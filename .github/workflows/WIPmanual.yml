@@ -19,6 +19,7 @@ on:
         required: false
         type: choice
         description: 'Runner label'
+        default: 'self-hosted'
         options:
           - urbanke
           - dependabot
@@ -28,7 +29,7 @@ jobs:
   # This workflow contains a single job called "greet"
   greet:
     # The type of runner that the job will run on
-    runs-on: [ self-hosted, "${{ inputs.chosen-os }}" ]
+    runs-on: [ self-hosted, "${{ inputs.chosen-runner }}" ]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
