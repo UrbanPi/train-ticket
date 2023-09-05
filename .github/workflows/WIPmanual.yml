@@ -42,11 +42,6 @@ jobs:
 
     steps:
 #      - run: sudo apt install -y make
-      - run: wget https://dlcdn.apache.org/maven/maven-3/3.9.4/binaries/apache-maven-3.9.4-bin.tar.gz
-      - run: tar -xvf apache-maven-3.9.4-bin.tar.gz
-#      - run: mv apache-maven-3.9.4 /opt/
-      - run: export M2_HOME="$(pwd)/apache-maven-3.9.4" ; export PATH="$PATH:$M2_HOME/bin"
-      - run: ./apache-maven-3.9.4/bin/mvn --version
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
         with:
@@ -87,6 +82,12 @@ jobs:
 #          python-version: '3.10'
 
       - run: ls -al
+      - run: wget https://dlcdn.apache.org/maven/maven-3/3.9.4/binaries/apache-maven-3.9.4-bin.tar.gz
+      - run: tar -xvf apache-maven-3.9.4-bin.tar.gz
+#       - run: mv apache-maven-3.9.4 /opt/
+      - run: export M2_HOME="$(pwd)/apache-maven-3.9.4" ; export PATH="$PATH:$M2_HOME/bin"
+      - run: ls -al
+      - run: ./apache-maven-3.9.4/bin/mvn --version
       - run: ./apache-maven-3.9.4/bin/mvn clean package -Dmaven.test.skip=true
       - run: script/publish-docker-images.sh containers.github.scch.at latest
 #      - run: make package publish-image Repo=containers.github.scch.at
