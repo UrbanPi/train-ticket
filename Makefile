@@ -1,6 +1,6 @@
 # Codewisdom Train-Ticket system
 
-Repo=codewisdom
+Repo=containers.github.scch.at/contest/trainticket
 Tag=latest
 Namespace="default"
 DeployArgs=""
