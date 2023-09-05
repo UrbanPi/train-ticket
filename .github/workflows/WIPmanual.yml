@@ -46,7 +46,7 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: 'adopt'
-          java-version: '17'
+          java-version: '11'
       # Probably deactivate for run on cluster
       - name: Cache local Maven repository
         uses: actions/cache@v3
@@ -84,7 +84,7 @@ jobs:
       - run: wget https://dlcdn.apache.org/maven/maven-3/3.9.4/binaries/apache-maven-3.9.4-bin.tar.gz
       - run: tar -xvf apache-maven-3.9.4-bin.tar.gz
 #       - run: mv apache-maven-3.9.4 /opt/
-      - run: export M2_HOME="$(pwd)/apache-maven-3.9.4" ; export PATH="$PATH:$M2_HOME/bin"
+#      - run: export M2_HOME="$(pwd)/apache-maven-3.9.4" ; export PATH="$PATH:$M2_HOME/bin"
       - run: ./apache-maven-3.9.4/bin/mvn --version
       - run: ./apache-maven-3.9.4/bin/mvn clean package -Dmaven.test.skip=true
       - run: ./script/publish-docker-images.sh containers.github.scch.at/contest/trainticket latest
