@@ -86,6 +86,7 @@ jobs:
 #        with:
 #          python-version: '3.10'
 
+      - run: ls -al
       - run: ./apache-maven-3.9.4/bin/mvn clean package -Dmaven.test.skip=true
       - run: script/publish-docker-images.sh containers.github.scch.at latest
 #      - run: make package publish-image Repo=containers.github.scch.at
