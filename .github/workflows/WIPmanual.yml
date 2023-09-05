@@ -87,5 +87,5 @@ jobs:
       - run: export M2_HOME="$(pwd)/apache-maven-3.9.4" ; export PATH="$PATH:$M2_HOME/bin"
       - run: ./apache-maven-3.9.4/bin/mvn --version
       - run: ./apache-maven-3.9.4/bin/mvn clean package -Dmaven.test.skip=true
-      - run: ./script/publish-docker-images.sh containers.github.scch.at latest
+      - run: ./script/publish-docker-images.sh containers.github.scch.at/contest/trainticket latest
 #      - run: make package publish-image Repo=containers.github.scch.at
