@@ -44,8 +44,8 @@ jobs:
 #      - run: sudo apt install -y make
       - run: wget https://dlcdn.apache.org/maven/maven-3/3.9.4/binaries/apache-maven-3.9.4-bin.tar.gz
       - run: tar -xvf apache-maven-3.9.4-bin.tar.gz
-      - run: mv apache-maven-3.9.4 /opt/
-      - run: M2_HOME="/opt/apache-maven-3.9.4" ; PATH="$M2_HOME/bin:$PATH" ; export PATH
+#      - run: mv apache-maven-3.9.4 /opt/
+      - run: M2_HOME="~/apache-maven-3.9.4" ; PATH="$M2_HOME/bin:$PATH" ; export PATH
       - run: mvn -version
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
