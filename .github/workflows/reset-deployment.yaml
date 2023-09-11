@@ -17,5 +17,7 @@ jobs:
           HPC_TENANT: ${{ secrets.HPC_TENANT }}
         with:
           args: |
-            ./hack/deploy/reset.sh scch-sws
+            kubectl apply -f .
+            kubectl get pods
+        run: ./hack/deploy/reset.sh scch-sws
 
