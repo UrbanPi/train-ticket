@@ -2,6 +2,7 @@ name: Reset deployment on SCCH Cluster
 
 on:
   workflow_dispatch:
+    inputs:
 jobs:
   deploy:
     runs-on: [ dependabot ]

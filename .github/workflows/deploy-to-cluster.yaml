@@ -2,20 +2,21 @@ name: Deploy to SCCH Cluster
 
 on:
   workflow_dispatch:
-    deploy-args:
-      required: false
-      type: choice
-      description: 'Deployment arguments'
-      default: ''
-      options:
-        -
-        - --independent-db
-        - --with-monitoring
-        - --with-tracing
-        - --independent-db --with-tracing
-        - --independent-db --with-monitoring
-        - --with-tracing --with-monitoring
-        - --all
+    inputs:
+      deploy-args:
+        required: false
+        type: choice
+        description: 'Deployment arguments'
+        default: ''
+        options:
+          -
+          - --independent-db
+          - --with-monitoring
+          - --with-tracing
+          - --independent-db --with-tracing
+          - --independent-db --with-monitoring
+          - --with-tracing --with-monitoring
+          - --all
 
 jobs:
   deploy:
