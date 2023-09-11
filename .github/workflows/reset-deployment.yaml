@@ -7,17 +7,17 @@ jobs:
   reset-deploy:
     runs-on: [ dependabot ]
     steps:
-#      - name: Checkout
-#        uses: actions/checkout@v3
-#      - name: Execute kubectl commands
-#        uses: HPC/hpc-scch-actions@main
-#        env:
-#          HPC_USERNAME: ${{ secrets.HPC_USERNAME }}
-#          HPC_PASSWORD: ${{ secrets.HPC_PASSWORD }}
-#          HPC_TENANT: ${{ secrets.HPC_TENANT }}
-#        with:
-#          args: |
-#            kubectl get pods
-##      - run: kubectl version
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Execute kubectl commands
+        uses: HPC/hpc-scch-actions@main
+        env:
+          HPC_USERNAME: ${{ secrets.HPC_USERNAME }}
+          HPC_PASSWORD: ${{ secrets.HPC_PASSWORD }}
+          HPC_TENANT: ${{ secrets.HPC_TENANT }}
+        with:
+          args: |
+            kubectl get pods
+#      - run: kubectl version
       - run: ./hack/deploy/reset.sh scch-sws
 
