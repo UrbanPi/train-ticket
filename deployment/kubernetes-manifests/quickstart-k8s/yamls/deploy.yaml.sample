@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-admin-basic-info-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -10,11 +12,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-admin-basic-info-service
         app: ts-admin-basic-info-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-admin-basic-info-service
-          image: codewisdom/ts-admin-basic-info-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-admin-basic-info-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -44,6 +50,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-admin-order-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -52,11 +60,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-admin-order-service
         app: ts-admin-order-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-admin-order-service
-          image: codewisdom/ts-admin-order-service:1.0.1
+          image: containers.github.scch.at/contest/trainticket/ts-admin-order-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -86,6 +98,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-admin-route-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -94,11 +108,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-admin-route-service
         app: ts-admin-route-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-admin-route-service
-          image: codewisdom/ts-admin-route-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-admin-route-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -128,6 +146,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-admin-travel-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -136,11 +156,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-admin-travel-service
         app: ts-admin-travel-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-admin-travel-service
-          image: codewisdom/ts-admin-travel-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-admin-travel-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -170,6 +194,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-admin-user-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -178,11 +204,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-admin-user-service
         app: ts-admin-user-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-admin-user-service
-          image: codewisdom/ts-admin-user-service:1.0.1
+          image: containers.github.scch.at/contest/trainticket/ts-admin-user-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -212,6 +242,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-assurance-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -220,11 +252,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-assurance-service
         app: ts-assurance-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-assurance-service
-          image: codewisdom/ts-assurance-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-assurance-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -256,6 +292,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-auth-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -264,11 +302,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-auth-service
         app: ts-auth-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-auth-service
-          image: codewisdom/ts-auth-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-auth-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -300,6 +342,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-avatar-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -308,11 +352,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-avatar-service
         app: ts-avatar-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-avatar-service
-          image: codewisdom/ts-avatar-service:0.2.0
+          image: containers.github.scch.at/contest/trainticket/ts-avatar-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -342,6 +390,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-basic-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -350,11 +400,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-basic-service
         app: ts-basic-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-basic-service
-          image: codewisdom/ts-basic-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-basic-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -384,6 +438,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-cancel-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -392,11 +448,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-cancel-service
         app: ts-cancel-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-cancel-service
-          image: codewisdom/ts-cancel-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-cancel-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -426,6 +486,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-config-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -434,11 +496,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-config-service
         app: ts-config-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-config-service
-          image: codewisdom/ts-config-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-config-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -470,6 +536,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-consign-price-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -478,11 +546,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-consign-price-service
         app: ts-consign-price-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-consign-price-service
-          image: codewisdom/ts-consign-price-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-consign-price-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -514,6 +586,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-consign-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -522,11 +596,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-consign-service
         app: ts-consign-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-consign-service
-          image: codewisdom/ts-consign-service:1.0.1
+          image: containers.github.scch.at/contest/trainticket/ts-consign-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -558,6 +636,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-contacts-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -566,11 +646,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-contacts-service
         app: ts-contacts-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-contacts-service
-          image: codewisdom/ts-contacts-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-contacts-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -602,6 +686,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-delivery-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -610,11 +696,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-delivery-service
         app: ts-delivery-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-delivery-service
-          image: codewisdom/ts-delivery-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-delivery-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -648,6 +738,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-execute-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -656,11 +748,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-execute-service
         app: ts-execute-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-execute-service
-          image: codewisdom/ts-execute-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-execute-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -690,6 +786,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-food-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -698,11 +796,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-food-delivery-service
         app: ts-food-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-food-service
-          image: codewisdom/ts-food-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-food-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -736,6 +838,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-food-delivery-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -744,11 +848,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-food-service
         app: ts-food-delivery-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-food-delivery-service
-          image: codewisdom/ts-food-delivery-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-food-delivery-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -780,6 +888,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-gateway-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
+    hpecp.hpe.com/hpecp-internal-gateway: "true"
 spec:
   selector:
     matchLabels:
@@ -788,11 +899,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-gateway-service
         app: ts-gateway-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-gateway-service
-          image: codewisdom/ts-gateway-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-gateway-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -822,6 +937,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-inside-payment-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -830,11 +947,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-inside-payment-service
         app: ts-inside-payment-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-inside-payment-service
-          image: codewisdom/ts-inside-payment-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-inside-payment-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -866,6 +987,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-news-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -874,11 +997,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-news-service
         app: ts-news-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-news-service
-          image: codewisdom/ts-news-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-news-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -908,6 +1035,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-notification-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -916,11 +1045,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-notification-service
         app: ts-notification-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-notification-service
-          image: codewisdom/ts-notification-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-notification-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -954,6 +1087,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-order-other-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -962,11 +1097,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-order-other-service
         app: ts-order-other-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-order-other-service
-          image: codewisdom/ts-order-other-service:1.0.1
+          image: containers.github.scch.at/contest/trainticket/ts-order-other-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -1000,6 +1139,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-order-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -1008,11 +1149,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-order-service
         app: ts-order-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-order-service
-          image: codewisdom/ts-order-service:1.0.1
+          image: containers.github.scch.at/contest/trainticket/ts-order-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -1046,6 +1191,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-payment-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -1054,11 +1201,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-payment-service
         app: ts-payment-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-payment-service
-          image: codewisdom/ts-payment-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-payment-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -1090,6 +1241,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-preserve-other-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -1098,11 +1251,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-preserve-other-service
         app: ts-preserve-other-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-preserve-other-service
-          image: codewisdom/ts-preserve-other-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-preserve-other-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -1134,6 +1291,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-preserve-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -1142,11 +1301,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-preserve-service
         app: ts-preserve-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-preserve-service
-          image: codewisdom/ts-preserve-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-preserve-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -1178,6 +1341,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-price-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -1186,11 +1351,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-price-service
         app: ts-price-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-price-service
-          image: codewisdom/ts-price-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-price-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -1222,6 +1391,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-rebook-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -1230,11 +1401,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-rebook-service
         app: ts-rebook-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-rebook-service
-          image: codewisdom/ts-rebook-service:1.0.1
+          image: containers.github.scch.at/contest/trainticket/ts-rebook-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -1266,6 +1441,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-route-plan-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -1274,11 +1451,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-route-plan-service
         app: ts-route-plan-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-route-plan-service
-          image: codewisdom/ts-route-plan-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-route-plan-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -1308,6 +1489,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-route-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -1316,11 +1499,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-route-service
         app: ts-route-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-route-service
-          image: codewisdom/ts-route-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-route-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -1352,6 +1539,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-seat-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -1360,11 +1549,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-seat-service
         app: ts-seat-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-seat-service
-          image: codewisdom/ts-seat-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-seat-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -1394,6 +1587,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-security-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -1402,11 +1597,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-security-service
         app: ts-security-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-security-service
-          image: codewisdom/ts-security-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-security-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -1438,6 +1637,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-station-food-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -1446,11 +1647,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-station-food-service
         app: ts-station-food-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-station-food-service
-          image: codewisdom/ts-station-food-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-station-food-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -1482,6 +1687,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-station-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -1490,11 +1697,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-station-service
         app: ts-station-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-station-service
-          image: codewisdom/ts-station-service:1.0.1
+          image: containers.github.scch.at/contest/trainticket/ts-station-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -1526,6 +1737,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-ticket-office-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -1534,11 +1747,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-ticket-office-service
         app: ts-ticket-office-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-ticket-office-service
-          image: codewisdom/ts-ticket-office-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-ticket-office-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -1570,6 +1787,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-train-food-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -1578,11 +1797,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-train-food-service
         app: ts-train-food-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-train-food-service
-          image: codewisdom/ts-train-food-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-train-food-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -1614,6 +1837,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-train-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -1622,11 +1847,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-train-service
         app: ts-train-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-train-service
-          image: codewisdom/ts-train-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-train-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -1658,6 +1887,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-travel-plan-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -1666,11 +1897,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-travel-plan-service
         app: ts-travel-plan-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-travel-plan-service
-          image: codewisdom/ts-travel-plan-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-travel-plan-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -1700,6 +1935,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-travel-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -1708,11 +1945,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-travel-service
         app: ts-travel-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-travel-service
-          image: codewisdom/ts-travel-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-travel-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -1744,6 +1985,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-travel2-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -1752,11 +1995,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-travel2-service
         app: ts-travel2-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-travel2-service
-          image: codewisdom/ts-travel2-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-travel2-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -1788,6 +2035,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-user-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -1796,11 +2045,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-user-service
         app: ts-user-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-user-service
-          image: codewisdom/ts-user-service:1.0.1
+          image: containers.github.scch.at/contest/trainticket/ts-user-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -1832,6 +2085,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-verification-code-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -1840,11 +2095,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-verification-code-service
         app: ts-verification-code-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-verification-code-service
-          image: codewisdom/ts-verification-code-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-verification-code-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -1874,6 +2133,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-voucher-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -1882,11 +2143,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-voucher-service
         app: ts-voucher-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-voucher-service
-          image: codewisdom/ts-voucher-service:1.0.0
+          image: containers.github.scch.at/contest/trainticket/ts-voucher-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -1918,6 +2183,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-wait-order-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -1926,11 +2193,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-wait-order-service
         app: ts-wait-order-service
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-wait-order-service
-          image: codewisdom/ts-wait-order-service:1.0.1
+          image: containers.github.scch.at/contest/trainticket/ts-wait-order-service:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: NODE_IP
@@ -1962,6 +2233,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-ui-dashboard
+  labels:
+    hpc.scch.at/responsibility: urbanke
+    hpecp.hpe.com/hpecp-internal-gateway: "true"
 spec:
   selector:
     matchLabels:
@@ -1970,11 +2244,15 @@ spec:
   template:
     metadata:
       labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-ui-dashboard
         app: ts-ui-dashboard
     spec:
+      imagePullSecrets:
+        - name: conregscch
       containers:
         - name: ts-ui-dashboard
-          image: codewisdom/ts-ui-dashboard:1.0.1
+          image: containers.github.scch.at/contest/trainticket/ts-ui-dashboard:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
