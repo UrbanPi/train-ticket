@@ -7,17 +7,26 @@ jobs:
   reset-deploy:
     runs-on: [ dependabot ]
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+#      - name: Checkout
+#        uses: actions/checkout@v3
       - name: Execute kubectl commands
-        uses: HPC/hpc-scch-actions@main
         env:
           HPC_USERNAME: ${{ secrets.HPC_USERNAME }}
           HPC_PASSWORD: ${{ secrets.HPC_PASSWORD }}
           HPC_TENANT: ${{ secrets.HPC_TENANT }}
         with:
           args: |
-            kubectl get pods
+            curl -k -s --request GET "https://duesentrieb.hpc.scch.at:8080/api/v2/k8skubeconfig" \
+            --header "X-BDS-SESSION: $(curl -k -i -s --request POST "https://duesentrieb.hpc.scch.at:8080/api/v2/session" \
+            --header 'Accept: application/json' \
+            --header 'Content-Type: application/json' \
+              --data-raw "{
+            \"name\": \"${HPC_USERNAME}\",
+            \"password\": \"${HPC_PASSWORD}\",
+            \"tenant_name\": \"${HPC_TENANT}\"
+            }" | grep Location | awk '{print $2}' | tr -d '\r')" \
+            --header 'Accept: application/json' \
+            --header 'Content-Type: application/json' > ./config
 #      - run: kubectl version
-      - run: ./hack/deploy/reset.sh scch-sws
+#      - run: ./hack/deploy/reset.sh scch-sws
 
