@@ -34,5 +34,5 @@ jobs:
           args: |
             kubectl apply -f .
             kubectl get pods
-        run: ./hack/deploy/deploy.sh scch-sws "${{ inputs.deploy-args }}"
+      - run: ./hack/deploy/deploy.sh scch-sws "${{ inputs.deploy-args }}"
 

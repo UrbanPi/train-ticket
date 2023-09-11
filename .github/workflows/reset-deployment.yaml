@@ -19,5 +19,5 @@ jobs:
           args: |
             kubectl apply -f .
             kubectl get pods
-        run: ./hack/deploy/reset.sh scch-sws
+      - run: ./hack/deploy/reset.sh scch-sws
 
