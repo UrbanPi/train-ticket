@@ -26,6 +26,7 @@ jobs:
           }" | grep Location | awk '{print $2}' | tr -d '\r')" \
           --header 'Accept: application/json' \
           --header 'Content-Type: application/json' > ./config
+      - run: cat ./config
 #      - run: kubectl version
 #      - run: ./hack/deploy/reset.sh scch-sws
 
