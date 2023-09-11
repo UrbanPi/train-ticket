@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
 jobs:
-  deploy:
+  reset-deploy:
     runs-on: [ dependabot ]
     steps:
       - name: Checkout
@@ -17,7 +17,6 @@ jobs:
           HPC_TENANT: ${{ secrets.HPC_TENANT }}
         with:
           args: |
-            kubectl apply -f .
             kubectl get pods
       - run: ./hack/deploy/reset.sh scch-sws
 

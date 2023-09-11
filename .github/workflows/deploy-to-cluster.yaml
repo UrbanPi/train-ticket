@@ -32,7 +32,6 @@ jobs:
           HPC_TENANT: ${{ secrets.HPC_TENANT }}
         with:
           args: |
-            kubectl apply -f .
             kubectl get pods
       - run: ./hack/deploy/deploy.sh scch-sws "${{ inputs.deploy-args }}"
 
