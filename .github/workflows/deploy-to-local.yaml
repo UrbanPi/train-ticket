@@ -33,5 +33,5 @@ jobs:
           registry: containers.github.scch.at
           username: ${{ github.actor }}
           password: ${{ github.token }}
-      - run: ./hack/deploy/deploy.sh scch-sws "${{ inputs.deploy-args }}"
+      - run: ./hack/deploy/deploy.sh "${{ inputs.namespace }}" "${{ inputs.deploy-args }}"
 
