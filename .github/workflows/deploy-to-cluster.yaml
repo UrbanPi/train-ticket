@@ -24,14 +24,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Execute kubectl commands
-        uses: HPC/hpc-scch-actions@main
-        env:
-          HPC_USERNAME: ${{ secrets.HPC_USERNAME }}
-          HPC_PASSWORD: ${{ secrets.HPC_PASSWORD }}
-          HPC_TENANT: ${{ secrets.HPC_TENANT }}
+#      - name: Execute kubectl commands
+#        uses: HPC/hpc-scch-actions@main
+#        env:
+#          HPC_USERNAME: ${{ secrets.HPC_USERNAME }}
+#          HPC_PASSWORD: ${{ secrets.HPC_PASSWORD }}
+#          HPC_TENANT: ${{ secrets.HPC_TENANT }}
+#        with:
+#          args: |
+#            kubectl get pods
+      - name: Login to github container registry
+        uses: docker/login-action@v2.1.0
         with:
-          args: |
-            kubectl get pods
+          registry: containers.github.scch.at
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
       - run: ./hack/deploy/deploy.sh scch-sws "${{ inputs.deploy-args }}"
 
