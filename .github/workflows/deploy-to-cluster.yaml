@@ -1,4 +1,4 @@
-name: Deploy to self-hosted runner
+name: Deploy to cluster
 
 on:
   workflow_dispatch:
