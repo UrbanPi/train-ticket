@@ -50,13 +50,12 @@ jobs:
           rm helm-v3.12.3-linux-amd64.tar.gz
           chmod +x helmbin/
       - run: |
+          echo $PATH
           export PATH="$PATH:$(pwd)/.kube:$(pwd)/helmbin"
           export KUBECONFIG="$(pwd)/.kube/config"
           echo $PATH
-          ls -al ./.kube
-          echo $PATH
           kubectl plugin list
           kubectl version
-          which kubectl#
+          which kubectl
           kubectl get pods
       - run: ./hack/deploy/reset.sh scch-sws
