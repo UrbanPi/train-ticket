@@ -45,10 +45,12 @@ jobs:
 
       - run: |
           export PATH="$PATH:$(pwd)/.kube"
+          export KUBECONFIG="$(pwd)/.kube/config"
           echo $PATH
           echo $(pwd)
           ls -al ./.kube
           echo $PATH
+          kubectl plugin list
           kubectl version
           which kubectl
 #      - run: ./hack/deploy/reset.sh scch-sws
