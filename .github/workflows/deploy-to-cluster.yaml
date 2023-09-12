@@ -84,7 +84,7 @@ jobs:
           chmod +x helmbin/
 
       - name: Set paths and execute deployment script
-      - run: |
+        run: |
           export PATH="$PATH:$(pwd)/.kube:$(pwd)/helmbin"
           export KUBECONFIG="$(pwd)/.kube/config"
           ./hack/deploy/deploy.sh "${{ inputs.namespace }}" "${{ inputs.deploy-args }}"

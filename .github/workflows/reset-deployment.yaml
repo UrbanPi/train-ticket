@@ -57,7 +57,7 @@ jobs:
           chmod +x helmbin/
 
       - name: Set paths and execute reset script
-      - run: |
+        run: |
           export PATH="$PATH:$(pwd)/.kube:$(pwd)/helmbin"
           export KUBECONFIG="$(pwd)/.kube/config"
           ./hack/deploy/reset.sh scch-sws
