@@ -14,22 +14,31 @@ argMonitoring=0
 argTracing=0
 argAll=0
 
+function delete_tt_micro_services {
+    kubectl delete -f deployment/kubernetes-manifests/quickstart-k8s/yamls -n $namespace
+    helm ls -n $namespace | grep ^ts- | awk '{print $1}' | xargs helm uninstall -n $namespace
+}
+
 function quick_end {
   echo "quick end"
   tsMysqlName="ts-db"
 
   update_tt_dp_cm $nacosRelease $rabbitmqRelease
   gen_secret_for_services $tsUser $tsPassword $tsDB "${tsMysqlName}-mysql-leader"
+  delete_tt_micro_services
+
 }
 
 
 function reset_all {
   update_tt_sw_dp_cm $nacosRelease $rabbitmqRelease
   gen_secret_for_services $tsUser $tsPassword $tsDB
-
+  delete_tt_micro_services
+  kubectl delete -f deployment/kubernetes-manifests/skywalking -n $namespace
+  kubectl delete -f deployment/kubernetes-manifests/prometheus -n $namespace
 }
 
-function prepare-reset {
+function reset {
     if [ $argNone == 1 ]; then
       quick_end
       exit $?
@@ -37,6 +46,7 @@ function prepare-reset {
 
     if [ $argAll == 1 ]; then
       reset_all
+
       exit $?
     fi
 
@@ -58,17 +68,26 @@ function prepare-reset {
 #      deploy_tt_dp_sw  $namespace
 #      deploy_tracing  $namespace
       update_tt_sw_dp_cm $nacosRelease $rabbitmqRelease
+      kubectl delete -f deployment/kubernetes-manifests/skywalking -n $namespace
+
     else
 #      deploy_tt_dp $namespace
       update_tt_dp_cm $nacosRelease $rabbitmqRelease
 
     fi
 
-#    if [ $argMonitoring == 1 ]; then
+    if [ $argMonitoring == 1 ]; then
 #      deploy_monitoring
-#    fi
+      kubectl delete -f deployment/kubernetes-manifests/prometheus -n $namespace
+
+    fi
+
+    helm uninstall $rabbitmqRelease -n $namespace
+    helm uninstall $nacosRelease -n $namespace
+    helm uninstall $nacosDBRelease -n $namespace
+
 }
-#prepare-reset
+#reset
 function parse_args {
     echo "Parse ResetArgs"
     for arg in $args
@@ -96,4 +115,4 @@ if [ $# == 2 ]; then
   argNone=0
   parse_args $args
 fi
-prepare-reset
+reset

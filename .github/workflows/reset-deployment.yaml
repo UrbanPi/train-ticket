@@ -80,5 +80,4 @@ jobs:
           export PATH="$PATH:$(pwd)/.kube:$(pwd)/helmbin"
           export KUBECONFIG="$(pwd)/.kube/config"
           ls -al ./hack/deploy/
-          ./hack/deploy/prepare-reset.sh "${{ inputs.namespace }}" "${{ inputs.deploy-args }}"
-          ./hack/deploy/reset.sh "${{ inputs.namespace }}"
+          ./hack/deploy/specific-reset.sh "${{ inputs.namespace }}" "${{ inputs.deploy-args }}"
