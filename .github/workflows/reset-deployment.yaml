@@ -21,8 +21,7 @@ jobs:
           --header 'Content-Type: application/json' \
             --data-raw "{
           \"name\": \"${HPC_USERNAME}\",
-          \"password\": \"${HPC_PASSWORD}\",
-          \"tenant_name\": \"${HPC_TENANT}\"
+          \"password\": \"${HPC_PASSWORD}\"
           }" | grep Location | awk '{print $2}' | tr -d '\r')" \
           --header 'Accept: application/json' \
           --header 'Content-Type: application/json' > ./config
