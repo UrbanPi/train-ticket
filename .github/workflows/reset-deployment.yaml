@@ -15,14 +15,13 @@ jobs:
   reset-deploy:
     runs-on: [ self-hosted, "${{ inputs.chosen-runner }}" ]
     steps:
-#      - name: Checkout
-#        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
       - run: mkdir --parents .kube
       - name: Setup kubernetes
         env:
           HPC_USERNAME: ${{ secrets.HPC_USERNAME }}
           HPC_PASSWORD: ${{ secrets.HPC_PASSWORD }}
-          HPC_TENANT: ${{ secrets.HPC_TENANT }}
         run: |
           curl -k -s --request GET "https://duesentrieb.hpc.scch.at:8080/api/v2/k8skubeconfig" \
           --header "X-BDS-SESSION: $(curl -k -i -s --request POST "https://duesentrieb.hpc.scch.at:8080/api/v2/session" \
@@ -44,13 +43,20 @@ jobs:
       - run: rm -f kubectl-hpecp.star
 
       - run: |
-          export PATH="$PATH:$(pwd)/.kube"
+          curl -k -s --request GET "https://get.helm.sh/helm-v3.12.3-linux-amd64.tar.gz" > helm-v3.12.3-linux-amd64.tar.gz
+          tar -xzf helm-v3.12.3-linux-amd64.tar.gz linux-amd64/helm
+          mkdir helmbin
+          mv linux-amd64/helm helmbin/
+          rm helm-v3.12.3-linux-amd64.tar.gz
+          chmod +x helmbin/
+      - run: |
+          export PATH="$PATH:$(pwd)/.kube:$(pwd)/helmbin"
           export KUBECONFIG="$(pwd)/.kube/config"
           echo $PATH
-          echo $(pwd)
           ls -al ./.kube
           echo $PATH
           kubectl plugin list
           kubectl version
-          which kubectl
-#      - run: ./hack/deploy/reset.sh scch-sws
+          which kubectl#
+          kubectl get pods
+      - run: ./hack/deploy/reset.sh scch-sws
