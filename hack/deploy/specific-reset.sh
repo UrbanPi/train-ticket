@@ -111,7 +111,7 @@ function parse_args {
 }
 
 echo "args num: $#"
-if [ $# == 2 ]; then
+if [ $# == 2 && $args != "" ]; then
   argNone=0
   parse_args $args
 fi
