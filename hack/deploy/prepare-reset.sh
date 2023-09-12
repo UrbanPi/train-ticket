@@ -68,7 +68,7 @@ function reset {
 #      deploy_monitoring
 #    fi
 }
-#specific-reset
+#prepare-reset
 function parse_args {
     echo "Parse ResetArgs"
     for arg in $args
@@ -96,4 +96,4 @@ if [ $# == 2 ]; then
   argNone=0
   parse_args $args
 fi
-specific-reset
+prepare-reset
