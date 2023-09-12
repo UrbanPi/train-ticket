@@ -9,7 +9,8 @@ jobs:
     steps:
 #      - name: Checkout
 #        uses: actions/checkout@v3
-      - name: Execute kubectl commands
+      - run: mkdir --parents .kube/bin
+      - name: Setup kubernetes
         env:
           HPC_USERNAME: ${{ secrets.HPC_USERNAME }}
           HPC_PASSWORD: ${{ secrets.HPC_PASSWORD }}
@@ -24,8 +25,11 @@ jobs:
           \"password\": \"${HPC_PASSWORD}\"
           }" | grep Location | awk '{print $2}' | tr -d '\r')" \
           --header 'Accept: application/json' \
-          --header 'Content-Type: application/json' > ./config
-      - run: cat ./config
-#      - run: kubectl version
+          --header 'Content-Type: application/json' > ./.kube/config
+      - run: cat ./.kube/config
+      - run: curl --location "https://dl.k8s.io/release/v1.26.1/bin/linux/amd64/kubectl" --output ./.kube/bin \
+            && chmod +x ./.kube/bin/kubectl \
+      - run: export PATH="$PATH:$(pwd)/.kube/bin"
+      - run: kubectl version
 #      - run: ./hack/deploy/reset.sh scch-sws
 
