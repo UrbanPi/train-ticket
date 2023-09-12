@@ -3,9 +3,17 @@ name: Reset deployment on SCCH Cluster
 on:
   workflow_dispatch:
     inputs:
+      chosen-runner:
+        required: false
+        type: choice
+        description: 'Runner label'
+        default: 'urbanke'
+        options:
+          - urbanke
+          - dependabot
 jobs:
   reset-deploy:
-    runs-on: [ dependabot ]
+    runs-on: [ self-hosted, "${{ inputs.chosen-runner }}" ]
     steps:
 #      - name: Checkout
 #        uses: actions/checkout@v3
@@ -36,4 +44,5 @@ jobs:
             && rm -f kubectl-hpecp.star
 
       - run: kubectl version
+      - run: which kubectl
 #      - run: ./hack/deploy/reset.sh scch-sws
