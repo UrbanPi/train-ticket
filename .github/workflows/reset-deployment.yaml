@@ -27,7 +27,7 @@ jobs:
           --header 'Accept: application/json' \
           --header 'Content-Type: application/json' > ./.kube/config
       - run: cat ./.kube/config
-      - run: curl --location "https://dl.k8s.io/release/v1.26.1/bin/linux/amd64/kubectl" --output ./.kube/bin/kubectl \
+      - run: curl --location "https://storage.googleapis.com/kubernetes-release/release/v1.20.11/bin/linux/amd64/kubectl" --output ./.kube/bin/kubectl \
             && chmod +x ./.kube/bin/kubectl \
       - run: export PATH="$PATH:$(pwd)/.kube/bin"
 
@@ -38,4 +38,3 @@ jobs:
 
       - run: kubectl version
 #      - run: ./hack/deploy/reset.sh scch-sws
-
