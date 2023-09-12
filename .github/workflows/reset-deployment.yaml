@@ -37,15 +37,18 @@ jobs:
       - run: cat ./.kube/config
       - run: curl -k -s --request GET "https://storage.googleapis.com/kubernetes-release/release/v1.20.11/bin/linux/amd64/kubectl" > ./.kube/kubectl
       - run: chmod +x ./.kube/kubectl
-      - run: export PATH="$PATH:$(pwd)/.kube"
-      - run: ls -al ./.kube
-      - run: echo $PATH
 
       - run: curl -k -s --request GET "https://bluedata-releases.s3.amazonaws.com/kubectl-epic/3.4/14/linux/kubectl-hpecp.star" > kubectl-hpecp.star
       - run: tar --extract --file kubectl-hpecp.star kubectl-hpecp
       - run: mv kubectl-hpecp .kube/kubectl-hpecp
       - run: rm -f kubectl-hpecp.star
 
-      - run: kubectl version
-      - run: which kubectl
+      - run: |
+          export PATH="$PATH:$(pwd)/.kube"
+          echo $PATH
+          echo $(pwd)
+          ls -al ./.kube
+          echo $PATH
+          kubectl version
+          which kubectl
 #      - run: ./hack/deploy/reset.sh scch-sws
