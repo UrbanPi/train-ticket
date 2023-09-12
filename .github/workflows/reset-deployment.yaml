@@ -1,4 +1,4 @@
-name: Reset deployment on SCCH Cluster
+name: Reset deployment on SCCH cluster
 
 on:
   workflow_dispatch:
@@ -79,5 +79,4 @@ jobs:
         run: |
           export PATH="$PATH:$(pwd)/.kube:$(pwd)/helmbin"
           export KUBECONFIG="$(pwd)/.kube/config"
-          ls -al ./hack/deploy/
           ./hack/deploy/specific-reset.sh "${{ inputs.namespace }}" "${{ inputs.deploy-args }}"

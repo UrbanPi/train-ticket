@@ -29,7 +29,6 @@ function quick_end {
 
 }
 
-
 function reset_all {
   update_tt_sw_dp_cm $nacosRelease $rabbitmqRelease
   gen_secret_for_services $tsUser $tsPassword $tsDB
@@ -50,34 +49,23 @@ function reset {
       exit $?
     fi
 
-#    deploy_infrastructures $namespace
-
     if [ $argDB == 1 ]; then
-#      deploy_tt_mysql_each_service  $namespace
       gen_secret_for_services $tsUser $tsPassword $tsDB
 
     else
-#      deploy_tt_mysql_all_in_one $namespace
       gen_secret_for_services $tsUser $tsPassword $tsDB "${tsMysqlName}-mysql-leader"
     fi
 
-#    deploy_tt_secret  $namespace
-#    deploy_tt_svc $namespace
-
     if [ $argTracing == 1 ]; then
-#      deploy_tt_dp_sw  $namespace
-#      deploy_tracing  $namespace
       update_tt_sw_dp_cm $nacosRelease $rabbitmqRelease
       kubectl delete -f deployment/kubernetes-manifests/skywalking -n $namespace
 
     else
-#      deploy_tt_dp $namespace
       update_tt_dp_cm $nacosRelease $rabbitmqRelease
 
     fi
 
     if [ $argMonitoring == 1 ]; then
-#      deploy_monitoring
       kubectl delete -f deployment/kubernetes-manifests/prometheus -n $namespace
 
     fi

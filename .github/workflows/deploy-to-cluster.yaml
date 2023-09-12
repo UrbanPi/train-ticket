@@ -1,4 +1,4 @@
-name: Deploy to cluster
+name: Deploy to SCCH cluster
 
 on:
   workflow_dispatch:
