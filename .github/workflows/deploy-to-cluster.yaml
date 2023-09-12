@@ -15,7 +15,7 @@ on:
         required: false
         type: text
         description: 'Kubernetes namespace'
-        default: ''
+        default: 'scch-sws'
       deploy-args:
         required: false
         type: choice
