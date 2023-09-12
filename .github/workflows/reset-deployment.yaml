@@ -40,7 +40,7 @@ jobs:
 
       - run: curl -k -s --request GET "https://bluedata-releases.s3.amazonaws.com/kubectl-epic/3.4/14/linux/kubectl-hpecp.star" > kubectl-hpecp.star \
             && tar --extract --file kubectl-hpecp.star kubectl-hpecp \
-            && mv kubectl-hpecp ./kubectl/kubectl-hpecp \
+            && mv kubectl-hpecp .kube/kubectl-hpecp \
             && rm -f kubectl-hpecp.star
 
       - run: kubectl version
