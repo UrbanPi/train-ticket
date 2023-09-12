@@ -29,7 +29,7 @@ function reset_all {
 
 }
 
-function reset {
+function prepare-reset {
     if [ $argNone == 1 ]; then
       quick_end
       exit $?
