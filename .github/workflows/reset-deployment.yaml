@@ -28,7 +28,7 @@ jobs:
           --header 'Content-Type: application/json' > ./.kube/config
       - run: cat ./.kube/config
       - run: curl --location "https://storage.googleapis.com/kubernetes-release/release/v1.20.11/bin/linux/amd64/kubectl" --output ./.kube/bin/kubectl \
-            && chmod +x ./.kube/bin/kubectl \
+            && chmod +x ./.kube/bin/kubectl
       - run: export PATH="$PATH:$(pwd)/.kube/bin"
 
       - run: curl --location https://bluedata-releases.s3.amazonaws.com/kubectl-epic/3.4/14/linux/kubectl-hpecp.star --output kubectl-hpecp.star \
