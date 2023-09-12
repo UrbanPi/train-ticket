@@ -17,7 +17,7 @@ jobs:
     steps:
 #      - name: Checkout
 #        uses: actions/checkout@v3
-      - run: mkdir --parents .kube/bin
+      - run: mkdir --parents .kube
       - name: Setup kubernetes
         env:
           HPC_USERNAME: ${{ secrets.HPC_USERNAME }}
@@ -35,8 +35,11 @@ jobs:
           --header 'Accept: application/json' \
           --header 'Content-Type: application/json' > ./.kube/config
       - run: cat ./.kube/config
-      - run: curl -k -s --request GET "https://storage.googleapis.com/kubernetes-release/release/v1.20.11/bin/linux/amd64/kubectl" > ./.kube/bin/kubectl && chmod +x ./.kube/bin/kubectl
-      - run: export PATH="$PATH:$(pwd)/.kube/bin"
+      - run: curl -k -s --request GET "https://storage.googleapis.com/kubernetes-release/release/v1.20.11/bin/linux/amd64/kubectl" > ./.kube/kubectl &&
+      - run: chmod +x ./.kube/kubectl
+      - run: export PATH="$PATH:$(pwd)/.kube"
+      - run: ls -al ./kube
+      - run: echo $PATH
 
       - run: curl -k -s --request GET "https://bluedata-releases.s3.amazonaws.com/kubectl-epic/3.4/14/linux/kubectl-hpecp.star" > kubectl-hpecp.star
       - run: tar --extract --file kubectl-hpecp.star kubectl-hpecp
