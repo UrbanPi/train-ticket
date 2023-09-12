@@ -38,7 +38,7 @@ jobs:
       - run: curl -k -s --request GET "https://storage.googleapis.com/kubernetes-release/release/v1.20.11/bin/linux/amd64/kubectl" > ./.kube/kubectl
       - run: chmod +x ./.kube/kubectl
       - run: export PATH="$PATH:$(pwd)/.kube"
-      - run: ls -al ./kube
+      - run: ls -al ./.kube
       - run: echo $PATH
 
       - run: curl -k -s --request GET "https://bluedata-releases.s3.amazonaws.com/kubectl-epic/3.4/14/linux/kubectl-hpecp.star" > kubectl-hpecp.star
