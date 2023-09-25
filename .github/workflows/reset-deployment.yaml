@@ -26,9 +26,12 @@ on:
           - --independent-db
           - --with-monitoring
           - --with-tracing
+          - --with-otel
           - --independent-db --with-tracing
           - --independent-db --with-monitoring
+          - --independent-db --with_otel
           - --with-tracing --with-monitoring
+          - --with-tracing --with-monitoring --with_otel
           - --all
 jobs:
   reset-deploy:
