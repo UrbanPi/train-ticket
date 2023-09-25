@@ -2,12 +2,11 @@ name: Build and push containers to SCCH registry
 on:
   workflow_dispatch:
     inputs:
-      name:
       chosen-runner:
         required: false
         type: choice
         description: 'Runner label'
-        default: 'local-runner'
+        default: 'dependabot'
         options:
           - local-runner
           - dependabot
