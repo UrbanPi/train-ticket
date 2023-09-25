@@ -553,7 +553,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-avatar-service
-          image:  containers.github.scch.at/contest/trainticket/ts-avatar-service::latest
+          image:  containers.github.scch.at/contest/trainticket/ts-avatar-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: skywalking-agent
