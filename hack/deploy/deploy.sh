@@ -13,6 +13,7 @@ argNone=1
 argDB=0
 argMonitoring=0
 argTracing=0
+argOTEL=0
 argAll=0
 
 function quick_start {
@@ -32,6 +33,7 @@ function deploy_all {
   deploy_tt_dp_sw  $namespace
   deploy_tracing  $namespace
   deploy_monitoring
+  deploy_tt_dp_otel $namespace
 }
 
 
@@ -60,6 +62,8 @@ function deploy {
     if [ $argTracing == 1 ]; then
       deploy_tt_dp_sw  $namespace
       deploy_tracing  $namespace
+    elif [ $argOTEL == 1 ]; then
+      deploy_tt_dp_otel $namespace
     else
       deploy_tt_dp $namespace
     fi
@@ -87,6 +91,9 @@ function parse_args {
         ;;
       "--with-tracing")
         argTracing=1
+        ;;
+      "--with-otel")
+        argOTEL=1
         ;;
       esac
     done

@@ -115,3 +115,10 @@ function deploy_tt_dp_sw {
   echo "End deployment Step <3/3>----------------------------------------------------------------------"
 }
 
+function deploy_tt_dp_otel {
+  namespace=$1
+  echo "Start to deploy train-ticket deployments with otel agent."
+  update_tt_otel_dp_cm $nacosRelease $rabbitmqRelease
+  kubectl apply -f deployment/kubernetes-manifests/quickstart-k8s/yamls/otel_deploy.yaml -n $namespace > /dev/null
+  echo "End deployment Step <3/3>----------------------------------------------------------------------"
+}

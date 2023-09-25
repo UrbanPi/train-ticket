@@ -4,9 +4,11 @@ svc_list="assurance auth config consign-price consign contacts delivery food foo
 secret_yaml="deployment/kubernetes-manifests/quickstart-k8s/yamls/secret.yaml"
 dp_sample_yaml="deployment/kubernetes-manifests/quickstart-k8s/yamls/deploy.yaml.sample"
 sw_dp_sample_yaml="deployment/kubernetes-manifests/quickstart-k8s/yamls/sw_deploy.yaml.sample"
+otel_dp_sample_yaml="deployment/kubernetes-manifests/quickstart-k8s/yamls/otel_deploy.yaml.sample"
 
 dp_yaml="deployment/kubernetes-manifests/quickstart-k8s/yamls/deploy.yaml"
 sw_dp_yaml="deployment/kubernetes-manifests/quickstart-k8s/yamls/sw_deploy.yaml"
+otel_dp_yaml="deployment/kubernetes-manifests/quickstart-k8s/yamls/otel_deploy.yaml"
 
 
 function gen_secret_for_tt {
@@ -91,3 +93,16 @@ function update_tt_sw_dp_cm {
   fi
 }
 
+function update_tt_otel_dp_cm {
+  nacosCM="$1"
+  rabbitmqCM="$2"
+
+  cp $otel_dp_sample_yaml $otel_dp_yaml
+  if [ "$(uname)" = "Darwin" ]; then
+    sed -i "" "s/nacos/${nacosCM}/g" $sw_dp_yaml
+    sed -i "" "s/rabbitmq/${rabbitmqCM}/g" $sw_dp_yaml
+  else
+    sed -i "s/nacos/${nacosCM}/g" $sw_dp_yaml
+    sed -i "s/rabbitmq/${rabbitmqCM}/g" $sw_dp_yaml
+  fi
+}
