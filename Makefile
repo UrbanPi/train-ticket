@@ -41,7 +41,7 @@ deploy:
 # specific reset
 # reset with same semantics as deploy arguments
 .PHONY: reset-specific
-reset-deploy:
+reset-specific:
 	@hack/deploy/specific-reset.sh $(Namespace) "$(DeployArgs)"
 
 
