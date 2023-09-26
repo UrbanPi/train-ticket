@@ -20,7 +20,7 @@ echo
 echo "Publishing OTEL images"
 echo
 
-docker build --push -t containers.github.scch.at/contest/trainticket/slotel:latest ./OTEL/ \
+docker build --push -t containers.github.scch.at/contest/trainticket/otel-agent:latest ./OTEL/otel_agent \
 --label "org.opencontainers.image.source=https://github.scch.at/ConTest/TrainTicket" \
 --label "org.opencontainers.image.url=https://github.scch.at/ConTest/TrainTicket"
 

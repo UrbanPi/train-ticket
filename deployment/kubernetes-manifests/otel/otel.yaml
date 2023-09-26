@@ -20,10 +20,10 @@ spec:
         - name: conregscch
       containers:
         - name: otel-collector
-          image: containers.github.scch.at/contest/trainticket/slotel-collector:latest
+          image: containers.github.scch.at/contest/trainticket/otel-collector:latest
           imagePullPolicy: IfNotPresent
           command: [ "/bin/sh" ]
-          args: [ "-c", 'cd /slotel/; java -jar TraceCollector-1.0.jar -t traces.txt -m PUSH -p 4242 -f "\"http.status_code\":2"' ]
+          args: [ "-c", 'cd /otel/; java -jar TraceCollector-1.0.jar -t traces.txt -m PUSH -p 4242 -f "\"http.status_code\":2"' ]
           ports:
             - containerPort: 4242
           resources:

@@ -17,17 +17,17 @@ spec:
         app: ts-admin-basic-info-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -35,8 +35,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-admin-basic-info-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -51,9 +51,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-admin-basic-info-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: nacos
@@ -92,17 +92,17 @@ spec:
         app: ts-admin-order-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -110,8 +110,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-admin-order-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -126,9 +126,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-admin-order-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: nacos
@@ -167,17 +167,17 @@ spec:
         app: ts-admin-route-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -185,8 +185,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-admin-route-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -201,9 +201,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-admin-route-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: nacos
@@ -242,17 +242,17 @@ spec:
         app: ts-admin-travel-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -260,8 +260,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-admin-travel-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -276,9 +276,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-admin-travel-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: nacos
@@ -317,17 +317,17 @@ spec:
         app: ts-admin-user-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -335,8 +335,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-admin-user-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -351,9 +351,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-admin-user-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: nacos
@@ -392,17 +392,17 @@ spec:
         app: ts-assurance-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -410,8 +410,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-assurance-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -426,9 +426,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-assurance-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - secretRef:
                 name: ts-assurance-mysql
@@ -469,17 +469,17 @@ spec:
         app: ts-auth-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -487,8 +487,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-auth-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -503,9 +503,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-auth-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - secretRef:
                 name: ts-auth-mysql
@@ -546,17 +546,17 @@ spec:
         app: ts-avatar-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -564,8 +564,8 @@ spec:
           image:  containers.github.scch.at/contest/trainticket/ts-avatar-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -580,9 +580,9 @@ spec:
 #            - name: SERVICE_JAR
 #              value: "ts-avatar-service"
 #            - name: JAVA_TOOL_OPTIONS
-#              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+#              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
 #          command: [ "/bin/sh" ]
-#          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+#          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: nacos
@@ -621,17 +621,17 @@ spec:
         app: ts-basic-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -639,8 +639,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-basic-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -655,9 +655,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-basic-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: nacos
@@ -696,17 +696,17 @@ spec:
         app: ts-cancel-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -714,8 +714,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-cancel-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -730,9 +730,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-cancel-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: nacos
@@ -771,17 +771,17 @@ spec:
         app: ts-config-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -789,8 +789,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-config-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -805,9 +805,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-config-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - secretRef:
                 name: ts-config-mysql
@@ -848,17 +848,17 @@ spec:
         app: ts-consign-price-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -866,8 +866,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-consign-price-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -882,9 +882,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-consign-price-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - secretRef:
                 name: ts-consign-price-mysql
@@ -925,17 +925,17 @@ spec:
         app: ts-consign-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -943,8 +943,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-consign-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -959,9 +959,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-consign-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - secretRef:
                 name: ts-consign-mysql
@@ -1002,17 +1002,17 @@ spec:
         app: ts-contacts-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -1020,8 +1020,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-contacts-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -1036,9 +1036,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-contacts-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - secretRef:
                 name: ts-contacts-mysql
@@ -1079,17 +1079,17 @@ spec:
         app: ts-delivery-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -1097,8 +1097,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-delivery-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -1113,9 +1113,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-delivery-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - secretRef:
                 name: ts-delivery-mysql
@@ -1158,17 +1158,17 @@ spec:
         app: ts-execute-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -1176,8 +1176,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-execute-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -1192,9 +1192,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-execute-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: nacos
@@ -1233,17 +1233,17 @@ spec:
         app: ts-food-delivery-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -1251,8 +1251,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-food-delivery-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -1267,9 +1267,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-food-delivery-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - secretRef:
                 name: ts-food-delivery-mysql
@@ -1310,17 +1310,17 @@ spec:
         app: ts-food-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -1328,8 +1328,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-food-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -1344,9 +1344,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-food-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: nacos
@@ -1390,17 +1390,17 @@ spec:
         app: ts-gateway-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -1408,8 +1408,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-gateway-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -1424,9 +1424,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-gateway-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: nacos
@@ -1465,17 +1465,17 @@ spec:
         app: ts-inside-payment-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -1483,8 +1483,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-inside-payment-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -1499,9 +1499,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-inside-payment-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - secretRef:
                 name: ts-inside-payment-mysql
@@ -1542,17 +1542,17 @@ spec:
         app: ts-news-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -1560,8 +1560,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-news-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -1576,9 +1576,9 @@ spec:
 #            - name: SERVICE_JAR
 #              value: "ts-news-service"
 #            - name: JAVA_TOOL_OPTIONS
-#              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+#              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
 #          command: [ "/bin/sh" ]
-#          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+#          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: nacos
@@ -1617,17 +1617,17 @@ spec:
         app: ts-notification-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -1635,8 +1635,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-notification-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -1651,9 +1651,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-notification-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - secretRef:
                 name: ts-notification-mysql
@@ -1696,17 +1696,17 @@ spec:
         app: ts-order-other-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -1714,8 +1714,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-order-other-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -1730,9 +1730,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-order-other-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - secretRef:
                 name: ts-order-other-mysql
@@ -1775,17 +1775,17 @@ spec:
         app: ts-order-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -1793,8 +1793,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-order-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -1809,9 +1809,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-order-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - secretRef:
                 name: ts-order-mysql
@@ -1854,17 +1854,17 @@ spec:
         app: ts-payment-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -1872,8 +1872,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-payment-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -1888,9 +1888,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-payment-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - secretRef:
                 name: ts-payment-mysql
@@ -1931,17 +1931,17 @@ spec:
         app: ts-preserve-other-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -1949,8 +1949,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-preserve-other-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -1965,9 +1965,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-preserve-other-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: nacos
@@ -2008,17 +2008,17 @@ spec:
         app: ts-preserve-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -2026,8 +2026,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-preserve-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -2042,9 +2042,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-preserve-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: nacos
@@ -2085,17 +2085,17 @@ spec:
         app: ts-price-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -2103,8 +2103,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-price-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -2119,9 +2119,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-price-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - secretRef:
                 name: ts-price-mysql
@@ -2162,17 +2162,17 @@ spec:
         app: ts-rebook-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -2180,8 +2180,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-rebook-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -2196,9 +2196,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-rebook-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: nacos
@@ -2239,17 +2239,17 @@ spec:
         app: ts-route-plan-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -2257,8 +2257,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-route-plan-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -2273,9 +2273,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-route-plan-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: nacos
@@ -2314,17 +2314,17 @@ spec:
         app: ts-route-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -2332,8 +2332,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-route-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -2348,9 +2348,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-route-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - secretRef:
                 name: ts-route-mysql
@@ -2391,17 +2391,17 @@ spec:
         app: ts-seat-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -2409,8 +2409,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-seat-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -2425,9 +2425,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-seat-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: nacos
@@ -2466,17 +2466,17 @@ spec:
         app: ts-security-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -2484,8 +2484,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-security-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -2500,9 +2500,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-security-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - secretRef:
                 name: ts-security-mysql
@@ -2543,17 +2543,17 @@ spec:
         app: ts-station-food-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -2561,8 +2561,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-station-food-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -2577,9 +2577,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-station-food-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - secretRef:
                 name: ts-station-food-mysql
@@ -2620,17 +2620,17 @@ spec:
         app: ts-station-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -2638,8 +2638,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-station-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -2654,9 +2654,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-station-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - secretRef:
                 name: ts-station-mysql
@@ -2697,17 +2697,17 @@ spec:
         app: ts-ticket-office-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -2715,8 +2715,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-ticket-office-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -2731,9 +2731,9 @@ spec:
 #            - name: SERVICE_JAR
 #              value: "ts-ticket-office-service"
 #            - name: JAVA_TOOL_OPTIONS
-#              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+#              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
 #          command: [ "/bin/sh" ]
-#          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+#          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - secretRef:
                 name: ts-ticket-office-mysql
@@ -2774,17 +2774,17 @@ spec:
         app: ts-train-food-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -2792,8 +2792,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-train-food-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -2808,9 +2808,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-train-food-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - secretRef:
                 name: ts-train-food-mysql
@@ -2851,17 +2851,17 @@ spec:
         app: ts-train-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -2869,8 +2869,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-train-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -2885,9 +2885,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-train-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - secretRef:
                 name: ts-train-mysql
@@ -2928,17 +2928,17 @@ spec:
         app: ts-travel-plan-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -2946,8 +2946,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-travel-plan-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -2962,9 +2962,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-travel-plan-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: nacos
@@ -3003,17 +3003,17 @@ spec:
         app: ts-travel-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -3021,8 +3021,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-travel-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -3037,9 +3037,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-travel-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - secretRef:
                 name: ts-travel-mysql
@@ -3080,17 +3080,17 @@ spec:
         app: ts-travel2-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -3098,8 +3098,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-travel2-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -3114,9 +3114,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-travel2-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - secretRef:
                 name: ts-travel2-mysql
@@ -3157,17 +3157,17 @@ spec:
         app: ts-user-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -3175,8 +3175,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-user-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -3191,9 +3191,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-user-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - secretRef:
                 name: ts-user-mysql
@@ -3234,17 +3234,17 @@ spec:
         app: ts-verification-code-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -3252,8 +3252,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-verification-code-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -3268,9 +3268,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-verification-code-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: nacos
@@ -3359,17 +3359,17 @@ spec:
         app: ts-wait-order-service
     spec:
       volumes:
-        - name: slotel-agent
+        - name: otel-agent
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
+            - name: otel-agent
               mountPath: /agent
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /slotel /agent/" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -3377,8 +3377,8 @@ spec:
           image: containers.github.scch.at/contest/trainticket/ts-wait-order-service:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - name: slotel-agent
-              mountPath: /slotel
+            - name: otel-agent
+              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
@@ -3393,9 +3393,9 @@ spec:
             - name: SERVICE_JAR
               value: "ts-wait-order-service"
             - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/slotel/slotel/opentelemetry-javaagent.jar"
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "mv /slotel/slotel/scch-testAgent.properties /app/; mv /slotel/slotel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "mv /otel/otel/scch-testAgent.properties /app/; mv /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
           envFrom:
             - secretRef:
                 name: ts-wait-order-mysql
