@@ -21,7 +21,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -96,7 +96,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -171,7 +171,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -246,7 +246,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -321,7 +321,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -396,7 +396,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -473,7 +473,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -550,7 +550,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -625,7 +625,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -700,7 +700,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -775,7 +775,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -852,7 +852,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -929,7 +929,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -1006,7 +1006,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -1083,7 +1083,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -1162,7 +1162,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -1237,7 +1237,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -1314,7 +1314,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -1394,7 +1394,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -1469,7 +1469,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -1546,7 +1546,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -1621,7 +1621,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -1700,7 +1700,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -1779,7 +1779,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -1858,7 +1858,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -1935,7 +1935,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -2012,7 +2012,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -2089,7 +2089,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -2166,7 +2166,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -2243,7 +2243,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -2318,7 +2318,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -2395,7 +2395,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -2470,7 +2470,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -2547,7 +2547,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -2624,7 +2624,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -2701,7 +2701,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -2778,7 +2778,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -2855,7 +2855,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -2932,7 +2932,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -3007,7 +3007,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -3084,7 +3084,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -3161,7 +3161,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -3238,7 +3238,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
@@ -3363,7 +3363,7 @@ spec:
           emptyDir: {}
       initContainers:
         - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/slotel:latest
+          image: containers.github.scch.at/contest/trainticket/slotel-agent:latest
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: slotel-agent
