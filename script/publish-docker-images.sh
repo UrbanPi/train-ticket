@@ -17,9 +17,13 @@ for dir in ts-*; do
 done
 
 echo
-echo "Publishing OTEL agent image"
+echo "Publishing OTEL images"
 echo
 
 docker build --push -t containers.github.scch.at/contest/trainticket/slotel:latest ./OTEL/ \
+--label "org.opencontainers.image.source=https://github.scch.at/ConTest/TrainTicket" \
+--label "org.opencontainers.image.url=https://github.scch.at/ConTest/TrainTicket"
+
+docker build --push -t containers.github.scch.at/contest/trainticket/lotel-collector:latest ./OTEL/otel_collector \
 --label "org.opencontainers.image.source=https://github.scch.at/ConTest/TrainTicket" \
 --label "org.opencontainers.image.url=https://github.scch.at/ConTest/TrainTicket"
