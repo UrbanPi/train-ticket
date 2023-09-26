@@ -12,6 +12,7 @@ argNone=1
 argDB=0
 argMonitoring=0
 argTracing=0
+argOTEL=0
 argAll=0
 
 function delete_tt_micro_services {
@@ -51,25 +52,26 @@ function reset {
 
     if [ $argDB == 1 ]; then
       gen_secret_for_services $tsUser $tsPassword $tsDB
-
     else
       gen_secret_for_services $tsUser $tsPassword $tsDB "${tsMysqlName}-mysql-leader"
     fi
 
+
     if [ $argTracing == 1 ]; then
       update_tt_sw_dp_cm $nacosRelease $rabbitmqRelease
       kubectl delete -f deployment/kubernetes-manifests/skywalking -n $namespace
-
+    elif [ $argOTEL == 1 ]; then
+      update_tt_otel_dp_cm $nacosRelease $rabbitmqRelease
+      kubectl delete -f deployment/kubernetes-manifests/otel -n $namespace
     else
       update_tt_dp_cm $nacosRelease $rabbitmqRelease
-
     fi
 
     if [ $argMonitoring == 1 ]; then
       kubectl delete -f deployment/kubernetes-manifests/prometheus -n $namespace
 
     fi
-
+    delete_tt_micro_services
     helm uninstall $rabbitmqRelease -n $namespace
     helm uninstall $nacosRelease -n $namespace
     helm uninstall $nacosDBRelease -n $namespace
@@ -94,12 +96,15 @@ function parse_args {
       "--with-tracing")
         argTracing=1
         ;;
+      "--with-otel")
+        argOTEL=1
+        ;;
       esac
     done
 }
 
 echo "args num: $#"
-if [ $# == 2 && $args != "" ]; then
+if [ $# == 2 ] && [ $args != "" ]; then
   argNone=0
   parse_args $args
 fi

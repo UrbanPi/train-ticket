@@ -56,6 +56,12 @@ function deploy_tracing {
   kubectl apply -f deployment/kubernetes-manifests/skywalking -n $namespace
 }
 
+function deploy_otel_collector {
+  echo "Start deploy otel_collector"
+  namespace=$1
+  kubectl apply -f deployment/kubernetes-manifests/otel -n $namespace
+}
+
 function deploy_tt_mysql_all_in_one {
   namespace=$1
   tsMysqlName="ts-db"

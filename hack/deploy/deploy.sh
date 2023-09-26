@@ -33,7 +33,6 @@ function deploy_all {
   deploy_tt_dp_sw  $namespace
   deploy_tracing  $namespace
   deploy_monitoring
-  deploy_tt_dp_otel $namespace
 }
 
 
@@ -63,6 +62,7 @@ function deploy {
       deploy_tt_dp_sw  $namespace
       deploy_tracing  $namespace
     elif [ $argOTEL == 1 ]; then
+      deploy_otel_collector $namespace
       deploy_tt_dp_otel $namespace
     else
       deploy_tt_dp $namespace

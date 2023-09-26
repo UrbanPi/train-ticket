@@ -32,12 +32,19 @@ publish-image:
 # DeployArgs "--independent-db"    : deploy train-ticket with mysql cluster each service
 # DeployArgs "--with-monitoring"   : deploy train-ticket with prometheus
 # DeployArgs "--with-tracing"      : deploy train-ticket with skywalking
+# DeployArgs "--with-otel"         : deploy train-ticket with otel tracing
 # DeployArgs "--all"               : deploy train-ticket with mysql cluster each service
 .PHONY: deploy
 deploy:
 	@hack/deploy/deploy.sh $(Namespace) "$(DeployArgs)"
 
-# deploy
+# specific reset
+# reset with same semantics as deploy arguments
+.PHONY: reset-specific
+reset-deploy:
+	@hack/deploy/specific-reset.sh $(Namespace) "$(DeployArgs)"
+
+
 .PHONY: reset-deploy
 reset-deploy:
 	@hack/deploy/reset.sh $(Namespace)
