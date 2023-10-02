@@ -42,8 +42,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -117,8 +119,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -192,8 +196,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -267,8 +273,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -342,8 +350,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -417,8 +427,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -494,8 +506,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -646,8 +660,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -721,8 +737,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -796,8 +814,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -873,8 +893,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -950,8 +972,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -1027,8 +1051,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -1104,8 +1130,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -1183,8 +1211,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -1258,8 +1288,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -1335,8 +1367,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -1415,8 +1449,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -1490,8 +1526,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -1642,8 +1680,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -1721,8 +1761,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -1800,8 +1842,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -1879,8 +1923,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -1956,8 +2002,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -2033,8 +2081,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -2110,8 +2160,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -2187,8 +2239,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -2264,8 +2318,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -2339,8 +2395,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -2416,8 +2474,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -2491,8 +2551,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -2568,8 +2630,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -2645,8 +2709,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -2799,8 +2865,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -2876,8 +2944,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -2953,8 +3023,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -3028,8 +3100,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -3105,8 +3179,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -3182,8 +3258,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -3259,8 +3337,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER
@@ -3384,8 +3464,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
             - name: OTEL_TRACES_EXPORTER
-              value: "logging"
+              value: "jaeger"
             - name: DEACT_OTEL_METRICS_EXPORTER
               value: "logging"
             - name: DEACT_OTEL_LOGS_EXPORTER

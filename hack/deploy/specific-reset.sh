@@ -63,6 +63,7 @@ function reset {
     elif [ $argOTEL == 1 ]; then
       update_tt_otel_dp_cm $nacosRelease $rabbitmqRelease
       kubectl delete -f deployment/kubernetes-manifests/otel -n "$namespace"
+      kubectl delete -f deployment/kubernetes-manifests/jaeger -n "$namespace"
     else
       update_tt_dp_cm $nacosRelease $rabbitmqRelease
     fi

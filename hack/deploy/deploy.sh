@@ -63,6 +63,7 @@ function deploy {
       deploy_tracing  $namespace
     elif [ $argOTEL == 1 ]; then
       deploy_otel_collector $namespace
+      deploy_jaeger $namespace
       deploy_tt_dp_otel $namespace
     else
       deploy_tt_dp $namespace

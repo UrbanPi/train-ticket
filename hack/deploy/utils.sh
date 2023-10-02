@@ -62,6 +62,12 @@ function deploy_otel_collector {
   kubectl apply -f deployment/kubernetes-manifests/otel -n $namespace
 }
 
+function deploy_jaeger {
+  echo "Start deploy jaeger"
+  namespace=$1
+  kubectl apply -f deployment/kubernetes-manifests/jaeger -n $namespace
+}
+
 function deploy_tt_mysql_all_in_one {
   namespace=$1
   tsMysqlName="ts-db"
