@@ -7,14 +7,15 @@ on:
         required: false
         type: choice
         description: 'Runner label'
-        default: 'local-runner'
+        default: 'austin'
         options:
           - local-runner
+          - austin
       namespace:
         required: false
         type: text
         description: 'Kubernetes namespace'
-        default: 'myspace'
+        default: ''
       deploy-args:
         required: false
         type: choice
