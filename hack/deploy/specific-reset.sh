@@ -16,8 +16,8 @@ argOTEL=0
 argAll=0
 
 function delete_tt_micro_services {
-    kubectl delete -f deployment/kubernetes-manifests/quickstart-k8s/yamls -n $namespace
-    helm ls -n $namespace | grep ^ts- | awk '{print $1}' | xargs helm uninstall -n $namespace
+    kubectl delete -f deployment/kubernetes-manifests/quickstart-k8s/yamls -n "$namespace"
+    helm ls -n "$namespace" | grep ^ts- | awk '{print $1}' | xargs helm uninstall -n "$namespace"
 }
 
 function quick_end {
@@ -34,8 +34,8 @@ function reset_all {
   update_tt_sw_dp_cm $nacosRelease $rabbitmqRelease
   gen_secret_for_services $tsUser $tsPassword $tsDB
   delete_tt_micro_services
-  kubectl delete -f deployment/kubernetes-manifests/skywalking -n $namespace
-  kubectl delete -f deployment/kubernetes-manifests/prometheus -n $namespace
+  kubectl delete -f deployment/kubernetes-manifests/skywalking -n "$namespace"
+  kubectl delete -f deployment/kubernetes-manifests/prometheus -n "$namespace"
 }
 
 function reset {
@@ -59,22 +59,22 @@ function reset {
 
     if [ $argTracing == 1 ]; then
       update_tt_sw_dp_cm $nacosRelease $rabbitmqRelease
-      kubectl delete -f deployment/kubernetes-manifests/skywalking -n $namespace
+      kubectl delete -f deployment/kubernetes-manifests/skywalking -n "$namespace"
     elif [ $argOTEL == 1 ]; then
       update_tt_otel_dp_cm $nacosRelease $rabbitmqRelease
-      kubectl delete -f deployment/kubernetes-manifests/otel -n $namespace
+      kubectl delete -f deployment/kubernetes-manifests/otel -n "$namespace"
     else
       update_tt_dp_cm $nacosRelease $rabbitmqRelease
     fi
 
     if [ $argMonitoring == 1 ]; then
-      kubectl delete -f deployment/kubernetes-manifests/prometheus -n $namespace
+      kubectl delete -f deployment/kubernetes-manifests/prometheus
 
     fi
     delete_tt_micro_services
-    helm uninstall $rabbitmqRelease -n $namespace
-    helm uninstall $nacosRelease -n $namespace
-    helm uninstall $nacosDBRelease -n $namespace
+    helm uninstall $rabbitmqRelease -n "$namespace"
+    helm uninstall $nacosRelease -n "$namespace"
+    helm uninstall $nacosDBRelease -n "$namespace"
 
 }
 #reset
@@ -82,7 +82,7 @@ function parse_args {
     echo "Parse ResetArgs"
     for arg in $args
     do
-      echo $arg
+      echo "$arg"
       case $arg in
       "--all")
         argAll=1
@@ -104,8 +104,8 @@ function parse_args {
 }
 
 echo "args num: $#"
-if [ $# == 2 ] && [ $args != "" ]; then
+if [ $# == 2 ] && [ "$args" != "" ]; then
   argNone=0
-  parse_args $args
+  parse_args "$args"
 fi
 reset

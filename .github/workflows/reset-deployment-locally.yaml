@@ -1,0 +1,45 @@
+name: Reset deployment on local cluster
+
+on:
+  workflow_dispatch:
+    inputs:
+      chosen-runner:
+        required: false
+        type: choice
+        description: 'Runner label'
+        default: 'austin'
+        options:
+          - local-runner
+          - austin
+      namespace:
+        required: false
+        type: text
+        description: 'Kubernetes namespace'
+        default: ''
+      deploy-args:
+        required: false
+        type: choice
+        description: 'How was it deployed?'
+        default: ''
+        options:
+          -
+          - --independent-db
+          - --with-monitoring
+          - --with-tracing
+          - --with-otel
+          - --independent-db --with-tracing
+          - --independent-db --with-monitoring
+          - --independent-db --with_otel
+          - --with-tracing --with-monitoring
+          - --with-tracing --with-monitoring --with_otel
+          - --all
+jobs:
+  reset-deploy:
+    runs-on: [ self-hosted, "${{ inputs.chosen-runner }}" ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set paths and execute reset script
+        run: |
+          ./hack/deploy/specific-reset.sh "${{ inputs.namespace }}" "${{ inputs.deploy-args }}"
