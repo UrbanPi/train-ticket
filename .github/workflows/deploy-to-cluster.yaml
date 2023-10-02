@@ -31,6 +31,8 @@ on:
           - --independent-db --with-tracing
           - --independent-db --with-monitoring
           - --independent-db --with_otel
+          - --with-otel --with-tracing
+          - --with-otel --with-monitoring
           - --with-tracing --with-monitoring
           - --with-tracing --with-monitoring --with_otel
           - --all
