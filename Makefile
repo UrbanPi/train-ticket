@@ -23,7 +23,7 @@ build-image:
 push-image:
 	@hack/push-image.sh $(Repo)
 
-.PHONY: publish-image
+.PHONY: publish-imreage
 publish-image:
 	@script/publish-docker-images.sh $(Repo) $(Tag)
 
