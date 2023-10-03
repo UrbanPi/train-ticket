@@ -18,8 +18,7 @@ import java.util.Date;
 public class JWTProvider {
 
     private String secretKey = "secret";
-
-    private long validityInMilliseconds = 3600000;
+    private long validityInMilliseconds =   17_280_000; // 48 hours 1000ms * 60 * 60 * 48
 
     @PostConstruct
     protected void init() {
