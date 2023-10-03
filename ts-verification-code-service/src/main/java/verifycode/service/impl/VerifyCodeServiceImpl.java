@@ -28,6 +28,7 @@ import java.util.concurrent.TimeUnit;
 public class VerifyCodeServiceImpl implements VerifyCodeService {
 
     public static final int CAPTCHA_EXPIRED = 1000;
+    public static final int COOKIE_MAX_AGE = 60 * 60 * 48; // 48 hours
     private static final Logger LOGGER = LoggerFactory.getLogger(VerifyCodeServiceImpl.class);
 
     String ysbCaptcha = "YsbCaptcha";
@@ -38,7 +39,7 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
     public Cache<String, String> cacheCode = CacheBuilder.newBuilder()
             // max  size
             .maximumSize(CAPTCHA_EXPIRED)
-            .expireAfterAccess(CAPTCHA_EXPIRED, TimeUnit.SECONDS)
+            .expireAfterAccess(COOKIE_MAX_AGE, TimeUnit.SECONDS)
             .build();
 
     private static char mapTable[] = {
@@ -95,11 +96,11 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
         if (cookie == null) {
             VerifyCodeServiceImpl.LOGGER.warn("[getImageCode][Get image code warn.Cookie not found][Path Info: {}]",request.getPathInfo());
             cookieId = UUID.randomUUID().toString().replace("-", "").toUpperCase();
-            CookieUtil.addCookie(response, ysbCaptcha, cookieId, CAPTCHA_EXPIRED);
+            CookieUtil.addCookie(response, ysbCaptcha, cookieId, COOKIE_MAX_AGE);
         } else {
             if (cookie.getValue() != null) {
                 cookieId = UUID.randomUUID().toString().replace("-", "").toUpperCase();
-                CookieUtil.addCookie(response, ysbCaptcha, cookieId, CAPTCHA_EXPIRED);
+                CookieUtil.addCookie(response, ysbCaptcha, cookieId, COOKIE_MAX_AGE);
             } else {
                 cookieId = cookie.getValue();
             }
@@ -117,7 +118,7 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
         if (cookie == null) {
             VerifyCodeServiceImpl.LOGGER.warn("[verifyCode][Verify code warn][Cookie not found][Path Info: {}]",request.getPathInfo());
             cookieId = UUID.randomUUID().toString().replace("-", "").toUpperCase();
-            CookieUtil.addCookie(response, ysbCaptcha, cookieId, CAPTCHA_EXPIRED);
+            CookieUtil.addCookie(response, ysbCaptcha, cookieId, COOKIE_MAX_AGE);
         } else {
             cookieId = cookie.getValue();
         }
