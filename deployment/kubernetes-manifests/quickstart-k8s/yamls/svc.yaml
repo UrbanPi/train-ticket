@@ -3,9 +3,11 @@ kind: Service
 metadata:
   name: ts-admin-basic-info-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 18767
+      nodePort: 30030
   selector:
     app: ts-admin-basic-info-service
 ---
@@ -14,9 +16,11 @@ kind: Service
 metadata:
   name: ts-admin-order-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 16112
+      nodePort: 30031
   selector:
     app: ts-admin-order-service
 ---
@@ -25,9 +29,11 @@ kind: Service
 metadata:
   name: ts-admin-route-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 16113
+      nodePort: 30032
   selector:
     app: ts-admin-route-service
 ---
@@ -36,9 +42,11 @@ kind: Service
 metadata:
   name: ts-admin-travel-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 16114
+      nodePort: 30033
   selector:
     app: ts-admin-travel-service
 ---
@@ -47,9 +55,11 @@ kind: Service
 metadata:
   name: ts-admin-user-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 16115
+      nodePort: 30034
   selector:
     app: ts-admin-user-service
 ---
@@ -58,9 +68,11 @@ kind: Service
 metadata:
   name: ts-assurance-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 18888
+      nodePort: 30035
   selector:
     app: ts-assurance-service
 ---
@@ -69,9 +81,11 @@ kind: Service
 metadata:
   name: ts-auth-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 12340
+      nodePort: 30036
   selector:
     app: ts-auth-service
 ---
@@ -80,9 +94,11 @@ kind: Service
 metadata:
   name: ts-avatar-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 17001
+      nodePort: 30037
   selector:
     app: ts-avatar-service
 ---
@@ -91,9 +107,11 @@ kind: Service
 metadata:
   name: ts-basic-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 15680
+      nodePort: 30038
   selector:
     app: ts-basic-service
 ---
@@ -102,9 +120,11 @@ kind: Service
 metadata:
   name: ts-cancel-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 18885
+      nodePort: 30039
   selector:
     app: ts-cancel-service
 ---
@@ -113,9 +133,11 @@ kind: Service
 metadata:
   name: ts-config-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 15679
+      nodePort: 30040
   selector:
     app: ts-config-service
 ---
@@ -124,9 +146,11 @@ kind: Service
 metadata:
   name: ts-consign-price-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 16110
+      nodePort: 30041
   selector:
     app: ts-consign-price-service
 ---
@@ -135,9 +159,11 @@ kind: Service
 metadata:
   name: ts-consign-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 16111
+      nodePort: 30042
   selector:
     app: ts-consign-service
 ---
@@ -146,9 +172,11 @@ kind: Service
 metadata:
   name: ts-contacts-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 12347
+      nodePort: 30043
   selector:
     app: ts-contacts-service
 ---
@@ -157,9 +185,11 @@ kind: Service
 metadata:
   name: ts-delivery-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 18808
+      nodePort: 30044
   selector:
     app: ts-delivery-service
 ---
@@ -168,9 +198,11 @@ kind: Service
 metadata:
   name: ts-execute-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 12386
+      nodePort: 30045
   selector:
     app: ts-execute-service
 ---
@@ -179,9 +211,11 @@ kind: Service
 metadata:
   name: ts-food-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 18856
+      nodePort: 30046
   selector:
     app: ts-food-service
 ---
@@ -203,9 +237,11 @@ kind: Service
 metadata:
   name: ts-inside-payment-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 18673
+      nodePort: 30047
   selector:
     app: ts-inside-payment-service
 ---
@@ -214,9 +250,11 @@ kind: Service
 metadata:
   name: ts-news-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 12862
+      nodePort: 30048
   selector:
     app: ts-news-service
 ---
@@ -225,9 +263,11 @@ kind: Service
 metadata:
   name: ts-notification-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 17853
+      nodePort: 30049
   selector:
     app: ts-notification-service
 ---
@@ -236,9 +276,11 @@ kind: Service
 metadata:
   name: ts-order-other-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 12032
+      nodePort: 30050
   selector:
     app: ts-order-other-service
 ---
@@ -247,9 +289,11 @@ kind: Service
 metadata:
   name: ts-order-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 12031
+      nodePort: 30051
   selector:
     app: ts-order-service
 ---
@@ -258,9 +302,11 @@ kind: Service
 metadata:
   name: ts-payment-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 19001
+      nodePort: 30052
   selector:
     app: ts-payment-service
 ---
@@ -269,9 +315,11 @@ kind: Service
 metadata:
   name: ts-preserve-other-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 14569
+      nodePort: 30053
   selector:
     app: ts-preserve-other-service
 ---
@@ -280,9 +328,11 @@ kind: Service
 metadata:
   name: ts-preserve-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 14568
+      nodePort: 30054
   selector:
     app: ts-preserve-service
 ---
@@ -291,9 +341,11 @@ kind: Service
 metadata:
   name: ts-price-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 16579
+      nodePort: 30055
   selector:
     app: ts-price-service
 ---
@@ -302,9 +354,11 @@ kind: Service
 metadata:
   name: ts-rebook-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 18886
+      nodePort: 30056
   selector:
     app: ts-rebook-service
 ---
@@ -313,9 +367,11 @@ kind: Service
 metadata:
   name: ts-route-plan-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 14578
+      nodePort: 30057
   selector:
     app: ts-route-plan-service
 ---
@@ -324,9 +380,11 @@ kind: Service
 metadata:
   name: ts-route-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 11178
+      nodePort: 30058
   selector:
     app: ts-route-service
 ---
@@ -335,9 +393,11 @@ kind: Service
 metadata:
   name: ts-seat-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 18898
+      nodePort: 30059
   selector:
     app: ts-seat-service
 ---
@@ -346,9 +406,11 @@ kind: Service
 metadata:
   name: ts-security-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 11188
+      nodePort: 30060
   selector:
     app: ts-security-service
 ---
@@ -357,9 +419,11 @@ kind: Service
 metadata:
   name: ts-station-food-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 18855
+      nodePort: 30061
   selector:
     app: ts-station-food-service
 ---
@@ -368,9 +432,11 @@ kind: Service
 metadata:
   name: ts-station-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 12345
+      nodePort: 30062
   selector:
     app: ts-station-service
 ---
@@ -379,9 +445,11 @@ kind: Service
 metadata:
   name: ts-ticket-office-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 16108
+      nodePort: 30063
   selector:
     app: ts-ticket-office-service
 ---
@@ -390,9 +458,11 @@ kind: Service
 metadata:
   name: ts-train-food-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 19999
+      nodePort: 30064
   selector:
     app: ts-train-food-service
 ---
@@ -401,9 +471,11 @@ kind: Service
 metadata:
   name: ts-train-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 14567
+      nodePort: 30065
   selector:
     app: ts-train-service
 ---
@@ -412,9 +484,11 @@ kind: Service
 metadata:
   name: ts-travel-plan-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 14322
+      nodePort: 30066
   selector:
     app: ts-travel-plan-service
 ---
@@ -423,9 +497,11 @@ kind: Service
 metadata:
   name: ts-travel-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 12346
+      nodePort: 30067
   selector:
     app: ts-travel-service
 ---
@@ -434,9 +510,11 @@ kind: Service
 metadata:
   name: ts-travel2-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 16346
+      nodePort: 30068
   selector:
     app: ts-travel2-service
 ---
@@ -445,9 +523,11 @@ kind: Service
 metadata:
   name: ts-user-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 12342
+      nodePort: 30069
   selector:
     app: ts-user-service
 ---
@@ -456,9 +536,11 @@ kind: Service
 metadata:
   name: ts-verification-code-service
 spec:
+  type: NodePort
   ports:
     - name: http
       port: 15678
+      nodePort: 30070
   selector:
     app: ts-verification-code-service
 ---
@@ -467,9 +549,13 @@ kind: Service
 metadata:
   name: ts-voucher-service
 spec:
+  type: NodePort
+#  type: NodePort
   ports:
     - name: http
       port: 16101
+      targetPort: 16101
+      nodePort: 30071
   selector:
     app: ts-voucher-service
 ---
