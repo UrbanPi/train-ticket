@@ -21,7 +21,7 @@ spec:
       containers:
         - name: ts-admin-basic-info-service
           image: containers.github.scch.at/contest/trainticket/ts-admin-basic-info-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -69,7 +69,7 @@ spec:
       containers:
         - name: ts-admin-order-service
           image: containers.github.scch.at/contest/trainticket/ts-admin-order-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -117,7 +117,7 @@ spec:
       containers:
         - name: ts-admin-route-service
           image: containers.github.scch.at/contest/trainticket/ts-admin-route-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -165,7 +165,7 @@ spec:
       containers:
         - name: ts-admin-travel-service
           image: containers.github.scch.at/contest/trainticket/ts-admin-travel-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -213,7 +213,7 @@ spec:
       containers:
         - name: ts-admin-user-service
           image: containers.github.scch.at/contest/trainticket/ts-admin-user-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -261,7 +261,7 @@ spec:
       containers:
         - name: ts-assurance-service
           image: containers.github.scch.at/contest/trainticket/ts-assurance-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -311,7 +311,7 @@ spec:
       containers:
         - name: ts-auth-service
           image: containers.github.scch.at/contest/trainticket/ts-auth-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -361,7 +361,7 @@ spec:
       containers:
         - name: ts-avatar-service
           image: containers.github.scch.at/contest/trainticket/ts-avatar-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -409,7 +409,7 @@ spec:
       containers:
         - name: ts-basic-service
           image: containers.github.scch.at/contest/trainticket/ts-basic-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -457,7 +457,7 @@ spec:
       containers:
         - name: ts-cancel-service
           image: containers.github.scch.at/contest/trainticket/ts-cancel-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -505,7 +505,7 @@ spec:
       containers:
         - name: ts-config-service
           image: containers.github.scch.at/contest/trainticket/ts-config-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -555,7 +555,7 @@ spec:
       containers:
         - name: ts-consign-price-service
           image: containers.github.scch.at/contest/trainticket/ts-consign-price-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -605,7 +605,7 @@ spec:
       containers:
         - name: ts-consign-service
           image: containers.github.scch.at/contest/trainticket/ts-consign-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -655,7 +655,7 @@ spec:
       containers:
         - name: ts-contacts-service
           image: containers.github.scch.at/contest/trainticket/ts-contacts-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -705,7 +705,7 @@ spec:
       containers:
         - name: ts-delivery-service
           image: containers.github.scch.at/contest/trainticket/ts-delivery-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -757,7 +757,7 @@ spec:
       containers:
         - name: ts-execute-service
           image: containers.github.scch.at/contest/trainticket/ts-execute-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -805,7 +805,7 @@ spec:
       containers:
         - name: ts-food-service
           image: containers.github.scch.at/contest/trainticket/ts-food-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -857,7 +857,7 @@ spec:
       containers:
         - name: ts-food-delivery-service
           image: containers.github.scch.at/contest/trainticket/ts-food-delivery-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -908,7 +908,7 @@ spec:
       containers:
         - name: ts-gateway-service
           image: containers.github.scch.at/contest/trainticket/ts-gateway-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -956,7 +956,7 @@ spec:
       containers:
         - name: ts-inside-payment-service
           image: containers.github.scch.at/contest/trainticket/ts-inside-payment-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -1006,7 +1006,7 @@ spec:
       containers:
         - name: ts-news-service
           image: containers.github.scch.at/contest/trainticket/ts-news-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -1054,7 +1054,7 @@ spec:
       containers:
         - name: ts-notification-service
           image: containers.github.scch.at/contest/trainticket/ts-notification-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -1106,7 +1106,7 @@ spec:
       containers:
         - name: ts-order-other-service
           image: containers.github.scch.at/contest/trainticket/ts-order-other-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -1158,7 +1158,7 @@ spec:
       containers:
         - name: ts-order-service
           image: containers.github.scch.at/contest/trainticket/ts-order-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -1210,7 +1210,7 @@ spec:
       containers:
         - name: ts-payment-service
           image: containers.github.scch.at/contest/trainticket/ts-payment-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -1260,7 +1260,7 @@ spec:
       containers:
         - name: ts-preserve-other-service
           image: containers.github.scch.at/contest/trainticket/ts-preserve-other-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -1310,7 +1310,7 @@ spec:
       containers:
         - name: ts-preserve-service
           image: containers.github.scch.at/contest/trainticket/ts-preserve-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -1360,7 +1360,7 @@ spec:
       containers:
         - name: ts-price-service
           image: containers.github.scch.at/contest/trainticket/ts-price-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -1410,7 +1410,7 @@ spec:
       containers:
         - name: ts-rebook-service
           image: containers.github.scch.at/contest/trainticket/ts-rebook-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -1460,7 +1460,7 @@ spec:
       containers:
         - name: ts-route-plan-service
           image: containers.github.scch.at/contest/trainticket/ts-route-plan-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -1508,7 +1508,7 @@ spec:
       containers:
         - name: ts-route-service
           image: containers.github.scch.at/contest/trainticket/ts-route-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -1558,7 +1558,7 @@ spec:
       containers:
         - name: ts-seat-service
           image: containers.github.scch.at/contest/trainticket/ts-seat-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -1606,7 +1606,7 @@ spec:
       containers:
         - name: ts-security-service
           image: containers.github.scch.at/contest/trainticket/ts-security-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -1656,7 +1656,7 @@ spec:
       containers:
         - name: ts-station-food-service
           image: containers.github.scch.at/contest/trainticket/ts-station-food-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -1706,7 +1706,7 @@ spec:
       containers:
         - name: ts-station-service
           image: containers.github.scch.at/contest/trainticket/ts-station-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -1756,7 +1756,7 @@ spec:
       containers:
         - name: ts-ticket-office-service
           image: containers.github.scch.at/contest/trainticket/ts-ticket-office-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -1806,7 +1806,7 @@ spec:
       containers:
         - name: ts-train-food-service
           image: containers.github.scch.at/contest/trainticket/ts-train-food-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -1856,7 +1856,7 @@ spec:
       containers:
         - name: ts-train-service
           image: containers.github.scch.at/contest/trainticket/ts-train-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -1906,7 +1906,7 @@ spec:
       containers:
         - name: ts-travel-plan-service
           image: containers.github.scch.at/contest/trainticket/ts-travel-plan-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -1954,7 +1954,7 @@ spec:
       containers:
         - name: ts-travel-service
           image: containers.github.scch.at/contest/trainticket/ts-travel-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -2004,7 +2004,7 @@ spec:
       containers:
         - name: ts-travel2-service
           image: containers.github.scch.at/contest/trainticket/ts-travel2-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -2054,7 +2054,7 @@ spec:
       containers:
         - name: ts-user-service
           image: containers.github.scch.at/contest/trainticket/ts-user-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -2104,7 +2104,7 @@ spec:
       containers:
         - name: ts-verification-code-service
           image: containers.github.scch.at/contest/trainticket/ts-verification-code-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -2152,7 +2152,7 @@ spec:
       containers:
         - name: ts-voucher-service
           image: containers.github.scch.at/contest/trainticket/ts-voucher-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -2202,7 +2202,7 @@ spec:
       containers:
         - name: ts-wait-order-service
           image: containers.github.scch.at/contest/trainticket/ts-wait-order-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: NODE_IP
               valueFrom:
@@ -2253,7 +2253,7 @@ spec:
       containers:
         - name: ts-ui-dashboard
           image: containers.github.scch.at/contest/trainticket/ts-ui-dashboard:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           resources:

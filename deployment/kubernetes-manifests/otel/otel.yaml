@@ -21,7 +21,7 @@ spec:
       containers:
         - name: otel-collector
           image: containers.github.scch.at/contest/trainticket/otel-collector:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           command: [ "/bin/sh" ]
           args: [ "-c", 'cd /otel/; java -jar TraceCollector-1.0.jar -t traces.txt -m PUSH -p 4242 -f "\"http.status_code\":2"' ]
           ports:
