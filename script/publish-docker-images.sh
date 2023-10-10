@@ -2,28 +2,16 @@
 set -eux
 
 echo
-echo "Publishing images, Repo: $1, Tag: $2"
+echo "Publishing images, Repo: $1, Tag: error-f1"
 echo
 for dir in ts-*; do
     if [[ -d $dir ]]; then
         if [[ -n $(ls "$dir" | grep -i Dockerfile) ]]; then
             echo "build ${dir}"
 	    # Must use `buildx` as docker build tool
-            docker build --push -t "$1"/"${dir}":"$2" "$dir"\
+            docker build --push -t "$1"/"${dir}":error-f1 "$dir"\
             --label "org.opencontainers.image.source=https://github.scch.at/ConTest/TrainTicket" \
             --label "org.opencontainers.image.url=https://github.scch.at/ConTest/TrainTicket"
         fi
     fi
 done
-
-echo
-echo "Publishing OTEL images"
-echo
-
-docker build --push -t containers.github.scch.at/contest/trainticket/otel-agent:latest ./OTEL/otel_agent \
---label "org.opencontainers.image.source=https://github.scch.at/ConTest/TrainTicket" \
---label "org.opencontainers.image.url=https://github.scch.at/ConTest/TrainTicket"
-
-docker build --push -t containers.github.scch.at/contest/trainticket/otel-collector:latest ./OTEL/otel_collector \
---label "org.opencontainers.image.source=https://github.scch.at/ConTest/TrainTicket" \
---label "org.opencontainers.image.url=https://github.scch.at/ConTest/TrainTicket"
