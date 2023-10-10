@@ -1,4 +1,1 @@
-OTEL/otel_agent/javax.servlet-api-4.0.1.jar filter=lfs diff=lfs merge=lfs -text
-OTEL/otel_agent/opentelemetry-javaagent.jar filter=lfs diff=lfs merge=lfs -text
-
-OTEL/otel_collector/TraceCollector-1.0.jar filter=lfs diff=lfs merge=lfs -text
+*.jar filter=lfs diff=lfs merge=lfs -text
