@@ -99,10 +99,10 @@ function update_tt_otel_dp_cm {
 
   cp $otel_dp_sample_yaml $otel_dp_yaml
   if [ "$(uname)" = "Darwin" ]; then
-    sed -i "" "s/nacos/${nacosCM}/g" $sw_dp_yaml
-    sed -i "" "s/rabbitmq/${rabbitmqCM}/g" $sw_dp_yaml
+    sed -i "" "s/nacos/${nacosCM}/g" $otel_dp_yaml
+    sed -i "" "s/rabbitmq/${rabbitmqCM}/g" $otel_dp_yaml
   else
-    sed -i "s/nacos/${nacosCM}/g" $sw_dp_yaml
-    sed -i "s/rabbitmq/${rabbitmqCM}/g" $sw_dp_yaml
+    sed -i "s/nacos/${nacosCM}/g" $otel_dp_yaml
+    sed -i "s/rabbitmq/${rabbitmqCM}/g" $otel_dp_yaml
   fi
 }
