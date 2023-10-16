@@ -43,7 +43,7 @@ function deploy_infrastructures {
   echo "Waiting for rabbitmq to be ready ......"
   kubectl rollout status deployment/$rabbitmqRelease -n $namespace
   echo "Deploying mongo DBs ..."
-  kubectl apply -f deployment/kubernetes-manifests/quickstart-k8s/mongo-dbs.yml
+  kubectl apply -f deployment/kubernetes-manifests/quickstart-k8s/yamls/mongo-dbs.yml
   echo "End deployment Step <1/3>--------------------------------------"
 
 }
