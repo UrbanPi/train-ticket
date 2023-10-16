@@ -3178,7 +3178,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-ticketinfo-service
-          image: containers.github.scch.at/contest/trainticket/ts-ticketinfo-service:error-F1
+          image: containers.github.scch.at/contest/trainticket/ts-ticketinfo-service:error-f1
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -3257,7 +3257,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-food-map-service
-          image: containers.github.scch.at/contest/trainticket/ts-food-map-service:error-F1
+          image: containers.github.scch.at/contest/trainticket/ts-food-map-service:error-f1
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
