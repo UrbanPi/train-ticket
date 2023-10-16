@@ -17,25 +17,21 @@ argAll=0
 
 function delete_tt_micro_services {
     kubectl delete -f deployment/kubernetes-manifests/quickstart-k8s/yamls -n "$namespace"
-    helm ls -n "$namespace" | grep ^ts- | awk '{print $1}' | xargs helm uninstall -n "$namespace"
 }
 
 function quick_end {
   echo "quick end"
-  tsMysqlName="ts-db"
-
   update_tt_dp_cm $nacosRelease $rabbitmqRelease
-  gen_secret_for_services $tsUser $tsPassword $tsDB "${tsMysqlName}-mysql-leader"
   delete_tt_micro_services
 
 }
 
 function reset_all {
-  update_tt_sw_dp_cm $nacosRelease $rabbitmqRelease
-  gen_secret_for_services $tsUser $tsPassword $tsDB
-  delete_tt_micro_services
-  kubectl delete -f deployment/kubernetes-manifests/skywalking -n "$namespace"
+  update_tt_otel_dp_cm $nacosRelease $rabbitmqRelease
+  kubectl delete -f deployment/kubernetes-manifests/otel -n "$namespace"
+  kubectl delete -f deployment/kubernetes-manifests/jaeger -n "$namespace"
   kubectl delete -f deployment/kubernetes-manifests/prometheus -n "$namespace"
+  delete_tt_micro_services
 }
 
 function reset {
@@ -50,17 +46,8 @@ function reset {
       exit $?
     fi
 
-    if [ $argDB == 1 ]; then
-      gen_secret_for_services $tsUser $tsPassword $tsDB
-    else
-      gen_secret_for_services $tsUser $tsPassword $tsDB "${tsMysqlName}-mysql-leader"
-    fi
 
-
-    if [ $argTracing == 1 ]; then
-      update_tt_sw_dp_cm $nacosRelease $rabbitmqRelease
-      kubectl delete -f deployment/kubernetes-manifests/skywalking -n "$namespace"
-    elif [ $argOTEL == 1 ]; then
+    if [ $argOTEL == 1 ]; then
       update_tt_otel_dp_cm $nacosRelease $rabbitmqRelease
       kubectl delete -f deployment/kubernetes-manifests/otel -n "$namespace"
       kubectl delete -f deployment/kubernetes-manifests/jaeger -n "$namespace"
@@ -74,8 +61,6 @@ function reset {
     fi
     delete_tt_micro_services
     helm uninstall $rabbitmqRelease -n "$namespace"
-    helm uninstall $nacosRelease -n "$namespace"
-    helm uninstall $nacosDBRelease -n "$namespace"
 
 }
 #reset
@@ -88,14 +73,8 @@ function parse_args {
       "--all")
         argAll=1
         ;;
-      "--independent-db")
-        argDB=1
-        ;;
       "--with-monitoring")
         argMonitoring=1
-        ;;
-      "--with-tracing")
-        argTracing=1
         ;;
       "--with-otel")
         argOTEL=1
