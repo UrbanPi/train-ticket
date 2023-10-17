@@ -1,3 +1,6 @@
+#!/usr/bin/env bash
+set -eux
+
 echo
 echo "Publishing OTEL images"
 echo
