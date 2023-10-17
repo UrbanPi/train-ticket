@@ -16,7 +16,7 @@ jobs:
     runs-on: [ self-hosted, "${{ inputs.chosen-runner }}" ]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
         with:
           lfs: 'true'
       - name: Login to GitHub Container Registry
