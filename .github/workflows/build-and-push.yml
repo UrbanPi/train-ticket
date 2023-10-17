@@ -55,6 +55,3 @@ jobs:
 
       - name: Push build images to container registry
         run: ./script/publish-docker-images.sh containers.github.scch.at/contest/trainticket
-
-      - name: Push otel images to container registry
-        run: ./OTEL/publish-otel-images.sh
