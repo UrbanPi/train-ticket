@@ -1,0 +1,24 @@
+﻿
+Setup System:
+
+1. Use docker-compose to setup the TrainTicket system.
+
+
+Failure Triggering Usage Steps:
+
+1. Log in.
+2. Click [Flow One - Ticket Reserve].
+3. Select date and click [Search].
+4. Select one Train-Number and click [Book].
+5. Select one contacts and click [Select].
+6. Click [Confirm Ticket].
+7. Click [Pay].
+8. If the result returns after an acceptable time period, it is succeeded. 
+   But if the response time is very long, then it fails and the fault occurs.
+
+
+Failure Triggering Test Case:
+
+There is only one test case in ts-ui-test, named [TestFlowOne.java].
+Just run it and it will do as failure triggering usage steps mentioned above.
+
