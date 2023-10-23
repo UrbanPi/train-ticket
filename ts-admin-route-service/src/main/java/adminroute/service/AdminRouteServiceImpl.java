@@ -1,71 +1,85 @@
 package adminroute.service;
 
-import adminroute.entity.Route;
-import adminroute.entity.RouteInfo;
-import edu.fudan.common.util.Response;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import adminroute.domain.bean.CreateAndModifyRouteInfo;
+import adminroute.domain.bean.DeleteRouteInfo;
+import adminroute.domain.request.CreateAndModifyRouteRequest;
+import adminroute.domain.request.DeleteRouteRequest;
+import adminroute.domain.response.CreateAndModifyRouteResult;
+import adminroute.domain.response.DeleteRouteResult;
+import adminroute.domain.response.GetRoutesListlResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-/**
- * @author fdse
- */
 @Service
 public class AdminRouteServiceImpl implements AdminRouteService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public static final Logger logger = LoggerFactory.getLogger(AdminRouteServiceImpl.class);
-
     @Override
-    public Response getAllRoutes(HttpHeaders headers) {
-
-        HttpEntity requestEntity = new HttpEntity(null);
-        ResponseEntity<Response> re = restTemplate.exchange(
-                "http://ts-route-service:11178/api/v1/routeservice/routes",
-                HttpMethod.GET,
-                requestEntity,
-                Response.class);
-        if (re.getStatusCode() != HttpStatus.ACCEPTED) {
-            logger.error("Get routes error, response code: {}", re.getStatusCodeValue());
+    public GetRoutesListlResult getAllRoutes(String id) {
+        if(checkId(id)){
+            GetRoutesListlResult result = restTemplate.getForObject(
+                    "https://ts-route-service:11178/route/queryAll",
+                    GetRoutesListlResult.class);
+            return result;
+        }else {
+            System.out.println("[Admin Route Service][Wrong Admin ID]");
+            GetRoutesListlResult result = new GetRoutesListlResult();
+            result.setStatus(false);
+            result.setMessage("The loginId is Wrong: " + id);
+            result.setRoutes(null);
+            return result;
         }
-        return re.getBody();
-
     }
 
     @Override
-    public Response createAndModifyRoute(RouteInfo request, HttpHeaders headers) {
-
-        HttpEntity requestEntity = new HttpEntity(request, null);
-        ResponseEntity<Response<Route>> re = restTemplate.exchange(
-                "http://ts-route-service:11178/api/v1/routeservice/routes",
-                HttpMethod.POST,
-                requestEntity,
-                new ParameterizedTypeReference<Response<Route>>() {
-                });
-        if (re.getStatusCode() != HttpStatus.ACCEPTED) {
-            logger.error("Get status error, response code: {}", re.getStatusCodeValue());
+    public CreateAndModifyRouteResult createAndModifyRoute(CreateAndModifyRouteRequest request) {
+        if(checkId(request.getLoginId())){
+            CreateAndModifyRouteInfo createAndModifyRouteInfo = new CreateAndModifyRouteInfo();
+            createAndModifyRouteInfo.setId(request.getId());
+            createAndModifyRouteInfo.setStationList(request.getStationList());
+            createAndModifyRouteInfo.setDistanceList(request.getDistanceList());
+            createAndModifyRouteInfo.setStartStation(request.getStartStation());
+            createAndModifyRouteInfo.setEndStation(request.getEndStation());
+            CreateAndModifyRouteResult result = restTemplate.postForObject(
+                    "https://ts-route-service:11178/route/createAndModify", createAndModifyRouteInfo,CreateAndModifyRouteResult.class);
+            return result;
         }
-        return re.getBody();
+        else {
+            System.out.println("[Admin Route Service][Wrong Admin ID]");
+            CreateAndModifyRouteResult result = new CreateAndModifyRouteResult();
+            result.setStatus(false);
+            result.setMessage("The loginId is Wrong: " + request.getLoginId());
+            result.setRoute(null);
+            return result;
+        }
     }
 
     @Override
-    public Response deleteRoute(String routeId, HttpHeaders headers) {
-
-        HttpEntity requestEntity = new HttpEntity(null);
-        ResponseEntity<Response> re = restTemplate.exchange(
-                "http://ts-route-service:11178/api/v1/routeservice/routes/" + routeId,
-                HttpMethod.DELETE,
-                requestEntity,
-                Response.class);
-        if (re.getStatusCode() != HttpStatus.ACCEPTED) {
-            logger.error("Delete error, response code: {}", re.getStatusCodeValue());
+    public DeleteRouteResult deleteRoute(DeleteRouteRequest request) {
+        if(checkId(request.getLoginId())){
+            DeleteRouteInfo deleteRouteInfo = new DeleteRouteInfo();
+            deleteRouteInfo.setRouteId(request.getRouteId());
+            DeleteRouteResult result = restTemplate.postForObject(
+                    "https://ts-route-service:11178/route/delete", deleteRouteInfo,DeleteRouteResult.class);
+            return result;
         }
-        return re.getBody();
+        else {
+            System.out.println("[Admin Route Service][Wrong Admin ID]");
+            DeleteRouteResult result = new DeleteRouteResult();
+            result.setStatus(false);
+            result.setMessage("The loginId is Wrong: " + request.getLoginId());
+            return result;
+        }
+    }
 
+    private boolean checkId(String id){
+        if("1d1a11c1-11cb-1cf1-b1bb-b11111d1da1f".equals(id)){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

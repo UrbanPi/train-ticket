@@ -5,8 +5,7 @@ server:
 spring:
   application:
     name: ts-rebook-service
-swagger:
-  controllerPackage: rebook.controller
+
 #  rabbitmq:
 #    host: rabbitmq
 #    listener:
@@ -17,6 +16,12 @@ swagger:
 #      retry:
 #        enabled: false
 #        max-attempts: 1
+
+  zipkin:
+    baseUrl: http://zipkin:9411/
+  sleuth:
+    sampler:
+      percentage: 1.0
 
 #  cloud:
 #    stream:

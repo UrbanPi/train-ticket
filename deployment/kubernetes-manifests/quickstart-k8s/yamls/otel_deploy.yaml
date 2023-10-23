@@ -462,85 +462,85 @@ spec:
             periodSeconds: 10
             timeoutSeconds: 5
 ---
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: ts-auth-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
-spec:
-  selector:
-    matchLabels:
-      app: ts-auth-service
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-auth-service
-        app: ts-auth-service
-    spec:
-      volumes:
-        - name: otel-agent
-          emptyDir: {}
-      initContainers:
-        - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
-          imagePullPolicy: Always
-          volumeMounts:
-            - name: otel-agent
-              mountPath: /agent
-          command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /otel /agent/" ]
-      imagePullSecrets:
-        - name: conregscch
-      containers:
-        - name: ts-auth-service
-          image: containers.github.scch.at/contest/trainticket/ts-auth-service:error-f4
-          imagePullPolicy: Always
-          volumeMounts:
-            - name: otel-agent
-              mountPath: /otel
-          env:
-            - name: NODE_IP
-              valueFrom:
-                fieldRef:
-                  fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
-            - name: SERVICE_JAR
-              value: "ts-auth-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
-          command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
-          #          envFrom:
-          #            - secretRef:
-          #                name: ts-auth-mysql
-          #            - configMapRef:
-          #                name: nacos
-          ports:
-            - containerPort: 12340
-          resources:
-            requests:
-              cpu: 100m
-              memory: 250Mi
-            limits:
-              cpu: 500m
-              memory: 500Mi
-          readinessProbe:
-            tcpSocket:
-              port: 12340
-            initialDelaySeconds: 60
-            periodSeconds: 10
-            timeoutSeconds: 5
----
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: ts-auth-service
+#  labels:
+#    hpc.scch.at/responsibility: urbanke
+#spec:
+#  selector:
+#    matchLabels:
+#      app: ts-auth-service
+#  replicas: 1
+#  template:
+#    metadata:
+#      labels:
+#        hpc.scch.at/responsibility: urbanke
+#        # hpc.scch.at/service: ts-auth-service
+#        app: ts-auth-service
+#    spec:
+#      volumes:
+#        - name: otel-agent
+#          emptyDir: {}
+#      initContainers:
+#        - name: agent-container
+#          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
+#          imagePullPolicy: Always
+#          volumeMounts:
+#            - name: otel-agent
+#              mountPath: /agent
+#          command: [ "/bin/sh" ]
+#          args: [ "-c", "cp -R /otel /agent/" ]
+#      imagePullSecrets:
+#        - name: conregscch
+#      containers:
+#        - name: ts-auth-service
+#          image: containers.github.scch.at/contest/trainticket/ts-auth-service:error-f4
+#          imagePullPolicy: Always
+#          volumeMounts:
+#            - name: otel-agent
+#              mountPath: /otel
+#          env:
+#            - name: NODE_IP
+#              valueFrom:
+#                fieldRef:
+#                  fieldPath: status.hostIP
+#            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+#              value: "http://jaeger:14250"
+#            - name: OTEL_TRACES_EXPORTER
+#              value: "jaeger"
+#            - name: DEACT_OTEL_METRICS_EXPORTER
+#              value: "logging"
+#            - name: DEACT_OTEL_LOGS_EXPORTER
+#              value: "logging"
+#            - name: SERVICE_JAR
+#              value: "ts-auth-service"
+#            - name: JAVA_TOOL_OPTIONS
+#              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+#          command: [ "/bin/sh" ]
+#          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+#          #          envFrom:
+#          #            - secretRef:
+#          #                name: ts-auth-mysql
+#          #            - configMapRef:
+#          #                name: nacos
+#          ports:
+#            - containerPort: 12340
+#          resources:
+#            requests:
+#              cpu: 100m
+#              memory: 250Mi
+#            limits:
+#              cpu: 500m
+#              memory: 500Mi
+#          readinessProbe:
+#            tcpSocket:
+#              port: 12340
+#            initialDelaySeconds: 60
+#            periodSeconds: 10
+#            timeoutSeconds: 5
+#---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -1015,89 +1015,89 @@ spec:
             periodSeconds: 10
             timeoutSeconds: 5
 ---
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: ts-delivery-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
-spec:
-  selector:
-    matchLabels:
-      app: ts-delivery-service
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-delivery-service
-        app: ts-delivery-service
-    spec:
-      volumes:
-        - name: otel-agent
-          emptyDir: {}
-      initContainers:
-        - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
-          imagePullPolicy: Always
-          volumeMounts:
-            - name: otel-agent
-              mountPath: /agent
-          command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /otel /agent/" ]
-      imagePullSecrets:
-        - name: conregscch
-      containers:
-        - name: ts-delivery-service
-          image: containers.github.scch.at/contest/trainticket/ts-delivery-service:error-f4
-          imagePullPolicy: Always
-          volumeMounts:
-            - name: otel-agent
-              mountPath: /otel
-          env:
-            - name: NODE_IP
-              valueFrom:
-                fieldRef:
-                  fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
-            - name: SERVICE_JAR
-              value: "ts-delivery-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
-            - name: rabbitmq_port
-              value: "5672"
-          command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
-          envFrom:
-            #            - secretRef:
-            #                name: ts-delivery-mysql
-            #            - configMapRef:
-            #                name: nacos
-            - configMapRef:
-                name: rabbitmq
-          ports:
-            - containerPort: 18808
-          resources:
-            requests:
-              cpu: 100m
-              memory: 250Mi
-            limits:
-              cpu: 500m
-              memory: 500Mi
-          readinessProbe:
-            tcpSocket:
-              port: 18808
-            initialDelaySeconds: 60
-            periodSeconds: 10
-            timeoutSeconds: 5
----
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: ts-delivery-service
+#  labels:
+#    hpc.scch.at/responsibility: urbanke
+#spec:
+#  selector:
+#    matchLabels:
+#      app: ts-delivery-service
+#  replicas: 1
+#  template:
+#    metadata:
+#      labels:
+#        hpc.scch.at/responsibility: urbanke
+#        # hpc.scch.at/service: ts-delivery-service
+#        app: ts-delivery-service
+#    spec:
+#      volumes:
+#        - name: otel-agent
+#          emptyDir: {}
+#      initContainers:
+#        - name: agent-container
+#          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
+#          imagePullPolicy: Always
+#          volumeMounts:
+#            - name: otel-agent
+#              mountPath: /agent
+#          command: [ "/bin/sh" ]
+#          args: [ "-c", "cp -R /otel /agent/" ]
+#      imagePullSecrets:
+#        - name: conregscch
+#      containers:
+#        - name: ts-delivery-service
+#          image: containers.github.scch.at/contest/trainticket/ts-delivery-service:error-f4
+#          imagePullPolicy: Always
+#          volumeMounts:
+#            - name: otel-agent
+#              mountPath: /otel
+#          env:
+#            - name: NODE_IP
+#              valueFrom:
+#                fieldRef:
+#                  fieldPath: status.hostIP
+#            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+#              value: "http://jaeger:14250"
+#            - name: OTEL_TRACES_EXPORTER
+#              value: "jaeger"
+#            - name: DEACT_OTEL_METRICS_EXPORTER
+#              value: "logging"
+#            - name: DEACT_OTEL_LOGS_EXPORTER
+#              value: "logging"
+#            - name: SERVICE_JAR
+#              value: "ts-delivery-service"
+#            - name: JAVA_TOOL_OPTIONS
+#              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+#            - name: rabbitmq_port
+#              value: "5672"
+#          command: [ "/bin/sh" ]
+#          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+#          envFrom:
+#            #            - secretRef:
+#            #                name: ts-delivery-mysql
+#            #            - configMapRef:
+#            #                name: nacos
+#            - configMapRef:
+#                name: rabbitmq
+#          ports:
+#            - containerPort: 18808
+#          resources:
+#            requests:
+#              cpu: 100m
+#              memory: 250Mi
+#            limits:
+#              cpu: 500m
+#              memory: 500Mi
+#          readinessProbe:
+#            tcpSocket:
+#              port: 18808
+#            initialDelaySeconds: 60
+#            periodSeconds: 10
+#            timeoutSeconds: 5
+#---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -2842,85 +2842,85 @@ spec:
             periodSeconds: 10
             timeoutSeconds: 5
 ---
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: ts-user-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
-spec:
-  selector:
-    matchLabels:
-      app: ts-user-service
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-user-service
-        app: ts-user-service
-    spec:
-      volumes:
-        - name: otel-agent
-          emptyDir: {}
-      initContainers:
-        - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
-          imagePullPolicy: Always
-          volumeMounts:
-            - name: otel-agent
-              mountPath: /agent
-          command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /otel /agent/" ]
-      imagePullSecrets:
-        - name: conregscch
-      containers:
-        - name: ts-user-service
-          image: containers.github.scch.at/contest/trainticket/ts-user-service:error-f4
-          imagePullPolicy: Always
-          volumeMounts:
-            - name: otel-agent
-              mountPath: /otel
-          env:
-            - name: NODE_IP
-              valueFrom:
-                fieldRef:
-                  fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
-            - name: SERVICE_JAR
-              value: "ts-user-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
-          command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
-          #          envFrom:
-          #            - secretRef:
-          #                name: ts-user-mysql
-          #            - configMapRef:
-          #                name: nacos
-          ports:
-            - containerPort: 12342
-          resources:
-            requests:
-              cpu: 100m
-              memory: 250Mi
-            limits:
-              cpu: 500m
-              memory: 500Mi
-          readinessProbe:
-            tcpSocket:
-              port: 12342
-            initialDelaySeconds: 60
-            periodSeconds: 10
-            timeoutSeconds: 5
----
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: ts-user-service
+#  labels:
+#    hpc.scch.at/responsibility: urbanke
+#spec:
+#  selector:
+#    matchLabels:
+#      app: ts-user-service
+#  replicas: 1
+#  template:
+#    metadata:
+#      labels:
+#        hpc.scch.at/responsibility: urbanke
+#        # hpc.scch.at/service: ts-user-service
+#        app: ts-user-service
+#    spec:
+#      volumes:
+#        - name: otel-agent
+#          emptyDir: {}
+#      initContainers:
+#        - name: agent-container
+#          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
+#          imagePullPolicy: Always
+#          volumeMounts:
+#            - name: otel-agent
+#              mountPath: /agent
+#          command: [ "/bin/sh" ]
+#          args: [ "-c", "cp -R /otel /agent/" ]
+#      imagePullSecrets:
+#        - name: conregscch
+#      containers:
+#        - name: ts-user-service
+#          image: containers.github.scch.at/contest/trainticket/ts-user-service:error-f4
+#          imagePullPolicy: Always
+#          volumeMounts:
+#            - name: otel-agent
+#              mountPath: /otel
+#          env:
+#            - name: NODE_IP
+#              valueFrom:
+#                fieldRef:
+#                  fieldPath: status.hostIP
+#            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+#              value: "http://jaeger:14250"
+#            - name: OTEL_TRACES_EXPORTER
+#              value: "jaeger"
+#            - name: DEACT_OTEL_METRICS_EXPORTER
+#              value: "logging"
+#            - name: DEACT_OTEL_LOGS_EXPORTER
+#              value: "logging"
+#            - name: SERVICE_JAR
+#              value: "ts-user-service"
+#            - name: JAVA_TOOL_OPTIONS
+#              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+#          command: [ "/bin/sh" ]
+#          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+#          #          envFrom:
+#          #            - secretRef:
+#          #                name: ts-user-mysql
+#          #            - configMapRef:
+#          #                name: nacos
+#          ports:
+#            - containerPort: 12342
+#          resources:
+#            requests:
+#              cpu: 100m
+#              memory: 250Mi
+#            limits:
+#              cpu: 500m
+#              memory: 500Mi
+#          readinessProbe:
+#            tcpSocket:
+#              port: 12342
+#            initialDelaySeconds: 60
+#            periodSeconds: 10
+#            timeoutSeconds: 5
+#---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -2998,56 +2998,56 @@ spec:
             periodSeconds: 10
             timeoutSeconds: 5
 ---
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: ts-voucher-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
-spec:
-  selector:
-    matchLabels:
-      app: ts-voucher-service
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-voucher-service
-        app: ts-voucher-service
-    spec:
-      imagePullSecrets:
-        - name: conregscch
-      containers:
-        - name: ts-voucher-service
-          image: containers.github.scch.at/contest/trainticket/ts-voucher-service:error-f4
-          imagePullPolicy: Always
-          env:
-            - name: NODE_IP
-              valueFrom:
-                fieldRef:
-                  fieldPath: status.hostIP
-          #          envFrom:
-          #            - secretRef:
-          #                name: ts-voucher-mysql
-          #            - configMapRef:
-          #                name: nacos
-          ports:
-            - containerPort: 16101
-          resources:
-            requests:
-              cpu: 100m
-              memory: 250Mi
-            limits:
-              cpu: 500m
-              memory: 500Mi
-          readinessProbe:
-            tcpSocket:
-              port: 16101
-            initialDelaySeconds: 60
-            periodSeconds: 10
-            timeoutSeconds: 5
----
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: ts-voucher-service
+#  labels:
+#    hpc.scch.at/responsibility: urbanke
+#spec:
+#  selector:
+#    matchLabels:
+#      app: ts-voucher-service
+#  replicas: 1
+#  template:
+#    metadata:
+#      labels:
+#        hpc.scch.at/responsibility: urbanke
+#        # hpc.scch.at/service: ts-voucher-service
+#        app: ts-voucher-service
+#    spec:
+#      imagePullSecrets:
+#        - name: conregscch
+#      containers:
+#        - name: ts-voucher-service
+#          image: containers.github.scch.at/contest/trainticket/ts-voucher-service:error-f4
+#          imagePullPolicy: Always
+#          env:
+#            - name: NODE_IP
+#              valueFrom:
+#                fieldRef:
+#                  fieldPath: status.hostIP
+#          #          envFrom:
+#          #            - secretRef:
+#          #                name: ts-voucher-mysql
+#          #            - configMapRef:
+#          #                name: nacos
+#          ports:
+#            - containerPort: 16101
+#          resources:
+#            requests:
+#              cpu: 100m
+#              memory: 250Mi
+#            limits:
+#              cpu: 500m
+#              memory: 500Mi
+#          readinessProbe:
+#            tcpSocket:
+#              port: 16101
+#            initialDelaySeconds: 60
+#            periodSeconds: 10
+#            timeoutSeconds: 5
+#---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -3239,6 +3239,228 @@ spec:
           readinessProbe:
             tcpSocket:
               port: 18855
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 5
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ts-login-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
+spec:
+  selector:
+    matchLabels:
+      app: ts-login-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-login-service
+        app: ts-login-service
+    spec:
+      volumes:
+        - name: otel-agent
+          emptyDir: {}
+      initContainers:
+        - name: agent-container
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: otel-agent
+              mountPath: /agent
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
+      imagePullSecrets:
+        - name: conregscch
+      containers:
+        - name: ts-login-service
+          image: containers.github.scch.at/contest/trainticket/ts-login-service:error-f4
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: otel-agent
+              mountPath: /otel
+          env:
+            - name: NODE_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
+            - name: OTEL_TRACES_EXPORTER
+              value: "jaeger"
+            - name: DEACT_OTEL_METRICS_EXPORTER
+              value: "logging"
+            - name: DEACT_OTEL_LOGS_EXPORTER
+              value: "logging"
+            - name: SERVICE_JAR
+              value: "ts-login-service"
+            - name: JAVA_TOOL_OPTIONS
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          ports:
+            - containerPort: 12342
+          resources:
+            requests:
+              cpu: 100m
+              memory: 250Mi
+            limits:
+              cpu: 500m
+              memory: 500Mi
+          readinessProbe:
+            tcpSocket:
+              port: 12342
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 5
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ts-sso-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
+spec:
+  selector:
+    matchLabels:
+      app: ts-sso-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-sso-service
+        app: ts-sso-service
+    spec:
+      volumes:
+        - name: otel-agent
+          emptyDir: {}
+      initContainers:
+        - name: agent-container
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: otel-agent
+              mountPath: /agent
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
+      imagePullSecrets:
+        - name: conregscch
+      containers:
+        - name: ts-sso-service
+          image: containers.github.scch.at/contest/trainticket/ts-sso-service:error-f4
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: otel-agent
+              mountPath: /otel
+          env:
+            - name: NODE_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
+            - name: OTEL_TRACES_EXPORTER
+              value: "jaeger"
+            - name: DEACT_OTEL_METRICS_EXPORTER
+              value: "logging"
+            - name: DEACT_OTEL_LOGS_EXPORTER
+              value: "logging"
+            - name: SERVICE_JAR
+              value: "ts-sso-service"
+            - name: JAVA_TOOL_OPTIONS
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          ports:
+            - containerPort: 12349
+          resources:
+            requests:
+              cpu: 100m
+              memory: 250Mi
+            limits:
+              cpu: 500m
+              memory: 500Mi
+          readinessProbe:
+            tcpSocket:
+              port: 12349
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 5
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ts-register-service
+  labels:
+    hpc.scch.at/responsibility: urbanke
+spec:
+  selector:
+    matchLabels:
+      app: ts-register-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-register-service
+        app: ts-register-service
+    spec:
+      volumes:
+        - name: otel-agent
+          emptyDir: {}
+      initContainers:
+        - name: agent-container
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: otel-agent
+              mountPath: /agent
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
+      imagePullSecrets:
+        - name: conregscch
+      containers:
+        - name: ts-register-service
+          image: containers.github.scch.at/contest/trainticket/ts-register-service:error-f4
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: otel-agent
+              mountPath: /otel
+          env:
+            - name: NODE_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
+              value: "http://jaeger:14250"
+            - name: OTEL_TRACES_EXPORTER
+              value: "jaeger"
+            - name: DEACT_OTEL_METRICS_EXPORTER
+              value: "logging"
+            - name: DEACT_OTEL_LOGS_EXPORTER
+              value: "logging"
+            - name: SERVICE_JAR
+              value: "ts-register-service"
+            - name: JAVA_TOOL_OPTIONS
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          ports:
+            - containerPort: 12344
+          resources:
+            requests:
+              cpu: 100m
+              memory: 250Mi
+            limits:
+              cpu: 500m
+              memory: 500Mi
+          readinessProbe:
+            tcpSocket:
+              port: 12344
             initialDelaySeconds: 60
             periodSeconds: 10
             timeoutSeconds: 5

@@ -1,6 +1,6 @@
 package consignprice.config;
 
-import consignprice.service.ConsignPriceServiceImpl;
+import consignprice.ConsignPriceApplication;
 import org.apache.http.client.HttpClient;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
@@ -20,49 +20,47 @@ import javax.net.ssl.SSLContext;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
-/**
- * @author xywu
- * @date 2021/07/08
- */
 @Configuration
 public class SslConfiguration {
+	
+	@Value("${http.client.ssl.key-store}")
+	private Resource keyStore;
 
-    @Value("${http.client.ssl.key-store}")
-    private Resource keyStore;
+	@Value("${http.client.ssl.trust-store}")
+	private Resource trustStore;
 
-    @Value("${http.client.ssl.trust-store}")
-    private Resource trustStore;
+	// I use the same pw for both keystores:
+	@Value("${http.client.ssl.trust-store-password}")
+	private String keyStorePassword;
 
-    // I use the same pw for both keystores:
-    @Value("${http.client.ssl.trust-store-password}")
-    private String keyStorePassword;
+	private static final Logger log = LoggerFactory.getLogger(ConsignPriceApplication.class);
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SslConfiguration.class);
+	@Bean
+	RestTemplate restTemplate() throws Exception {
 
-    @Bean
-    RestTemplate restTemplate() throws Exception {
+		log.info("-----------------path------------------");
+		log.info(String.valueOf(keyStore.getURL()));
+		log.info(String.valueOf(keyStorePassword));
 
-        SslConfiguration.LOGGER.info("[--path--][ URL is {}][ Password is {} ]", keyStore.getURL(), keyStorePassword);
+		try {
+			SSLContext sslContext = SSLContexts.custom()
+					// keystore wasn't within the question's scope, yet it might
+					// be handy:
+					.loadKeyMaterial(keyStore.getURL(), keyStorePassword.toCharArray(), keyStorePassword.toCharArray())
+					.loadTrustMaterial(trustStore.getURL(), keyStorePassword.toCharArray(),
+							// use this for self-signed certificates only:
+							new TrustSelfSignedStrategy())
+					.build();
 
-        try {
-            SSLContext sslContext = SSLContexts.custom()
-                    // keystore wasn't within the question's scope, yet it might
-                    // be handy:
-                    .loadKeyMaterial(keyStore.getURL(), keyStorePassword.toCharArray(), keyStorePassword.toCharArray())
-                    .loadTrustMaterial(trustStore.getURL(), keyStorePassword.toCharArray(),
-                            // use this for self-signed certificates only:
-                            new TrustSelfSignedStrategy())
-                    .build();
+			HttpClient httpClient = HttpClients.custom()
+					// use NoopHostnameVerifier with caution, see
+					// https://stackoverflow.com/a/22901289/3890673
+					.setSSLSocketFactory(new SSLConnectionSocketFactory(sslContext, new NoopHostnameVerifier()))
+					.build();
 
-            HttpClient httpClient = HttpClients.custom()
-                    // use NoopHostnameVerifier with caution, see
-                    // https://stackoverflow.com/a/22901289/3890673
-                    .setSSLSocketFactory(new SSLConnectionSocketFactory(sslContext, new NoopHostnameVerifier()))
-                    .build();
-
-            return new RestTemplate(new HttpComponentsClientHttpRequestFactory(httpClient));
-        } catch (IOException | GeneralSecurityException e) {
-            throw new RuntimeException(e);
-        }
-    }
+			return new RestTemplate(new HttpComponentsClientHttpRequestFactory(httpClient));
+		} catch (IOException | GeneralSecurityException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

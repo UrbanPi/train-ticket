@@ -1,77 +1,38 @@
 package consign.controller;
 
-import consign.entity.Consign;
+import consign.domain.ConsignRecord;
+import consign.domain.ConsignRequest;
+import consign.domain.InsertConsignRecordResult;
 import consign.service.ConsignService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
-import static org.springframework.http.ResponseEntity.ok;
-import static org.springframework.http.ResponseEntity.status;
-
-/**
- * @author fdse
- */
 @RestController
-@RequestMapping("/api/v1/consignservice")
 public class ConsignController {
-
     @Autowired
     ConsignService service;
 
-    private static final Logger logger = LoggerFactory.getLogger(ConsignController.class);
-
-    @GetMapping(path = "/welcome")
-    public String home(@RequestHeader HttpHeaders headers) {
-        return "Welcome to [ Consign Service ] !";
+    @RequestMapping(value = "/consign/insertConsign", method= RequestMethod.POST)
+    public InsertConsignRecordResult insertConsign(@RequestBody ConsignRequest request){
+        return service.insertConsignRecord(request);
     }
 
-    @PostMapping(value = "/consigns")
-    public HttpEntity insertConsign(@RequestBody Consign request,
-                                    @RequestHeader HttpHeaders headers) {
-        logger.info("Insert consign record, id:{}", request.getId());
-        try {
-            return ok(service.insertConsignRecord(request, headers));
-        }catch (Exception e){
-            logger.error(e.toString());
-            return status(500).build();
-        }
+    @RequestMapping(value = "/consign/updateConsign", method= RequestMethod.POST)
+    public boolean updateConsign(@RequestBody ConsignRequest request){
+        return service.updateConsignRecord(request);
     }
 
-    @PutMapping(value = "/consigns")
-    public HttpEntity updateConsign(@RequestBody Consign request, @RequestHeader HttpHeaders headers) {
-        logger.info("Update consign record, id: {}", request.getId());
-        try {
-            return ok(service.updateConsignRecord(request, headers));
-        }catch (Exception e){
-            logger.error(e.toString());
-            return status(500).build();
-        }
-    }
-
-    @GetMapping(value = "/consigns/account/{id}")
-    public HttpEntity findByAccountId(@PathVariable String id, @RequestHeader HttpHeaders headers) {
-        logger.info("Find consign by account id: {}", id);
+    @RequestMapping(value = "/consign/findByAccountId/{id}", method= RequestMethod.GET)
+    public List<ConsignRecord> findByAccountId(@PathVariable String id){
         UUID newid = UUID.fromString(id);
-        return ok(service.queryByAccountId(newid, headers));
+        return service.queryByAccountId(newid);
     }
 
-    @GetMapping(value = "/consigns/order/{id}")
-    public HttpEntity findByOrderId(@PathVariable String id, @RequestHeader HttpHeaders headers) {
-        logger.info("Find consign by order id: {}", id);
-        UUID newid = UUID.fromString(id);
-        return ok(service.queryByOrderId(newid, headers));
+    @RequestMapping(value = "/consign/findByConsignee", method= RequestMethod.POST)
+    public List<ConsignRecord> findByConsignee(@RequestParam(value = "consignee", required = true) String consignee){
+        return service.queryByConsignee(consignee);
     }
-
-    @GetMapping(value = "/consigns/{consignee}")
-    public HttpEntity findByConsignee(@PathVariable String consignee, @RequestHeader HttpHeaders headers) {
-        logger.info("Find consign by consignee: {}", consignee);
-        return ok(service.queryByConsignee(consignee, headers));
-    }
-
 }

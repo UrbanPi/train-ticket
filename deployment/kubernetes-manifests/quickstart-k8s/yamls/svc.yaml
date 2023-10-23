@@ -76,19 +76,19 @@ spec:
   selector:
     app: ts-assurance-service
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: ts-auth-service
-spec:
-  type: NodePort
-  ports:
-    - name: http
-      port: 12340
-      nodePort: 30000
-  selector:
-    app: ts-auth-service
----
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: ts-auth-service
+#spec:
+#  type: NodePort
+#  ports:
+#    - name: http
+#      port: 12340
+#      nodePort: 30000
+#  selector:
+#    app: ts-auth-service
+#---
 apiVersion: v1
 kind: Service
 metadata:
@@ -167,19 +167,19 @@ spec:
   selector:
     app: ts-contacts-service
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: ts-delivery-service
-spec:
-  type: NodePort
-  ports:
-    - name: http
-      port: 18808
-      nodePort: 30044
-  selector:
-    app: ts-delivery-service
----
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: ts-delivery-service
+#spec:
+#  type: NodePort
+#  ports:
+#    - name: http
+#      port: 18808
+#      nodePort: 30044
+#  selector:
+#    app: ts-delivery-service
+#---
 apiVersion: v1
 kind: Service
 metadata:
@@ -466,19 +466,19 @@ spec:
   selector:
     app: ts-travel2-service
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: ts-user-service
-spec:
-  type: NodePort
-  ports:
-    - name: http
-      port: 12342
-      nodePort: 30069
-  selector:
-    app: ts-user-service
----
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: ts-user-service
+#spec:
+#  type: NodePort
+#  ports:
+#    - name: http
+#      port: 12342
+#      nodePort: 30069
+#  selector:
+#    app: ts-user-service
+#---
 apiVersion: v1
 kind: Service
 metadata:
@@ -492,20 +492,20 @@ spec:
   selector:
     app: ts-verification-code-service
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: ts-voucher-service
-spec:
-  type: NodePort
-  ports:
-    - name: http
-      port: 16101
-      targetPort: 16101
-      nodePort: 30071
-  selector:
-    app: ts-voucher-service
----
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: ts-voucher-service
+#spec:
+#  type: NodePort
+#  ports:
+#    - name: http
+#      port: 16101
+#      targetPort: 16101
+#      nodePort: 30071
+#  selector:
+#    app: ts-voucher-service
+#---
 apiVersion: v1
 kind: Service
 metadata:
@@ -544,4 +544,43 @@ spec:
       nodePort: 30073
   selector:
     app: ts-ticketinfo-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ts-login-service
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      port: 12342
+      nodePort: 30074
+  selector:
+    app: ts-login-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ts-sso-service
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      port: 12349
+      nodePort: 30075
+  selector:
+    app: ts-sso-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ts-register-service
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      port: 12344
+      nodePort: 30076
+  selector:
+    app: ts-register-service
 ---

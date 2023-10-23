@@ -1,152 +1,135 @@
 package admintravel.service;
 
-import admintravel.entity.AdminTrip;
-import admintravel.entity.TravelInfo;
-import edu.fudan.common.util.Response;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import admintravel.domain.bean.AdminTrip;
+import admintravel.domain.request.AddAndModifyTravelRequest;
+import admintravel.domain.request.DeleteTravelRequest;
+import admintravel.domain.response.AdminFindAllResult;
+import admintravel.domain.response.ResponseBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 
-/**
- * @author fdse
- */
 @Service
 public class AdminTravelServiceImpl implements AdminTravelService {
-
     @Autowired
     private RestTemplate restTemplate;
-    private static final Logger LOGGER = LoggerFactory.getLogger(AdminTravelServiceImpl.class);
 
     @Override
-    public Response getAllTravels(HttpHeaders headers) {
-        Response<ArrayList<AdminTrip>> result;
-        ArrayList<AdminTrip> trips = new ArrayList<>();
+    public AdminFindAllResult getAllTravels(String id) {
+        AdminFindAllResult result = new AdminFindAllResult();
+        ArrayList<AdminTrip> trips = new ArrayList<AdminTrip>();
+        if(checkId(id)){
+            System.out.println("[Admin Travel Service][Get All Travels]");
+            result = restTemplate.getForObject(
+                    "https://ts-travel-service:12346/travel/adminQueryAll",
+                    AdminFindAllResult.class);
+            if(result.isStatus()){
+                System.out.println("[Admin Travel Service][Get Travel From ts-travel-service successfully!]");
+                trips.addAll(result.getTrips());
+            }
+            else
+                System.out.println("[Admin Travel Service][Get Travel From ts-travel-service fail!]");
 
-        AdminTravelServiceImpl.LOGGER.info("[Get All Travels]");
-        HttpEntity requestEntity = new HttpEntity(headers);
-        ResponseEntity<Response<ArrayList<AdminTrip>>> re = restTemplate.exchange(
-                "http://ts-travel-service:12346/api/v1/travelservice/admin_trip",
-                HttpMethod.GET,
-                requestEntity,
-                new ParameterizedTypeReference<Response<ArrayList<AdminTrip>>>() {
-                });
-        result = re.getBody();
-
-        if (result.getStatus() == 1) {
-            ArrayList<AdminTrip> adminTrips = result.getData();
-            AdminTravelServiceImpl.LOGGER.info("[Get Travel From ts-travel-service successfully!]");
-            trips.addAll(adminTrips);
-        } else {
-            AdminTravelServiceImpl.LOGGER.error("[Get Travel From ts-travel-service fail!]");
+            result = restTemplate.getForObject(
+                    "https://ts-travel2-service:16346/travel2/adminQueryAll",
+                    AdminFindAllResult.class);
+            if(result.isStatus()){
+                System.out.println("[Admin Travel Service][Get Travel From ts-travel2-service successfully!]");
+                trips.addAll(result.getTrips());
+            }
+            else
+                System.out.println("[Admin Travel Service][Get Travel From ts-travel2-service fail!]");
+            result.setTrips(trips);
         }
-
-        HttpEntity requestEntity2 = new HttpEntity(headers);
-        ResponseEntity<Response<ArrayList<AdminTrip>>> re2 = restTemplate.exchange(
-                "http://ts-travel2-service:16346/api/v1/travel2service/admin_trip",
-                HttpMethod.GET,
-                requestEntity2,
-                new ParameterizedTypeReference<Response<ArrayList<AdminTrip>>>() {
-                });
-        result = re2.getBody();
-
-        if (result.getStatus() == 1) {
-            AdminTravelServiceImpl.LOGGER.info("[Get Travel From ts-travel2-service successfully!]");
-            ArrayList<AdminTrip> adminTrips = result.getData();
-            trips.addAll(adminTrips);
-        } else {
-            AdminTravelServiceImpl.LOGGER.error("[Get Travel From ts-travel2-service fail!]");
+        else{
+            result.setStatus(false);
+            result.setMessage("Admin find all travel result fail: wrong login id");
+            result.setTrips(null);
         }
-        result.setData(trips);
-
         return result;
     }
 
     @Override
-    public Response addTravel(TravelInfo request, HttpHeaders headers) {
-        Response result;
-        String requestUrl;
-        if (request.getTrainTypeId().charAt(0) == 'G' || request.getTrainTypeId().charAt(0) == 'D') {
-            requestUrl = "http://ts-travel-service:12346/api/v1/travelservice/trips";
-        } else {
-            requestUrl = "http://ts-travel2-service:16346/api/v1/travel2service/trips";
-        }
-        HttpEntity requestEntity = new HttpEntity(request, headers);
-        ResponseEntity<Response> re = restTemplate.exchange(
-                requestUrl,
-                HttpMethod.POST,
-                requestEntity,
-                Response.class);
-        result = re.getBody();
+    public ResponseBean addTravel(AddAndModifyTravelRequest request) {
+        ResponseBean responseBean = new ResponseBean();
+        String result;
+        if(checkId(request.getLoginId())){
+            if(request.getTrainTypeId().charAt(0) == 'G' || request.getTrainTypeId().charAt(0) == 'D'){
+                result = restTemplate.postForObject(
+                        "https://ts-travel-service:12346/travel/create", request ,String.class);
+            }else{
+                result = restTemplate.postForObject(
+                        "https://ts-travel2-service:16346/travel2/create", request ,String.class);
 
-        if (result.getStatus() == 1) {
-            AdminTravelServiceImpl.LOGGER.info("Admin add new travel");
-            return new Response<>(1, "[Admin add new travel]", null);
-        } else {
-            AdminTravelServiceImpl.LOGGER.error("Admin add new travel failed, trip id: {}", request.getTripId());
-            return new Response<>(0, "Admin add new travel failed", null);
+            }
+            System.out.println("[Admin Travel Service][Admin add new travel]");
+            responseBean.setStatus(true);
+        }else{
+            result = "Admin add new travel fail: wrong login id";
+            System.out.println("[Admin Travel Service][Admin add new travel fail]");
+            responseBean.setStatus(false);
         }
+        responseBean.setMessage(result);
+        return responseBean;
     }
 
     @Override
-    public Response updateTravel(TravelInfo request, HttpHeaders headers) {
-        Response result;
+    public ResponseBean updateTravel(AddAndModifyTravelRequest request) {
+        ResponseBean responseBean = new ResponseBean();
+        String result;
+        if(checkId(request.getLoginId())){
+            if(request.getTrainTypeId().charAt(0) == 'G' || request.getTrainTypeId().charAt(0) == 'D'){
+                result = restTemplate.postForObject(
+                        "https://ts-travel-service:12346/travel/update", request ,String.class);
+            }else{
+                result = restTemplate.postForObject(
+                        "https://ts-travel2-service:16346/travel2/update", request ,String.class);
 
-        String requestUrl = "";
-        if (request.getTrainTypeId().charAt(0) == 'G' || request.getTrainTypeId().charAt(0) == 'D') {
-            requestUrl = "http://ts-travel-service:12346/api/v1/travelservice/trips";
-        } else {
-            requestUrl = "http://ts-travel2-service:16346/api/v1/travel2service/trips";
+            }
+            System.out.println("[Admin Travel Service][Admin update travel]");
+            responseBean.setStatus(true);
+        }else{
+            result = "Admin update travel fail: wrong login id";
+            System.out.println("[Admin Travel Service][Admin update travel fail]");
+            responseBean.setStatus(false);
         }
-        HttpEntity requestEntity = new HttpEntity(request, headers);
-        ResponseEntity<Response> re = restTemplate.exchange(
-                requestUrl,
-                HttpMethod.PUT,
-                requestEntity,
-                Response.class);
-
-        result = re.getBody();
-        if (result.getStatus() != 1)  {
-            AdminTravelServiceImpl.LOGGER.info("[Admin update travel failed]");
-            return new Response<>(0, "Admin update travel failed", null);
-        }
-
-        AdminTravelServiceImpl.LOGGER.info("[Admin update travel success]");
-        return result;
+        responseBean.setMessage(result);
+        return responseBean;
     }
 
     @Override
-    public Response deleteTravel(String tripId, HttpHeaders headers) {
+    public ResponseBean deleteTravel(DeleteTravelRequest request) {
+        ResponseBean responseBean = new ResponseBean();
+        String result;
+        if(checkId(request.getLoginId())){
+            if(request.getTripId().charAt(0) == 'G' || request.getTripId().charAt(0) == 'D'){
+                result = restTemplate.postForObject(
+                        "https://ts-travel-service:12346/travel/delete", request ,String.class);
+            }else{
+                result = restTemplate.postForObject(
+                        "https://ts-travel2-service:16346/travel2/delete", request ,String.class);
 
-        Response result;
-        String requestUtl = "";
-        if (tripId.charAt(0) == 'G' || tripId.charAt(0) == 'D') {
-            requestUtl = "http://ts-travel-service:12346/api/v1/travelservice/trips/" + tripId;
-        } else {
-            requestUtl = "http://ts-travel2-service:16346/api/v1/travel2service/trips/" + tripId;
+            }
+            System.out.println("[Admin Travel Service][Admin delete travel]");
+            responseBean.setStatus(true);
+        }else{
+            result = "Admin delete travel fail: wrong login id";
+            System.out.println("[Admin Travel Service][Admin delete travel fail]");
+            responseBean.setStatus(false);
         }
-        HttpEntity requestEntity = new HttpEntity(headers);
-        ResponseEntity<Response> re = restTemplate.exchange(
-                requestUtl,
-                HttpMethod.DELETE,
-                requestEntity,
-                Response.class);
-
-        result = re.getBody();
-        if (result.getStatus() != 1) {
-            AdminTravelServiceImpl.LOGGER.error("Admin delete travel failed, trip id: {}", tripId);
-            return new Response<>(0, "Admin delete travel failed", null);
-        }
-
-        AdminTravelServiceImpl.LOGGER.info("Admin delete travel success, trip id: {}", tripId);
-        return result;
+        responseBean.setMessage(result);
+        return responseBean;
     }
+
+    private boolean checkId(String id){
+        if("1d1a11c1-11cb-1cf1-b1bb-b11111d1da1f".equals(id)){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
 }

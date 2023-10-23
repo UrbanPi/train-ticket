@@ -7,20 +7,13 @@ spring:
       database: ts
       port: 27017
 
+  zipkin:
+    baseUrl: http://zipkin:9411/
+  sleuth:
+    sampler:
+      percentage: 1.0
+
 
 # HTTP Server
 server:
   port: 16110
-  ssl:
-    key-store: classpath:keystore.p12
-    keyStoreType: PKCS12
-    keyAlias: tomcat
-    key-store-password: ${KEY_STORE_PASSWORD}
-http:
-  client:
-    ssl:
-      key-store: classpath:keystore.p12
-      trust-store: classpath:keystore.p12
-      trust-store-password: ${KEY_STORE_PASSWORD}
-swagger:
-  controllerPackage: consignprice.controller

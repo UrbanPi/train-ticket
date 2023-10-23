@@ -1,44 +1,25 @@
 package rebook.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
-import rebook.entity.RebookInfo;
+import rebook.domain.RebookInfo;
+import rebook.domain.RebookResult;
 import rebook.service.RebookService;
 
-import static org.springframework.http.ResponseEntity.ok;
-
-/**
- * @author fdse
- */
 @RestController
-@RequestMapping("/api/v1/rebookservice")
 public class RebookController {
 
     @Autowired
     RebookService service;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RebookController.class);
-
-    @GetMapping(path = "/welcome")
-    public String home() {
-        return "Welcome to [ Rebook Service ] !";
+    @RequestMapping(value="/rebook/payDifference", method = RequestMethod.POST)
+    public RebookResult payDifference(@RequestBody RebookInfo info, @CookieValue String loginId, @CookieValue String loginToken){
+        return service.payDifference(info, loginId, loginToken);
     }
 
-    @PostMapping(value = "/rebook/difference")
-    public HttpEntity payDifference(@RequestBody RebookInfo info,
-                                    @RequestHeader HttpHeaders headers) {
-        RebookController.LOGGER.info("Pay difference,OrderId: {}",info.getOrderId());
-        return ok(service.payDifference(info, headers));
+    @RequestMapping(value="/rebook/rebook", method = RequestMethod.POST)
+    public RebookResult rebook(@RequestBody RebookInfo info, @CookieValue String loginId, @CookieValue String loginToken){
+        System.out.println("[Rebook Service] OrderId:" + info.getOrderId() + "Old Trip Id:" + info.getOldTripId() + " New Trip Id:" + info.getTripId() + " Date:" + info.getDate() + " Seat Type:" + info.getSeatType());
+        return service.rebook(info, loginId, loginToken);
     }
-
-    @PostMapping(value = "/rebook")
-    public HttpEntity rebook(@RequestBody RebookInfo info, @RequestHeader HttpHeaders headers) {
-        RebookController.LOGGER.info("Rebook,OrderId: {}  Old Trip Id: {}  New Trip Id: {}  Date: {}  Seat Type: {}", info.getOrderId(), info.getOldTripId(), info.getTripId(), info.getDate(), info.getSeatType());
-        return ok(service.rebook(info, headers));
-    }
-
 }

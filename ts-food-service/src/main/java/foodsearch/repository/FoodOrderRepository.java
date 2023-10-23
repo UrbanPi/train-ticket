@@ -1,6 +1,6 @@
 package foodsearch.repository;
 
-import foodsearch.entity.FoodOrder;
+import foodsearch.domain.FoodOrder;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -16,7 +16,6 @@ public interface FoodOrderRepository extends MongoRepository<FoodOrder, String> 
     @Query("{ 'orderId' : ?0 }")
     FoodOrder findByOrderId(UUID orderId);
 
-    @Override
     List<FoodOrder> findAll();
 
     void deleteById(UUID id);

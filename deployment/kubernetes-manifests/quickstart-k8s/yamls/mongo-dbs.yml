@@ -1,62 +1,62 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: ts-user-mongo
-  labels:
-    hpc.scch.at/responsibility: urbanke
-spec:
-  selector:
-    matchLabels:
-      app: ts-user-mongo
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: ts-user-mongo
-        hpc.scch.at/responsibility: urbanke
-        hpc.scch.at/service: ts-user-mongo
-    spec:
-      containers:
-        - name: ts-user-mongo
-          image: mongo:4.4
-          imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 27017
-          resources:
-            requests:
-              cpu: 50m
-              memory: 100Mi
----
-
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: ts-auth-mongo
-  labels:
-    hpc.scch.at/responsibility: urbanke
-spec:
-  selector:
-    matchLabels:
-      app: ts-auth-mongo
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: ts-auth-mongo
-        hpc.scch.at/responsibility: urbanke
-        hpc.scch.at/service: ts-auth-mongo
-    spec:
-      containers:
-        - name: ts-auth-mongo
-          image: mongo:4.4
-          imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 27017
-          resources:
-            requests:
-              cpu: 50m
-              memory: 100Mi
----
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: ts-user-mongo
+#  labels:
+#    hpc.scch.at/responsibility: urbanke
+#spec:
+#  selector:
+#    matchLabels:
+#      app: ts-user-mongo
+#  replicas: 1
+#  template:
+#    metadata:
+#      labels:
+#        app: ts-user-mongo
+#        hpc.scch.at/responsibility: urbanke
+#        hpc.scch.at/service: ts-user-mongo
+#    spec:
+#      containers:
+#        - name: ts-user-mongo
+#          image: mongo:4.4
+#          imagePullPolicy: IfNotPresent
+#          ports:
+#            - containerPort: 27017
+#          resources:
+#            requests:
+#              cpu: 50m
+#              memory: 100Mi
+#---
+#
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: ts-auth-mongo
+#  labels:
+#    hpc.scch.at/responsibility: urbanke
+#spec:
+#  selector:
+#    matchLabels:
+#      app: ts-auth-mongo
+#  replicas: 1
+#  template:
+#    metadata:
+#      labels:
+#        app: ts-auth-mongo
+#        hpc.scch.at/responsibility: urbanke
+#        hpc.scch.at/service: ts-auth-mongo
+#    spec:
+#      containers:
+#        - name: ts-auth-mongo
+#          image: mongo:4.4
+#          imagePullPolicy: IfNotPresent
+#          ports:
+#            - containerPort: 27017
+#          resources:
+#            requests:
+#              cpu: 50m
+#              memory: 100Mi
+#---
 
 apiVersion: apps/v1
 kind: Deployment
@@ -524,40 +524,40 @@ spec:
 
 ---
 
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: ts-voucher-mysql
-  labels:
-    hpc.scch.at/responsibility: urbanke
-spec:
-  selector:
-    matchLabels:
-      app: ts-voucher-mysql
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: ts-voucher-mysql
-        hpc.scch.at/responsibility: urbanke
-        hpc.scch.at/service: ts-voucher-mysql
-    spec:
-      containers:
-        - name: ts-voucher-mysql
-          image: mysql:5.6.35
-          imagePullPolicy: IfNotPresent
-          env:
-            # Use secret in real usage
-            - name: MYSQL_ROOT_PASSWORD
-              value: root
-          ports:
-            - containerPort: 3306
-          resources:
-            requests:
-              cpu: 50m
-              memory: 100Mi
-
----
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: ts-voucher-mysql
+#  labels:
+#    hpc.scch.at/responsibility: urbanke
+#spec:
+#  selector:
+#    matchLabels:
+#      app: ts-voucher-mysql
+#  replicas: 1
+#  template:
+#    metadata:
+#      labels:
+#        app: ts-voucher-mysql
+#        hpc.scch.at/responsibility: urbanke
+#        hpc.scch.at/service: ts-voucher-mysql
+#    spec:
+#      containers:
+#        - name: ts-voucher-mysql
+#          image: mysql:5.6.35
+#          imagePullPolicy: IfNotPresent
+#          env:
+#            # Use secret in real usage
+#            - name: MYSQL_ROOT_PASSWORD
+#              value: root
+#          ports:
+#            - containerPort: 3306
+#          resources:
+#            requests:
+#              cpu: 50m
+#              memory: 100Mi
+#
+#---
 
 apiVersion: apps/v1
 kind: Deployment
@@ -681,26 +681,142 @@ spec:
               cpu: 50m
               memory: 100Mi
 ---
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: ts-notification-mongo
+#  labels:
+#    hpc.scch.at/responsibility: urbanke
+#spec:
+#  selector:
+#    matchLabels:
+#      app: ts-notification-mongo
+#  replicas: 1
+#  template:
+#    metadata:
+#      labels:
+#        app: ts-notification-mongo
+#        hpc.scch.at/responsibility: urbanke
+#        hpc.scch.at/service: ts-notification-mongo
+#    spec:
+#      containers:
+#        - name: ts-notification-mongo
+#          image: mongo:4.4
+#          imagePullPolicy: IfNotPresent
+#          ports:
+#            - containerPort: 27017
+#          resources:
+#            requests:
+#              cpu: 50m
+#              memory: 100Mi
+#---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ts-notification-mongo
+  name: ts-account-mongo
   labels:
     hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
-      app: ts-notification-mongo
+      app: ts-account-mongo
   replicas: 1
   template:
     metadata:
       labels:
-        app: ts-notification-mongo
+        app: ts-account-mongo
         hpc.scch.at/responsibility: urbanke
-        hpc.scch.at/service: ts-notification-mongo
+        hpc.scch.at/service: ts-account-mongo
     spec:
       containers:
-        - name: ts-notification-mongo
+        - name: ts-account-mongo
+          image: mongo:4.4
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 27017
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ts-news-mongo
+  labels:
+    hpc.scch.at/responsibility: urbanke
+spec:
+  selector:
+    matchLabels:
+      app: ts-news-mongo
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ts-news-mongo
+        hpc.scch.at/responsibility: urbanke
+        hpc.scch.at/service: ts-news-mongo
+    spec:
+      containers:
+        - name: ts-news-mongo
+          image: mongo:4.4
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 27017
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ts-rebook-mongo
+  labels:
+    hpc.scch.at/responsibility: urbanke
+spec:
+  selector:
+    matchLabels:
+      app: ts-rebook-mongo
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ts-rebook-mongo
+        hpc.scch.at/responsibility: urbanke
+        hpc.scch.at/service: ts-rebook-mongo
+    spec:
+      containers:
+        - name: ts-rebook-mongo
+          image: mongo:4.4
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 27017
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ts-verification-code-mongo
+  labels:
+    hpc.scch.at/responsibility: urbanke
+spec:
+  selector:
+    matchLabels:
+      app: ts-verification-code-mongo
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ts-verification-code-mongo
+        hpc.scch.at/responsibility: urbanke
+        hpc.scch.at/service: ts-verification-code-mongo
+    spec:
+      containers:
+        - name: ts-verification-code-mongo
           image: mongo:4.4
           imagePullPolicy: IfNotPresent
           ports:
@@ -713,77 +829,109 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ts-notification-mongo
+  name: ts-account-mongo
 spec:
   ports:
     - port: 27017
   selector:
-    app: ts-notification-mongo
-
----
-
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: ts-delivery-mongo
-  labels:
-    hpc.scch.at/responsibility: urbanke
-spec:
-  selector:
-    matchLabels:
-      app: ts-delivery-mongo
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: ts-delivery-mongo
-        hpc.scch.at/responsibility: urbanke
-        hpc.scch.at/service: ts-delivery-mongo
-    spec:
-      containers:
-        - name: ts-delivery-mongo
-          image: mongo:4.4
-          imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 27017
-          resources:
-            requests:
-              cpu: 50m
-              memory: 100Mi
+    app: ts-account-mongo
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: ts-delivery-mongo
+  name: ts-news-mongo
 spec:
   ports:
     - port: 27017
   selector:
-    app: ts-delivery-mongo
+    app: ts-news-mongo
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: ts-user-mongo
+  name: ts-rebook-mongo
 spec:
   ports:
     - port: 27017
   selector:
-    app: ts-user-mongo
+    app: ts-rebook-mongo
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: ts-auth-mongo
+  name: ts-verification-code-mongo
 spec:
   ports:
     - port: 27017
   selector:
-    app: ts-auth-mongo
+    app: ts-verification-code-mongo
+
 ---
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: ts-delivery-mongo
+#  labels:
+#    hpc.scch.at/responsibility: urbanke
+#spec:
+#  selector:
+#    matchLabels:
+#      app: ts-delivery-mongo
+#  replicas: 1
+#  template:
+#    metadata:
+#      labels:
+#        app: ts-delivery-mongo
+#        hpc.scch.at/responsibility: urbanke
+#        hpc.scch.at/service: ts-delivery-mongo
+#    spec:
+#      containers:
+#        - name: ts-delivery-mongo
+#          image: mongo:4.4
+#          imagePullPolicy: IfNotPresent
+#          ports:
+#            - containerPort: 27017
+#          resources:
+#            requests:
+#              cpu: 50m
+#              memory: 100Mi
+#
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: ts-delivery-mongo
+#spec:
+#  ports:
+#    - port: 27017
+#  selector:
+#    app: ts-delivery-mongo
+#
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: ts-user-mongo
+#spec:
+#  ports:
+#    - port: 27017
+#  selector:
+#    app: ts-user-mongo
+#
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: ts-auth-mongo
+#spec:
+#  ports:
+#    - port: 27017
+#  selector:
+#    app: ts-auth-mongo
+#---
 
 apiVersion: v1
 kind: Service
@@ -965,17 +1113,17 @@ spec:
 
 ---
 
-apiVersion: v1
-kind: Service
-metadata:
-  name: ts-voucher-mysql
-spec:
-  ports:
-    - port: 3306
-  selector:
-    app: ts-voucher-mysql
-
----
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: ts-voucher-mysql
+#spec:
+#  ports:
+#    - port: 3306
+#  selector:
+#    app: ts-voucher-mysql
+#
+#---
 
 apiVersion: v1
 kind: Service
