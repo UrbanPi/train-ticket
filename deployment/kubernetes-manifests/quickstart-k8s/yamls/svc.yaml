@@ -85,7 +85,7 @@ spec:
 #  ports:
 #    - name: http
 #      port: 12340
-#      nodePort: 30000
+#      nodePort: 30036
 #  selector:
 #    app: ts-auth-service
 #---
@@ -215,7 +215,7 @@ spec:
   ports:
     - name: http
       port: 18673
-      nodePort: 30047
+      nodePort: 30048
   selector:
     app: ts-inside-payment-service
 ---
@@ -228,7 +228,7 @@ spec:
   ports:
     - name: http
       port: 12862
-      nodePort: 30048
+      nodePort: 30049
   selector:
     app: ts-news-service
 ---
@@ -241,7 +241,7 @@ spec:
   ports:
     - name: http
       port: 17853
-      nodePort: 30049
+      nodePort: 30050
   selector:
     app: ts-notification-service
 ---
@@ -254,7 +254,7 @@ spec:
   ports:
     - name: http
       port: 12032
-      nodePort: 30050
+      nodePort: 30051
   selector:
     app: ts-order-other-service
 ---
@@ -267,7 +267,7 @@ spec:
   ports:
     - name: http
       port: 12031
-      nodePort: 30051
+      nodePort: 30052
   selector:
     app: ts-order-service
 ---
@@ -280,7 +280,7 @@ spec:
   ports:
     - name: http
       port: 19001
-      nodePort: 30052
+      nodePort: 30053
   selector:
     app: ts-payment-service
 ---
@@ -293,7 +293,7 @@ spec:
   ports:
     - name: http
       port: 14569
-      nodePort: 30053
+      nodePort: 30054
   selector:
     app: ts-preserve-other-service
 ---
@@ -306,7 +306,7 @@ spec:
   ports:
     - name: http
       port: 14568
-      nodePort: 30054
+      nodePort: 30055
   selector:
     app: ts-preserve-service
 ---
@@ -319,7 +319,7 @@ spec:
   ports:
     - name: http
       port: 16579
-      nodePort: 30055
+      nodePort: 30056
   selector:
     app: ts-price-service
 ---
@@ -332,7 +332,7 @@ spec:
   ports:
     - name: http
       port: 18886
-      nodePort: 30056
+      nodePort: 30057
   selector:
     app: ts-rebook-service
 ---
@@ -345,7 +345,7 @@ spec:
   ports:
     - name: http
       port: 14578
-      nodePort: 30057
+      nodePort: 30058
   selector:
     app: ts-route-plan-service
 ---
@@ -358,7 +358,7 @@ spec:
   ports:
     - name: http
       port: 11178
-      nodePort: 30058
+      nodePort: 30059
   selector:
     app: ts-route-service
 ---
@@ -371,7 +371,7 @@ spec:
   ports:
     - name: http
       port: 18898
-      nodePort: 30059
+      nodePort: 30060
   selector:
     app: ts-seat-service
 ---
@@ -384,7 +384,7 @@ spec:
   ports:
     - name: http
       port: 11188
-      nodePort: 30060
+      nodePort: 30061
   selector:
     app: ts-security-service
 ---
@@ -397,7 +397,7 @@ spec:
   ports:
     - name: http
       port: 12345
-      nodePort: 30062
+      nodePort: 30063
   selector:
     app: ts-station-service
 ---
@@ -410,7 +410,7 @@ spec:
   ports:
     - name: http
       port: 16108
-      nodePort: 30063
+      nodePort: 30064
   selector:
     app: ts-ticket-office-service
 ---
@@ -423,7 +423,7 @@ spec:
   ports:
     - name: http
       port: 14567
-      nodePort: 30065
+      nodePort: 30066
   selector:
     app: ts-train-service
 ---
@@ -436,7 +436,7 @@ spec:
   ports:
     - name: http
       port: 14322
-      nodePort: 30066
+      nodePort: 30067
   selector:
     app: ts-travel-plan-service
 ---
@@ -449,7 +449,7 @@ spec:
   ports:
     - name: http
       port: 12346
-      nodePort: 30067
+      nodePort: 30068
   selector:
     app: ts-travel-service
 ---
@@ -462,7 +462,7 @@ spec:
   ports:
     - name: http
       port: 16346
-      nodePort: 30068
+      nodePort: 30069
   selector:
     app: ts-travel2-service
 ---
@@ -475,7 +475,7 @@ spec:
 #  ports:
 #    - name: http
 #      port: 12342
-#      nodePort: 30069
+#      nodePort: 30070
 #  selector:
 #    app: ts-user-service
 #---
@@ -488,7 +488,7 @@ spec:
   ports:
     - name: http
       port: 15678
-      nodePort: 30070
+      nodePort: 30071
   selector:
     app: ts-verification-code-service
 ---
@@ -502,7 +502,7 @@ spec:
 #    - name: http
 #      port: 16101
 #      targetPort: 16101
-#      nodePort: 30071
+#      nodePort: 30072
 #  selector:
 #    app: ts-voucher-service
 #---
@@ -528,7 +528,7 @@ spec:
   ports:
     - name: http
       port: 18855
-      nodePort: 30072
+      nodePort: 30073
   selector:
     app: ts-food-map-service
 ---
@@ -541,7 +541,7 @@ spec:
   ports:
     - name: http
       port: 15681
-      nodePort: 30073
+      nodePort: 30074
   selector:
     app: ts-ticketinfo-service
 ---
@@ -554,7 +554,7 @@ spec:
   ports:
     - name: http
       port: 12342
-      nodePort: 30074
+      nodePort: 30075
   selector:
     app: ts-login-service
 ---
@@ -567,7 +567,7 @@ spec:
   ports:
     - name: http
       port: 12349
-      nodePort: 30075
+      nodePort: 30076
   selector:
     app: ts-sso-service
 ---
@@ -580,7 +580,7 @@ spec:
   ports:
     - name: http
       port: 12344
-      nodePort: 30076
+      nodePort: 30077
   selector:
     app: ts-register-service
 ---
