@@ -1,6 +1,5 @@
 package admintravel.domain.request;
 
-import org.springframework.data.annotation.Id;
 
 import javax.validation.Valid;
 
@@ -11,7 +10,6 @@ public class DeleteTravelRequest {
     private String loginId;
 
     @Valid
-    @Id
     private String tripId;
 
     public DeleteTravelRequest(){
