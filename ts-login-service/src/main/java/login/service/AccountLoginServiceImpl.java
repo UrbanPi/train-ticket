@@ -26,8 +26,8 @@ public class AccountLoginServiceImpl implements AccountLoginService {
     @Autowired
     private RestTemplate restTemplate;
 
-    //cookie失效时间，秒为单位
-    public static final int COOKIE_EXPIRED = 21600;
+    //cookie max age in seconds
+    public static final int COOKIE_EXPIRED = 60 * 60 * 48; // 60sec * 60min * 48hours
 
     @Override
     public LoginResult login(LoginInfo li,String YsbCaptcha, HttpServletResponse response){
