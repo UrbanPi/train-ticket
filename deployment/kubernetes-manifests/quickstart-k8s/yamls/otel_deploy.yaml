@@ -1,3 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: environment-vars
+data:
+  OTEL_EXPORTER_JAEGER_ENDPOINT: "http://jaeger:14250"
+  OTEL_TRACES_EXPORTER: "jaeger"
+  OTEL_METRICS_EXPORTER: "logging"
+#  OTEL_EXPORTER_PROMETHEUS_PORT: "9464"
+#  OTEL_EXPORTER_PROMETHEUS_HOST: "0.0.0.0"
+  OTEL_LOGS_EXPORTER: "logging"
+  JAVA_TOOL_OPTIONS: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
+---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -42,23 +57,15 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-admin-basic-info-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
-          #          envFrom:
-          #            - configMapRef:
-          #                name: nacos
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
           ports:
             - containerPort: 18767
           resources:
@@ -119,23 +126,16 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-admin-order-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
-          #          envFrom:
-          #            - configMapRef:
-          #                name: nacos
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs" ]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
+
           ports:
             - containerPort: 16112
           resources:
@@ -196,23 +196,16 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-admin-route-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
-          #          envFrom:
-          #            - configMapRef:
-          #                name: nacos
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
+
           ports:
             - containerPort: 16113
           resources:
@@ -273,23 +266,16 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-admin-travel-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
-          #          envFrom:
-          #            - configMapRef:
-          #                name: nacos
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
+
           ports:
             - containerPort: 16114
           resources:
@@ -350,23 +336,16 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-admin-user-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
-          #          envFrom:
-          #            - configMapRef:
-          #                name: nacos
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
+
           ports:
             - containerPort: 16115
           resources:
@@ -427,20 +406,15 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-assurance-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
           #          envFrom:
           #            - secretRef:
           #                name: ts-assurance-mysql
@@ -519,7 +493,10 @@ spec:
 #            - name: JAVA_TOOL_OPTIONS
 #              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
 #          command: [ "/bin/sh" ]
-#          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+#          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+#          envFrom:
+#            - configMapRef:
+#                name: environment-vars
 #          #          envFrom:
 #          #            - secretRef:
 #          #                name: ts-auth-mysql
@@ -585,23 +562,16 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-basic-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
-          #          envFrom:
-          #            - configMapRef:
-          #                name: nacos
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
+
           ports:
             - containerPort: 15680
           resources:
@@ -662,20 +632,15 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-cancel-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
           #          envFrom:
           #            - conf/igMapRef:
           #                name: nacos
@@ -739,22 +704,17 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-config-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
             - name: KEY_STORE_PASSWORD
               value: "passw0rd"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
           #          envFrom:
           #            - secretRef:
           #                name: ts-config-mysql
@@ -820,22 +780,17 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-consign-price-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
             - name: KEY_STORE_PASSWORD
               value: "passw0rd"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
           #          envFrom:
           #            - secretRef:
           #                name: ts-consign-price-mysql
@@ -901,20 +856,15 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-consign-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
           #          envFrom:
           #            - secretRef:
           #                name: ts-consign-mysql
@@ -980,20 +930,15 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-contacts-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
           #          envFrom:
           #            - secretRef:
           #                name: ts-contacts-mysql
@@ -1074,7 +1019,10 @@ spec:
 #            - name: rabbitmq_port
 #              value: "5672"
 #          command: [ "/bin/sh" ]
-#          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+#          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+#          envFrom:
+#            - configMapRef:
+#                name: environment-vars
 #          envFrom:
 #            #            - secretRef:
 #            #                name: ts-delivery-mysql
@@ -1142,23 +1090,16 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-execute-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
-          #          envFrom:
-          #            - configMapRef:
-          #                name: nacos
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
+
           ports:
             - containerPort: 12386
           resources:
@@ -1219,25 +1160,17 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-food-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
             - name: rabbitmq_port
               value: "5672"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
           envFrom:
-            #            - configMapRef:
-            #                name: nacos
+            - configMapRef:
+                name: environment-vars
             - configMapRef:
                 name: rabbitmq
           #            - secretRef:
@@ -1302,20 +1235,15 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-inside-payment-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
           #          envFrom:
           #            - secretRef:
           #                name: ts-inside-payment-mysql
@@ -1392,10 +1320,11 @@ spec:
           #            - name: JAVA_TOOL_OPTIONS
           #              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           #          command: [ "/bin/sh" ]
-          #          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
-          #          envFrom:
-          #            - configMapRef:
-          #                name: nacos
+          #          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
+
           ports:
             - containerPort: 12862
           resources:
@@ -1456,27 +1385,17 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-notification-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
             - name: rabbitmq_port
               value: "5672"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
           envFrom:
-            #            - secretRef:
-            #                name: ts-notification-mysql
-            #            - configMapRef:
-            #                name: nacos
+            - configMapRef:
+                name: environment-vars
             - configMapRef:
                 name: rabbitmq
           ports:
@@ -1539,25 +1458,15 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-order-other-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
           envFrom:
-            #            - secretRef:
-            #                name: ts-order-other-mysql
-            #            - configMapRef:
-            #                name: nacos
+            - configMapRef:
+                name: environment-vars
             - configMapRef:
                 name: rabbitmq
           ports:
@@ -1620,25 +1529,15 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-order-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
           envFrom:
-            #            - secretRef:
-            #                name: ts-order-mysql
-            #            - configMapRef:
-            #                name: nacos
+            - configMapRef:
+                name: environment-vars
             - configMapRef:
                 name: rabbitmq
           ports:
@@ -1701,22 +1600,17 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-payment-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
             - name: KEY_STORE_PASSWORD
               value: "passw0rd"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
           #          envFrom:
           #            - secretRef:
           #                name: ts-payment-mysql
@@ -1782,25 +1676,17 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-preserve-other-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
             - name: rabbitmq_port
               value: "5672"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
           envFrom:
-            #            - configMapRef:
-            #                name: nacos
+            - configMapRef:
+                name: environment-vars
             - configMapRef:
                 name: rabbitmq
           ports:
@@ -1863,25 +1749,17 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-preserve-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
             - name: rabbitmq_port
               value: "5672"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
           envFrom:
-            #            - configMapRef:
-            #                name: nacos
+            - configMapRef:
+                name: environment-vars
             - configMapRef:
                 name: rabbitmq
           ports:
@@ -1944,22 +1822,17 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-price-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
             - name: KEY_STORE_PASSWORD
               value: "passw0rd"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
           #          envFrom:
           #            - secretRef:
           #                name: ts-price-mysql
@@ -2025,23 +1898,15 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-rebook-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
           envFrom:
-            #            - configMapRef:
-            #                name: nacos
+            - configMapRef:
+                name: environment-vars
             - configMapRef:
                 name: rabbitmq
           ports:
@@ -2104,23 +1969,16 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-route-plan-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
-          #          envFrom:
-          #            - configMapRef:
-          #                name: nacos
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
+
           ports:
             - containerPort: 14578
           resources:
@@ -2181,20 +2039,15 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-route-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
           #          envFrom:
           #            - secretRef:
           #                name: ts-route-mysql
@@ -2260,23 +2113,16 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-seat-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
-          #          envFrom:
-          #            - configMapRef:
-          #                name: nacos
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
+
           ports:
             - containerPort: 18898
           resources:
@@ -2337,20 +2183,15 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-security-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
           #          envFrom:
           #            - secretRef:
           #                name: ts-security-mysql
@@ -2416,20 +2257,15 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-station-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
           #          envFrom:
           #            - secretRef:
           #                name: ts-station-mysql
@@ -2506,7 +2342,10 @@ spec:
           #            - name: JAVA_TOOL_OPTIONS
           #              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           #          command: [ "/bin/sh" ]
-          #          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          #          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
           #          envFrom:
           #            - secretRef:
           #                name: ts-ticket-office-mysql
@@ -2572,20 +2411,15 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-train-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
           #          envFrom:
           #            - secretRef:
           #                name: ts-train-mysql
@@ -2651,23 +2485,16 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-travel-plan-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
-          #          envFrom:
-          #            - configMapRef:
-          #                name: nacos
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
+
           ports:
             - containerPort: 14322
           resources:
@@ -2728,20 +2555,15 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-travel-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
           #          envFrom:
           #            - secretRef:
           #                name: ts-travel-mysql
@@ -2807,20 +2629,15 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-travel2-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
           #          envFrom:
           #            - secretRef:
           #                name: ts-travel2-mysql
@@ -2899,7 +2716,10 @@ spec:
 #            - name: JAVA_TOOL_OPTIONS
 #              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
 #          command: [ "/bin/sh" ]
-#          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+#          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+#          envFrom:
+#            - configMapRef:
+#                name: environment-vars
 #          #          envFrom:
 #          #            - secretRef:
 #          #                name: ts-user-mysql
@@ -2965,23 +2785,16 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-verification-code-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
-          #          envFrom:
-          #            - configMapRef:
-          #                name: nacos
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
+
           ports:
             - containerPort: 15678
           resources:
@@ -3127,20 +2940,15 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-ticketinfo-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
           #          envFrom:
           #            - secretRef:
           #                name: ts-wait-order-mysql
@@ -3206,22 +3014,17 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-food-map-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
             - name: KEY_STORE_PASSWORD
               value: "passw0rd"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
           #          envFrom:
           #            - secretRef:
           #                name: ts-station-food-mysql
@@ -3287,20 +3090,15 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-login-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
           ports:
             - containerPort: 12342
           resources:
@@ -3361,20 +3159,15 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-sso-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
           ports:
             - containerPort: 12349
           resources:
@@ -3435,20 +3228,15 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-            - name: OTEL_EXPORTER_JAEGER_ENDPOINT
-              value: "http://jaeger:14250"
-            - name: OTEL_TRACES_EXPORTER
-              value: "jaeger"
-            - name: DEACT_OTEL_METRICS_EXPORTER
-              value: "logging"
-            - name: DEACT_OTEL_LOGS_EXPORTER
-              value: "logging"
+
             - name: SERVICE_JAR
               value: "ts-register-service"
-            - name: JAVA_TOOL_OPTIONS
-              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
           ports:
             - containerPort: 12344
           resources:
