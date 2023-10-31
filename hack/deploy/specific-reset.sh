@@ -3,15 +3,12 @@
 TT_ROOT=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 source "$TT_ROOT/utils.sh"
-source "$TT_ROOT/gen-mysql-secret.sh"
 
 namespace="$1"
 args="$2"
 
 argNone=1
-argDB=0
 argMonitoring=0
-argTracing=0
 argOTEL=0
 argAll=0
 
@@ -21,17 +18,16 @@ function delete_tt_micro_services {
 
 function quick_end {
   echo "quick end"
-  update_tt_dp_cm $nacosRelease $rabbitmqRelease
   delete_tt_micro_services
 
 }
 
 function reset_all {
-  update_tt_otel_dp_cm $nacosRelease $rabbitmqRelease
   kubectl delete -f deployment/kubernetes-manifests/otel -n "$namespace"
   kubectl delete -f deployment/kubernetes-manifests/jaeger -n "$namespace"
-  kubectl delete -f deployment/kubernetes-manifests/prometheus -n "$namespace"
+  kubectl delete -f deployment/kubernetes-manifests/prometheus
   delete_tt_micro_services
+  helm uninstall rabbitmq -n "$namespace"
 }
 
 function reset {
@@ -48,11 +44,8 @@ function reset {
 
 
     if [ $argOTEL == 1 ]; then
-      update_tt_otel_dp_cm $nacosRelease $rabbitmqRelease
       kubectl delete -f deployment/kubernetes-manifests/otel -n "$namespace"
       kubectl delete -f deployment/kubernetes-manifests/jaeger -n "$namespace"
-    else
-      update_tt_dp_cm $nacosRelease $rabbitmqRelease
     fi
 
     if [ $argMonitoring == 1 ]; then
@@ -60,7 +53,7 @@ function reset {
 
     fi
     delete_tt_micro_services
-    helm uninstall $rabbitmqRelease -n "$namespace"
+    helm uninstall rabbitmq -n "$namespace"
 
 }
 #reset
@@ -84,7 +77,7 @@ function parse_args {
 }
 
 echo "args num: $#"
-if [ $# == 2 ] && [ "$args" != "" ]; then
+if [ $# != 0 ] && [ "$args" != "" ]; then
   argNone=0
   parse_args "$args"
 fi
