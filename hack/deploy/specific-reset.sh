@@ -35,7 +35,8 @@ function reset_all {
   gen_secret_for_services $tsUser $tsPassword $tsDB
   delete_tt_micro_services
   kubectl delete -f deployment/kubernetes-manifests/skywalking -n "$namespace"
-  kubectl delete -f deployment/kubernetes-manifests/prometheus -n "$namespace"
+  kubectl delete -f deployment/kubernetes-manifests/prometheus
+  kubectl delete -f deployment/kubernetes-manifests/prometheus_micros -n "$namespace"
 }
 
 function reset {
@@ -70,6 +71,7 @@ function reset {
 
     if [ $argMonitoring == 1 ]; then
       kubectl delete -f deployment/kubernetes-manifests/prometheus
+      kubectl delete -f deployment/kubernetes-manifests/prometheus_micros -n "$namespace"
 
     fi
     delete_tt_micro_services
