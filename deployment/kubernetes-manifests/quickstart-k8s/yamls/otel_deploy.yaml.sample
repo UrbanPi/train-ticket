@@ -5,7 +5,7 @@ metadata:
 data:
   OTEL_EXPORTER_JAEGER_ENDPOINT: "http://jaeger:14250"
   OTEL_TRACES_EXPORTER: "jaeger"
-  OTEL_METRICS_EXPORTER: "logging"
+  OTEL_METRICS_EXPORTER: "prometheus" # Opens a server with URL "localhost:9464/metrics", which can be scraped by prometheus
   OTEL_LOGS_EXPORTER: "logging"
   OTEL_JAVAAGENT_LOGGING: "application"
   JAVA_TOOL_OPTIONS: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
@@ -66,6 +66,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 18767
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -135,6 +137,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 16112
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -204,6 +208,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 16113
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -273,6 +279,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 16114
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -342,6 +350,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 16115
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -413,6 +423,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 18888
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -484,6 +496,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 12340
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -516,44 +530,17 @@ spec:
         # hpc.scch.at/service: ts-avatar-service
         app: ts-avatar-service
     spec:
-      volumes:
-        - name: otel-agent
-          emptyDir: {}
-      initContainers:
-        - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
-          imagePullPolicy: Always
-          volumeMounts:
-            - name: otel-agent
-              mountPath: /agent
-          command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
         - name: ts-avatar-service
           image:  containers.github.scch.at/contest/trainticket/ts-avatar-service:latest
           imagePullPolicy: Always
-          volumeMounts:
-            - name: otel-agent
-              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-#            - name: OTEL_TRACES_EXPORTER
-#              value: "logging"
-#            - name: DEACT_OTEL_METRICS_EXPORTER
-#              value: "logging"
-#            - name: DEACT_OTEL_LOGS_EXPORTER
-#              value: "logging"
-#            - name: SERVICE_JAR
-#              value: "ts-avatar-service"
-#            - name: JAVA_TOOL_OPTIONS
-#              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
-#          command: [ "/bin/sh" ]
-#          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -630,6 +617,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 15680
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -699,6 +688,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 18885
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -770,6 +761,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 15679
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -841,6 +834,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 16110
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -912,6 +907,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 16111
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -983,6 +980,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 12347
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -1056,6 +1055,8 @@ spec:
                 name: rabbitmq
           ports:
             - containerPort: 18808
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -1125,6 +1126,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 12386
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -1196,6 +1199,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 18957
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -1269,6 +1274,8 @@ spec:
                 name: ts-food-mysql
           ports:
             - containerPort: 18856
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -1339,6 +1346,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 18888
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -1410,6 +1419,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 18673
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -1442,44 +1453,17 @@ spec:
         # hpc.scch.at/service: ts-news-service
         app: ts-news-service
     spec:
-      volumes:
-        - name: otel-agent
-          emptyDir: {}
-      initContainers:
-        - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
-          imagePullPolicy: Always
-          volumeMounts:
-            - name: otel-agent
-              mountPath: /agent
-          command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
         - name: ts-news-service
           image: containers.github.scch.at/contest/trainticket/ts-news-service:latest
           imagePullPolicy: Always
-          volumeMounts:
-            - name: otel-agent
-              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-#            - name: OTEL_TRACES_EXPORTER
-#              value: "logging"
-#            - name: DEACT_OTEL_METRICS_EXPORTER
-#              value: "logging"
-#            - name: DEACT_OTEL_LOGS_EXPORTER
-#              value: "logging"
-#            - name: SERVICE_JAR
-#              value: "ts-news-service"
-#            - name: JAVA_TOOL_OPTIONS
-#              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
-#          command: [ "/bin/sh" ]
-#          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1560,6 +1544,8 @@ spec:
                 name: rabbitmq
           ports:
             - containerPort: 17853
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -1633,6 +1619,8 @@ spec:
                 name: rabbitmq
           ports:
             - containerPort: 12032
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -1706,6 +1694,8 @@ spec:
                 name: rabbitmq
           ports:
             - containerPort: 12031
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -1777,6 +1767,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 19001
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -1848,6 +1840,8 @@ spec:
                 name: rabbitmq
           ports:
             - containerPort: 14569
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -1919,6 +1913,8 @@ spec:
                 name: rabbitmq
           ports:
             - containerPort: 14568
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -1990,6 +1986,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 16579
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -2061,6 +2059,8 @@ spec:
                 name: rabbitmq
           ports:
             - containerPort: 18886
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -2130,6 +2130,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 14578
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -2201,6 +2203,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 11178
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -2270,6 +2274,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 18898
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -2341,6 +2347,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 11188
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -2412,6 +2420,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 18855
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -2483,6 +2493,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 12345
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -2515,44 +2527,18 @@ spec:
         # hpc.scch.at/service: ts-ticket-office-service
         app: ts-ticket-office-service
     spec:
-      volumes:
-        - name: otel-agent
-          emptyDir: {}
-      initContainers:
-        - name: agent-container
-          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
-          imagePullPolicy: Always
-          volumeMounts:
-            - name: otel-agent
-              mountPath: /agent
-          command: [ "/bin/sh" ]
-          args: [ "-c", "cp -R /otel /agent/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
         - name: ts-ticket-office-service
           image: containers.github.scch.at/contest/trainticket/ts-ticket-office-service:latest
           imagePullPolicy: Always
-          volumeMounts:
-            - name: otel-agent
-              mountPath: /otel
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-#            - name: OTEL_TRACES_EXPORTER
-#              value: "logging"
-#            - name: DEACT_OTEL_METRICS_EXPORTER
-#              value: "logging"
-#            - name: DEACT_OTEL_LOGS_EXPORTER
-#              value: "logging"
-#            - name: SERVICE_JAR
-#              value: "ts-ticket-office-service"
-#            - name: JAVA_TOOL_OPTIONS
-#              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
-#          command: [ "/bin/sh" ]
-#          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2633,6 +2619,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 19999
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -2704,6 +2692,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 14567
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -2773,6 +2763,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 14322
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -2844,6 +2836,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 12346
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -2915,6 +2909,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 16346
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -2986,6 +2982,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 12342
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -3055,6 +3053,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 15678
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -3105,6 +3105,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 16101
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
@@ -3176,6 +3178,8 @@ spec:
                 name: nacos
           ports:
             - containerPort: 17525
+            - name: metric
+              containerPort: 9464
           resources:
             requests:
               cpu: 100m
