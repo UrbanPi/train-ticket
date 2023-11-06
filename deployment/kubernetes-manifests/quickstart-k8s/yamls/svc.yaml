@@ -599,6 +599,8 @@ spec:
     - name: http
       port: 18855
       nodePort: 30073
+    - name: metric
+      port: 9464
   selector:
     app: ts-food-map-service
 ---
