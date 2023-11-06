@@ -21,17 +21,14 @@ data:
               - ts-admin-travel-service:9464
               - ts-admin-user-service:9464
               - ts-assurance-service:9464
-              - ts-auth-service:9464
               - ts-basic-service:9464
               - ts-cancel-service:9464
               - ts-config-service:9464
               - ts-consign-price-service:9464
               - ts-consign-service:9464
               - ts-contacts-service:9464
-              - ts-delivery-service:9464
               - ts-execute-service:9464
               - ts-food-service:9464
-              - ts-gateway-service:9464
               - ts-inside-payment-service:9464
               - ts-notification-service:9464
               - ts-order-other-service:9464
@@ -45,20 +42,17 @@ data:
               - ts-route-service:9464
               - ts-seat-service:9464
               - ts-security-service:9464
-              - ts-station-food-service:9464
               - ts-station-service:9464
-              - ts-train-food-service:9464
               - ts-train-service:9464
               - ts-travel-plan-service:9464
               - ts-travel-service:9464
               - ts-travel2-service:9464
-              - ts-user-service:9464
               - ts-verification-code-service:9464
               - ts-food-map-service:9464
               - ts-ticketinfo-service:9464
               - ts-login-service:9464
               - ts-sso-service:9464
-              - ts-register-servic:9464
+              - ts-register-service:9464
 ---
 
 apiVersion: v1
