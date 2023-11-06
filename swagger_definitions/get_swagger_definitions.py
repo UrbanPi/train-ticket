@@ -4,6 +4,7 @@ import sys
 import urllib.request
 import json
 from concurrent.futures import ThreadPoolExecutor
+from http.client import RemoteDisconnected
 from json import JSONDecodeError
 from urllib.error import URLError
 
@@ -179,6 +180,8 @@ def retrieve_and_save(service: dict):
         return "{}: Invalid json from url: {}".format(service.get("name"), url)
     except JSONDecodeError:
         return "{}: Invalid json from url: {}".format(service.get("name"), url)
+    except RemoteDisconnected as error:
+        return '{}: URL Error: Data of not retrieved because {}\nURL: {}'.format(service.get("name"), error, url)
     except URLError as error:
         if isinstance(error.reason, socket.timeout):
             return '{}: Timeout Error for {} '.format(service.get("name"), url)
