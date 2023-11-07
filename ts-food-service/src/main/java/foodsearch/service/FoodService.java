@@ -1,21 +1,20 @@
 package foodsearch.service;
 
-import edu.fudan.common.util.Response;
-import foodsearch.entity.*;
-import org.springframework.http.HttpHeaders;
+import foodsearch.domain.*;
 
+import java.util.List;
 
 public interface FoodService {
 
-    Response createFoodOrder(FoodOrder afoi, HttpHeaders headers);
-    Response deleteFoodOrder(String orderId, HttpHeaders headers);
+    GetAllFoodOfTripResult getAllFood(String date, String startStation, String endStation, String tripId);
 
-    Response findByOrderId(String orderId, HttpHeaders headers);
+    AddFoodOrderResult createFoodOrder(AddFoodOrderInfo afoi);
 
-    Response updateFoodOrder(FoodOrder updateFoodOrder, HttpHeaders headers);
+    CancelFoodOrderResult cancelFoodOrder(CancelFoodOrderInfo cfoi);
 
-    Response findAllFoodOrder(HttpHeaders headers);
+    UpdateFoodOrderResult updateFoodOrder(UpdateFoodOrderInfo ufoi);
 
-    Response getAllFood(String date, String startStation, String endStation, String tripId, HttpHeaders headers);
+    List<FoodOrder> findAllFoodOrder();
 
+    FindByOrderIdResult findByOrderId(String orderId);
 }

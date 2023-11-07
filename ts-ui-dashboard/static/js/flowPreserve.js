@@ -165,6 +165,9 @@ function queryForTravelInfo(data,path) {
                 addListenerToBookingTable();
             }
         },
+        error: function(){
+            alert("Error");
+        },
         complete: function () {
             $("#travel_booking_button").attr("disabled",false);
         }
@@ -296,7 +299,7 @@ function initFoodSelect(tripId){
                 }
 
             } else {
-                alert(result.status + ":" + result.message);
+                //alert(result.status + ":" + result.message);
             }
 
         }
@@ -673,6 +676,9 @@ $("#ticket_confirm_confirm_btn").click(function () {
                 location.hash="anchor_flow_preserve_pay";
             }
         },
+        error: function(){
+            alert("Error");
+        },
         complete: function(){
             $("#ticket_confirm_confirm_btn").attr("disabled",false);
         }
@@ -755,7 +761,7 @@ $("#preserve_collect_button").click(function() {
             $("#preserve_collect_button").attr("disabled",false);
         }
     });
-});
+});;
 
 /**
  * Flow Preserve - Step 7 - Enter Station

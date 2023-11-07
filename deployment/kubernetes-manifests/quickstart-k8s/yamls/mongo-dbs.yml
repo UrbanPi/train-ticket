@@ -1,59 +1,69 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: ts-user-mongo
-spec:
-  selector:
-    matchLabels:
-      app: ts-user-mongo
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: ts-user-mongo
-    spec:
-      containers:
-        - name: ts-user-mongo
-          image: mongo:4.4
-          imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 27017
-          resources:
-            requests:
-              cpu: 50m
-              memory: 100Mi
----
-
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: ts-auth-mongo
-spec:
-  selector:
-    matchLabels:
-      app: ts-auth-mongo
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: ts-auth-mongo
-    spec:
-      containers:
-        - name: ts-auth-mongo
-          image: mongo:4.4
-          imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 27017
-          resources:
-            requests:
-              cpu: 50m
-              memory: 100Mi
----
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: ts-user-mongo
+#  labels:
+#    hpc.scch.at/responsibility: urbanke
+#spec:
+#  selector:
+#    matchLabels:
+#      app: ts-user-mongo
+#  replicas: 1
+#  template:
+#    metadata:
+#      labels:
+#        app: ts-user-mongo
+#        hpc.scch.at/responsibility: urbanke
+#        hpc.scch.at/service: ts-user-mongo
+#    spec:
+#      containers:
+#        - name: ts-user-mongo
+#          image: mongo:4.4
+#          imagePullPolicy: IfNotPresent
+#          ports:
+#            - containerPort: 27017
+#          resources:
+#            requests:
+#              cpu: 50m
+#              memory: 100Mi
+#---
+#
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: ts-auth-mongo
+#  labels:
+#    hpc.scch.at/responsibility: urbanke
+#spec:
+#  selector:
+#    matchLabels:
+#      app: ts-auth-mongo
+#  replicas: 1
+#  template:
+#    metadata:
+#      labels:
+#        app: ts-auth-mongo
+#        hpc.scch.at/responsibility: urbanke
+#        hpc.scch.at/service: ts-auth-mongo
+#    spec:
+#      containers:
+#        - name: ts-auth-mongo
+#          image: mongo:4.4
+#          imagePullPolicy: IfNotPresent
+#          ports:
+#            - containerPort: 27017
+#          resources:
+#            requests:
+#              cpu: 50m
+#              memory: 100Mi
+#---
 
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-route-mongo
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -63,6 +73,8 @@ spec:
     metadata:
       labels:
         app: ts-route-mongo
+        hpc.scch.at/responsibility: urbanke
+        hpc.scch.at/service: ts-route-mongo
     spec:
       containers:
         - name: ts-route-mongo
@@ -81,6 +93,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-contacts-mongo
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -90,6 +104,8 @@ spec:
     metadata:
       labels:
         app: ts-contacts-mongo
+        hpc.scch.at/responsibility: urbanke
+        hpc.scch.at/service: ts-contacts-mongo
     spec:
       containers:
         - name: ts-contacts-mongo
@@ -108,6 +124,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-order-mongo
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -117,6 +135,8 @@ spec:
     metadata:
       labels:
         app: ts-order-mongo
+        hpc.scch.at/responsibility: urbanke
+        hpc.scch.at/service: ts-order-mongo
     spec:
       containers:
         - name: ts-order-mongo
@@ -135,6 +155,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-order-other-mongo
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -144,6 +166,8 @@ spec:
     metadata:
       labels:
         app: ts-order-other-mongo
+        hpc.scch.at/responsibility: urbanke
+        hpc.scch.at/service: ts-order-other-mongo
     spec:
       containers:
         - name: ts-order-other-mongo
@@ -162,6 +186,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-config-mongo
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -171,6 +197,8 @@ spec:
     metadata:
       labels:
         app: ts-config-mongo
+        hpc.scch.at/responsibility: urbanke
+        hpc.scch.at/service: ts-config-mongo
     spec:
       containers:
         - name: ts-config-mongo
@@ -189,6 +217,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-station-mongo
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -198,6 +228,8 @@ spec:
     metadata:
       labels:
         app: ts-station-mongo
+        hpc.scch.at/responsibility: urbanke
+        hpc.scch.at/service: ts-station-mongo
     spec:
       containers:
         - name: ts-station-mongo
@@ -216,6 +248,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-train-mongo
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -225,6 +259,8 @@ spec:
     metadata:
       labels:
         app: ts-train-mongo
+        hpc.scch.at/responsibility: urbanke
+        hpc.scch.at/service: ts-train-mongo
     spec:
       containers:
         - name: ts-train-mongo
@@ -243,6 +279,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-travel-mongo
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -252,6 +290,8 @@ spec:
     metadata:
       labels:
         app: ts-travel-mongo
+        hpc.scch.at/responsibility: urbanke
+        hpc.scch.at/service: ts-travel-mongo
     spec:
       containers:
         - name: ts-travel-mongo
@@ -270,6 +310,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-travel2-mongo
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -279,6 +321,8 @@ spec:
     metadata:
       labels:
         app: ts-travel2-mongo
+        hpc.scch.at/responsibility: urbanke
+        hpc.scch.at/service: ts-travel2-mongo
     spec:
       containers:
         - name: ts-travel2-mongo
@@ -297,6 +341,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-price-mongo
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -306,6 +352,8 @@ spec:
     metadata:
       labels:
         app: ts-price-mongo
+        hpc.scch.at/responsibility: urbanke
+        hpc.scch.at/service: ts-price-mongo
     spec:
       containers:
         - name: ts-price-mongo
@@ -324,6 +372,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-security-mongo
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -333,6 +383,8 @@ spec:
     metadata:
       labels:
         app: ts-security-mongo
+        hpc.scch.at/responsibility: urbanke
+        hpc.scch.at/service: ts-security-mongo
     spec:
       containers:
         - name: ts-security-mongo
@@ -351,6 +403,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-inside-payment-mongo
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -360,6 +414,8 @@ spec:
     metadata:
       labels:
         app: ts-inside-payment-mongo
+        hpc.scch.at/responsibility: urbanke
+        hpc.scch.at/service: ts-inside-payment-mongo
     spec:
       containers:
         - name: ts-inside-payment-mongo
@@ -378,6 +434,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-payment-mongo
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -387,6 +445,8 @@ spec:
     metadata:
       labels:
         app: ts-payment-mongo
+        hpc.scch.at/responsibility: urbanke
+        hpc.scch.at/service: ts-payment-mongo
     spec:
       containers:
         - name: ts-payment-mongo
@@ -405,6 +465,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-assurance-mongo
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -414,6 +476,8 @@ spec:
     metadata:
       labels:
         app: ts-assurance-mongo
+        hpc.scch.at/responsibility: urbanke
+        hpc.scch.at/service: ts-assurance-mongo
     spec:
       containers:
         - name: ts-assurance-mongo
@@ -432,6 +496,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-ticket-office-mongo
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -441,6 +507,8 @@ spec:
     metadata:
       labels:
         app: ts-ticket-office-mongo
+        hpc.scch.at/responsibility: urbanke
+        hpc.scch.at/service: ts-ticket-office-mongo
     spec:
       containers:
         - name: ts-ticket-office-mongo
@@ -460,6 +528,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-voucher-mysql
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -469,6 +539,8 @@ spec:
     metadata:
       labels:
         app: ts-voucher-mysql
+        hpc.scch.at/responsibility: urbanke
+        hpc.scch.at/service: ts-voucher-mysql
     spec:
       containers:
         - name: ts-voucher-mysql
@@ -491,6 +563,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-food-map-mongo
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -500,6 +574,8 @@ spec:
     metadata:
       labels:
         app: ts-food-map-mongo
+        hpc.scch.at/responsibility: urbanke
+        hpc.scch.at/service: ts-food-map-mongo
     spec:
       containers:
         - name: ts-food-map-mongo
@@ -518,6 +594,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-consign-mongo
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -527,6 +605,8 @@ spec:
     metadata:
       labels:
         app: ts-consign-mongo
+        hpc.scch.at/responsibility: urbanke
+        hpc.scch.at/service: ts-consign-mongo
     spec:
       containers:
         - name: ts-consign-mongo
@@ -545,6 +625,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-consign-price-mongo
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -554,6 +636,8 @@ spec:
     metadata:
       labels:
         app: ts-consign-price-mongo
+        hpc.scch.at/responsibility: urbanke
+        hpc.scch.at/service: ts-consign-price-mongo
     spec:
       containers:
         - name: ts-consign-price-mongo
@@ -572,6 +656,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-food-mongo
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -581,6 +667,8 @@ spec:
     metadata:
       labels:
         app: ts-food-mongo
+        hpc.scch.at/responsibility: urbanke
+        hpc.scch.at/service: ts-food-mongo
     spec:
       containers:
         - name: ts-food-mongo
@@ -596,19 +684,23 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ts-notification-mongo
+  name: ts-account-mongo
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
-      app: ts-notification-mongo
+      app: ts-account-mongo
   replicas: 1
   template:
     metadata:
       labels:
-        app: ts-notification-mongo
+        app: ts-account-mongo
+        hpc.scch.at/responsibility: urbanke
+        hpc.scch.at/service: ts-account-mongo
     spec:
       containers:
-        - name: ts-notification-mongo
+        - name: ts-account-mongo
           image: mongo:4.4
           imagePullPolicy: IfNotPresent
           ports:
@@ -618,34 +710,26 @@ spec:
               cpu: 50m
               memory: 100Mi
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: ts-notification-mongo
-spec:
-  ports:
-    - port: 27017
-  selector:
-    app: ts-notification-mongo
-
----
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ts-delivery-mongo
+  name: ts-news-mongo
+  labels:
+    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
-      app: ts-delivery-mongo
+      app: ts-news-mongo
   replicas: 1
   template:
     metadata:
       labels:
-        app: ts-delivery-mongo
+        app: ts-news-mongo
+        hpc.scch.at/responsibility: urbanke
+        hpc.scch.at/service: ts-news-mongo
     spec:
       containers:
-        - name: ts-delivery-mongo
+        - name: ts-news-mongo
           image: mongo:4.4
           imagePullPolicy: IfNotPresent
           ports:
@@ -654,39 +738,108 @@ spec:
             requests:
               cpu: 50m
               memory: 100Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ts-rebook-mongo
+  labels:
+    hpc.scch.at/responsibility: urbanke
+spec:
+  selector:
+    matchLabels:
+      app: ts-rebook-mongo
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ts-rebook-mongo
+        hpc.scch.at/responsibility: urbanke
+        hpc.scch.at/service: ts-rebook-mongo
+    spec:
+      containers:
+        - name: ts-rebook-mongo
+          image: mongo:4.4
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 27017
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ts-verification-code-mongo
+  labels:
+    hpc.scch.at/responsibility: urbanke
+spec:
+  selector:
+    matchLabels:
+      app: ts-verification-code-mongo
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ts-verification-code-mongo
+        hpc.scch.at/responsibility: urbanke
+        hpc.scch.at/service: ts-verification-code-mongo
+    spec:
+      containers:
+        - name: ts-verification-code-mongo
+          image: mongo:4.4
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 27017
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ts-account-mongo
+spec:
+  ports:
+    - port: 27017
+  selector:
+    app: ts-account-mongo
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: ts-delivery-mongo
+  name: ts-news-mongo
 spec:
   ports:
     - port: 27017
   selector:
-    app: ts-delivery-mongo
+    app: ts-news-mongo
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: ts-user-mongo
+  name: ts-rebook-mongo
 spec:
   ports:
     - port: 27017
   selector:
-    app: ts-user-mongo
+    app: ts-rebook-mongo
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: ts-auth-mongo
+  name: ts-verification-code-mongo
 spec:
   ports:
     - port: 27017
   selector:
-    app: ts-auth-mongo
+    app: ts-verification-code-mongo
+
 ---
 
 apiVersion: v1

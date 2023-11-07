@@ -1,0 +1,23 @@
+
+Setup System:
+
+1. Use docker-compose to setup the TrainTicket system.
+
+
+Failure Triggering Usage Steps:
+
+1. Log in.
+2. Input "Shanghai" in the start station and input "Suzhou" in the end station.
+2. Select date and click [Search]. Remeber to select high-speed train.
+4. After a few seconds, it will alert [error].
+
+Failure Triggering Test Case:
+
+There are two test cases in ts-ui-test, named [TestFlowKill] and [TestFlowOOM].
+Just run [TestFlowKill] and it will do as failure triggering usage steps mentioned above.
+
+Note:
+Every time you run it, order service crashes.
+Thus, you need to wait for the order service to restart if you want to run it one more time. 
+Otherwise "Connection refused" will be printed in the terminal.
+

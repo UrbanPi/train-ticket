@@ -1,66 +1,55 @@
 package security.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
-import security.entity.*;
+import security.domain.*;
+import security.domain.CheckResult;
+import security.domain.CheckInfo;
 import security.service.SecurityService;
 
-import static org.springframework.http.ResponseEntity.ok;
-
-/**
- * @author fdse
- */
 @RestController
-@RequestMapping("/api/v1/securityservice")
 public class SecurityController {
 
     @Autowired
     private SecurityService securityService;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SecurityController.class);
-
-    @GetMapping(value = "/welcome")
-    public String home(@RequestHeader HttpHeaders headers) {
+    @RequestMapping(value = "/welcome", method = RequestMethod.GET)
+    public String home(){
         return "welcome to [Security Service]";
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping(path = "/securityConfigs")
-    public HttpEntity findAllSecurityConfig(@RequestHeader HttpHeaders headers) {
-        SecurityController.LOGGER.info("[Find All]");
-        return ok(securityService.findAllSecurityConfig(headers));
+    @RequestMapping(path = "/securityConfig/findAll", method = RequestMethod.GET)
+    public GetAllSecurityConfigResult findAllSecurityConfig(){
+        System.out.println("[Security Service][Find All]");
+        return securityService.findAllSecurityConfig();
     }
 
     @CrossOrigin(origins = "*")
-    @PostMapping(path = "/securityConfigs")
-    public HttpEntity create(@RequestBody SecurityConfig info, @RequestHeader HttpHeaders headers) {
-        SecurityController.LOGGER.info("[Create] SecurityConfig Name: {}", info.getName());
-        return ok(securityService.addNewSecurityConfig(info, headers));
+    @RequestMapping(path = "/securityConfig/create", method = RequestMethod.POST)
+    public CreateSecurityConfigResult create(@RequestBody CreateSecurityConfigInfo info){
+        System.out.println("[Security Service][Create] Name:" + info.getName());
+        return securityService.addNewSecurityConfig(info);
     }
 
     @CrossOrigin(origins = "*")
-    @PutMapping(path = "/securityConfigs")
-    public HttpEntity update(@RequestBody SecurityConfig info, @RequestHeader HttpHeaders headers) {
-        SecurityController.LOGGER.info("[Update] SecurityConfig Name: {}", info.getName());
-        return ok(securityService.modifySecurityConfig(info, headers));
+    @RequestMapping(path = "/securityConfig/update", method = RequestMethod.POST)
+    public UpdateSecurityConfigResult update(@RequestBody UpdateSecurityConfigInfo info){
+        System.out.println("[Security Service][Update] Name:" + info.getName());
+        return securityService.modifySecurityConfig(info);
     }
 
     @CrossOrigin(origins = "*")
-    @DeleteMapping(path = "/securityConfigs/{id}")
-    public HttpEntity delete(@PathVariable String id, @RequestHeader HttpHeaders headers) {
-        SecurityController.LOGGER.info("[Delete] SecurityConfig Id: {}", id);
-        return ok(securityService.deleteSecurityConfig(id, headers));
+    @RequestMapping(path = "/securityConfig/delete", method = RequestMethod.POST)
+    public DeleteConfigResult delete(@RequestBody DeleteConfigInfo info){
+        System.out.println("[Security Service][Delete] Id:" + info.getId());
+        return securityService.deleteSecurityConfig(info);
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping(path = "/securityConfigs/{accountId}")
-    public HttpEntity check(@PathVariable String accountId, @RequestHeader HttpHeaders headers) {
-        SecurityController.LOGGER.info("[Check Security] Check Account Id: {}", accountId);
-        return ok(securityService.check(accountId, headers));
+    @RequestMapping(path = "/security/check", method = RequestMethod.POST)
+    public CheckResult check(@RequestBody CheckInfo info){
+        System.out.println("[Security Service][Check Security] Check Account Id:" + info.getAccountId());
+        return securityService.check(info);
     }
-
 }

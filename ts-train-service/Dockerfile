@@ -1,9 +1,6 @@
 FROM openjdk:8-jdk
 
-RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
-
 ADD ./target/ts-train-service-1.0.jar /app/
-ENV SW_AGENT_NAME=ts-train-service
-CMD ["java", "-Xmx200m", "-javaagent:/skywalking/agent/skywalking-agent.jar", "-jar", "/app/ts-train-service-1.0.jar"]
+CMD ["java", "-Xmx1200m", "-jar", "/app/ts-train-service-1.0.jar"]
 
 EXPOSE 14567

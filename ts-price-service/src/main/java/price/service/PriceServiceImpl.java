@@ -1,136 +1,135 @@
 package price.service;
 
-import edu.fudan.common.util.Response;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
-import price.entity.PriceConfig;
+import price.domain.CreateAndModifyPriceConfig;
+import price.domain.PriceConfig;
+import price.domain.ReturnManyPriceConfigResult;
+import price.domain.ReturnSinglePriceConfigResult;
 import price.repository.PriceConfigRepository;
-import price.utils.MemoryDefect;
-
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
-
-/**
- * @author fdse
- */
 @Service
-public class PriceServiceImpl implements PriceService {
+public class PriceServiceImpl implements PriceService{
 
     @Autowired
     private PriceConfigRepository priceConfigRepository;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PriceServiceImpl.class);
-
-    String noThatConfig = "No that config";
-
     @Override
-    public Response createNewPriceConfig(PriceConfig createAndModifyPriceConfig, HttpHeaders headers) {
-        PriceServiceImpl.LOGGER.info("[Create New Price Config]");
-        PriceConfig priceConfig = null;
-        // create
-        if (createAndModifyPriceConfig.getId() == null || createAndModifyPriceConfig.getId().toString().length() < 10) {
-            priceConfig = new PriceConfig();
+    public ReturnSinglePriceConfigResult createNewPriceConfig(CreateAndModifyPriceConfig createAndModifyPriceConfig) {
+        System.out.println("[Price Service][Create New Price Config]");
+        ReturnSinglePriceConfigResult result = new ReturnSinglePriceConfigResult();
+        if(createAndModifyPriceConfig.getId() == null || createAndModifyPriceConfig.getId().length() < 10){
+            PriceConfig priceConfig = new PriceConfig();
             priceConfig.setId(UUID.randomUUID());
             priceConfig.setBasicPriceRate(createAndModifyPriceConfig.getBasicPriceRate());
             priceConfig.setFirstClassPriceRate(createAndModifyPriceConfig.getFirstClassPriceRate());
             priceConfig.setRouteId(createAndModifyPriceConfig.getRouteId());
             priceConfig.setTrainType(createAndModifyPriceConfig.getTrainType());
             priceConfigRepository.save(priceConfig);
-        } else {
-            // modify
-            priceConfig = priceConfigRepository.findById(createAndModifyPriceConfig.getId());
-            if (priceConfig == null) {
+            result.setPriceConfig(priceConfig);
+            result.setMessage("Success.");
+            result.setStatus(true);
+        }else{
+            PriceConfig priceConfig = priceConfigRepository.findById(UUID.fromString(createAndModifyPriceConfig.getId()));
+            if(priceConfig == null){
                 priceConfig = new PriceConfig();
-                priceConfig.setId(createAndModifyPriceConfig.getId());
+                priceConfig.setId(UUID.fromString(createAndModifyPriceConfig.getId()));
             }
             priceConfig.setBasicPriceRate(createAndModifyPriceConfig.getBasicPriceRate());
             priceConfig.setFirstClassPriceRate(createAndModifyPriceConfig.getFirstClassPriceRate());
             priceConfig.setRouteId(createAndModifyPriceConfig.getRouteId());
             priceConfig.setTrainType(createAndModifyPriceConfig.getTrainType());
             priceConfigRepository.save(priceConfig);
+            result.setPriceConfig(priceConfig);
+            result.setMessage("Success.");
+            result.setStatus(true);
         }
-        return new Response<>(1, "Create success", priceConfig);
+        return result;
     }
 
     @Override
-    public PriceConfig findById(String id, HttpHeaders headers) {
-        PriceServiceImpl.LOGGER.info("[Find By Id] ID: {}", id);
-        return priceConfigRepository.findById(UUID.fromString(id));
-    }
-
-    @Override
-    public Response findByRouteIdAndTrainType(String routeId, String trainType, HttpHeaders headers) {
-        PriceServiceImpl.LOGGER.info("[Find By Route And Train Type] Rote: {}   Train Type: {}", routeId, trainType);
-        PriceConfig priceConfig = priceConfigRepository.findByRouteIdAndTrainType(routeId, trainType);
-        PriceServiceImpl.LOGGER.info("[Find By Route Id And Train Type]");
-
-        if (priceConfig == null) {
-            PriceServiceImpl.LOGGER.warn("Find by route and train type warn. PricrConfig not found, RouteId: {}, TrainType: {}",routeId,trainType);
-            return new Response<>(0, noThatConfig, null);
-        } else {
-            return new Response<>(1, "Success", priceConfig);
+    public ReturnSinglePriceConfigResult findById(String id) {
+        System.out.println("[Price Service][Find By Id] ID:" + id);
+        PriceConfig priceConfig = priceConfigRepository.findById(UUID.fromString(id));
+        ReturnSinglePriceConfigResult result = new ReturnSinglePriceConfigResult();
+        if(priceConfig == null){
+            result.setStatus(false);
+            result.setMessage("Price Config Not Found");
+            result.setPriceConfig(null);
+        }else{
+            result.setStatus(true);
+            result.setMessage("Success");
+            result.setPriceConfig(priceConfig);
         }
+        return result;
     }
 
+    @Override
+    public ReturnSinglePriceConfigResult findByRouteIdAndTrainType(String routeId, String trainType) {
+        System.out.println("[Price Service][Find By Route And Train Type] Rote:" + routeId + "Train Type:" + trainType);
+        PriceConfig priceConfig = priceConfigRepository.findByRouteIdAndTrainType(routeId,trainType);
+        ReturnSinglePriceConfigResult result = new ReturnSinglePriceConfigResult();
+        if(priceConfig == null){
+            result.setStatus(false);
+            result.setMessage("Price Config Not Found");
+            result.setPriceConfig(null);
+            System.out.println("[Price Service][Find By Route Id And Train Type] Fail");
+
+        }else{
+            result.setStatus(true);
+            result.setMessage("Success");
+            result.setPriceConfig(priceConfig);
+            System.out.println("[Price Service][Find By Route Id And Train Type] Success");
+        }
+        return result;
+    }
 
     @Override
-    public Response findAllPriceConfig(HttpHeaders headers) {
-        /**
-         * OOM Defect
-         */
-        MemoryDefect.injectMemoryDefect();
-
-        List<PriceConfig> list = priceConfigRepository.findAll();
-        if (list == null) {
+    public ReturnManyPriceConfigResult findAllPriceConfig() {
+        ArrayList<PriceConfig> list = priceConfigRepository.findAll();
+        ReturnManyPriceConfigResult result = new ReturnManyPriceConfigResult();
+        if(list == null){
             list = new ArrayList<>();
         }
-
-        if (!list.isEmpty()) {
-            PriceServiceImpl.LOGGER.warn("Find all price config warn,{}","No Content");
-            return new Response<>(1, "Success", list);
-        } else {
-            return new Response<>(0, "No price config", null);
-        }
-
+        result.setMessage("Success");
+        result.setPriceConfig(list);
+        result.setStatus(true);
+        return result;
     }
 
     @Override
-    public Response deletePriceConfig(PriceConfig c, HttpHeaders headers) {
-        PriceConfig priceConfig = priceConfigRepository.findById(c.getId());
-        if (priceConfig == null) {
-            PriceServiceImpl.LOGGER.error("Delete price config error. Price config not found, PriceConfigId: {}",c.getId());
-            return new Response<>(0, noThatConfig, null);
+    public boolean deletePriceConfig(CreateAndModifyPriceConfig c) {
+        PriceConfig priceConfig = priceConfigRepository.findById(UUID.fromString(c.getId()));
+        if(priceConfig == null){
+            return false;
         } else {
             PriceConfig pc = new PriceConfig();
-            pc.setId(c.getId());
+            pc.setId(UUID.fromString(c.getId()));
             pc.setRouteId(c.getRouteId());
             pc.setTrainType(c.getTrainType());
             pc.setBasicPriceRate(c.getBasicPriceRate());
             pc.setFirstClassPriceRate(c.getFirstClassPriceRate());
             priceConfigRepository.delete(pc);
-            return new Response<>(1, "Delete success", pc);
+            return true;
         }
     }
 
     @Override
-    public Response updatePriceConfig(PriceConfig c, HttpHeaders headers) {
-        PriceConfig priceConfig = priceConfigRepository.findById(c.getId());
-        if (priceConfig == null) {
-            PriceServiceImpl.LOGGER.error("Update price config error. Price config not found, PriceConfigId: {}",c.getId());
-            return new Response<>(0, noThatConfig, null);
+    public boolean updatePriceConfig(CreateAndModifyPriceConfig c) {
+        PriceConfig priceConfig = priceConfigRepository.findById(UUID.fromString(c.getId()));
+        if(priceConfig == null){
+            return false;
         } else {
-            priceConfig.setId(c.getId());
+            priceConfig.setId(UUID.fromString(c.getId()));
             priceConfig.setBasicPriceRate(c.getBasicPriceRate());
             priceConfig.setFirstClassPriceRate(c.getFirstClassPriceRate());
             priceConfig.setRouteId(c.getRouteId());
             priceConfig.setTrainType(c.getTrainType());
             priceConfigRepository.save(priceConfig);
-            return new Response<>(1, "Update success", priceConfig);
+            return true;
         }
     }
+
 }

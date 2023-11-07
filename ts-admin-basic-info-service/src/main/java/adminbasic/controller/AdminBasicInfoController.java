@@ -1,182 +1,169 @@
 package adminbasic.controller;
 
-import adminbasic.entity.*;
+import adminbasic.domin.bean.Config;
+import adminbasic.domin.bean.Contacts;
+import adminbasic.domin.bean.Station;
+import adminbasic.domin.bean.TrainType;
+import adminbasic.domin.info.*;
+import adminbasic.domin.reuslt.*;
 import adminbasic.service.AdminBasicInfoService;
-import edu.fudan.common.util.Response;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
-import static org.springframework.http.ResponseEntity.ok;
-import static org.springframework.http.ResponseEntity.status;
-
-/**
- * @author fdse
- */
 @RestController
-@RequestMapping("/api/v1/adminbasicservice")
 public class AdminBasicInfoController {
 
     @Autowired
     AdminBasicInfoService adminBasicInfoService;
-    private static final Logger LOGGER = LoggerFactory.getLogger(AdminBasicInfoController.class);
 
-    @GetMapping(path = "/welcome")
-    public String home(@RequestHeader HttpHeaders headers) {
+    @RequestMapping(path = "/welcome", method = RequestMethod.GET)
+    public String home() {
         return "Welcome to [ AdminBasicInfo Service ] !";
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping(path = "/adminbasic/contacts")
-    public HttpEntity getAllContacts(@RequestHeader HttpHeaders headers) {
-        AdminBasicInfoController.LOGGER.info("[Admin Basic Info Service][Find All Contacts by admin ");
-        return ok(adminBasicInfoService.getAllContacts(headers));
+    @RequestMapping(path = "/adminbasic/getAllContacts/{id}", method = RequestMethod.GET)
+    public GetAllContactsResult getAllContacts(@PathVariable String id){
+        System.out.println("[Admin Basic Info Service][Find All Contacts by admin: " + id);
+        return adminBasicInfoService.getAllContacts(id);
     }
 
     @CrossOrigin(origins = "*")
-    @DeleteMapping(path = "/adminbasic/contacts/{contactsId}")
-    public HttpEntity deleteContacts(@PathVariable String contactsId, @RequestHeader HttpHeaders headers) {
-        AdminBasicInfoController.LOGGER.info("[Admin Basic Info Service][Delete Contacts by admin ");
-        return ok(adminBasicInfoService.deleteContact(contactsId, headers));
+    @RequestMapping(path = "/adminbasic/deleteContacts", method = RequestMethod.POST)
+    public DeleteContactsResult deleteContacts(@RequestBody DeleteContactsInfo dci){
+        System.out.println("[Admin Basic Info Service][Delete Contacts by admin: " + dci.getLoginId());
+        return adminBasicInfoService.deleteContact(dci.getLoginId(), dci);
     }
 
     @CrossOrigin(origins = "*")
-    @PutMapping(path = "/adminbasic/contacts")
-    public HttpEntity modifyContacts(@RequestBody Contacts mci, @RequestHeader HttpHeaders headers) {
-        AdminBasicInfoController.LOGGER.info("[Admin Basic Info Service][Modify Contacts by admin: ");
-        return ok(adminBasicInfoService.modifyContact(mci, headers));
+    @RequestMapping(path = "/adminbasic/modifyContacts", method = RequestMethod.POST)
+    public ModifyContactsResult modifyContacts(@RequestBody ModifyContactsInfo mci){
+        System.out.println("[Admin Basic Info Service][Modify Contacts by admin: " + mci.getLoginId());
+        return adminBasicInfoService.modifyContact(mci.getLoginId(), mci);
     }
 
     @CrossOrigin(origins = "*")
-    @PostMapping(path = "/adminbasic/contacts")
-    public HttpEntity addContacts(@RequestBody Contacts c, @RequestHeader HttpHeaders headers) {
-        AdminBasicInfoController.LOGGER.info("[Admin Basic Info Service][Modify Contacts by admin  ");
-        return ok(adminBasicInfoService.addContact(c, headers));
+    @RequestMapping(path = "/adminbasic/addContacts", method = RequestMethod.POST)
+    public AddContactsResult addContacts(@RequestBody Contacts c){
+        System.out.println("[Admin Basic Info Service][Modify Contacts by admin: " + c.getLoginId());
+        return adminBasicInfoService.addContact(c.getLoginId(), c);
+    }
+
+    /////////////////////////station/////////////////////////////////////////////////////////////////////////////////
+    @CrossOrigin(origins = "*")
+    @RequestMapping(path = "/adminbasic/getAllStations/{id}", method = RequestMethod.GET)
+    public GetAllStationResult getAllStations(@PathVariable String id){
+        System.out.println("[Admin Basic Info Service][Find All Station by admin: " + id);
+        return adminBasicInfoService.getAllStations(id);
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping(path = "/adminbasic/stations")
-    public HttpEntity getAllStations(@RequestHeader HttpHeaders headers) {
-        AdminBasicInfoController.LOGGER.info("[Admin Basic Info Service][Find All Station by admin  ");
-        return ok(adminBasicInfoService.getAllStations(headers));
+    @RequestMapping(path = "/adminbasic/deleteStation", method = RequestMethod.POST)
+    public boolean deleteStation(@RequestBody Station s){
+        System.out.println("[Admin Basic Info Service][Delete Station by admin: " + s.getLoginId());
+        return adminBasicInfoService.deleteStation(s);
     }
 
     @CrossOrigin(origins = "*")
-    @DeleteMapping(path = "/adminbasic/stations")
-    public HttpEntity deleteStation(@RequestBody Station s, @RequestHeader HttpHeaders headers) {
-        AdminBasicInfoController.LOGGER.info("[Admin Basic Info Service][Delete Station by admin ");
-        return ok(adminBasicInfoService.deleteStation(s, headers));
+    @RequestMapping(path = "/adminbasic/modifyStation", method = RequestMethod.POST)
+    public boolean modifyStation(@RequestBody Station s){
+        System.out.println("[Admin Basic Info Service][Modify Station by admin: " + s.getLoginId());
+        return adminBasicInfoService.modifyStation(s);
     }
 
     @CrossOrigin(origins = "*")
-    @PutMapping(path = "/adminbasic/stations")
-    public HttpEntity modifyStation(@RequestBody Station s, @RequestHeader HttpHeaders headers) {
-        AdminBasicInfoController.LOGGER.info("[Admin Basic Info Service][Modify Station by admin ");
-        return ok(adminBasicInfoService.modifyStation(s, headers));
+    @RequestMapping(path = "/adminbasic/addStation", method = RequestMethod.POST)
+    public boolean addStation(@RequestBody Station s){
+        System.out.println("[Admin Basic Info Service][Modify Station by admin: " + s.getLoginId());
+        return adminBasicInfoService.addStation(s);
+    }
+
+    /////////////////////////train/////////////////////////////////////////////////////////////////////////////////
+    @CrossOrigin(origins = "*")
+    @RequestMapping(path = "/adminbasic/getAllTrains/{id}", method = RequestMethod.GET)
+    public GetAllTrainResult getAllTrains(@PathVariable String id){
+        System.out.println("[Admin Basic Info Service][Find All Train by admin: " + id);
+        return adminBasicInfoService.getAllTrains(id);
     }
 
     @CrossOrigin(origins = "*")
-    @PostMapping(path = "/adminbasic/stations")
-    public HttpEntity addStation(@RequestBody Station s, @RequestHeader HttpHeaders headers) {
-        AdminBasicInfoController.LOGGER.info("[Admin Basic Info Service][Modify Station by admin");
-        return ok(adminBasicInfoService.addStation(s, headers));
+    @RequestMapping(path = "/adminbasic/deleteTrain", method = RequestMethod.POST)
+    public boolean deleteTrain(@RequestBody TrainInfo2 t){
+        System.out.println("[Admin Basic Info Service][Delete Train by admin: " + t.getLoginId());
+        return adminBasicInfoService.deleteTrain(t);
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping(path = "/adminbasic/trains")
-    public HttpEntity getAllTrains(@RequestHeader HttpHeaders headers) {
-        AdminBasicInfoController.LOGGER.info("[Admin Basic Info Service][Find All Train by admin: ");
-        return ok(adminBasicInfoService.getAllTrains(headers));
+    @RequestMapping(path = "/adminbasic/modifyTrain", method = RequestMethod.POST)
+    public boolean modifyTrain(@RequestBody TrainType t){
+        System.out.println("[Admin Basic Info Service][Modify Train by admin: " + t.getLoginId());
+        return adminBasicInfoService.modifyTrain(t);
     }
 
     @CrossOrigin(origins = "*")
-    @DeleteMapping(path = "/adminbasic/trains/{id}")
-    public HttpEntity deleteTrain(@PathVariable String id, @RequestHeader HttpHeaders headers) {
-        AdminBasicInfoController.LOGGER.info("[Admin Basic Info Service][Delete Train by admin");
-        return ok(adminBasicInfoService.deleteTrain(id, headers));
+    @RequestMapping(path = "/adminbasic/addTrain", method = RequestMethod.POST)
+    public boolean addTrain(@RequestBody TrainType t){
+        System.out.println("[Admin Basic Info Service][Modify Train by admin: " + t.getLoginId());
+        return adminBasicInfoService.addTrain(t);
+    }
+
+    /////////////////////////config/////////////////////////////////////////////////////////////////////////////////
+    @CrossOrigin(origins = "*")
+    @RequestMapping(path = "/adminbasic/getAllConfigs/{id}", method = RequestMethod.GET)
+    public GetAllConfigResult getAllConfigs(@PathVariable String id){
+        System.out.println("[Admin Basic Info Service][Find All Config by admin: " + id);
+        return adminBasicInfoService.getAllConfigs(id);
     }
 
     @CrossOrigin(origins = "*")
-    @PutMapping(path = "/adminbasic/trains")
-    public HttpEntity modifyTrain(@RequestBody TrainType t, @RequestHeader HttpHeaders headers) {
-        AdminBasicInfoController.LOGGER.info("[Admin Basic Info Service][Modify Train by admin  ");
-        return ok(adminBasicInfoService.modifyTrain(t, headers));
+    @RequestMapping(path = "/adminbasic/deleteConfig", method = RequestMethod.POST)
+    public String deleteConfig(@RequestBody ConfigInfo2 c){
+        System.out.println("[Admin Basic Info Service][Delete Config by admin: " + c.getLoginId());
+        return adminBasicInfoService.deleteConfig(c);
     }
 
     @CrossOrigin(origins = "*")
-    @PostMapping(path = "/adminbasic/trains")
-    public HttpEntity addTrain(@RequestBody TrainType t, @RequestHeader HttpHeaders headers) {
-        AdminBasicInfoController.LOGGER.info("[Admin Basic Info Service][Modify Train by admin ");
-        return ok(adminBasicInfoService.addTrain(t, headers));
+    @RequestMapping(path = "/adminbasic/modifyConfig", method = RequestMethod.POST)
+    public String modifyConfig(@RequestBody Config c){
+        System.out.println("[Admin Basic Info Service][Modify Config by admin: " + c.getLoginId());
+        return adminBasicInfoService.modifyConfig(c);
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping(path = "/adminbasic/configs")
-    public HttpEntity getAllConfigs(@RequestHeader HttpHeaders headers) {
-        AdminBasicInfoController.LOGGER.info("[Admin Basic Info Service][Find All Config by admin  ");
-        try{
-            return ok(adminBasicInfoService.getAllConfigs(headers));
-        }catch (Exception e){
-            AdminBasicInfoController.LOGGER.error(e.toString());
-            return status(500).build();
-        }
+    @RequestMapping(path = "/adminbasic/addConfig", method = RequestMethod.POST)
+    public String addConfig(@RequestBody Config c){
+        System.out.println("[Admin Basic Info Service][Modify Config by admin: " + c.getLoginId());
+        return adminBasicInfoService.addConfig(c);
+    }
+
+    /////////////////////////price/////////////////////////////////////////////////////////////////////////////////
+    @CrossOrigin(origins = "*")
+    @RequestMapping(path = "/adminbasic/getAllPrices/{id}", method = RequestMethod.GET)
+    public GetAllPriceResult getAllPrices(@PathVariable String id){
+        System.out.println("[Admin Basic Info Service][Find All Price by admin: " + id);
+        return adminBasicInfoService.getAllPrices(id);
     }
 
     @CrossOrigin(origins = "*")
-    @DeleteMapping(path = "/adminbasic/configs/{name}")
-    public HttpEntity deleteConfig(@PathVariable String name, @RequestHeader HttpHeaders headers) {
-        AdminBasicInfoController.LOGGER.info("[Admin Basic Info Service][Delete Config by admin ");
-        return ok(adminBasicInfoService.deleteConfig(name, headers));
+    @RequestMapping(path = "/adminbasic/deletePrice", method = RequestMethod.POST)
+    public boolean deletePrice(@RequestBody PriceInfo pi){
+        System.out.println("[Admin Basic Info Service][Delete Price by admin: " + pi.getLoginId());
+        return adminBasicInfoService.deletePrice(pi);
     }
 
     @CrossOrigin(origins = "*")
-    @PutMapping(path = "/adminbasic/configs")
-    public HttpEntity modifyConfig(@RequestBody Config c, @RequestHeader HttpHeaders headers) {
-        AdminBasicInfoController.LOGGER.info("[Admin Basic Info Service][Modify Config by admin ");
-        return ok(adminBasicInfoService.modifyConfig(c, headers));
+    @RequestMapping(path = "/adminbasic/modifyPrice", method = RequestMethod.POST)
+    public boolean modifyPrice(@RequestBody PriceInfo pi){
+        System.out.println("[Admin Basic Info Service][Modify Price by admin: " + pi.getLoginId());
+        return adminBasicInfoService.modifyPrice(pi);
     }
 
     @CrossOrigin(origins = "*")
-    @PostMapping(path = "/adminbasic/configs")
-    public HttpEntity addConfig(@RequestBody Config c, @RequestHeader HttpHeaders headers) {
-        AdminBasicInfoController.LOGGER.info("[Admin Basic Info Service][Modify Config by admin  ");
-        return ok(adminBasicInfoService.addConfig(c, headers));
+    @RequestMapping(path = "/adminbasic/addPrice", method = RequestMethod.POST)
+    public ReturnSinglePriceConfigResult addPrice(@RequestBody PriceInfo pi){
+        System.out.println("[Admin Basic Info Service][Add Price by admin: " + pi.getLoginId());
+        return adminBasicInfoService.addPrice(pi);
     }
 
-    @CrossOrigin(origins = "*")
-    @GetMapping(path = "/adminbasic/prices")
-    public HttpEntity getAllPrices(@RequestHeader HttpHeaders headers) {
-        AdminBasicInfoController.LOGGER.info("[Admin Basic Info Service][Find All Price by admin ");
-        try {
-            return ok(adminBasicInfoService.getAllPrices(headers));
-        }catch (Exception e){
-            AdminBasicInfoController.LOGGER.error(e.toString());
-            return status(500).build();
-        }
-    }
-
-    @CrossOrigin(origins = "*")
-    @DeleteMapping(path = "/adminbasic/prices")
-    public HttpEntity deletePrice(@RequestBody PriceInfo pi, @RequestHeader HttpHeaders headers) {
-        AdminBasicInfoController.LOGGER.info("[Admin Basic Info Service][Delete Price by admin  ");
-        return ok(adminBasicInfoService.deletePrice(pi, headers));
-    }
-
-    @CrossOrigin(origins = "*")
-    @PutMapping(path = "/adminbasic/prices")
-    public HttpEntity modifyPrice(@RequestBody PriceInfo pi, @RequestHeader HttpHeaders headers) {
-        AdminBasicInfoController.LOGGER.info("[Admin Basic Info Service][Modify Price by admin  ");
-        return ok(adminBasicInfoService.modifyPrice(pi, headers));
-    }
-
-    @CrossOrigin(origins = "*")
-    @PostMapping(path = "/adminbasic/prices")
-    public HttpEntity addPrice(@RequestBody PriceInfo pi, @RequestHeader HttpHeaders headers) {
-        AdminBasicInfoController.LOGGER.info("[Admin Basic Info Service][Add Price by admin");
-        return ok(adminBasicInfoService.addPrice(pi, headers));
-    }
 
 }

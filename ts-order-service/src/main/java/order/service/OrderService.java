@@ -1,52 +1,44 @@
 package order.service;
 
-import edu.fudan.common.util.Response;
-import order.entity.*;
-import org.springframework.http.HttpHeaders;
-
-import java.util.Date;
+import order.domain.*;
+import java.util.ArrayList;
 import java.util.UUID;
 
-/**
- * @author fdse
- */
 public interface OrderService {
 
-    Response findOrderById(UUID id, HttpHeaders headers);
+    Order findOrderById(UUID id);
 
-    Response create(Order newOrder, HttpHeaders headers);
+    CreateOrderResult create(Order newOrder);
 
-    Response saveChanges(Order order, HttpHeaders headers);
+    ChangeOrderResult saveChanges(Order order);
 
-    Response cancelOrder(UUID accountId, UUID orderId, HttpHeaders headers);
+    CancelOrderResult cancelOrder(CancelOrderInfo coi);
 
-    Response queryOrders(OrderInfo qi, String accountId, HttpHeaders headers);
+    ArrayList<Order> queryOrders(QueryInfo qi,String accountId);
 
-    Response queryOrdersForRefresh(OrderInfo qi, String accountId, HttpHeaders headers);
+    OrderAlterResult alterOrder(OrderAlterInfo oai);
 
-    Response alterOrder(OrderAlterInfo oai, HttpHeaders headers);
+    CalculateSoldTicketResult queryAlreadySoldOrders(CalculateSoldTicketInfo csti);
 
-    Response queryAlreadySoldOrders(Date travelDate, String trainNumber, HttpHeaders headers);
+    QueryOrderResult getAllOrders();
 
-    Response getAllOrders(HttpHeaders headers);
+    ModifyOrderStatusResult modifyOrder(ModifyOrderStatusInfo info);
 
-    Response modifyOrder(String orderId, int status, HttpHeaders headers);
+    GetOrderPriceResult getOrderPrice(GetOrderPrice info);
 
-    Response getOrderPrice(String orderId, HttpHeaders headers);
+    PayOrderResult payOrder(PayOrderInfo info);
 
-    Response payOrder(String orderId, HttpHeaders headers);
+    GetOrderResult getOrderById(GetOrderByIdInfo info);
 
-    Response getOrderById(String orderId , HttpHeaders headers);
+    GetOrderInfoForSecurityResult checkSecurityAboutOrder(GetOrderInfoForSecurity info);
 
-    Response checkSecurityAboutOrder(Date checkDate, String accountId, HttpHeaders headers);
+    void initOrder(Order order);
 
-    void initOrder(Order order, HttpHeaders headers);
+    DeleteOrderResult deleteOrder(DeleteOrderInfo info);
 
-    Response deleteOrder(String orderId, HttpHeaders headers);
+    LeftTicketInfo getSoldTickets(SeatRequest seatRequest);
 
-    Response getSoldTickets(Seat seatRequest, HttpHeaders headers);
+    AddOrderResult addNewOrder(Order order);
 
-    Response addNewOrder(Order order, HttpHeaders headers);
-
-    Response updateOrder(Order order, HttpHeaders headers);
+    UpdateOrderResult updateOrder(Order order);
 }

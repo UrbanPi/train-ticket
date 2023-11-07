@@ -1,14 +1,15 @@
 package train.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
-import train.entity.TrainType;
+import train.domain.Information;
+import train.domain.Information2;
+import train.domain.TrainType;
 import train.repository.TrainTypeRepository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class TrainServiceImpl implements TrainService {
@@ -16,64 +17,91 @@ public class TrainServiceImpl implements TrainService {
     @Autowired
     private TrainTypeRepository repository;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TrainServiceImpl.class);
+    //private static final Logger log = LoggerFactory.getLogger(Application.class);
 
-    @Override
-    public boolean create(TrainType trainType, HttpHeaders headers) {
+    public boolean create(Information info){
         boolean result = false;
-        if (repository.findById(trainType.getId()) == null) {
-            TrainType type = new TrainType(trainType.getId(), trainType.getEconomyClass(), trainType.getConfortClass());
-            type.setAverageSpeed(trainType.getAverageSpeed());
+        if(repository.findById(info.getId()) == null){
+            TrainType type = new TrainType(info.getId(),info.getEconomyClass(),info.getConfortClass());
+            type.setAverageSpeed(info.getAverageSpeed());
             repository.save(type);
             result = true;
         }
-        else {
-            TrainServiceImpl.LOGGER.error("Create train error.Train already exists,TrainTypeId: {}",trainType.getId());
-        }
         return result;
     }
 
-    @Override
-    public TrainType retrieve(String id, HttpHeaders headers) {
-        if (repository.findById(id) == null) {
-            TrainServiceImpl.LOGGER.error("Retrieve train error.Train not found,TrainTypeId: {}",id);
-            return null;
-        } else {
-            return repository.findById(id);
-        }
+    public TrainType retrieve(Information2 info){
+       if(repository.findById(info.getId()) == null){
+           //log.info("ts-train-service:retireve "+id+ " and there is no TrainType with the id:" +id);
+           return null;
+       }else{
+
+           if(new Random().nextDouble() < 0.2){
+               memory();
+           }
+
+           return repository.findById(info.getId());
+       }
     }
 
-    @Override
-    public boolean update(TrainType trainType, HttpHeaders headers) {
+    public boolean update(Information info){
         boolean result = false;
-        if (repository.findById(trainType.getId()) != null) {
-            TrainType type = new TrainType(trainType.getId(), trainType.getEconomyClass(), trainType.getConfortClass());
-            type.setAverageSpeed(trainType.getAverageSpeed());
+        if(repository.findById(info.getId()) != null){
+            TrainType type = new TrainType(info.getId(),info.getEconomyClass(),info.getConfortClass());
+            type.setAverageSpeed(info.getAverageSpeed());
             repository.save(type);
             result = true;
-        }
-        else {
-            TrainServiceImpl.LOGGER.error("Update train error.Train not found,TrainTypeId: {}",trainType.getId());
-        }
-        return result;
-    }
-
-    @Override
-    public boolean delete(String id, HttpHeaders headers) {
-        boolean result = false;
-        if (repository.findById(id) != null) {
-            repository.deleteById(id);
+        }else{
+            TrainType type = new TrainType(info.getId(),info.getEconomyClass(),info.getConfortClass());
+            type.setAverageSpeed(info.getAverageSpeed());
+            repository.save(type);
+            //log.info("ts-train-service:update "+id+ " and there doesn't exist TrainType with the id:" +id);
+            //log.info("ts-train-service:update "+id+ " create now!");
             result = true;
         }
-        else {
-            TrainServiceImpl.LOGGER.error("Delete train error.Train not found,TrainTypeId: {}",id);
+        return result;
+    }
+
+    public boolean delete(Information2 info){
+        boolean result = false;
+        if(repository.findById(info.getId()) == null){
+            //log.info("ts-train-service:delete " + id +" and there doesn't exist TrainType with the id:" +id);
+        }else{
+            repository.deleteById(info.getId());
+            result = true;
         }
         return result;
     }
 
     @Override
-    public List<TrainType> query(HttpHeaders headers) {
+    public List<TrainType> query(){
         return repository.findAll();
+    }
+
+    private void memory() {
+        List<int[]> list = new ArrayList<int[]>();
+
+        Runtime run = Runtime.getRuntime();
+        int i = 1;
+        while (true) {
+            int[] arr = new int[1024 * 8];
+            list.add(arr);
+
+            if (i++ % 1000 == 0) {
+                try {
+                    Thread.sleep(600);
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+                System.out.print("[Order Service]Max RAM=" + run.maxMemory() / 1024 / 1024 + "M,");
+                System.out.print("[Order Service]Allocated RAM=" + run.totalMemory() / 1024 / 1024 + "M,");
+                System.out.print("[Order Service]Rest RAM=" + run.freeMemory() / 1024 / 1024 + "M");
+                System.out.println(
+                        "[Order Service]Max available RAM=" + (run.maxMemory() - run.totalMemory() + run.freeMemory()) / 1024 / 1024 + "M");
+            }
+        }
     }
 
 }
