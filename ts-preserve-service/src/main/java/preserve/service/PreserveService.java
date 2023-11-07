@@ -1,13 +1,14 @@
 package preserve.service;
 
-import edu.fudan.common.util.Response;
-import org.springframework.http.HttpHeaders;
-import preserve.entity.OrderTicketsInfo;
+import org.springframework.scheduling.annotation.Async;
+import preserve.domain.OrderTicketsInfo;
+import preserve.domain.OrderTicketsResult;
 
-/**
- * @author fdse
- */
+import java.util.concurrent.Future;
+
 public interface PreserveService {
 
-    Response preserve(OrderTicketsInfo oti, HttpHeaders headers);
+    @Async("myAsync")
+    Future<OrderTicketsResult> preserve(OrderTicketsInfo oti, String accountId, String loginToken);
+
 }

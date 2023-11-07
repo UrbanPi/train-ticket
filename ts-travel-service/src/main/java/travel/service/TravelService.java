@@ -1,38 +1,34 @@
 package travel.service;
 
-import edu.fudan.common.util.Response;
-import org.springframework.http.HttpHeaders;
-import travel.entity.*;
+import travel.domain.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
- * @author  Chenjie Xu
- * @date 2017/5/9.
+ * Created by Chenjie Xu on 2017/5/9.
  */
 public interface TravelService {
 
-    Response create(TravelInfo info, HttpHeaders headers);
+    String create(Information info);
 
-    Response retrieve(String tripId, HttpHeaders headers);
+    Trip retrieve(Information2 info);
 
-    Response update(TravelInfo info, HttpHeaders headers);
+    String update(Information info);
 
-    Response delete(String tripId, HttpHeaders headers);
+    String delete(Information2 info);
 
-    Response query(TripInfo info, HttpHeaders headers);
+    ArrayList<TripResponse> query(QueryInfo info);
 
-    Response queryInParallel(TripInfo info, HttpHeaders headers);
+    GetTripAllDetailResult getTripAllDetailInfo(GetTripAllDetailInfo gtdi);
 
-    Response getTripAllDetailInfo(TripAllDetailInfo gtdi, HttpHeaders headers);
+    GetRouteResult getRouteByTripId(String tripId);
 
-    Response getRouteByTripId(String tripId, HttpHeaders headers);
+    GetTrainTypeResult getTrainTypeByTripId(String tripId);
 
-    Response getTrainTypeByTripId(String tripId, HttpHeaders headers);
+    List<Trip> queryAll();
 
-    Response queryAll(HttpHeaders headers);
+    GetTripsByRouteIdResult getTripByRoute(GetTripsByRouteIdInfo info);
 
-    Response  getTripByRoute(ArrayList<String> routeIds, HttpHeaders headers);
-
-    Response adminQueryAll(HttpHeaders headers);
+    AdminFindAllResult adminQueryAll();
 }

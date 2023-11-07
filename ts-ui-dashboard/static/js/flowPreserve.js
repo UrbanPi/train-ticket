@@ -296,7 +296,7 @@ function initFoodSelect(tripId){
                 }
 
             } else {
-                alert(result.status + ":" + result.message);
+                //alert(result.status + ":" + result.message);
             }
 
         }
@@ -591,7 +591,7 @@ $("#ticket_confirm_confirm_btn").click(function () {
         alert("Please Login");
     }
 
-    $("#ticket_confirm_confirm_btn").attr("disabled",true);
+    //$("#ticket_confirm_confirm_btn").attr("disabled",true);
     var orderTicketInfo = new Object();
     orderTicketInfo.contactsId = $("#ticket_confirm_contactsId").text();
     orderTicketInfo.tripId = $("#ticket_confirm_tripId").text();
@@ -648,8 +648,10 @@ $("#ticket_confirm_confirm_btn").click(function () {
     console.log(orderTicketsData);
 
     var tripType = orderTicketInfo.tripId.charAt(0);
+    var path;
     if(tripType == 'G' || tripType == 'D'){
-        path = "/preserve";
+        // path = "/preserve";
+        path = "/click/clickTwice";
     }else{
         path = "/preserveOther";
     }
@@ -663,7 +665,7 @@ $("#ticket_confirm_confirm_btn").click(function () {
             withCredentials: true
         },
         success: function (result) {
-            alert(result["message"]);
+            alert("Success");
             if(result['status'] == true){
                 //$("#preserve_pay_panel").css('display','block');
                 $("#preserve_pay_orderId").val(result["order"]["id"]);
@@ -673,9 +675,12 @@ $("#ticket_confirm_confirm_btn").click(function () {
                 location.hash="anchor_flow_preserve_pay";
             }
         },
-        complete: function(){
-            $("#ticket_confirm_confirm_btn").attr("disabled",false);
+        error: function(){
+            alert("Error");
         }
+        // complete: function(){
+        //     $("#ticket_confirm_confirm_btn").attr("disabled",false);
+        // }
     })
 })
 
@@ -755,7 +760,7 @@ $("#preserve_collect_button").click(function() {
             $("#preserve_collect_button").attr("disabled",false);
         }
     });
-});
+});;
 
 /**
  * Flow Preserve - Step 7 - Enter Station

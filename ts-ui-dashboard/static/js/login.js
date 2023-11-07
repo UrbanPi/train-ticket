@@ -20,6 +20,13 @@ $("#login_button").click(function() {
         alert("Please input verification code to login.");
         return;
     }
+
+
+    $(curr).parent().parent().parent().parent()
+        .prev().find("select").html($(curr)
+        .parent().next().next().next().html())
+
+
     var data = JSON.stringify(loginInfo);
     $("#login_button").attr("disabled",true);
     $("#login_result_status").text("false");

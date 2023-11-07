@@ -1,10 +1,11 @@
 package com.trainticket.repository;
 
-import com.trainticket.entity.Money;
+import com.trainticket.domain.AddMoney;
+import com.trainticket.domain.Payment;
 import org.springframework.data.repository.CrudRepository;
 
 /**
- * @author fdse
+ * Created by Administrator on 2017/6/23.
  */
-public interface AddMoneyRepository extends CrudRepository<Money,String> {
+public interface AddMoneyRepository extends CrudRepository<AddMoney,String> {
 }

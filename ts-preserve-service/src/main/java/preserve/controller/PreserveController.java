@@ -1,39 +1,77 @@
 package preserve.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
-import preserve.entity.*;
+import preserve.domain.*;
 import preserve.service.PreserveService;
 
-import static org.springframework.http.ResponseEntity.ok;
+import java.util.UUID;
+import java.util.concurrent.Future;
 
-/**
- * @author fdse
- */
 @RestController
-@RequestMapping("/api/v1/preserveservice")
 public class PreserveController {
 
     @Autowired
     private PreserveService preserveService;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PreserveController.class);
-
-    @GetMapping(path = "/welcome")
-    public String home() {
-        return "Welcome to [ Preserve Service ] !";
-    }
+    @Autowired
+    private StatusBean statusBean;
 
     @CrossOrigin(origins = "*")
-    @PostMapping(value = "/preserve")
-    public HttpEntity preserve(@RequestBody OrderTicketsInfo oti,
-                               @RequestHeader HttpHeaders headers) {
-        PreserveController.LOGGER.info("[Preserve] Account  order from {} -----> {} at {}", oti.getFrom(), oti.getTo(), oti.getDate());
-        return ok(preserveService.preserve(oti, headers));
+    @RequestMapping(value="/preserve", method = RequestMethod.POST)
+    public OrderTicketsResult preserve(@RequestBody OrderTicketsInfoPlus otiPlus) throws Exception {
+
+        OrderTicketsInfo oti = otiPlus.getInfo();
+
+        String loginId = otiPlus.getLoginId();
+
+        String loginToken = otiPlus.getLoginToken();
+
+
+        System.out.println("[Preserve Service][Preserve] Account " + loginId + " order from " +
+                oti.getFrom() + " -----> " + oti.getTo() + " at " + oti.getDate());
+
+        //add this request to the queue of requests
+        UUID uuid = UUID.randomUUID();
+        PreserveNode pn = new PreserveNode(uuid, loginId);
+        statusBean.chartMsgs.add(pn);
+
+        Future<OrderTicketsResult> otr = preserveService.preserve(oti,loginId,loginToken);
+        //wait the task done
+        while(true) {
+            if(otr.isDone()) {
+                System.out.println("------preserveService uuid = " + uuid  +  " done--------");
+                break;
+            }
+            Thread.sleep(300);
+        }
+
+        OrderTicketsResult result = otr.get();
+        int index = statusBean.chartMsgs.indexOf(pn);
+        //some error happened that beyond image
+        if(index < 0){
+            statusBean.chartMsgs.remove(pn);
+            System.out.println("-----cannot find the current preserve node.------");
+            throw new Exception("cannot find the current preserve node.");
+        } else {
+            //check if there exists any request from the same loginId that haven't return
+            for(int i = 0; i < index; i++){
+                if(statusBean.chartMsgs.get(i).getLoginId().equals(loginId)){
+                    statusBean.chartMsgs.remove(pn);
+                    System.out.println("-----This OrderTicketsResult return before the last loginId request.------");
+                    result.setStatus(false);
+                    result.setMessage("ErrorReportUI");
+                    return result;
+                    //throw new Exception("This OrderTicketsResult return before the last loginId request.");
+                }
+            }
+        }
+
+        System.out.println("-----This OrderTicketsResult return in the sequence.------");
+        statusBean.chartMsgs.remove(pn);
+
+        return result;
     }
+
 
 }

@@ -79,13 +79,12 @@ $("#flow_advance_reserve_booking_button").click(function() {
     var advanceSearchData = JSON.stringify(advanceSearchInfo);
     $("#flow_advance_reserve_booking_list_table").find("tbody").html("");
     var selectType = $("#flow_advance_reserve_select_searchType").val();
-
     if(selectType == 0){
-        advanceSearchForMinStopInfo(advanceSearchData,"/api/v1/travelplanservice/travelPlan/minStation");
+        advanceSearchForMinStopInfo(advanceSearchData,"/travelPlan/getMinStation");
     }else if(selectType == 1){
-        advanceSearchForCheapestInfo(advanceSearchData,"/api/v1/travelplanservice/travelPlan/cheapest");
+        advanceSearchForCheapestInfo(advanceSearchData,"/travelPlan/getCheapest");
     }else if(selectType == 2){
-        advanceSearchForQuickestInfo(advanceSearchData,"/api/v1/travelplanservice/travelPlan/quickest");
+        advanceSearchForQuickestInfo(advanceSearchData,"/travelPlan/getQuickest");
     }else{
         alert("Select Search Type Wrong");
     }
@@ -195,12 +194,11 @@ function advanceSearchForMinStopInfo(data,path) {
         contentType: "application/json",
         dataType: "json",
         data: data,
-        headers: {"Authorization": "Bearer " + sessionStorage.getItem("client_token")},
         xhrFields: {
             withCredentials: true
         },
         success: function (result) {
-            if (result.status == 1) {
+            if (result.status = true) {
                 var obj = result["travelAdvanceResultUnits"];
                 for (var i = 0, l = obj.length; i < l; i++) {
                     $("#flow_advance_reserve_booking_list_table").find("tbody").append(
@@ -798,7 +796,7 @@ $("#flow_advanced_reserve_collect_button").click(function() {
             $("#flow_advanced_reserve_collect_button").attr("disabled",false);
         }
     });
-});
+});;
 
 /**
  * Flow Preserve - Step 7 - Enter Station
