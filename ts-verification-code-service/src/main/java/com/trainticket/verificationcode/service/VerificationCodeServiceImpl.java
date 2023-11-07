@@ -36,8 +36,8 @@ public class VerificationCodeServiceImpl implements VerificationCodeService{
     /** 验证码，field，验证码是否已经验证过 */
     public static final String CAPTCHA_CHECKED = "checked";
     /** 验证码失效时间，秒 */
-    public static final int CAPTCHA_EXPIRED = 1000;
-
+    // Max age in seconds
+    public static final int CAPTCHA_EXPIRED = 60 * 60 * 48; // 60sec * 60min * 48hours
     @Override
     public Map<String, Object> getImageCode(int width, int height, OutputStream os, HttpServletRequest request, HttpServletResponse response) {
         Map<String,Object> returnMap = new HashMap<String, Object>();
