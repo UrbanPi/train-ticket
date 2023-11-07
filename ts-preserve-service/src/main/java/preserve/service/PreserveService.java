@@ -1,15 +1,10 @@
 package preserve.service;
 
-import edu.fudan.common.util.Response;
-import org.springframework.http.HttpHeaders;
-import preserve.entity.OrderTicketsInfo;
+import preserve.domain.OrderTicketsInfo;
+import preserve.domain.OrderTicketsResult;
 
-import java.util.concurrent.ExecutionException;
-
-/**
- * @author fdse
- */
 public interface PreserveService {
 
-    Response preserve(OrderTicketsInfo oti, HttpHeaders headers) throws InterruptedException, ExecutionException;
+    OrderTicketsResult preserve(OrderTicketsInfo oti,String accountId,String loginToken);
+
 }

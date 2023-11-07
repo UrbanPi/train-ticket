@@ -1,31 +1,13 @@
 package execute.serivce;
 
-import edu.fudan.common.util.Response;
-import org.springframework.http.HttpHeaders;
+import execute.domain.TicketExecuteInfo;
+import execute.domain.TicketExecuteResult;
+import sun.security.krb5.internal.Ticket;
 
-import java.util.concurrent.ExecutionException;
-
-/**
- * @author fdse
- */
 public interface ExecuteService {
 
-    /**
-     * ticket execute by order id
-     *
-     * @param orderId order id
-     * @param headers headers
-     * @return Response
-     */
-    Response ticketExecute(String orderId, HttpHeaders headers) throws ExecutionException, InterruptedException;
+    TicketExecuteResult ticketExecute(TicketExecuteInfo info);
 
-    /**
-     * ticker collect
-     *
-     * @param orderId order id
-     * @param headers headers
-     * @return Response
-     */
-    Response ticketCollect(String orderId, HttpHeaders headers);
+    TicketExecuteResult ticketCollect(TicketExecuteInfo info);
 
 }

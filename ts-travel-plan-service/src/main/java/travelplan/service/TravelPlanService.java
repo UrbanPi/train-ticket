@@ -1,20 +1,15 @@
 package travelplan.service;
 
-import edu.fudan.common.util.Response;
-import org.springframework.http.HttpHeaders;
-import travelplan.entity.*;
+import travelplan.domain.*;
 
-/**
- * @author fdse
- */
 public interface TravelPlanService {
 
-    Response getTransferSearch(TransferTravelInfo info, HttpHeaders headers);
+    TransferTravelSearchResult getTransferSearch(TransferTravelSearchInfo info);
 
-    Response getCheapest(TripInfo info, HttpHeaders headers);
+    TravelAdvanceResult getCheapest(QueryInfo info);
 
-    Response getQuickest(TripInfo info, HttpHeaders headers);
+    TravelAdvanceResult getQuickest(QueryInfo info);
 
-    Response getMinStation(TripInfo info, HttpHeaders headers);
+    TravelAdvanceResult getMinStation(QueryInfo info);
 
 }

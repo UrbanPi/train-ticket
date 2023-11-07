@@ -8,6 +8,8 @@ spec:
     - name: http
       port: 18767
       nodePort: 30030
+    - name: metric
+      port: 9464
   selector:
     app: ts-admin-basic-info-service
 ---
@@ -21,6 +23,8 @@ spec:
     - name: http
       port: 16112
       nodePort: 30031
+    - name: metric
+      port: 9464
   selector:
     app: ts-admin-order-service
 ---
@@ -34,6 +38,8 @@ spec:
     - name: http
       port: 16113
       nodePort: 30032
+    - name: metric
+      port: 9464
   selector:
     app: ts-admin-route-service
 ---
@@ -47,6 +53,8 @@ spec:
     - name: http
       port: 16114
       nodePort: 30033
+    - name: metric
+      port: 9464
   selector:
     app: ts-admin-travel-service
 ---
@@ -60,6 +68,8 @@ spec:
     - name: http
       port: 16115
       nodePort: 30034
+    - name: metric
+      port: 9464
   selector:
     app: ts-admin-user-service
 ---
@@ -73,22 +83,24 @@ spec:
     - name: http
       port: 18888
       nodePort: 30035
+    - name: metric
+      port: 9464
   selector:
     app: ts-assurance-service
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: ts-auth-service
-spec:
-  type: NodePort
-  ports:
-    - name: http
-      port: 12340
-      nodePort: 30000
-  selector:
-    app: ts-auth-service
----
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: ts-auth-service
+#spec:
+#  type: NodePort
+#  ports:
+#    - name: http
+#      port: 12340
+#      nodePort: 30036
+#  selector:
+#    app: ts-auth-service
+#---
 apiVersion: v1
 kind: Service
 metadata:
@@ -99,6 +111,8 @@ spec:
     - name: http
       port: 15680
       nodePort: 30038
+    - name: metric
+      port: 9464
   selector:
     app: ts-basic-service
 ---
@@ -112,6 +126,8 @@ spec:
     - name: http
       port: 18885
       nodePort: 30039
+    - name: metric
+      port: 9464
   selector:
     app: ts-cancel-service
 ---
@@ -125,6 +141,8 @@ spec:
     - name: http
       port: 15679
       nodePort: 30040
+    - name: metric
+      port: 9464
   selector:
     app: ts-config-service
 ---
@@ -138,6 +156,8 @@ spec:
     - name: http
       port: 16110
       nodePort: 30041
+    - name: metric
+      port: 9464
   selector:
     app: ts-consign-price-service
 ---
@@ -151,6 +171,8 @@ spec:
     - name: http
       port: 16111
       nodePort: 30042
+    - name: metric
+      port: 9464
   selector:
     app: ts-consign-service
 ---
@@ -164,22 +186,24 @@ spec:
     - name: http
       port: 12347
       nodePort: 30043
+    - name: metric
+      port: 9464
   selector:
     app: ts-contacts-service
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: ts-delivery-service
-spec:
-  type: NodePort
-  ports:
-    - name: http
-      port: 18808
-      nodePort: 30044
-  selector:
-    app: ts-delivery-service
----
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: ts-delivery-service
+#spec:
+#  type: NodePort
+#  ports:
+#    - name: http
+#      port: 18808
+#      nodePort: 30044
+#  selector:
+#    app: ts-delivery-service
+#---
 apiVersion: v1
 kind: Service
 metadata:
@@ -190,6 +214,8 @@ spec:
     - name: http
       port: 12386
       nodePort: 30045
+    - name: metric
+      port: 9464
   selector:
     app: ts-execute-service
 ---
@@ -203,6 +229,8 @@ spec:
     - name: http
       port: 18856
       nodePort: 30046
+    - name: metric
+      port: 9464
   selector:
     app: ts-food-service
 ---
@@ -216,6 +244,8 @@ spec:
     - name: http
       port: 18673
       nodePort: 30047
+    - name: metric
+      port: 9464
   selector:
     app: ts-inside-payment-service
 ---
@@ -229,6 +259,8 @@ spec:
     - name: http
       port: 12862
       nodePort: 30048
+    - name: metric
+      port: 9464
   selector:
     app: ts-news-service
 ---
@@ -242,6 +274,8 @@ spec:
     - name: http
       port: 17853
       nodePort: 30049
+    - name: metric
+      port: 9464
   selector:
     app: ts-notification-service
 ---
@@ -255,6 +289,8 @@ spec:
     - name: http
       port: 12032
       nodePort: 30050
+    - name: metric
+      port: 9464
   selector:
     app: ts-order-other-service
 ---
@@ -268,6 +304,8 @@ spec:
     - name: http
       port: 12031
       nodePort: 30051
+    - name: metric
+      port: 9464
   selector:
     app: ts-order-service
 ---
@@ -281,6 +319,8 @@ spec:
     - name: http
       port: 19001
       nodePort: 30052
+    - name: metric
+      port: 9464
   selector:
     app: ts-payment-service
 ---
@@ -294,6 +334,8 @@ spec:
     - name: http
       port: 14569
       nodePort: 30053
+    - name: metric
+      port: 9464
   selector:
     app: ts-preserve-other-service
 ---
@@ -307,6 +349,8 @@ spec:
     - name: http
       port: 14568
       nodePort: 30054
+    - name: metric
+      port: 9464
   selector:
     app: ts-preserve-service
 ---
@@ -320,6 +364,8 @@ spec:
     - name: http
       port: 16579
       nodePort: 30055
+    - name: metric
+      port: 9464
   selector:
     app: ts-price-service
 ---
@@ -333,6 +379,8 @@ spec:
     - name: http
       port: 18886
       nodePort: 30056
+    - name: metric
+      port: 9464
   selector:
     app: ts-rebook-service
 ---
@@ -346,6 +394,8 @@ spec:
     - name: http
       port: 14578
       nodePort: 30057
+    - name: metric
+      port: 9464
   selector:
     app: ts-route-plan-service
 ---
@@ -359,6 +409,8 @@ spec:
     - name: http
       port: 11178
       nodePort: 30058
+    - name: metric
+      port: 9464
   selector:
     app: ts-route-service
 ---
@@ -372,6 +424,8 @@ spec:
     - name: http
       port: 18898
       nodePort: 30059
+    - name: metric
+      port: 9464
   selector:
     app: ts-seat-service
 ---
@@ -385,6 +439,8 @@ spec:
     - name: http
       port: 11188
       nodePort: 30060
+    - name: metric
+      port: 9464
   selector:
     app: ts-security-service
 ---
@@ -398,6 +454,8 @@ spec:
     - name: http
       port: 12345
       nodePort: 30062
+    - name: metric
+      port: 9464
   selector:
     app: ts-station-service
 ---
@@ -411,6 +469,8 @@ spec:
     - name: http
       port: 16108
       nodePort: 30063
+    - name: metric
+      port: 9464
   selector:
     app: ts-ticket-office-service
 ---
@@ -424,6 +484,8 @@ spec:
     - name: http
       port: 14567
       nodePort: 30065
+    - name: metric
+      port: 9464
   selector:
     app: ts-train-service
 ---
@@ -437,6 +499,8 @@ spec:
     - name: http
       port: 14322
       nodePort: 30066
+    - name: metric
+      port: 9464
   selector:
     app: ts-travel-plan-service
 ---
@@ -450,6 +514,8 @@ spec:
     - name: http
       port: 12346
       nodePort: 30067
+    - name: metric
+      port: 9464
   selector:
     app: ts-travel-service
 ---
@@ -463,22 +529,24 @@ spec:
     - name: http
       port: 16346
       nodePort: 30068
+    - name: metric
+      port: 9464
   selector:
     app: ts-travel2-service
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: ts-user-service
-spec:
-  type: NodePort
-  ports:
-    - name: http
-      port: 12342
-      nodePort: 30069
-  selector:
-    app: ts-user-service
----
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: ts-user-service
+#spec:
+#  type: NodePort
+#  ports:
+#    - name: http
+#      port: 12342
+#      nodePort: 30069
+#  selector:
+#    app: ts-user-service
+#---
 apiVersion: v1
 kind: Service
 metadata:
@@ -489,23 +557,25 @@ spec:
     - name: http
       port: 15678
       nodePort: 30070
+    - name: metric
+      port: 9464
   selector:
     app: ts-verification-code-service
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: ts-voucher-service
-spec:
-  type: NodePort
-  ports:
-    - name: http
-      port: 16101
-      targetPort: 16101
-      nodePort: 30071
-  selector:
-    app: ts-voucher-service
----
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: ts-voucher-service
+#spec:
+#  type: NodePort
+#  ports:
+#    - name: http
+#      port: 16101
+#      targetPort: 16101
+#      nodePort: 30071
+#  selector:
+#    app: ts-voucher-service
+#---
 apiVersion: v1
 kind: Service
 metadata:
@@ -528,7 +598,9 @@ spec:
   ports:
     - name: http
       port: 18855
-      nodePort: 30072
+      nodePort: 30073
+    - name: metric
+      port: 9464
   selector:
     app: ts-food-map-service
 ---
@@ -541,7 +613,54 @@ spec:
   ports:
     - name: http
       port: 15681
-      nodePort: 30073
+      nodePort: 30074
+    - name: metric
+      port: 9464
   selector:
     app: ts-ticketinfo-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ts-login-service
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      port: 12342
+      nodePort: 30075
+    - name: metric
+      port: 9464
+  selector:
+    app: ts-login-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ts-sso-service
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      port: 12349
+      nodePort: 30076
+    - name: metric
+      port: 9464
+  selector:
+    app: ts-sso-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ts-register-service
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      port: 12344
+      nodePort: 30077
+    - name: metric
+      port: 9464
+  selector:
+    app: ts-register-service
 ---

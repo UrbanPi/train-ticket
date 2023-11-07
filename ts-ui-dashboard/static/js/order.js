@@ -166,6 +166,16 @@ function convertNumberToHtmlOrderStatus(number){
             "<option value='4'>Cance</option>" +
             "<option value='5'>Refunded</option>" +
             "<option selected='selected' value='6'>Used</option>";
+    }else{
+        result +=
+            "<option value='0'>Not Paid</option>" +
+            "<option value='1'>Paid & Not Collected</option>" +
+            "<option value='2'>Collected</option>" +
+            "<option value='3'>Cancel & Rebook</option>" +
+            "<option value='4'>Cance</option>" +
+            "<option value='5'>Refunded</option>" +
+            "<option selected='selected' value='100'>Cancelling</option>" +
+            "<option value='6'>Used</option>";
     }
     result += "</select>";
     return result;

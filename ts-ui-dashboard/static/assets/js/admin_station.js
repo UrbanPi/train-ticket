@@ -1,10 +1,10 @@
-var stationModule = angular.module("myApp", []);
+var stationModule = angular.module("myApp",[]);
 
 stationModule.factory('loadDataService', function ($http, $q) {
 
     var service = {};
 
-    service.loadAdminBasic = function (url) {
+    service.loadAdminBasic = function(url){
         var deferred = $q.defer();
         var promise = deferred.promise;
         //返回的数据对象
@@ -12,20 +12,16 @@ stationModule.factory('loadDataService', function ($http, $q) {
 
         $http({
             method: "get",
-            url: url ,
-            headers: {"Authorization": "Bearer " + sessionStorage.getItem("admin_token")},
+            url: url + "/" + sessionStorage.getItem("admin_id"),
             withCredentials: true
         }).success(function (data, status, headers, config) {
-            if (data.status == 1) {
-
-                information = data.data;
+            if (data.status) {
+                information = data;
                 deferred.resolve(information);
             }
-            else {
-                alert("Request the station list fail!" + data.msg);
+            else{
+                alert("Request the station list fail!" + data.message);
             }
-        }).error(function(data, header, config, status){
-            alert(data.message)
         });
         return promise;
     };
@@ -33,38 +29,36 @@ stationModule.factory('loadDataService', function ($http, $q) {
     return service;
 });
 
-stationModule.controller("stationCtrl", function ($scope, $http, loadDataService, $window) {
+stationModule.controller("stationCtrl", function ($scope,$http, loadDataService, $window) {
 
     //首次加载显示数据
-    loadDataService.loadAdminBasic("/api/v1/adminbasicservice/adminbasic/stations").then(function (result) {
-        console.log(result);
-        $scope.stations = result;
+    loadDataService.loadAdminBasic("/adminbasic/getAllStations").then(function (result) {
+        // console.log(result);
+        $scope.stations = result.stationList;
     });
 
-    $scope.deleteStation = function (station) {
+    $scope.deleteStation = function(station) {
         $('#delete-station-confirm').modal({
             relatedTarget: this,
             onConfirm: function (options) {
                 $http({
-                    method: "delete",
-                    url: "/api/v1/adminbasicservice/adminbasic/stations",
-                    headers: {"Authorization": "Bearer " + sessionStorage.getItem("admin_token")},
+                    method:"post",
+                    url: "/adminbasic/deleteStation",
                     withCredentials: true,
-                    data: {
-                        id: station.id,
-                        name: station.name,
-                        stayTime: station.stayTime
+                    data:{
+                        loginId:sessionStorage.getItem("admin_id"),
+                        id:station.id,
+                        name:station.name,
+                        stayTime:station.stayTime
                     }
-                }).success(function (data, status, headers, config) {
-                    if (data.status ==1) {
-                        alert("Delete station successfully!");
-                    } else {
+                }).success(function(data, status, headers, config){
+                    if (data) {
+                       alert("Delete station successfully!");
+                    }else{
                         alert("Update station failed!");
                     }
                     $window.location.reload();
-                }).error(function(data, header, config, status){
-                    alert(data.message)
-                });
+                })
             },
             // closeOnConfirm: false,
             onCancel: function () {
@@ -73,7 +67,7 @@ stationModule.controller("stationCtrl", function ($scope, $http, loadDataService
         });
     };
 
-    $scope.updateStation = function (station) {
+    $scope.updateStation = function(station) {
         $('#update-station-name').val(station.name);
         $('#update-station-stay-time').val(station.stayTime);
 
@@ -81,28 +75,26 @@ stationModule.controller("stationCtrl", function ($scope, $http, loadDataService
         $('#update-station-table').modal({
             relatedTarget: this,
             onConfirm: function (options) {
-                if (parseInt($('#update-station-stay-time').val())) {
+                if(parseInt( $('#update-station-stay-time').val())){
                     var data = new Object();
                     data.id = station.id;
-                    data.name = $('#update-station-name').val();
-                    data.stayTime = parseInt($('#update-station-stay-time').val());
+                    data.name =  $('#update-station-name').val();
+                    data.stayTime =  parseInt($('#update-station-stay-time').val());
+                    data.loginId=sessionStorage.getItem("admin_id");
                     // alert(JSON.stringify(data));
                     $http({
-                        method: "put",
-                        url: "/api/v1/adminbasicservice/adminbasic/stations",
-                        headers: {"Authorization": "Bearer " + sessionStorage.getItem("admin_token")},
+                        method:"post",
+                        url: "/adminbasic/modifyStation",
                         withCredentials: true,
-                        data: data
-                    }).success(function (data, status, headers, config) {
-                        if (data.status ==1) {
+                        data:data
+                    }).success(function(data, status, headers, config){
+                        if (data) {
                             alert("Update station successfully!");
-                        } else {
+                        }else{
                             alert("Update station failed!");
                         }
                         $window.location.reload();
-                    }).error(function(data, header, config, status){
-                        alert(data.message)
-                    });
+                    })
                 } else {
                     alert("The stay time must be an integer!");
                 }
@@ -114,7 +106,7 @@ stationModule.controller("stationCtrl", function ($scope, $http, loadDataService
         });
     };
 
-    $scope.addStation = function () {
+    $scope.addStation = function() {
         $('#add-station-id').val("");
         $('#add-station-name').val("");
         $('#add-station-stay-time').val("");
@@ -122,29 +114,27 @@ stationModule.controller("stationCtrl", function ($scope, $http, loadDataService
         $('#add-station-table').modal({
             relatedTarget: this,
             onConfirm: function (options) {
-                if (parseInt($('#add-station-stay-time').val())) {
+                if(parseInt( $('#add-station-stay-time').val())){
                     var data = new Object();
                     data.id = $('#add-station-id').val();
-                    data.name = $('#add-station-name').val();
-                    data.stayTime = parseInt($('#add-station-stay-time').val());
+                    data.name =  $('#add-station-name').val();
+                    data.stayTime =  parseInt($('#add-station-stay-time').val());
+                    data.loginId=sessionStorage.getItem("admin_id");
                     // alert(JSON.stringify(data));
                     $http({
-                        method: "post",
-                        url: "/api/v1/adminbasicservice/adminbasic/stations",
-                        headers: {"Authorization": "Bearer " + sessionStorage.getItem("admin_token")},
+                        method:"post",
+                        url: "/adminbasic/addStation",
                         withCredentials: true,
-                        data: data
-                    }).success(function (data, status, headers, config) {
-                        if (data.status == 1) {
+                        data:data
+                    }).success(function(data, status, headers, config){
+                        if (data) {
                             alert("Add station successfully!");
-                        } else {
+                        }else{
                             alert("Add station failed!");
                         }
                         $window.location.reload();
-                    }).error(function(data, header, config, status){
-                        alert(data.message)
-                    });
-                } else {
+                    })
+                } else{
                     alert("The staytime must be an integer!");
                 }
 
@@ -154,6 +144,7 @@ stationModule.controller("stationCtrl", function ($scope, $http, loadDataService
             }
         });
     };
+
 
 
 });

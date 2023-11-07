@@ -1,80 +1,72 @@
 package cancel.async;
 
-import cancel.entity.Order;
-import cancel.entity.OrderStatus;
-import edu.fudan.common.util.Response;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.Random;
+import java.util.concurrent.Future;
+import cancel.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Random;
-import java.util.concurrent.Future;
-
-import static cancel.service.CancelServiceImpl.getAuthorizationHeadersFrom;
-
-/**
- * @author fdse
- */
-@Component
+@Component  
 public class AsyncTask {
-
+    
     @Autowired
-    private RestTemplate restTemplate;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(AsyncTask.class);
+	private RestTemplate restTemplate;
 
     @Async("myAsync")
-    public Future<Response> cancelFromOrder(Order order, HttpHeaders headers) throws InterruptedException {
+    public Future<ChangeOrderResult> updateOtherOrderStatusToCancel(ChangeOrderInfo info) throws InterruptedException{
+
+        Thread.sleep(4000);
+
+        System.out.println("[Cancel Order Service][Change Order Status]");
+        ChangeOrderResult result = restTemplate.postForObject("http://ts-order-other-service:12032/orderOther/update",info,ChangeOrderResult.class);
+        return new AsyncResult<>(result);
+
+    }
+
+    @Async("mySimpleAsync")
+    public Future<Boolean> drawBackMoneyForOrderCancel(String money, String userId,String orderId, String loginToken) throws InterruptedException{
+
         /*********************** Fault Reproduction - Error Process Seq *************************/
         double op = new Random().nextDouble();
-        if (op < 1.0) {
-            AsyncTask.LOGGER.error("[Cancel Order Service] Delay Process，Wrong Cancel Process");
-            Thread.sleep(4000);
+        if(op < 1.0){
+            System.out.println("[Cancel Order Service] Delay Process，Wrong Cancel Process");
+            Thread.sleep(8000);
         } else {
-            AsyncTask.LOGGER.info("[Cancel Order Service] Normal Process，Normal Cancel Process");
+            System.out.println("[Cancel Order Service] Normal Process，Normal Cancel Process");
         }
 
-        AsyncTask.LOGGER.info("[Change Order Status] Changing...");
-        order.setStatus(OrderStatus.CANCEL.getCode());
-        // add authorization header
-        HttpHeaders newHeaders = getAuthorizationHeadersFrom(headers);
-        HttpEntity requestEntity = new HttpEntity(order, newHeaders);
-        ResponseEntity<Response> re = restTemplate.exchange(
-                "http://ts-order-service:12031/api/v1/orderservice/order",
-                HttpMethod.PUT,
-                requestEntity,
-                Response.class);
 
-        ;
-        return new AsyncResult<>(re.getBody());
-
+        //1.Search Order Info
+        System.out.println("[Cancel Order Service][Get Order] Getting....");
+        GetOrderByIdInfo getOrderInfo = new GetOrderByIdInfo();
+        getOrderInfo.setOrderId(orderId);
+        GetOrderResult cor = restTemplate.postForObject(
+                "http://ts-order-other-service:12032/orderOther/getById/"
+                ,getOrderInfo,GetOrderResult.class);
+        Order order = cor.getOrder();
+        //2.Change order status to cancelling
+        order.setStatus(OrderStatus.Canceling.getCode());
+        ChangeOrderInfo changeOrderInfo = new ChangeOrderInfo();
+        changeOrderInfo.setOrder(order);
+        changeOrderInfo.setLoginToken(loginToken);
+        ChangeOrderResult changeOrderResult = restTemplate.postForObject("http://ts-order-other-service:12032/orderOther/update",changeOrderInfo,ChangeOrderResult.class);
+        if(changeOrderResult.isStatus() == false){
+            System.out.println("[Cancel Order Service]Unexpected error");
+        }
+        //3.do drawback money
+        System.out.println("[Cancel Order Service][Draw Back Money] Draw back money...");
+        DrawBackInfo info = new DrawBackInfo();
+        info.setMoney(money);
+        info.setUserId(userId);
+        String result = restTemplate.postForObject("http://ts-inside-payment-service:18673/inside_payment/drawBack",info,String.class);
+        if(result.equals("true")){
+            return new AsyncResult<>(true);
+        }else{
+            return new AsyncResult<>(false);
+        }
+        /*****************************************************************************/
     }
-
-    @Async("myAsync")
-    public Future<Boolean> drawBackMoney(String money, String userId, HttpHeaders headers) throws InterruptedException {
-
-
-        AsyncTask.LOGGER.info("[Draw Back Money] Draw back money...");
-
-        HttpHeaders newHeaders = getAuthorizationHeadersFrom(headers);
-        HttpEntity requestEntity = new HttpEntity(newHeaders);
-        ResponseEntity<Response> re = restTemplate.exchange(
-                "http://ts-inside-payment-service:18673/api/v1/inside_pay_service/inside_payment/drawback/" + userId
-                        + "/" + money,
-                HttpMethod.GET,
-                requestEntity,
-                Response.class);
-        Response result = re.getBody();
-
-        return new AsyncResult<>(result.getStatus() == 1);
-
-    }
-}
+}  

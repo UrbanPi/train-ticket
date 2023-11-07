@@ -296,7 +296,7 @@ function initFoodSelect(tripId){
                 }
 
             } else {
-                alert(result.status + ":" + result.message);
+                //alert(result.status + ":" + result.message);
             }
 
         }
@@ -755,7 +755,7 @@ $("#preserve_collect_button").click(function() {
             $("#preserve_collect_button").attr("disabled",false);
         }
     });
-});
+});;
 
 /**
  * Flow Preserve - Step 7 - Enter Station

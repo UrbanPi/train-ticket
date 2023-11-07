@@ -1,0 +1,76 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+  namespace: default
+  labels:
+    kubernetes.io/cluster-service: "true"
+    addonmanager.kubernetes.io/mode: EnsureExists
+data:
+  prometheus.yml: |
+    rule_files:
+      - /etc/config/rules/*.rules
+
+    scrape_configs:
+      - job_name: TrainTicketServices
+        scrape_interval: 30s
+        static_configs:
+          - targets:
+              - ts-admin-basic-info-service:9464
+              - ts-admin-order-service:9464
+              - ts-admin-route-service:9464
+              - ts-admin-travel-service:9464
+              - ts-admin-user-service:9464
+              - ts-assurance-service:9464
+              - ts-basic-service:9464
+              - ts-cancel-service:9464
+              - ts-config-service:9464
+              - ts-consign-price-service:9464
+              - ts-consign-service:9464
+              - ts-contacts-service:9464
+              - ts-execute-service:9464
+              - ts-food-service:9464
+              - ts-inside-payment-service:9464
+              - ts-notification-service:9464
+              - ts-order-other-service:9464
+              - ts-order-service:9464
+              - ts-payment-service:9464
+              - ts-preserve-other-service:9464
+              - ts-preserve-service:9464
+              - ts-price-service:9464
+              - ts-rebook-service:9464
+              - ts-route-plan-service:9464
+              - ts-route-service:9464
+              - ts-seat-service:9464
+              - ts-security-service:9464
+              - ts-station-service:9464
+              - ts-train-service:9464
+              - ts-travel-plan-service:9464
+              - ts-travel-service:9464
+              - ts-travel2-service:9464
+              - ts-verification-code-service:9464
+              - ts-food-map-service:9464
+              - ts-ticketinfo-service:9464
+              - ts-login-service:9464
+              - ts-sso-service:9464
+              - ts-register-service:9464
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-rules
+  namespace: default
+data:
+  pod.rules: |
+    groups:
+    - name: kubernetes pod failures
+      rules:
+      - alert: kubernetes pod failures
+        expr: up == 0
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Pod {{ $labels.kubernetes_pod_name }} down"
+          description: "{{ $labels.kubernetes_pod_name }} of namespace {{ $labels.kubernetes_namespace }} has been down for more than 5 minutes."

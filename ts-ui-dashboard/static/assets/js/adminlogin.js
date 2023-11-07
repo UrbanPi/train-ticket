@@ -4,27 +4,25 @@
 var controllerModule = angular.module("myApp", []);
 controllerModule.controller("loginCtrl", function ($scope,$http) {
     $scope.login = function() {
-        var username = $scope.username;
+        var account = $scope.username;
         var password = $scope.password;
         $http({
             method:"post",
-            url: "/api/v1/users/login",
+            url: "/account/adminlogin",
             withCredentials: true,
             data:{
-                username: username,
+                name: account,
                 password: password
             }
         }).success(function(data, status, headers, config){
-            if (data.status == 1) {
-                sessionStorage.setItem("admin_name", data.data.username);
-                sessionStorage.setItem("admin_token", data.data.token);
+            if (data != null) {
+                sessionStorage.setItem("admin_id",data.id);
+                sessionStorage.setItem("admin_name", data.name);
                 location.href = "../../admin.html";
             }else{
                 alert("Wrong user name and password!");
             }
-        }).error(function(data, header, config, status){
-            alert(data.message)
-        });
+        })
     }
 
     $scope.decodeInfo = function (obj) {

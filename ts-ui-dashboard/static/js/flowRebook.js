@@ -39,8 +39,8 @@ function queryMyOrder(){
     myOrdersQueryInfo.boughtDateEnd = null;
     var myOrdersQueryData = JSON.stringify(myOrdersQueryInfo);
     $("#my_orders_result").html("");
-    queryForMyOrder("/order/queryForRefresh",myOrdersQueryData);
-    queryForMyOrder("/orderOther/queryForRefresh",myOrdersQueryData);
+    queryForMyOrder("/order/query",myOrdersQueryData);
+    queryForMyOrder("/orderOther/query",myOrdersQueryData);
 }
 
 function queryForMyOrder(path,data){
@@ -57,8 +57,8 @@ function queryForMyOrder(path,data){
             var size = result.length;
             for(var i = 0; i < size;i++){
                 var order = result[i];
-                var fromString = order['from'];
-                var toString  = order['to'];
+                var fromString = getStationNameById(order['from']);
+                var toString  = getStationNameById(order['to']);
                 $("#my_orders_result").append(
                     "<div class='panel panel-default'>" +
                     "<div class='panel-heading'>" +
@@ -84,14 +84,14 @@ function queryForMyOrder(path,data){
                     "<label class='col-sm-2 control-label'>From: </label>" +
                     "<div class='col-sm-10'>" +
                     "<label class='control-label my_order_list_from'>" + fromString + "</label>" +
-                    "<label class='control-label noshow_component my_order_list_from_name'>" + order["from"] + "</label>" +
+                    "<label class='control-label noshow_component my_order_list_from_id'>" + order["from"] + "</label>" +
                     "</div>" +
                     "</div>" +
                     "<div class='div form-group'>" +
                     "<label class='col-sm-2 control-label'>To: </label>" +
                     "<div class='col-sm-10'>" +
                     "<label class='control-label my_order_list_to'>" + toString + "</label>" +
-                    "<label class='control-label noshow_component my_order_list_to_name'>" + order["to"] + "</label>" +
+                    "<label class='control-label noshow_component my_order_list_to_id'>" + order["to"] + "</label>" +
                     "</div>" +
                     "</div>" +
                     "<div class='form-group'>" +
@@ -182,14 +182,14 @@ function addListenerToOrderChange(){
     var ticketChangeButtonSet = $(".order_rebook_btn");
     for(var i = 0;i < ticketChangeButtonSet.length;i++){
         ticketChangeButtonSet[i].onclick = function(){
-            var changeStartingPlaceName = $(this).parents("form").find(".my_order_list_from_name").text();
-            var changeEndPlaceName = $(this).parents("form").find(".my_order_list_to_name").text();
+            var changeStartingPlaceId = $(this).parents("form").find(".my_order_list_from_id").text();
+            var changeEndPlaceId = $(this).parents("form").find(".my_order_list_to_id").text();
             var orderStatus = $(this).parents("form").find(".my_order_list_status").text();
             if(orderStatus != 1){
                 alert("Order Can Not Be Changed");
                 return;
             }
-            replaceStationId(changeStartingPlaceName,changeEndPlaceName);
+            replaceStationId(changeStartingPlaceId,changeEndPlaceId);
             //$("#order_rebook_panel").css('display','block');
             location.hash="anchor_flow_rebook_rebook_orders";
             //Set Information on confirm page
@@ -272,41 +272,39 @@ function getStationNameById(stationId){
     return stationName;
 }
 
-function replaceStationId(stationNameOne,stationNameTwo){
-    $("#travel_rebook_startingPlace").val(stationNameOne);
-    $("#travel_rebook_terminalPlace").val(stationNameTwo);
-    // var getStationInfoOne = new Object();
-    // getStationInfoOne.stationId =  stationIdOne;
-    // var getStationInfoOneData = JSON.stringify(getStationInfoOne);
-    // $.ajax({
-    //     type: "post",
-    //     url: "/station/queryById",
-    //     contentType: "application/json",
-    //     dataType: "json",
-    //     data:getStationInfoOneData,
-    //     xhrFields: {
-    //         withCredentials: true
-    //     },
-    //     success: function (result) {
-    //         $("#travel_rebook_startingPlace").val(result["name"]);
-    //     },
-    // });
-    // var getStationInfoTwo = new Object();
-    // getStationInfoTwo.stationId =  stationIdTwo;
-    // var getStationInfoTwoData = JSON.stringify(getStationInfoTwo);
-    // $.ajax({
-    //     type: "post",
-    //     url: "/station/queryById",
-    //     contentType: "application/json",
-    //     dataType: "json",
-    //     data:getStationInfoTwoData,
-    //     xhrFields: {
-    //         withCredentials: true
-    //     },
-    //     success: function (result) {
-    //         $("#travel_rebook_terminalPlace").val(result["name"]);
-    //     },
-    // });
+function replaceStationId(stationIdOne,stationIdTwo){
+    var getStationInfoOne = new Object();
+    getStationInfoOne.stationId =  stationIdOne;
+    var getStationInfoOneData = JSON.stringify(getStationInfoOne);
+    $.ajax({
+        type: "post",
+        url: "/station/queryById",
+        contentType: "application/json",
+        dataType: "json",
+        data:getStationInfoOneData,
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function (result) {
+            $("#travel_rebook_startingPlace").val(result["name"]);
+        },
+    });
+    var getStationInfoTwo = new Object();
+    getStationInfoTwo.stationId =  stationIdTwo;
+    var getStationInfoTwoData = JSON.stringify(getStationInfoTwo);
+    $.ajax({
+        type: "post",
+        url: "/station/queryById",
+        contentType: "application/json",
+        dataType: "json",
+        data:getStationInfoTwoData,
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function (result) {
+            $("#travel_rebook_terminalPlace").val(result["name"]);
+        },
+    });
 }
 
 $("#travel_rebook_cancel").click(function(){
@@ -437,11 +435,11 @@ $("#ticket_rebook_confirm_confirm_btn").click(function(){
         },
         success: function(result){
             if(result["status"] == true){
-                alert(result["message"]);
+                alert("rebook true:" + result["message"] );
                 location.hash="anchor_flow_rebook_orders";
                 queryMyOrder();
             }else{
-                alert(result["message"]);
+                alert("rebook false:" + result["message"]);
                 if(result['price'] != null || result['price'] != 'null'){
                     $("#rebook_money_pay").val(result["price"]);
                     location.hash="anchor_flow_rebook_pay";
@@ -483,7 +481,7 @@ $("#ticket_rebook_pay_panel_confirm").click(function(){
             withCredentials: true
         },
         success: function (result) {
-            alert(result['message']);
+            alert("rebook pay:" + result['message']);
             location.hash="anchor_flow_rebook_orders";
             queryMyOrder();
         }
@@ -537,7 +535,7 @@ $("#pay_for_not_paid_pay_button").click(function(){
         },
         success: function (result) {
             if(result == "true"){
-                alert("Success");
+                alert("Not Paid Rebook:" + "Success");
                 location.hash="anchor_flow_rebook_orders";
                 queryMyOrder();
             }else{
@@ -581,6 +579,9 @@ function addListenerToOrderCancel(){
                         $("#cancel_money_refund").text("Error ");
                     }
                 },
+                error: function(){
+                    alert("Cancel Calculate Refund Error");
+                }
             });
         }
     }
@@ -601,6 +602,7 @@ $("#ticket_cancel_panel_confirm").click(function(){
         return;
     }
     var cancelOrderInfoData = JSON.stringify(cancelOrderInfo);
+    $("#ticket_cancel_panel_confirm").attr("disabled",true);
     $.ajax({
         type: "post",
         url: "/cancelOrder",
@@ -614,7 +616,14 @@ $("#ticket_cancel_panel_confirm").click(function(){
             if(result["status"] == true){
                 $("#ticket_cancel_panel").css('display','none');
             }
-            alert(result["message"]);
+            alert("Cancel Success:" + result["message"]);
+        },
+        error: function(){
+            alert("Error");
+        },
+        complete: function(){
+            $("#ticket_cancel_panel_confirm").attr("disabled",false);
+            queryMyOrder();
         }
     });
 });
