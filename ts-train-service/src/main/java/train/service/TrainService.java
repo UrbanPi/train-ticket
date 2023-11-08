@@ -1,19 +1,20 @@
 package train.service;
 
-import org.springframework.http.HttpHeaders;
-import train.entity.TrainType;
+import train.domain.Information;
+import train.domain.Information2;
+import train.domain.TrainType;
 
 import java.util.List;
 
 public interface TrainService {
     //CRUD
-    boolean create(TrainType trainType, HttpHeaders headers);
+    boolean create(Information info);
 
-    TrainType retrieve(String id,HttpHeaders headers);
+    TrainType retrieve(Information2 info);
 
-    boolean update(TrainType trainType,HttpHeaders headers);
+    boolean update(Information info);
 
-    boolean delete(String id,HttpHeaders headers);
+    boolean delete(Information2 info);
 
-    List<TrainType> query(HttpHeaders headers);
+    List<TrainType> query();
 }

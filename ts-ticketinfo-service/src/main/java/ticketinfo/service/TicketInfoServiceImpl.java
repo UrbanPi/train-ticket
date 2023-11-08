@@ -1,44 +1,30 @@
 package ticketinfo.service;
 
-import edu.fudan.common.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import ticketinfo.entity.Travel;
+import ticketinfo.domain.QueryForStationId;
+import ticketinfo.domain.QueryForTravel;
+import ticketinfo.domain.ResultForTravel;
 
-/**
- * Created by Chenjie Xu on 2017/6/6.
- */
+
 @Service
-public class TicketInfoServiceImpl implements TicketInfoService {
+public class TicketInfoServiceImpl implements TicketInfoService{
 
     @Autowired
     private RestTemplate restTemplate;
 
     @Override
-    public Response queryForTravel(Travel info, HttpHeaders headers) {
-        HttpEntity requestEntity = new HttpEntity(info, null);
-        ResponseEntity<Response> re = restTemplate.exchange(
-                "http://ts-basic-service:15680/api/v1/basicservice/basic/travel",
-                HttpMethod.POST,
-                requestEntity,
-                Response.class);
-        return re.getBody();
+    public ResultForTravel queryForTravel(QueryForTravel info){
+        ResultForTravel result = restTemplate.postForObject(
+                "http://ts-basic-service:15680/basic/queryForTravel", info, ResultForTravel.class);
+        return result;
     }
 
     @Override
-    public Response queryForStationId(String name, HttpHeaders headers) {
-        HttpEntity requestEntity = new HttpEntity(null);
-        ResponseEntity<Response> re = restTemplate.exchange(
-                "http://ts-basic-service:15680/api/v1/basicservice/basic/" + name,
-                HttpMethod.GET,
-                requestEntity,
-                Response.class);
-
-        return re.getBody();
+    public String queryForStationId(QueryForStationId info){
+        String id = restTemplate.postForObject(
+                "http://ts-basic-service:15680/basic/queryForStationId", info,String.class);
+        return id;
     }
 }

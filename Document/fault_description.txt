@@ -1,0 +1,20 @@
+
+
+Industrial fault description:
+
+A service is slowing down and returns error finally.
+Endless recursive requests of a microservice are caused by SQL errors of another dependent microservice.
+
+
+TrainTicket replicated fault description:
+
+In out train ticket system, we replicate this fault in voucher service.
+The SQL arg in voucher service is something wrong, make the request fail.
+When the request is fail, the host service will send another request.
+After many retries, we will receive a timeout error finally.
+
+
+
+
+
+

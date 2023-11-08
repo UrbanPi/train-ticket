@@ -6,5 +6,17 @@ spring:
   application:
     name: ts-verification-code-service
 
-swagger:
-  controllerPackage: verifycode.controller
+  data:
+    mongodb:
+      host: ts-verification-code-mongo
+#      username: user
+#      password: ${MONGODB_PASSWORD}
+      database: ts
+      port: 27017
+
+  zipkin:
+    baseUrl: http://zipkin:9411/
+  sleuth:
+    sampler:
+      percentage: 1.0
+

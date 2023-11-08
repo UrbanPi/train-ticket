@@ -1,0 +1,15 @@
+
+Setup System:
+
+1. Use docker-compose to setup the TrainTicket system.
+
+
+Failure Triggering Usage Steps:
+
+1. Log in.
+2. Click [Flow Two - Ticket Cancel & Ticket Change].
+3. Click [Refresh Orders].
+4. Select the order mentioned above and click [Cancel Order].
+5. Click [Confirm Cancel].
+6. You will receive a timeout.
+
