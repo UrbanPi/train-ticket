@@ -1,27 +1,21 @@
 package food.service;
 
-import edu.fudan.common.util.Response;
-import food.entity.*;
-import org.springframework.http.HttpHeaders;
-
-import java.util.List;
+import food.domain.*;
 
 public interface FoodMapService {
 
-    // create data
-    Response createFoodStore(FoodStore fs, HttpHeaders headers);
+    FoodStore createFoodStore(FoodStore fs);
 
-    TrainFood createTrainFood(TrainFood tf, HttpHeaders headers);
+    TrainFood createTrainFood(TrainFood tf);
 
-    // query all food
-    Response listFoodStores(HttpHeaders headers);
+    GetFoodStoresListResult listFoodStores();
 
-    Response listTrainFood(HttpHeaders headers);
+    GetTrainFoodListResult listTrainFood();
 
-    // query according id
-    Response listFoodStoresByStationId(String stationId, HttpHeaders headers);
+    GetFoodStoresListResult listFoodStoresByStationId(String stationId);
 
-    Response listTrainFoodByTripId(String tripId, HttpHeaders headers);
+    GetTrainFoodListResult listTrainFoodByTripId(String tripId);
 
-    Response getFoodStoresByStationIds(List<String> stationIds);
+
+
 }

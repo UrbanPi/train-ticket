@@ -1,162 +1,105 @@
 package travel.controller;
 
-import edu.fudan.common.util.Response;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestClientException;
-import travel.entity.*;
+import travel.domain.*;
 import travel.service.TravelService;
-
 import java.util.ArrayList;
+import java.util.List;
 
-import static org.springframework.http.ResponseEntity.ok;
-import static org.springframework.http.ResponseEntity.status;
-
-/**
- * @author fdse
- */
 @RestController
-@RequestMapping("/api/v1/travelservice")
-
 public class TravelController {
 
     @Autowired
     private TravelService travelService;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TravelController.class);
-
-    @GetMapping(path = "/welcome")
-    public String home(@RequestHeader HttpHeaders headers) {
-        return "Welcome to [ Travel Service ] !";
+    @RequestMapping(value="/travel/getTrainTypeByTripId/{tripId}", method = RequestMethod.GET)
+    public GetTrainTypeResult getTrainTypeByTripId(@PathVariable String tripId){
+        return travelService.getTrainTypeByTripId(tripId);
     }
 
-    @GetMapping(value = "/train_types/{tripId}")
-    public HttpEntity getTrainTypeByTripId(@PathVariable String tripId,
-                                           @RequestHeader HttpHeaders headers) {
-        // TrainType
-        TravelController.LOGGER.info("Get train Type by Trip id,TripId: {}",tripId);
-        return ok(travelService.getTrainTypeByTripId(tripId, headers));
+    @RequestMapping(value = "/travel/getRouteByTripId/{tripId}", method = RequestMethod.GET)
+    public GetRouteResult getRouteByTripId(@PathVariable String tripId){
+        System.out.println("[Get Route By Trip ID] TripId:" + tripId);
+        return travelService.getRouteByTripId(tripId);
     }
 
-    @GetMapping(value = "/routes/{tripId}")
-    public HttpEntity getRouteByTripId(@PathVariable String tripId,
-                                       @RequestHeader HttpHeaders headers) {
-        TravelController.LOGGER.info("[Get Route By Trip ID], TripId: {}", tripId);
-        //Route
-        return ok(travelService.getRouteByTripId(tripId, headers));
-    }
-
-    @PostMapping(value = "/trips/routes")
-    public HttpEntity getTripsByRouteId(@RequestBody ArrayList<String> routeIds,
-                                        @RequestHeader HttpHeaders headers) {
-        // ArrayList<ArrayList<Trip>>
-        TravelController.LOGGER.info("Get Trips by Route ids,RouteIds: {}",routeIds.size());
-        return ok(travelService.getTripByRoute(routeIds, headers));
+    @RequestMapping(value = "/travel/getTripsByRouteId", method = RequestMethod.POST)
+    public GetTripsByRouteIdResult getTripsByRouteId(@RequestBody GetTripsByRouteIdInfo info){
+        return travelService.getTripByRoute(info);
     }
 
     @CrossOrigin(origins = "*")
-    @PostMapping(value = "/trips")
-    public HttpEntity<?> createTrip(@RequestBody TravelInfo routeIds, @RequestHeader HttpHeaders headers) {
-        // null
-        TravelController.LOGGER.info("Create trip,TripId: {}",routeIds.getTripId());
-        return new ResponseEntity<>(travelService.create(routeIds, headers), HttpStatus.CREATED);
+    @RequestMapping(value="/travel/create", method= RequestMethod.POST)
+    public String create(@RequestBody Information info){
+        return travelService.create(info);
     }
 
-    /**
-     * Return Trip only, no left ticket information
-     *
-     * @param tripId trip id
-     * @param headers headers
-     * @return HttpEntity
-     */
+    //只返回Trip，不会返回票数信息
     @CrossOrigin(origins = "*")
-    @GetMapping(value = "/trips/{tripId}")
-    public HttpEntity retrieve(@PathVariable String tripId, @RequestHeader HttpHeaders headers) {
-        // Trip
-        TravelController.LOGGER.info("Retrieve trip,TripId: {}",tripId);
-        return ok(travelService.retrieve(tripId, headers));
+    @RequestMapping(value="/travel/retrieve", method= RequestMethod.POST)
+    public Trip retrieve(@RequestBody Information2 info){
+        return travelService.retrieve(info);
     }
 
     @CrossOrigin(origins = "*")
-    @PutMapping(value = "/trips")
-    public HttpEntity updateTrip(@RequestBody TravelInfo info, @RequestHeader HttpHeaders headers) {
-        // Trip
-        TravelController.LOGGER.info("Update trip,TripId: {}",info.getTripId());
-        return ok(travelService.update(info, headers));
+    @RequestMapping(value="/travel/update", method= RequestMethod.POST)
+    public String update(@RequestBody Information info){
+        return travelService.update(info);
     }
 
     @CrossOrigin(origins = "*")
-    @DeleteMapping(value = "/trips/{tripId}")
-    public HttpEntity deleteTrip(@PathVariable String tripId, @RequestHeader HttpHeaders headers) {
-        // string
-        TravelController.LOGGER.info("Delete trip,TripId: {}",tripId);
-        return ok(travelService.delete(tripId, headers));
+    @RequestMapping(value="/travel/delete", method= RequestMethod.POST)
+    public String delete(@RequestBody Information2 info){
+        return travelService.delete(info);
     }
 
-    /**
-     * Return Trips and the remaining tickets
-     *
-     * @param info trip info
-     * @param headers headers
-     * @return HttpEntity
-     */
+    //返回Trip以及剩余票数
     @CrossOrigin(origins = "*")
-    @PostMapping(value = "/trips/left")
-    public HttpEntity queryInfo(@RequestBody TripInfo info, @RequestHeader HttpHeaders headers) {
-        if (info.getStartingPlace() == null || info.getStartingPlace().length() == 0 ||
+    @RequestMapping(value="/travel/query", method= RequestMethod.POST)
+    public ArrayList<TripResponse> query(@RequestBody QueryInfo info){
+        if(info.getStartingPlace() == null || info.getStartingPlace().length() == 0 ||
                 info.getEndPlace() == null || info.getEndPlace().length() == 0 ||
-                info.getDepartureTime() == null) {
-            TravelController.LOGGER.info("[[Travel Query] Fail.Something null.");
+                info.getDepartureTime() == null){
+            System.out.println("[Travel Service][Travel Query] Fail.Something null.");
             ArrayList<TripResponse> errorList = new ArrayList<>();
-            return ok(errorList);
+            return errorList;
         }
-        TravelController.LOGGER.info(" Query TripResponse");
+        System.out.println("[Travel Service] Query TripResponse");
+        return travelService.query(info);
+    }
 
-        try {
-            Response result = travelService.query(info, headers);
-            return ok(result);
-        } catch (RestClientException e) {
-            LOGGER.error("request trips left time out:" + e.toString());
-            return status(500).build();
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value="/travel/queryWithPackage", method= RequestMethod.POST)
+    public QueryTripResponsePackage queryPackage(@RequestBody QueryInfo info){
+        if(info.getStartingPlace() == null || info.getStartingPlace().length() == 0 ||
+                info.getEndPlace() == null || info.getEndPlace().length() == 0 ||
+                info.getDepartureTime() == null){
+            System.out.println("[Travel Service][Travel Query] Fail.Something null.");
+            ArrayList<TripResponse> errorList = new ArrayList<>();
+            return new QueryTripResponsePackage(false,"Fail.",errorList);
         }
+        System.out.println("[Travel Service] Query TripResponse");
+        ArrayList<TripResponse> responses = travelService.query(info);
+        return new QueryTripResponsePackage(true,"Success.",responses);
     }
 
-    /**
-     * Return a Trip and the remaining
-     *
-     * @param gtdi trip all detail info
-     * @param headers headers
-     * @return HttpEntity
-     */
+    //返回某一个Trip以及剩余票数
     @CrossOrigin(origins = "*")
-    @PostMapping(value = "/trip_detail")
-    public HttpEntity getTripAllDetailInfo(@RequestBody TripAllDetailInfo gtdi, @RequestHeader HttpHeaders headers) {
-        // TripAllDetailInfo
-        // TripAllDetail tripAllDetail
-        TravelController.LOGGER.info("Get trip detail,TripId: {}",gtdi.getTripId());
-        return ok(travelService.getTripAllDetailInfo(gtdi, headers));
+    @RequestMapping(value="/travel/getTripAllDetailInfo", method= RequestMethod.POST)
+    public GetTripAllDetailResult getTripAllDetailInfo(@RequestBody GetTripAllDetailInfo gtdi){
+        return travelService.getTripAllDetailInfo(gtdi);
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping(value = "/trips")
-    public HttpEntity queryAll(@RequestHeader HttpHeaders headers) {
-        // List<Trip>
-        TravelController.LOGGER.info("Query all trips");
-        return ok(travelService.queryAll(headers));
+    @RequestMapping(value="/travel/queryAll", method= RequestMethod.GET)
+    public List<Trip> queryAll(){
+        return travelService.queryAll();
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping(value = "/admin_trip")
-    public HttpEntity adminQueryAll(@RequestHeader HttpHeaders headers) {
-        // ArrayList<AdminTrip>
-        TravelController.LOGGER.info("Admin query all trips");
-        return ok(travelService.adminQueryAll(headers));
+    @RequestMapping(value="/travel/adminQueryAll", method= RequestMethod.GET)
+    public AdminFindAllResult adminQueryAll(){
+        return travelService.adminQueryAll();
     }
-
 }

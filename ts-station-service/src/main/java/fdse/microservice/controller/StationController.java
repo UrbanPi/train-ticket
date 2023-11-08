@@ -1,104 +1,63 @@
 package fdse.microservice.controller;
 
-import edu.fudan.common.util.Response;
-import fdse.microservice.entity.*;
+import fdse.microservice.domain.*;
 import fdse.microservice.service.StationService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-import static org.springframework.http.ResponseEntity.ok;
-
+/**
+ * Created by Chenjie Xu on 2017/5/8.
+ */
 @RestController
-@RequestMapping("/api/v1/stationservice")
 public class StationController {
+
+    //private static final Logger log = LoggerFactory.getLogger(Application.class);
 
     @Autowired
     private StationService stationService;
 
-    @Value("${sleep_seconds}")
-    private long sleepSeconds;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(StationController.class);
-
-    @GetMapping(path = "/welcome")
-    public String home(@RequestHeader HttpHeaders headers) {
-        return "Welcome to [ Station Service ] !";
+    @RequestMapping(value="/station/create",method= RequestMethod.POST)
+    public boolean create(@RequestBody Information info){
+        return stationService.create(info);
     }
 
-    @GetMapping(value = "/stations")
-    public HttpEntity query(@RequestHeader HttpHeaders headers) {
-        return ok(stationService.query(headers));
+    @RequestMapping(value="/station/exist",method= RequestMethod.POST)
+    public boolean exist(@RequestBody QueryStation info){
+        return stationService.exist(info);
     }
 
-    @PostMapping(value = "/stations")
-    public ResponseEntity<Response> create(@RequestBody Station station, @RequestHeader HttpHeaders headers) {
-        StationController.LOGGER.info("Create station,name: {}",station.getName());
-        return new ResponseEntity<>(stationService.create(station, headers), HttpStatus.CREATED);
+    @RequestMapping(value="/station/update",method= RequestMethod.POST)
+    public boolean update(@RequestBody Information info){
+        return stationService.update(info);
     }
 
-    @PutMapping(value = "/stations")
-    public HttpEntity update(@RequestBody Station station, @RequestHeader HttpHeaders headers) {
-        StationController.LOGGER.info("Update station,StationId: {}",station.getId());
-        return ok(stationService.update(station, headers));
+    @RequestMapping(value="/station/delete",method= RequestMethod.POST)
+    public boolean delete(@RequestBody Information info){
+        return stationService.delete(info);
     }
 
-    @DeleteMapping(value = "/stations")
-    public ResponseEntity<Response> delete(@RequestBody Station station, @RequestHeader HttpHeaders headers) {
-        StationController.LOGGER.info("Delete station,StationId: {}",station.getId());
-        return ok(stationService.delete(station, headers));
+    @RequestMapping(value="/station/query",method= RequestMethod.GET)
+    public List<Station> query(){
+        return stationService.query();
     }
 
-
-
-    // according to station name ---> query station id
-    @GetMapping(value = "/stations/id/{stationNameForId}")
-    public HttpEntity queryForStationId(@PathVariable(value = "stationNameForId")
-                                                String stationName, @RequestHeader HttpHeaders headers) {
-        try {
-            TimeUnit.SECONDS.sleep(sleepSeconds);
-        } catch (java.lang.InterruptedException e) {
-            LOGGER.info("slowly executed " + sleepSeconds + " seconds");
-        }
-
-        // string
-        StationController.LOGGER.info("Query for station id,StationName: {}",stationName);
-        return ok(stationService.queryForId(stationName, headers));
+    @RequestMapping(value="/station/queryForId",method= RequestMethod.POST)
+    public String queryForId(@RequestBody QueryForId info){
+        return stationService.queryForId(info);
     }
 
-    // according to station name list --->  query all station ids
     @CrossOrigin(origins = "*")
-    @PostMapping(value = "/stations/idlist")
-    public HttpEntity queryForIdBatch(@RequestBody List<String> stationNameList, @RequestHeader HttpHeaders headers) {
-        StationController.LOGGER.info("Query stations for id batch,StationNameNumbers: {}",stationNameList.size());
-        return ok(stationService.queryForIdBatch(stationNameList, headers));
+    @RequestMapping(value = "/station/queryById",method = RequestMethod.POST)
+    public QueryStation queryById(@RequestBody QueryById queryById){
+        System.out.println("[Station Service] Query By Id:" + queryById.getStationId());
+        return stationService.queryById(queryById.getStationId());
     }
 
-    // according to station id ---> query station name
     @CrossOrigin(origins = "*")
-    @GetMapping(value = "/stations/name/{stationIdForName}")
-    public HttpEntity queryById(@PathVariable(value = "stationIdForName")
-                                        String stationId, @RequestHeader HttpHeaders headers) {
-        StationController.LOGGER.info("Query stations By Id: {}", stationId);
-        // string
-        return ok(stationService.queryById(stationId, headers));
+    @RequestMapping(value = "/station/queryByIdForName",method = RequestMethod.POST)
+    public String queryByIdForName(@RequestBody QueryById queryById){
+        System.out.println("[Station Service] Query By Id For Name:" + queryById.getStationId());
+        return stationService.queryById(queryById.getStationId()).getName();
     }
-
-    // according to station id list  ---> query all station names
-    @CrossOrigin(origins = "*")
-    @PostMapping(value = "/stations/namelist")
-    public HttpEntity queryForNameBatch(@RequestBody List<String> stationIdList, @RequestHeader HttpHeaders headers) {
-        StationController.LOGGER.info("Query stations for name batch,StationIdNumbers: {}",stationIdList.size());
-        return ok(stationService.queryByIdBatch(stationIdList, headers));
-    }
-
 }

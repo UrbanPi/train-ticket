@@ -1,56 +1,45 @@
 package travelplan.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.web.bind.annotation.*;
-import travelplan.entity.TripInfo;
-import travelplan.entity.TransferTravelInfo;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import travelplan.domain.QueryInfo;
+import travelplan.domain.TransferTravelSearchInfo;
+import travelplan.domain.TransferTravelSearchResult;
+import travelplan.domain.TravelAdvanceResult;
 import travelplan.service.TravelPlanService;
 
-import static org.springframework.http.ResponseEntity.ok;
-
-/**
- * @author fdse
- */
 @RestController
-@RequestMapping("api/v1/travelplanservice")
 public class TravelPlanController {
 
     @Autowired
     TravelPlanService travelPlanService;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TravelPlanController.class);
-
-    @GetMapping(path = "/welcome" )
-    public String home() {
-        return "Welcome to [ TravelPlan Service ] !";
+    @RequestMapping(value="/travelPlan/getTransferResult", method= RequestMethod.POST)
+    public TransferTravelSearchResult getTransferResult(@RequestBody TransferTravelSearchInfo info) {
+        System.out.println("[Search Transit]");
+        return travelPlanService.getTransferSearch(info);
     }
 
-    @PostMapping(value="/travelPlan/transferResult" )
-    public HttpEntity getTransferResult(@RequestBody TransferTravelInfo info, @RequestHeader HttpHeaders headers) {
-        TravelPlanController.LOGGER.info("[Search Transit],start: {},end: {}",info.getFromStationName(),info.getToStationName());
-        return ok(travelPlanService.getTransferSearch(info, headers));
+    @RequestMapping(value="/travelPlan/getCheapest", method= RequestMethod.POST)
+    public TravelAdvanceResult getByCheapest(@RequestBody QueryInfo queryInfo) {
+        System.out.println("[Search Cheapest]");
+        return travelPlanService.getCheapest(queryInfo);
     }
 
-    @PostMapping(value="/travelPlan/cheapest")
-    public HttpEntity getByCheapest(@RequestBody TripInfo queryInfo, @RequestHeader HttpHeaders headers) {
-        TravelPlanController.LOGGER.info("[Search Cheapest],start: {},end: {},time: {}",queryInfo.getStartingPlace(),queryInfo.getEndPlace(),queryInfo.getDepartureTime());
-        return ok(travelPlanService.getCheapest(queryInfo, headers));
+    @RequestMapping(value="/travelPlan/getQuickest", method= RequestMethod.POST)
+    public TravelAdvanceResult getByQuickest(@RequestBody QueryInfo queryInfo) {
+        System.out.println("[Search Quickest]");
+        return travelPlanService.getQuickest(queryInfo);
     }
 
-    @PostMapping(value="/travelPlan/quickest")
-    public HttpEntity getByQuickest(@RequestBody TripInfo queryInfo, @RequestHeader HttpHeaders headers) {
-        TravelPlanController.LOGGER.info("[Search Quickest],start: {},end: {},time: {}",queryInfo.getStartingPlace(),queryInfo.getEndPlace(),queryInfo.getDepartureTime());
-        return ok(travelPlanService.getQuickest(queryInfo, headers));
+    @RequestMapping(value="/travelPlan/getMinStation", method= RequestMethod.POST)
+    public TravelAdvanceResult getByMinStation(@RequestBody QueryInfo queryInfo) {
+        System.out.println("[Search Min Station]");
+        return travelPlanService.getMinStation(queryInfo);
     }
 
-    @PostMapping(value="/travelPlan/minStation")
-    public HttpEntity getByMinStation(@RequestBody TripInfo queryInfo, @RequestHeader HttpHeaders headers) {
-        TravelPlanController.LOGGER.info("[Search Min Station],start: {},end: {},time: {}",queryInfo.getStartingPlace(),queryInfo.getEndPlace(),queryInfo.getDepartureTime());
-        return ok(travelPlanService.getMinStation(queryInfo, headers));
-    }
 
 }

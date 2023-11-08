@@ -1,66 +1,36 @@
 package admintravel.controller;
 
-import admintravel.entity.TravelInfo;
+import admintravel.domain.request.AddAndModifyTravelRequest;
+import admintravel.domain.request.DeleteTravelRequest;
+import admintravel.domain.response.AdminFindAllResult;
+import admintravel.domain.response.ResponseBean;
 import admintravel.service.AdminTravelService;
-import edu.fudan.common.util.Response;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestClientException;
 
-import static org.springframework.http.ResponseEntity.*;
-
-/**
- * @author fdse
- */
 @RestController
-@RequestMapping("/api/v1/admintravelservice")
 public class AdminTravelController {
     @Autowired
     AdminTravelService adminTravelService;
 
-    private static final Logger logger = LoggerFactory.getLogger(AdminTravelController.class);
-
-    @GetMapping(path = "/welcome")
-    public String home(@RequestHeader HttpHeaders headers) {
-        return "Welcome to [ AdminTravel Service ] !";
-    }
-
     @CrossOrigin(origins = "*")
-    @GetMapping(path = "/admintravel")
-    public HttpEntity getAllTravels(@RequestHeader HttpHeaders headers) {
-        logger.info("Get all travels");
-
-        try {
-            Response result = adminTravelService.getAllTravels(headers);
-            return ok(result);
-        } catch (RestClientException e) {
-            logger.error("Get all travels time out:" + e.toString());
-            return status(500).build();
-        }
+    @RequestMapping(path = "/admintravel/findAll/{id}", method = RequestMethod.GET)
+    public AdminFindAllResult getAllTravels(@PathVariable String id){
+        return adminTravelService.getAllTravels(id);
     }
 
-    @PostMapping(value = "/admintravel")
-    public HttpEntity addTravel(@RequestBody TravelInfo request, @RequestHeader HttpHeaders headers) {
-        logger.info("Add travel, trip id: {}, train type id: {}, form station {} to station {}, login id: {}",
-                request.getTripId(), request.getTrainTypeId(), request.getStartingStationId(), request.getStationsId(), request.getLoginId());
-        return ok(adminTravelService.addTravel(request, headers));
+    @RequestMapping(value = "/admintravel/addTravel", method= RequestMethod.POST)
+    public ResponseBean addTravel(@RequestBody AddAndModifyTravelRequest request){
+        return adminTravelService.addTravel(request);
     }
 
-    @PutMapping(value = "/admintravel")
-    public HttpEntity updateTravel(@RequestBody TravelInfo request, @RequestHeader HttpHeaders headers) {
-        logger.info("Update travel, trip id: {}, train type id: {}, form station {} to station {}, login id: {}",
-                request.getTripId(), request.getTrainTypeId(), request.getStartingStationId(), request.getStationsId(), request.getLoginId());
-        return ok(adminTravelService.updateTravel(request, headers));
+    @RequestMapping(value = "/admintravel/updateTravel", method= RequestMethod.POST)
+    public ResponseBean updateTravel(@RequestBody AddAndModifyTravelRequest request){
+        return adminTravelService.updateTravel(request);
     }
 
-    @DeleteMapping(value = "/admintravel/{tripId}")
-    public HttpEntity deleteTravel(@PathVariable String tripId, @RequestHeader HttpHeaders headers) {
-        logger.info("Delete travel: trip id: {}", tripId);
-        return ok(adminTravelService.deleteTravel(tripId, headers));
+    @RequestMapping(value = "/admintravel/deleteTravel", method= RequestMethod.POST)
+    public ResponseBean deleteTravel(@RequestBody DeleteTravelRequest request){
+        return adminTravelService.deleteTravel(request);
     }
-
 }

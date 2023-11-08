@@ -1,0 +1,11 @@
+server:
+  port: 15345  # HTTP (Tomcat) port
+
+spring:
+  application:
+    name: ts-click-twice
+  zipkin:
+    baseUrl: http://zipkin:9411/
+  sleuth:
+    sampler:
+      percentage: 1.0
