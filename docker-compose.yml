@@ -42,15 +42,6 @@ services:
     networks:
       - my-network
 
-  ts-click-twice:
-    build: ts-click-twice
-    image: ts/ts-click-twice
-    restart: always
-    ports:
-      - 15345:15345
-    networks:
-      - my-network
-
   ts-login-service:
     build: ts-login-service
     image: ts/ts-login-service
@@ -566,6 +557,19 @@ services:
                       condition: on-failure
                   networks:
                     - my-network
+
+  rest-service-external:
+    build: ts-rest-service-external
+    image: node
+    restart: always
+    ports:
+      - 16100:16100
+    deploy:
+      replicas: 6
+      restart_policy:
+        condition: on-failure
+    networks:
+      - my-network
 
 networks:
     my-network:

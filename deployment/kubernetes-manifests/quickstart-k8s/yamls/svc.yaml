@@ -663,19 +663,32 @@ spec:
       port: 9464
   selector:
     app: ts-register-service
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: ts-click-twice
+#spec:
+#  type: NodePort
+#  ports:
+#    - name: http
+#      port: 15345
+#      nodePort: 30078
+#    - name: metric
+#      port: 9464
+#  selector:
+#    app: ts-click-twice-service
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: ts-click-twice
+  name: ts-rest-external-service
 spec:
   type: NodePort
   ports:
     - name: http
-      port: 15345
-      nodePort: 30078
-    - name: metric
-      port: 9464
+      port: 16100
+      nodePort: 30079
   selector:
-    app: ts-click-twice-service
+    app: ts-rest-external-service
 ---

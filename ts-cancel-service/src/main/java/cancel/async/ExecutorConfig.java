@@ -1,4 +1,4 @@
-package inside_payment.async;
+package cancel.async;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -13,7 +13,7 @@ public class ExecutorConfig {
   
     /** Set the ThreadPoolExecutor's core pool size. */  
     private int corePoolSize = 10;  
-    /** Set the ThreadPoolExecutor's maximum pool size. */ 
+    /** Set the ThreadPoolExecutor's maximum pool size. */  
     private int maxPoolSize = 200;  
     /** Set the capacity for the ThreadPoolExecutor's BlockingQueue. */  
     private int queueCapacity = 10;  
@@ -42,5 +42,5 @@ public class ExecutorConfig {
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());  
         executor.initialize();  
         return executor;  
-    }
-}
+    }  
+}  

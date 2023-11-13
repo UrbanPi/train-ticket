@@ -1,0 +1,48 @@
+name: Deploy to local minikube
+
+on:
+  workflow_dispatch:
+    inputs:
+      chosen-runner:
+        required: false
+        type: choice
+        description: 'Runner label'
+        default: 'austin'
+        options:
+          - local-runner
+          - austin
+      namespace:
+        required: false
+        type: text
+        description: 'Kubernetes namespace'
+        default: 'default'
+      deploy-args:
+        required: false
+        type: choice
+        description: 'Deployment arguments'
+        default: ''
+        options:
+          -
+          - --with-monitoring
+          - --with-otel
+          - --with-otel --with-monitoring
+
+jobs:
+  deploy:
+    runs-on: [ self-hosted, "${{ inputs.chosen-runner }}" ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: containers.github.scch.at
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+
+
+      - name: Set paths and execute deployment script
+        run: |
+          kubectl config use-context docker-desktop
+          ./hack/deploy/deploy.sh "${{ inputs.namespace }}" "${{ inputs.deploy-args }}"

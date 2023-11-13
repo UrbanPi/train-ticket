@@ -147,7 +147,7 @@ public class ExecuteServiceImpl implements ExecuteService{
     private ModifyOrderStatusResult executeOrderOther(ModifyOrderStatusInfo info){
         System.out.println("[Execute Service][Execute Order] Executing....");
         ModifyOrderStatusResult cor = restTemplate.postForObject(
-                "http://ts-order-other-service:12032/orderOther/modifyOrderStatus"
+                "http://ts-order-other-service:12032/order/modifyOrderStatus"
                 ,info,ModifyOrderStatusResult.class);
         return cor;
     }

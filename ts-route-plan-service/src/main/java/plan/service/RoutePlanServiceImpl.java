@@ -36,14 +36,8 @@ public class RoutePlanServiceImpl implements RoutePlanService{
         for(int i = 0;i < size;i++){
 
             minPrice = Float.MAX_VALUE;
-            for(int j = 0;j < finalResult.size(); j++){
-
+            for(int j = 0;j < finalResult.size();j++){
                 TripResponse thisRes = finalResult.get(j);
-
-                if(thisRes == null){
-                    System.out.println("警告：this-res null");
-                }
-
                 if(Float.parseFloat(thisRes.getPriceForEconomyClass()) < minPrice){
                     minPrice = Float.parseFloat(finalResult.get(j).getPriceForEconomyClass());
                     minIndex = j;

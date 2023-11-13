@@ -4,13 +4,9 @@ import inside_payment.domain.*;
 import inside_payment.service.InsidePaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-/**
- * Created by Administrator on 2017/6/20.
- */
 @RestController
 public class InsidePaymentController {
 
@@ -58,4 +54,12 @@ public class InsidePaymentController {
         return service.queryAddMoney();
     }
 
+    @RequestMapping("/hello1_callback")
+    public String hello1_callback(@RequestParam(value="result", defaultValue="satan") String cal_back) {
+
+        System.out.println("Call Back Result:" + cal_back);
+        System.out.println("-------------external call back-------------");
+        return "-------call back end-------";
+
+    }
 }

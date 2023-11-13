@@ -1,45 +1,34 @@
-# F5: ts-error-cross-timeout-status(chance)-F5
+
+
 ## Industrial fault description:
 
-F5 is such kind of fault which is caused by the resource competition of multiple requests. Sometimes a microservice 
-has its maximum number of connections by using thread pool. Suppose we have 3 services, A, B, C. A and B both call C 
-for some specific information. If A send some requests to C, but before that B has sent some requests to C and these 
-requests are too complex to process at a short time, then the requests from A must wait until the requests from B 
-completed, leading to a timeout exception.
+F7 is a fault which occurs in a third-party service and then leads to a failure.
+We always need to call a microservice that maintained by a third-party or company.
+Sometimes the response from the microservice maintained by others may be timeout and returns nothing, or even return wrong information.
+Then this kind of fault occurs.
+
 
 
 ## TrainTicket replicated fault description:
-We implemented this fault in **Basic-Info-Service** (Comment: There is no Basic-Info-Service, however, there are two 
-other production services, which have a small threadpool configuration). We use asynchronous tasks in Basic-Info-Service 
-to collect tickets information. Then we use the thread pool which is needed for the implementation of asynchronous tasks 
-as microservice resource. We send many requests at a short period of time and if the thread number is equal or exceeds the 
-max-thread-pool-size, the fault will occur.
 
-### ExecutorConfig of ticketinfo-service: 
-````    
-    /** Set the ThreadPoolExecutor's core pool size. */  
-    private int corePoolSize = 2;
-    /** Set the ThreadPoolExecutor's maximum pool size. */ 
-    private int maxPoolSize = 3;
-    /** Set the capacity for the ThreadPoolExecutor's BlockingQueue. */  
-    private int queueCapacity = 10;
-````
-Call
-````
-/ticketinfo/queryForTravel
-````
-This endpoint should return some JSON, but it should also return null when called too fast, too often.
+In TrainTicket system, if the user want to buy a ticket but the balance is not enough, the system will call a third-party service implemented by Node.js to get the ticket money.
+Sometimes there will be a delay in this third-party service, then the timeout will be triggered and the fault occurs.
 
 
-### Executor Config of inside-payment-service:
-````    
-    private int corePoolSize = 1;
-    private int maxPoolSize = 1;
-    private int queueCapacity = 1;
-````
-Call 
-````
-/inside_payment/pay
-/inside_payment/drawBack
-````
-These endpoints return a boolean. The fault occurs when the service returns false, although it should have returned true.
+
+
+
+## Fault Reproduce ##
+
+
+# Fault Reproduce Steps #
+Failure Triggering Usage Steps:
+
+1. Log in.
+2. Select date and click [Search]. Remember to select [Others].
+3. Select one Train-Number and click [Book].
+4. Select one contacts and click [Select].
+5. Click [Confirm Ticket] and wait for the [SUCCESS] alert.
+6. Click pay for the ticket and wait for the result.
+   If no fault occurs, you will receive [SUCCESS].
+   If the fault occurs, you will receive [Pay Error] and see the exception logs in server console.

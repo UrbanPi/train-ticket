@@ -11,7 +11,7 @@ function setTodayDatePreserve(){
     }
     if(mm < 10){
         mm = '0' + mm
-    }a
+    }
     today = yyyy+'-'+mm+'-'+dd;
     document.getElementById("travel_booking_date").setAttribute("min", today);
 }
@@ -125,7 +125,7 @@ function checkDateFormat(date){
 }
 
 function queryForTravelInfo(data,path) {
-    //$("#travel_booking_button").attr("disabled",true);
+    $("#travel_booking_button").attr("disabled",true);
     $.ajax({
         type: "post",
         url: path,
@@ -165,11 +165,8 @@ function queryForTravelInfo(data,path) {
                 addListenerToBookingTable();
             }
         },
-        error: function() {
-            alert("Ticket Search Error");
-        },
         complete: function () {
-            //$("#travel_booking_button").attr("disabled",false);
+            $("#travel_booking_button").attr("disabled",false);
         }
     });
 }
@@ -415,9 +412,6 @@ function refresh_booking_contacts() {
                 "</tr>"
             );
         },
-        error: function(){
-            alert("Error");
-        },
         complete: function(){
             $("#refresh_booking_contacts_button").attr("disabled",false);
         }
@@ -597,7 +591,7 @@ $("#ticket_confirm_confirm_btn").click(function () {
         alert("Please Login");
     }
 
-    //$("#ticket_confirm_confirm_btn").attr("disabled",true);
+    $("#ticket_confirm_confirm_btn").attr("disabled",true);
     var orderTicketInfo = new Object();
     orderTicketInfo.contactsId = $("#ticket_confirm_contactsId").text();
     orderTicketInfo.tripId = $("#ticket_confirm_tripId").text();
@@ -679,11 +673,8 @@ $("#ticket_confirm_confirm_btn").click(function () {
                 location.hash="anchor_flow_preserve_pay";
             }
         },
-        error: function () {
-          alert("Error");
-        },
         complete: function(){
-            //$("#ticket_confirm_confirm_btn").attr("disabled",false);
+            $("#ticket_confirm_confirm_btn").attr("disabled",false);
         }
     })
 })
@@ -701,7 +692,7 @@ $("#preserve_pay_button").click(function(){
     if(getCookie("loginId").length < 1 || getCookie("loginToken").length < 1){
         alert("Please Login");
     }
-    //$("#preserve_pay_button").attr("disabled",true);
+    $("#preserve_pay_button").attr("disabled",true);
     var info = new Object();
     info.orderId = $("#preserve_pay_orderId").val();
     info.tripId = $("#preserve_pay_tripId").val();
@@ -725,8 +716,11 @@ $("#preserve_pay_button").click(function(){
                 //alert("Some thing error");
             }
         },
+        error: function(){
+          alert("Pay Error");
+        },
         complete: function(){
-            //$("#preserve_pay_button").attr("disabled",false);
+            $("#preserve_pay_button").attr("disabled",false);
         }
     });
     //$("#preserve_pay_panel").css('display','none');

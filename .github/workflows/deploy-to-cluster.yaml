@@ -1,0 +1,88 @@
+name: Deploy to SCCH cluster
+
+on:
+  workflow_dispatch:
+    inputs:
+      chosen-runner:
+        required: false
+        type: choice
+        description: 'Runner label'
+        default: 'austin'
+        options:
+          - local-runner
+          - austin
+          - dependabot
+      namespace:
+        required: false
+        type: text
+        description: 'Kubernetes namespace (scch-sws for dependabot)'
+        default: ''
+      deploy-args:
+        required: false
+        type: choice
+        description: 'Deployment arguments'
+        default: ''
+        options:
+          -
+          - --with-monitoring
+          - --with-otel
+          - --with-otel --with-monitoring
+
+
+jobs:
+  deploy:
+    runs-on: [ self-hosted, "${{ inputs.chosen-runner }}" ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: containers.github.scch.at
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+
+      - name: Get kubeconfig with active session
+        env:
+          HPC_USERNAME: ${{ secrets.HPC_USERNAME }}
+          HPC_PASSWORD: ${{ secrets.HPC_PASSWORD }}
+        run: |
+          mkdir .kube
+          curl -k -s --request GET "https://duesentrieb.hpc.scch.at:8080/api/v2/k8skubeconfig" \
+          --header "X-BDS-SESSION: $(curl -k -i -s --request POST "https://duesentrieb.hpc.scch.at:8080/api/v2/session" \
+          --header 'Accept: application/json' \
+          --header 'Content-Type: application/json' \
+            --data-raw "{
+          \"name\": \"${HPC_USERNAME}\",
+          \"password\": \"${HPC_PASSWORD}\"
+          }" | grep Location | awk '{print $2}' | tr -d '\r')" \
+          --header 'Accept: application/json' \
+          --header 'Content-Type: application/json' > ./.kube/config
+
+      - name: Get kubectl
+        run: |
+          curl -k -s --request GET "https://storage.googleapis.com/kubernetes-release/release/v1.20.11/bin/linux/amd64/kubectl" > ./.kube/kubectl
+          chmod +x ./.kube/kubectl
+
+      - name: Get kubectl-hpecp plugin
+        run: |
+          curl -k -s --request GET "https://bluedata-releases.s3.amazonaws.com/kubectl-epic/3.4/14/linux/kubectl-hpecp.star" > kubectl-hpecp.star
+          tar -xf kubectl-hpecp.star kubectl-hpecp
+          mv kubectl-hpecp .kube/kubectl-hpecp
+          rm -f kubectl-hpecp.star
+
+      - name: Get helm
+        run: |
+          curl -k -s --request GET "https://get.helm.sh/helm-v3.12.3-linux-amd64.tar.gz" > helm-v3.12.3-linux-amd64.tar.gz
+          tar -xzf helm-v3.12.3-linux-amd64.tar.gz linux-amd64/helm
+          mkdir helmbin
+          mv linux-amd64/helm helmbin/
+          rm helm-v3.12.3-linux-amd64.tar.gz
+          chmod +x helmbin/
+
+      - name: Set paths and execute deployment script
+        run: |
+          export PATH="$PATH:$(pwd)/.kube:$(pwd)/helmbin"
+          export KUBECONFIG="$(pwd)/.kube/config"
+          ./hack/deploy/deploy.sh "${{ inputs.namespace }}" "${{ inputs.deploy-args }}"

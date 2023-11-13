@@ -1,5 +1,6 @@
 package fdse.microservice.controller;
 
+import fdse.microservice.domain.QueryForStationId;
 import fdse.microservice.domain.QueryForTravel;
 import fdse.microservice.domain.QueryStation;
 import fdse.microservice.domain.ResultForTravel;
@@ -18,13 +19,6 @@ public class BasicController {
 
     @RequestMapping(value="/basic/queryForTravel", method= RequestMethod.POST)
     public ResultForTravel queryForTravel(@RequestBody QueryForTravel info){
-        System.out.println("[Basic Info][Query For Travel] Sleep Begin");
-        try{
-            Thread.sleep(10000);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        System.out.println("[Basic Info][Query For Travel] Sleep End");
         return service.queryForTravel(info);
     }
 
