@@ -8,9 +8,9 @@ from http.client import RemoteDisconnected
 from json import JSONDecodeError
 from urllib.error import URLError
 
-available_versions = ["master", "error-f4", "error-f1",  "error-f2", "error-f3",  "error-f5", "error-f7"]
+available_versions = ["master", "error-f1", "error-f2", "error-f3", "error-f4", "error-f5", "error-f6", "error-f7"]
 
-version_groups = {"master_grp": ["master"], "error_grp": ["error-f4", "error-f1", "error-f3"], 
+version_groups = {"master_grp": ["master"], "error_grp": ["error-f4", "error-f1", "error-f3", "error-f6"],
                   "error_grp_2": ["error-f2", "error-f5"],
                   "error_grp3": ["error-f7"]}
 
@@ -176,8 +176,11 @@ def retrieve_and_save(service: dict):
     # print("Getting definition of {} from url: {}".format(service.get("name"), url))
     try:
         definition: dict = json.loads(urllib.request.urlopen(url, timeout=30).read().decode("utf8"))
-        definition["tags"] = list(filter(lambda tag: not any(tag.get("name") == not_wanted for not_wanted in unwanted_tags), definition.get("tags")))
-        definition["paths"] = dict(filter(lambda item: not any(item[0] == not_wanted for not_wanted in unwanted_paths), definition.get("paths").items()))
+        definition["tags"] = list(
+            filter(lambda tag: not any(tag.get("name") == not_wanted for not_wanted in unwanted_tags),
+                   definition.get("tags")))
+        definition["paths"] = dict(filter(lambda item: not any(item[0] == not_wanted for not_wanted in unwanted_paths),
+                                          definition.get("paths").items()))
         with open(service.get("name") + ".json", "w", encoding="utf8") as f:
             f.write(json.dumps(definition))
     except KeyError:
