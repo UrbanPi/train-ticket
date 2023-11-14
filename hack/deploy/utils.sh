@@ -22,7 +22,6 @@ function deploy_infrastructures {
 function deploy_monitoring {
   echo "Start deploy prometheus and grafana"
   kubectl apply -f deployment/kubernetes-manifests/prometheus
-  kubectl apply -f deployment/kubernetes-manifests/prometheus_micros -n $namespace
 }
 
 
