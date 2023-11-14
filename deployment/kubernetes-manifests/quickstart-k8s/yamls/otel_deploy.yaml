@@ -2942,7 +2942,7 @@ spec:
   selector:
     matchLabels:
       app: ts-rest-external-service
-  replicas: 6
+  replicas: 1
   template:
     metadata:
       labels:
@@ -2954,7 +2954,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-rest-external-service
-          image: containers.github.scch.at/contest/trainticket/ts-rest-external:error-f7
+          image: containers.github.scch.at/contest/trainticket/ts-rest-external-service:error-f7
           imagePullPolicy: Always
           env:
             - name: NODE_IP

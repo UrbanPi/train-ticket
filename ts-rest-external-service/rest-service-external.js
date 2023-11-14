@@ -99,6 +99,7 @@ http.createServer(function (req, res) {
           handleResponse(response);
         }).end();
     }else{
+
         // var resObj = {
         //   id: counter++,
         //   result: (params.cal < 100 && params.cal > 0)

@@ -559,7 +559,7 @@ services:
                     - my-network
 
   rest-service-external:
-    build: ts-rest-service-external
+    build: ts-rest-external-service
     image: node
     restart: always
     ports:
