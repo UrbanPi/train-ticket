@@ -31,4 +31,5 @@ Failure Triggering Usage Steps:
 5. Click [Confirm Ticket] and wait for the [SUCCESS] alert.
 6. Click pay for the ticket and wait for the result.
    If no fault occurs, you will receive [SUCCESS].
-   If the fault occurs, you will receive [Pay Error] and see the exception logs in server console.
+   If the fault occurs, you will receive [Pay Error] and see the exception logs in server console. 
+   PU: The error can be seen in traces of ts-inside-payment-service

@@ -9,9 +9,9 @@ Then this kind of fault occurs.
 
 
 
-TainTicket replicated fault description:
+TrainTicket replicated fault description:
 
-In TainTicket system, if the user want to buy a ticket but the balance is not enough, the system will call a third-party service implemented by Node.js to get the ticket money. 
+In TrainTicket system, if the user want to buy a ticket but the balance is not enough, the system will call a third-party service implemented by Node.js to get the ticket money.
 Sometimes there will be a delay in this third-party service, then the timeout will be triggered and the fault occurs.
 
 
