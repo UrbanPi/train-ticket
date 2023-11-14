@@ -21,6 +21,7 @@ var sleep = function(array, callback) {
     }
     async.mapLimit(tmp, 2, function(item, itemCallback) {
       console.log('Enter: ' + item.name);
+      item.delay = Math.random() > 0.5 ? 2000 : 1000
       setTimeout(function() {
         console.log('Handle: ' + item.name);
         itemCallback(false, item.name + '!!!');
@@ -77,7 +78,7 @@ http.createServer(function (req, res) {
     });
 
     if(req_url.pathname.indexOf('greeting_async') > -1){
-
+      // Note from PU: This path is never reached in this version, because the requests only come with a pathname of "greet"
         console.log("-------greeting_async----------");
         var options = {
             hostname: 'ts-inside-payment-service',
