@@ -1,122 +1,62 @@
+### error-f10
 
-# Train Ticket：A Benchmark Microservice System
+Original description (ts-error-logic-F10)
+> F10 is simply a normal logic fault in one business process.
+> This kind of fault occurs due to the defects in the implementation of a business process.
+>
+>
+>
+> train_ticket replicated fault description:
+>
+> In our Train Ticket System, the name and the ID Card number is required for booking a ticket.
+> In our society, one ID card number only mapping one name.
+> Thus, if two user input two distinct name but the document number is same, one of the user must be rejected.
+> In our system, if one  document number has been occupied by one name, another user inputs the same document number but
+> another name, he/she still successfully gets a ticket.
+> In this scenario, a logic fault like F10 occurs.
+>
+>
+> Fault reproduction:
+> 1. Log in
+> 2. Select date and click [Search]. Remeber to select [Others]
+> 3. Select one Train-Number and click [Book].
+> 4. At the first time you refresh contacts list, the list is empty.
+     >    Input a new contact info and click [Select]
+> 5. Click [Confirm Ticket] and wait for the SUCCESS alert.
+> 6. At the second time you refresh contacts list, the list has one contact.
+     >    Input a new contact info with the same document number with the first time and click [Select]
+> 7. Click [Confirm Ticket] and wait for the ERROR alert.
+> 8. At the third time you refresh contacts list, the list has two contact.
+     >    Input a new contact info with the same document number with the first time and click [Select]
+> 9. Click [Confirm Ticket] and wait for the ERROR alert.
 
-The project is a train ticket booking system based on microservice architecture which contains 41 microservices. The programming languages and frameworks it used are as below.
-- Java - Spring Boot, Spring Cloud
-- Node.js - Express
-- Python - Django
-- Go - Webgo
-- DB - Mongo、MySQL
 
-You can get more details at [Wiki Pages](https://github.com/FudanSELab/train-ticket/wiki).
+Original description (ts-error-normal-F10)
+>Reproduce Process:
+>    1. Login
+>    2. Search for "Nan Jing" and "Other"
+>    3. Add a new contacts with a new  document number. And click "confirm tickets"
+>    4. Add another new contacts with a different name and same document number. And click "confirm tickets"
+>    5. Add another new contacts with a different name and same document number. And click "confirm tickets"
+>    6. Only ticket in Step.3 should success and Step4&5 fail because of the duplicate document Number.
+        >       But Step4&5 success, this is a fault.
+>    7. Find out why and fix it.
 
-## Service Architecture Graph
-![architecture](./image/2.png)
 
-## Quick Start
-We provide two options to quickly deploy our application: [Using Docker Compose](#Using-Docker-Compose) and [Using Kubernetes](#Using-Kubernetes).
+1. The code or git branch used in this fault is not the one mentioned in the [fault replication repository](https://github.com/FudanSELab/train-ticket-fault-replicate#f10-ts-error-logic-f10)
+   The repository states that **ts-error-logic-f10** should be the correct branch but the code in this branch does not show the expected behaviour.
+2. The probably correct branch and code is **ts-error-normal-F10** in the fault replication repository, which is probably (at least the contents of `PreserveOtherServiceImpl`, which is the root cause of the injected error, are identical)
+   also contained in the corresponding zip package at https://fudanselab.github.io/research/MSFaultEmpiricalStudy/.
 
-### Using Docker Compose
-The easiest way to get start with the Train Ticket application is by using [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/).
+#### Adapted implementation
+To successfully reproducing this fault the following lines in ``PreserveOtherServiceImpl`` had to be commented in / activated:
 
-> If you don't have Docker and Docker Compose installed, you can refer to [the Docker website](https://www.docker.com/) to install them.
-
-#### Presequisite
-* Docker
-* Docker Compose
-
-#### 1. Clone the Repository
-```bash
-git clone --depth=1 https://github.com/FudanSELab/train-ticket.git
-cd train-ticket/
+```java
+/**********If user create a contact with duplicate ID，throw exception***********/
+if(oti.getIsCreateContacts().equals("true") && addContactsResult.isExists() == true){
+    throw new RuntimeException("[Normal Error] Reproduction Of Error Normal");
+}
 ```
 
-#### 2. Start the Application
-```bash
-docker-compose -f deployment/docker-compose-manifests/quickstart-docker-compose.yml up
-```
-Once the application starts, you can visit the Train Ticket web page at [http://localhost:8080](http://localhost:8080).
-
-### Using Kubernetes
-Here is the steps to deploy the Train Ticket onto any existing Kubernetes cluster.
-
-#### Presequisite
-* An existing Kubernetes cluster
-
-#### 1. Clone the Repository
-```bash
-git clone --depth=1 https://github.com/FudanSELab/train-ticket.git
-cd train-ticket/
-```
-
-#### 2. Deploy the application
-```bash
-cd deployment/kubernetes-manifests/quickstart-k8s
-
-# Deploy the databases
-kubectl apply -f quickstart-ts-deployment-part1.yml
-# Deploy the services
-kubectl apply -f quickstart-ts-deployment-part2.yml
-# Deploy the UI Dashboard
-kubectl apply -f quickstart-ts-deployment-part3.yml
-```
-
-#### 3. Run `kubectl get pods` to see pods are in a ready state
-
-#### 4. Visit the Train Ticket web page at [http://[Node-IP]:32677](http://[Node-IP]:32677).
-
-### More Deployment Ways
-
-There are many other quick deployment ways in [deployment folder](<https://github.com/FudanSELab/train-ticket/tree/master/deployment>).  For example, you can deploy this system [with Jaeger](<https://github.com/FudanSELab/train-ticket/tree/master/deployment/kubernetes-manifests/k8s-with-jaeger>), and then visit the Jaeger Webpage to view traces.
-
-## Build From Source
-In the above, We use pre-built images to quickly deploy the application.
-
-If you want to build the application from source, you can refer to [the Installation Guide](https://github.com/FudanSELab/train-ticket/wiki/Installation-Guide).
-
-## Screenshot
-![screenshot](./image/main_interface.png)
-In order to know how to use the application, you can refer to [the User Guide](https://github.com/FudanSELab/train-ticket/wiki/User-Guide).
-
-## Communication
-
-* [FAQ](https://github.com/FudanSELab/train-ticket/wiki/FAQ)
-* [Submit an issue](https://github.com/FudanSELab/train-ticket/issues)
-* [Open a pull request](https://github.com/FudanSELab/train-ticket/pulls)
-
-## Information
-
-* [Release Note](https://github.com/FudanSELab/train-ticket/wiki/Release-Note)
-
-## Paper Reference
-
-
-Xiang Zhou, Xin Peng, Tao Xie, Jun Sun, Chao Ji, Dewei Liu, Qilin Xiang, and Chuan He. <br/>
-**Latent Error Prediction and Fault Localization for Microservice Applications by Learning from System Trace Logs.**<br/>
-In Proceedings of the 27th ACM Joint European Software Engineering Conference and Symposium on the Foundations of Software Engineering ([ESEC/FSE 2019](https://esec-fse19.ut.ee/)) , Tallinn, Estonia, August 2019. <br/>
-Download: [[PDF](https://cspengxin.github.io/publications/fse19-zhou-microservice.pdf)] [[BibTeX](https://dblp.uni-trier.de/rec/bibtex/conf/sigsoft/Zhou0X0JLXH19)] 
-
-<br/>
-
-Xiang Zhou, Xin Peng, Tao Xie, Jun Sun, Chao Ji, Wenhai Li, and Dan Ding. <br/>
-**Fault Analysis and Debugging of Microservice Systems: Industrial Survey, Benchmark System, and Empirical Study.** <br/>
-[IEEE Transactions on Software Engineering](https://www.computer.org/web/tse) , To appear. <img src="image/cup.png" height="20px"/> <img src="image/tse-best-paper-award.png" height="28px"> <br/> 
-Download: [[PDF](https://cspengxin.github.io/publications/tse19-msdebugging.pdf)] 
-
-<br/>
-
-Xiang Zhou, Xin Peng, Tao Xie, Jun Sun, Wenhai Li, Chao Ji, and Dan Ding. <br/>
-**Delta Debugging Microservice Systems.** <br/>
-In Proceedings of 33rd IEEE/ACM International Conference on Automated Software Engineering ([ASE 2018](http://ase2018.com/)) , Short Paper, Montpellier, France, September 2018. <br/>
-Download: [[PDF](https://cspengxin.github.io/publications/ase18-debugmicroservice.pdf)] [[BibTeX](https://dblp.uni-trier.de/rec/bibtex/conf/kbse/ZhouPX0LJD18)] <br/>
-An extended version to appear in IEEE Transactions on Services Computing. 
-
-<br/>
-
-Xiang Zhou, Xin Peng, Tao Xie, Jun Sun, Chenjie Xu, Chao Ji, and Wenyun Zhao. <br/>
-**Poster: Benchmarking Microservice Systems for Software Engineering Research.** <br/>
-In Proceedings of the 40th International Conference on Software Engineering ([ICSE 2018](https://www.icse2018.org/)) , Posters, Gothenburg, Sweden, May 2018. <br/>
-Download: [[PDF](https://cspengxin.github.io/publications/icse18poster-microservices.pdf)] [[BibTeX](https://dblp.uni-trier.de/rec/bibtex/conf/icse/ZhouPX0XJZ18)] 
-
-
-
+Beware that, these are the only lines which have to be commented in / activated, although there are further sections of
+commented out code in this file, which might look like they have to be active too. 

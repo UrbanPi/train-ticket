@@ -1,63 +1,44 @@
 package route.controller;
 
-import edu.fudan.common.util.Response;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import route.entity.RouteInfo;
+import route.domain.*;
 import route.service.RouteService;
 
-import static org.springframework.http.ResponseEntity.ok;
-
-/**
- * @author fdse
- */
 @RestController
-@RequestMapping("/api/v1/routeservice")
 public class RouteController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RouteController.class);
+
     @Autowired
     private RouteService routeService;
 
-    @GetMapping(path = "/welcome")
+    @RequestMapping(path = "/welcome", method = RequestMethod.GET)
     public String home() {
         return "Welcome to [ Route Service ] !";
     }
 
-    @PostMapping(path = "/routes")
-    public ResponseEntity<Response> createAndModifyRoute(@RequestBody RouteInfo createAndModifyRouteInfo, @RequestHeader HttpHeaders headers) {
-        RouteController.LOGGER.info("Create route, start: {}, end: {}", createAndModifyRouteInfo.getStartStation(),createAndModifyRouteInfo.getEndStation());
-        return ok(routeService.createAndModify(createAndModifyRouteInfo, headers));
+    @RequestMapping(path = "/route/createAndModify", method = RequestMethod.POST)
+    public CreateAndModifyRouteResult createAndModifyRoute(@RequestBody CreateAndModifyRouteInfo createAndModifyRouteInfo){
+        return routeService.createAndModify(createAndModifyRouteInfo);
     }
 
-    @DeleteMapping(path = "/routes/{routeId}")
-    public HttpEntity deleteRoute(@PathVariable String routeId, @RequestHeader HttpHeaders headers) {
-        RouteController.LOGGER.info("Delete route,RouteId: {}", routeId);
-        return ok(routeService.deleteRoute(routeId, headers));
+    @RequestMapping(path = "/route/delete", method = RequestMethod.POST)
+    public DeleteRouteResult deleteRoute(@RequestBody DeleteRouteInfo deleteRouteInfo){
+        return routeService.deleteRoute(deleteRouteInfo);
     }
 
-    @GetMapping(path = "/routes/{routeId}")
-    public HttpEntity queryById(@PathVariable String routeId, @RequestHeader HttpHeaders headers) {
-        RouteController.LOGGER.info("Query route by id, RouteId: {}", routeId);
-        return ok(routeService.getRouteById(routeId, headers));
+    @RequestMapping(path = "/route/queryById/{routeId}", method = RequestMethod.GET)
+    public GetRouteByIdResult queryById(@PathVariable String routeId){
+        return routeService.getRouteById(routeId);
     }
 
-    @GetMapping(path = "/routes")
-    public HttpEntity queryAll(@RequestHeader HttpHeaders headers) {
-        RouteController.LOGGER.info("Query all routes");
-        return ok(routeService.getAllRoutes(headers));
+    @RequestMapping(path = "/route/queryAll", method = RequestMethod.GET)
+    public GetRoutesListlResult queryAll(){
+        return routeService.getAllRoutes();
     }
 
-    @GetMapping(path = "/routes/{startId}/{terminalId}")
-    public HttpEntity queryByStartAndTerminal(@PathVariable String startId,
-                                              @PathVariable String terminalId,
-                                              @RequestHeader HttpHeaders headers) {
-        RouteController.LOGGER.info("Query routes, startId : {}, terminalId: {}", startId, terminalId);
-        return ok(routeService.getRouteByStartAndTerminal(startId, terminalId, headers));
+    @RequestMapping(path = "/route/queryByStartAndTerminal", method = RequestMethod.POST)
+    public GetRoutesListlResult queryByStartAndTerminal(@RequestBody GetRouteByStartAndTerminalInfo getRouteByStartAndTerminalInfo){
+        return routeService.getRouteByStartAndTerminal(getRouteByStartAndTerminalInfo);
     }
 
 }

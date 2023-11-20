@@ -1,176 +1,171 @@
 package execute.serivce;
 
-import edu.fudan.common.util.Response;
-import execute.entity.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import execute.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-/**
- * @author fdse
- */
 @Service
-public class ExecuteServiceImpl implements ExecuteService {
+public class ExecuteServiceImpl implements ExecuteService{
 
     @Autowired
     private RestTemplate restTemplate;
 
-    String orderStatusWrong = "Order Status Wrong";
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ExecuteServiceImpl.class);
-
     @Override
-    public Response ticketExecute(String orderId, HttpHeaders headers) {
-        //1.Get order information
-
-        headers = null;
-        Response<Order> resultFromOrder = getOrderByIdFromOrder(orderId, headers);
+    public TicketExecuteResult ticketExecute(TicketExecuteInfo info){
+        //1.获取订单信息
+        GetOrderByIdInfo getOrderByIdInfo = new GetOrderByIdInfo();
+        getOrderByIdInfo.setOrderId(info.getOrderId());
+        GetOrderResult resultFromOrder = getOrderByIdFromOrder(getOrderByIdInfo);
+        TicketExecuteResult result = new TicketExecuteResult();
         Order order;
-        if (resultFromOrder.getStatus() == 1) {
-            order =   resultFromOrder.getData();
-            //2.Check if the order can come in
-            if (order.getStatus() != OrderStatus.COLLECTED.getCode()) {
-                LOGGER.error("ticket execute error: {}, orderId: {}", orderStatusWrong, orderId);
-                return new Response<>(0, orderStatusWrong, null);
+        if(resultFromOrder.isStatus() == true){
+            order = resultFromOrder.getOrder();
+            //2.检查订单是否可以进站
+            if(order.getStatus() != OrderStatus.COLLECTED.getCode()){
+                result.setStatus(false);
+                result.setMessage("Order Status Wrong");
+                return result;
             }
-            //3.Confirm inbound, request change order information
-
-            Response resultExecute = executeOrder(orderId, OrderStatus.USED.getCode(), headers);
-            if (resultExecute.getStatus() == 1) {
-                return new Response<>(1, "Success.", null);
-            } else {
-                LOGGER.error("executeOrder error: {}, orderId: {}", resultExecute.getMsg(), orderId);
-                return new Response<>(0, resultExecute.getMsg(), null);
+            //3.确认进站 请求修改订单信息
+            ModifyOrderStatusInfo executeInfo = new ModifyOrderStatusInfo();
+            executeInfo.setOrderId(info.getOrderId());
+            executeInfo.setStatus(OrderStatus.USED.getCode());
+            ModifyOrderStatusResult resultExecute = executeOrder(executeInfo);
+            if(resultExecute.isStatus() == true){
+                result.setStatus(true);
+                result.setMessage("Success.");
+                return result;
+            }else{
+                result.setStatus(false);
+                result.setMessage(resultExecute.getMessage());
+                return result;
             }
-        } else {
-            resultFromOrder = getOrderByIdFromOrderOther(orderId, headers);
-            if (resultFromOrder.getStatus() == 1) {
-                order =   resultFromOrder.getData();
-                //2.Check if the order can come in
-                if (order.getStatus() != OrderStatus.COLLECTED.getCode()) {
-                    LOGGER.error("ticket execute error: {}, orderId: {}", orderStatusWrong, orderId);
-                    return new Response<>(0, orderStatusWrong, null);
+        }else{
+            resultFromOrder = getOrderByIdFromOrderOther(getOrderByIdInfo);
+            if(resultFromOrder.isStatus() == true){
+                order = resultFromOrder.getOrder();
+                //2.检查订单是否可以进站
+                if(order.getStatus() != OrderStatus.COLLECTED.getCode()){
+                    result.setStatus(false);
+                    result.setMessage("Order Status Wrong");
+                    return result;
                 }
-                //3.Confirm inbound, request change order information
-
-                Response resultExecute = executeOrderOther(orderId, OrderStatus.USED.getCode(), headers);
-                if (resultExecute.getStatus() == 1) {
-                    return new Response<>(1, "Success", null);
-                } else {
-                    LOGGER.error("executeOrderOther error: {}, orderId: {}", resultExecute.getMsg(), orderId);
-                    return new Response<>(0, resultExecute.getMsg(), null);
+                //3.确认进站 请求修改订单信息
+                ModifyOrderStatusInfo executeInfo = new  ModifyOrderStatusInfo();
+                executeInfo.setOrderId(info.getOrderId());
+                executeInfo.setStatus(OrderStatus.USED.getCode());
+                ModifyOrderStatusResult resultExecute = executeOrderOther(executeInfo);
+                if(resultExecute.isStatus() == true){
+                    result.setStatus(true);
+                    result.setMessage("Success.");
+                    return result;
+                }else{
+                    result.setStatus(false);
+                    result.setMessage(resultExecute.getMessage());
+                    return result;
                 }
-            } else {
-                LOGGER.error("ticker execute error: {}, , orderId: {}", "Order Not Found", orderId);
-                return new Response<>(0, "Order Not Found", null);
+            }else{
+                result.setStatus(false);
+                result.setMessage("Order Not Found");
+                return result;
             }
         }
     }
 
     @Override
-    public Response ticketCollect(String orderId, HttpHeaders headers) {
-        //1.Get order information
-
-        headers = null;
-        Response<Order> resultFromOrder = getOrderByIdFromOrder(orderId, headers);
+    public TicketExecuteResult ticketCollect(TicketExecuteInfo info){
+        //1.获取订单信息
+        GetOrderByIdInfo getOrderByIdInfo = new GetOrderByIdInfo();
+        getOrderByIdInfo.setOrderId(info.getOrderId());
+        GetOrderResult resultFromOrder = getOrderByIdFromOrder(getOrderByIdInfo);
+        TicketExecuteResult result = new TicketExecuteResult();
         Order order;
-        if (resultFromOrder.getStatus() == 1) {
-            order =  resultFromOrder.getData();
-            //2.Check if the order can come in
-            if (order.getStatus() != OrderStatus.PAID.getCode() && order.getStatus() != OrderStatus.CHANGE.getCode()) {
-                LOGGER.error("ticket collect error: {}, orderId: {}", orderStatusWrong, orderId);
-                return new Response<>(0, orderStatusWrong, null);
+        if(resultFromOrder.isStatus() == true){
+            order = resultFromOrder.getOrder();
+            //2.检查订单是否可以进站
+            if(order.getStatus() != OrderStatus.PAID.getCode()){
+                result.setStatus(false);
+                result.setMessage("Order Status Wrong");
+                return result;
             }
-            //3.Confirm inbound, request change order information
-
-            Response resultExecute = executeOrder(orderId, OrderStatus.COLLECTED.getCode(), headers);
-            if (resultExecute.getStatus() == 1) {
-                return new Response<>(1, "Success", null);
-            } else {
-                LOGGER.error("ticket collect error: {}, orderId: {}", resultExecute.getMsg(), orderId);
-                return new Response<>(0, resultExecute.getMsg(), null);
+            //3.确认进站 请求修改订单信息
+            ModifyOrderStatusInfo executeInfo = new ModifyOrderStatusInfo();
+            executeInfo.setOrderId(info.getOrderId());
+            executeInfo.setStatus(OrderStatus.COLLECTED.getCode());
+            ModifyOrderStatusResult resultExecute = executeOrder(executeInfo);
+            if(resultExecute.isStatus() == true){
+                result.setStatus(true);
+                result.setMessage("Success.");
+                return result;
+            }else{
+                result.setStatus(false);
+                result.setMessage(resultExecute.getMessage());
+                return result;
             }
-        } else {
-            resultFromOrder = getOrderByIdFromOrderOther(orderId, headers);
-            if (resultFromOrder.getStatus() == 1) {
-                order = (Order) resultFromOrder.getData();
-                //2.Check if the order can come in
-                if (order.getStatus() != OrderStatus.PAID.getCode() && order.getStatus() != OrderStatus.CHANGE.getCode()) {
-                    LOGGER.error("ticket collect error: {}, orderId: {}", orderStatusWrong, orderId);
-                    return new Response<>(0, orderStatusWrong, null);
+        }else{
+            resultFromOrder = getOrderByIdFromOrderOther(getOrderByIdInfo);
+            if(resultFromOrder.isStatus() == true){
+                order = resultFromOrder.getOrder();
+                //2.检查订单是否可以进站
+                if(order.getStatus() != OrderStatus.PAID.getCode()){
+                    result.setStatus(false);
+                    result.setMessage("Order Status Wrong");
+                    return result;
                 }
-                //3.Confirm inbound, request change order information
-                Response resultExecute = executeOrderOther(orderId, OrderStatus.COLLECTED.getCode(), headers);
-                if (resultExecute.getStatus() == 1) {
-                    return new Response<>(1, "Success.", null);
-                } else {
-                    LOGGER.error("ticket collect error: {}, orderId: {}", resultExecute.getMsg(), orderId);
-                    return new Response<>(0, resultExecute.getMsg(), null);
+                //3.确认进站 请求修改订单信息
+                ModifyOrderStatusInfo executeInfo = new ModifyOrderStatusInfo();
+                executeInfo.setOrderId(info.getOrderId());
+                executeInfo.setStatus(OrderStatus.COLLECTED.getCode());
+                ModifyOrderStatusResult resultExecute = executeOrderOther(executeInfo);
+                if(resultExecute.isStatus() == true){
+                    result.setStatus(true);
+                    result.setMessage("Success.");
+                    return result;
+                }else{
+                    result.setStatus(false);
+                    result.setMessage(resultExecute.getMessage());
+                    return result;
                 }
-            } else {
-                LOGGER.error("ticket collect error: {}, orderId: {}", "Order Not Found", orderId);
-                return new Response<>(0, "Order Not Found", null);
+            }else{
+                result.setStatus(false);
+                result.setMessage("Order Not Found");
+                return result;
             }
         }
     }
 
 
-    private Response executeOrder(String orderId, int status, HttpHeaders headers) {
-        ExecuteServiceImpl.LOGGER.info("[Execute Service][Execute Order] Executing....");
-        headers = null;
-        HttpEntity requestEntity = new HttpEntity(headers);
-        ResponseEntity<Response> re = restTemplate.exchange(
-                "http://ts-order-service:12031/api/v1/orderservice/order/status/" + orderId + "/" + status,
-                HttpMethod.GET,
-                requestEntity,
-                Response.class);
-        return re.getBody();
+    private ModifyOrderStatusResult executeOrder(ModifyOrderStatusInfo info){
+        System.out.println("[Execute Service][Execute Order] Executing....");
+        ModifyOrderStatusResult cor = restTemplate.postForObject(
+                "http://ts-order-service:12031/order/modifyOrderStatus"
+                ,info,ModifyOrderStatusResult.class);
+        return cor;
     }
 
-
-    private Response executeOrderOther(String orderId, int status, HttpHeaders headers) {
-        ExecuteServiceImpl.LOGGER.info("[Execute Service][Execute Order] Executing....");
-        headers = null;
-        HttpEntity requestEntity = new HttpEntity(headers);
-        ResponseEntity<Response> re = restTemplate.exchange(
-                "http://ts-order-other-service:12032/api/v1/orderOtherService/orderOther/status/" + orderId + "/" + status,
-                HttpMethod.GET,
-                requestEntity,
-                Response.class);
-        return re.getBody();
+    private ModifyOrderStatusResult executeOrderOther(ModifyOrderStatusInfo info){
+        System.out.println("[Execute Service][Execute Order] Executing....");
+        ModifyOrderStatusResult cor = restTemplate.postForObject(
+                "http://ts-order-other-service:12032/order/modifyOrderStatus"
+                ,info,ModifyOrderStatusResult.class);
+        return cor;
     }
 
-    private Response<Order> getOrderByIdFromOrder(String orderId, HttpHeaders headers) {
-        ExecuteServiceImpl.LOGGER.info("[Execute Service][Get Order] Getting....");
-        headers = null;
-        HttpEntity requestEntity = new HttpEntity(headers);
-        ResponseEntity<Response<Order>> re = restTemplate.exchange(
-                "http://ts-order-service:12031/api/v1/orderservice/order/" + orderId,
-                HttpMethod.GET,
-                requestEntity,
-                new ParameterizedTypeReference<Response<Order>>() {
-                });
-        return re.getBody();
+    private GetOrderResult getOrderByIdFromOrder(GetOrderByIdInfo info){
+        System.out.println("[Execute Service][Get Order] Getting....");
+        GetOrderResult cor = restTemplate.postForObject(
+                "http://ts-order-service:12031/order/getById/"
+                ,info,GetOrderResult.class);
+        return cor;
     }
 
-    private Response<Order> getOrderByIdFromOrderOther(String orderId, HttpHeaders headers) {
-        ExecuteServiceImpl.LOGGER.info("[Execute Service][Get Order] Getting....");
-        headers = null;
-        HttpEntity requestEntity = new HttpEntity(headers);
-        ResponseEntity<Response<Order>> re = restTemplate.exchange(
-                "http://ts-order-other-service:12032/api/v1/orderOtherService/orderOther/" + orderId,
-                HttpMethod.GET,
-                requestEntity,
-                new ParameterizedTypeReference<Response<Order>>() {
-                });
-        return re.getBody();
+    private GetOrderResult getOrderByIdFromOrderOther(GetOrderByIdInfo info){
+        System.out.println("[Execute Service][Get Order] Getting....");
+        GetOrderResult cor = restTemplate.postForObject(
+                "http://ts-order-other-service:12032/orderOther/getById/"
+                ,info,GetOrderResult.class);
+        return cor;
     }
 
 }

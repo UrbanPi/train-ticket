@@ -296,7 +296,7 @@ function initFoodSelect(tripId){
                 }
 
             } else {
-                alert(result.status + ":" + result.message);
+                //(result.status + ":" + result.message);
             }
 
         }
@@ -407,7 +407,7 @@ function refresh_booking_contacts() {
                 "</select>" +
                 "</td>" +
                 "<td class='booking_contacts_documentNumber'>" + "<input id='booking_new_contacts_documentNum'>" + "</td>" +
-                "<td class='booking_contacts_phoneNumber'>" + "<input id='booking_new_contacts_phoneNum'>" + "</td>" +
+                "<td class='booking_contacts_phoneNumber'>" + "<input id='booking_new_contacts_phoneNum' />" + "</td>" +
                 "<td>" + "<label><input id='booking_new_contacts_select' class='booking_contacts_select' name='booking_contacts' type='radio' />" + "Select" + "</label>" + "</td>" +
                 "</tr>"
             );
@@ -465,7 +465,15 @@ $("#ticket_select_contacts_confirm_btn").click(function(){
     var selectContactsStatus = false;
     if(radios[radios.length - 1].checked){
         selectContactsStatus = true;
-        preserveCreateNewContacts();
+
+        /********************* For Fault Reproduction **********************/
+        $("#ticket_confirm_contactsId").text("null");
+        $("#ticket_confirm_contactsName").text($("#booking_new_contacts_name").val());
+        $("#ticket_confirm_documentType").text($("#booking_new_contacts_documentType").val());
+        $("#ticket_confirm_documentNumber").text($("#booking_new_contacts_documentNum").val());
+        $("#ticket_confirm_phoneNumber").text($("#booking_new_contacts_phoneNum").val());
+        /*******************************************************************/
+        //preserveCreateNewContacts();
     }else{
         for (var j = 0; j < radios.length - 1; j++) {
             if (radios[j].checked) {
@@ -593,6 +601,28 @@ $("#ticket_confirm_confirm_btn").click(function () {
 
     $("#ticket_confirm_confirm_btn").attr("disabled",true);
     var orderTicketInfo = new Object();
+
+    /********************* For Fault Reproduction **********************/
+    //Contacts
+    if($("#ticket_confirm_contactsId").text() == "null"){
+
+        orderTicketInfo.contactsId = "null";
+        orderTicketInfo.isCreateContacts = "true";
+        orderTicketInfo.contactsName = $("#ticket_confirm_contactsName").text();
+        orderTicketInfo.contactsDocumentType = $("#ticket_confirm_documentType").text();
+        orderTicketInfo.contactsDocumentNumber = $("#ticket_confirm_documentNumber").text();
+        orderTicketInfo.contactsPhoneNumber = $("#ticket_confirm_phoneNumber").text();
+    }else{
+
+        orderTicketInfo.contactsId = $("#ticket_confirm_contactsId").text();
+        orderTicketInfo.isCreateContacts = "false";
+        orderTicketInfo.contactsName = "null";
+        orderTicketInfo.contactsDocumentType = 0;
+        orderTicketInfo.contactsDocumentNumber = "null";
+        orderTicketInfo.contactsPhoneNumber = "null";
+    }
+    /*************************** ***************************************/
+    
     orderTicketInfo.contactsId = $("#ticket_confirm_contactsId").text();
     orderTicketInfo.tripId = $("#ticket_confirm_tripId").text();
     orderTicketInfo.seatType = $("#ticket_confirm_seatType").text();
@@ -670,8 +700,11 @@ $("#ticket_confirm_confirm_btn").click(function () {
                 $("#preserve_pay_price").val(result["order"]["price"]);
                 $("#preserve_pay_userId").val(result["order"]["accountId"]);
                 $("#preserve_pay_tripId").val(result["order"]["trainNumber"]);
-                location.hash="anchor_flow_preserve_pay";
+                //location.hash="anchor_flow_preserve_pay";
             }
+        },
+        error:function(){
+            alert("Something Wrong");
         },
         complete: function(){
             $("#ticket_confirm_confirm_btn").attr("disabled",false);
@@ -755,7 +788,7 @@ $("#preserve_collect_button").click(function() {
             $("#preserve_collect_button").attr("disabled",false);
         }
     });
-});
+});;
 
 /**
  * Flow Preserve - Step 7 - Enter Station

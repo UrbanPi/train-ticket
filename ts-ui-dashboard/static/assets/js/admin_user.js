@@ -9,7 +9,6 @@ var loadBody = function () {
     if (username == null) {
         alert("Please login first!");
         location.href = "adminlogin.html";
-        return;
     }
     else {
         document.getElementById("admin_name").innerHTML = username;
@@ -41,21 +40,16 @@ app.factory('loadDataService', function ($http, $q) {
 
         $http({
             method: "get",
-            url: "/api/v1/adminuserservice/users",
-            headers: {"Authorization": "Bearer " + param.admin_token},
-            withCredentials: true
+            url: "/adminuser/findAll/" + param.id,
+            withCredentials: true,
         }).success(function (data, status, headers, config) {
-            console.log(data)
-            if (data.status == 1) {
-                console.log("admin users")
-                information.userRecords = data.data;
+            if (data.status) {
+                information.userRecords = data.accountArrayList;
                 deferred.resolve(information);
             }
-            else {
-                alert(" No user !" + data.msg);
+            else{
+                alert("Request the order list fail!" + data.message);
             }
-        }).error(function (data, header, config, status) {
-            alert(data.message)
         });
 
         return promise;
@@ -67,9 +61,9 @@ app.factory('loadDataService', function ($http, $q) {
 /*
  * 加载列表
  * */
-app.controller('indexCtrl', function ($scope, $http, $window, loadDataService) {
+app.controller('indexCtrl', function ($scope, $http,$window,loadDataService) {
     var param = {};
-    param.admin_token = sessionStorage.getItem("admin_token");
+    param.id = sessionStorage.getItem("admin_id");
 
     //刷新页面
     $scope.reloadRoute = function () {
@@ -84,24 +78,24 @@ app.controller('indexCtrl', function ($scope, $http, $window, loadDataService) {
 
     $scope.decodeInfo = function (obj) {
         var des = "";
-        for (var name in obj) {
+        for(var name in obj){
             des += name + ":" + obj[name] + ";";
         }
         alert(des);
     }
-
+    
     //Add new user
     $scope.addNewUser = function () {
         $('#add_prompt').modal({
             relatedTarget: this,
-            onConfirm: function (e) {
+            onConfirm: function(e) {
                 $http({
                     method: "post",
-                    url: "/api/v1/adminuserservice/users",
-                    headers: {"Authorization": "Bearer " + sessionStorage.getItem("admin_token")},
+                    url: "/adminuser/addUser",
                     withCredentials: true,
-                    data: {
-                        userName: $scope.add_user_name,
+                    data:{
+                        loginId: sessionStorage.getItem("admin_id"),
+                        name: $scope.add_user_name,
                         password: $scope.add_user_password,
                         gender: $scope.add_user_gender,
                         email: $scope.add_user_email,
@@ -109,27 +103,25 @@ app.controller('indexCtrl', function ($scope, $http, $window, loadDataService) {
                         documentNum: $scope.add_user_document_number
                     }
                 }).success(function (data, status, headers, config) {
-                    if (data.status == 1) {
-                        alert(data.msg);
+                    if (data.status) {
+                        alert(data.message);
                         $scope.reloadRoute();
                     }
-                    else {
-                        alert("Add the route fail!" + data.msg);
+                    else{
+                        alert("Add the route fail!" + data.message);
                     }
-                }).error(function (data, header, config, status) {
-                    alert(data.message)
                 });
             },
-            onCancel: function (e) {
+            onCancel: function(e) {
                 alert('You have canceled the operation!');
             }
         });
     }
-
+    
     //Update exist user
     $scope.updateUser = function (record) {
-        $scope.update_user_id = record.userId;
-        $scope.update_user_name = record.userName;
+        $scope.update_user_id = record.id;
+        $scope.update_user_name = record.name;
         $scope.update_user_password = record.password;
         $scope.update_user_gender = record.gender;
         $scope.update_user_email = record.email;
@@ -138,63 +130,64 @@ app.controller('indexCtrl', function ($scope, $http, $window, loadDataService) {
 
         $('#update_prompt').modal({
             relatedTarget: this,
-            onConfirm: function (e) {
+            onConfirm: function(e) {
                 $http({
-                    method: "put",
-                    url: "/api/v1/adminuserservice/users",
-                    headers: {"Authorization": "Bearer " + sessionStorage.getItem("admin_token")},
+                    method: "post",
+                    url: "/adminuser/updateUser",
                     withCredentials: true,
-                    data: {
-                        accountId: $scope.update_user_id,
-                        userName: $scope.update_user_name,
-                        password: $scope.update_user_password,
-                        gender: $scope.update_user_gender,
-                        email: $scope.update_user_email,
-                        documentType: $scope.update_user_document_type,
-                        documentNum: $scope.update_user_document_number
+                    data:{
+                        loginId: sessionStorage.getItem("admin_id"),
+                        modifyAccountInfo:{
+                            accountId: $scope.update_user_id,
+                            newName: $scope.update_user_name,
+                            newPassword: $scope.update_user_password,
+                            newGender: $scope.update_user_gender,
+                            newEmail: $scope.update_user_email,
+                            newDocumentType: $scope.update_user_document_type,
+                            newDocumentNumber: $scope.update_user_document_number
+                        }
                     }
                 }).success(function (data, status, headers, config) {
-                    if (data.status ==  1) {
-                        alert(data.msg);
+                    if (data.status) {
+                        alert(data.message);
                         $scope.reloadRoute();
                     }
-                    else {
-                        alert("Update the user fail!" + data.msg);
+                    else{
+                        alert("Update the user fail!" + data.message);
                     }
-                }).error(function (data, header, config, status) {
-                    alert(data.message)
                 });
             },
-            onCancel: function (e) {
+            onCancel: function(e) {
                 alert('You have canceled the operation!');
             }
         });
     }
 
     //Delete user
-    $scope.deleteUser = function (accountId) {
+    $scope.deleteUser = function(accountId){
         $('#delete_confirm').modal({
             relatedTarget: this,
-            onConfirm: function (options) {
+            onConfirm: function(options) {
                 $http({
-                    method: "delete",
-                    url: "/api/v1/adminuserservice/users/" + accountId,
-                    headers: {"Authorization": "Bearer " + sessionStorage.getItem("admin_token")},
-                    withCredentials: true
+                    method: "post",
+                    url: "/adminuser/deleteUser",
+                    withCredentials: true,
+                    data: {
+                        loginId: sessionStorage.getItem("admin_id"),
+                        accountId: accountId
+                    }
                 }).success(function (data, status, headers, config) {
-                    if (data.status == 1) {
-                        alert(data.msg);
+                    if (data.status) {
+                        alert(data.message);
                         $scope.reloadRoute();
                     }
-                    else {
-                        alert("Delete the route fail!" + data.msg);
+                    else{
+                        alert("Delete the route fail!" + data.message);
                     }
-                }).error(function (data, header, config, status) {
-                    alert(data.message)
                 });
             },
             // closeOnConfirm: false,
-            onCancel: function () {
+            onCancel: function() {
                 alert('You have canceled the operation!');
             }
         });
