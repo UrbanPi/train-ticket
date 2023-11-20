@@ -3,7 +3,7 @@
 /**Before ***/
 function setTodayDatePreserve(){
     var today = new Date();
-    var dd = today.getDate();
+    var dd = today.getDate(a);
     var mm = today.getMonth()+1; //January is 0!
     var yyyy = today.getFullYear();
     if(dd < 10){
@@ -296,7 +296,7 @@ function initFoodSelect(tripId){
                 }
 
             } else {
-                alert(result.status + ":" + result.message);
+                //alert(result.status + ":" + result.message);
             }
 
         }
@@ -411,6 +411,9 @@ function refresh_booking_contacts() {
                 "<td>" + "<label><input id='booking_new_contacts_select' class='booking_contacts_select' name='booking_contacts' type='radio' />" + "Select" + "</label>" + "</td>" +
                 "</tr>"
             );
+        },
+        error: function () {
+            alert("Fail");
         },
         complete: function(){
             $("#refresh_booking_contacts_button").attr("disabled",false);
@@ -755,7 +758,7 @@ $("#preserve_collect_button").click(function() {
             $("#preserve_collect_button").attr("disabled",false);
         }
     });
-});
+});;
 
 /**
  * Flow Preserve - Step 7 - Enter Station

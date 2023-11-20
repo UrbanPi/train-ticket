@@ -1,6 +1,5 @@
 FROM node
-
-RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
+MAINTAINER dingding <17212010004@fudan.edu.cn>
 
 RUN mkdir -p /app
 WORKDIR /app

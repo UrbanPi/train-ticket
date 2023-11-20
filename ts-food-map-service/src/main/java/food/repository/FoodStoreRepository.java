@@ -1,6 +1,7 @@
 package food.repository;
 
-import food.entity.FoodStore;
+import food.domain.Food;
+import food.domain.FoodStore;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -15,10 +16,7 @@ public interface FoodStoreRepository extends MongoRepository<FoodStore, String> 
 
     @Query("{ 'stationId' : ?0 }")
     List<FoodStore> findByStationId(String stationId);
-    List<FoodStore> findByStationIdIn(List<String> stationIds);
 
-
-    @Override
     List<FoodStore> findAll();
 
     void deleteById(UUID id);

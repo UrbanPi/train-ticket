@@ -1,9 +1,7 @@
-FROM registry.cn-hangzhou.aliyuncs.com/lavenpok/skywalking-agent:1.0
-
-RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
+FROM openjdk:8-jdk
+MAINTAINER Wenhai Li<16212010016@fudan.edu.cn>
 
 ADD ./target/ts-consign-price-service-1.0.jar /app/
-ENV SW_AGENT_NAME=ts-consign-price-service
-CMD ["java", "-Xmx200m", "-javaagent:/skywalking/agent/skywalking-agent.jar", "-jar", "/app/ts-consign-price-service-1.0.jar"]
+CMD ["java", "-Xmx200m", "-jar", "/app/ts-consign-price-service-1.0.jar"]
 
 EXPOSE 16110

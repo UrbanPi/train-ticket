@@ -1,122 +1,52 @@
-
-# Train Ticket：A Benchmark Microservice System
-
-The project is a train ticket booking system based on microservice architecture which contains 41 microservices. The programming languages and frameworks it used are as below.
-- Java - Spring Boot, Spring Cloud
-- Node.js - Express
-- Python - Django
-- Go - Webgo
-- DB - Mongo、MySQL
-
-You can get more details at [Wiki Pages](https://github.com/FudanSELab/train-ticket/wiki).
-
-## Service Architecture Graph
-![architecture](./image/2.png)
-
-## Quick Start
-We provide two options to quickly deploy our application: [Using Docker Compose](#Using-Docker-Compose) and [Using Kubernetes](#Using-Kubernetes).
-
-### Using Docker Compose
-The easiest way to get start with the Train Ticket application is by using [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/).
-
-> If you don't have Docker and Docker Compose installed, you can refer to [the Docker website](https://www.docker.com/) to install them.
-
-#### Presequisite
-* Docker
-* Docker Compose
-
-#### 1. Clone the Repository
-```bash
-git clone --depth=1 https://github.com/FudanSELab/train-ticket.git
-cd train-ticket/
-```
-
-#### 2. Start the Application
-```bash
-docker-compose -f deployment/docker-compose-manifests/quickstart-docker-compose.yml up
-```
-Once the application starts, you can visit the Train Ticket web page at [http://localhost:8080](http://localhost:8080).
-
-### Using Kubernetes
-Here is the steps to deploy the Train Ticket onto any existing Kubernetes cluster.
-
-#### Presequisite
-* An existing Kubernetes cluster
-
-#### 1. Clone the Repository
-```bash
-git clone --depth=1 https://github.com/FudanSELab/train-ticket.git
-cd train-ticket/
-```
-
-#### 2. Deploy the application
-```bash
-cd deployment/kubernetes-manifests/quickstart-k8s
-
-# Deploy the databases
-kubectl apply -f quickstart-ts-deployment-part1.yml
-# Deploy the services
-kubectl apply -f quickstart-ts-deployment-part2.yml
-# Deploy the UI Dashboard
-kubectl apply -f quickstart-ts-deployment-part3.yml
-```
-
-#### 3. Run `kubectl get pods` to see pods are in a ready state
-
-#### 4. Visit the Train Ticket web page at [http://[Node-IP]:32677](http://[Node-IP]:32677).
-
-### More Deployment Ways
-
-There are many other quick deployment ways in [deployment folder](<https://github.com/FudanSELab/train-ticket/tree/master/deployment>).  For example, you can deploy this system [with Jaeger](<https://github.com/FudanSELab/train-ticket/tree/master/deployment/kubernetes-manifests/k8s-with-jaeger>), and then visit the Jaeger Webpage to view traces.
-
-## Build From Source
-In the above, We use pre-built images to quickly deploy the application.
-
-If you want to build the application from source, you can refer to [the Installation Guide](https://github.com/FudanSELab/train-ticket/wiki/Installation-Guide).
-
-## Screenshot
-![screenshot](./image/main_interface.png)
-In order to know how to use the application, you can refer to [the User Guide](https://github.com/FudanSELab/train-ticket/wiki/User-Guide).
-
-## Communication
-
-* [FAQ](https://github.com/FudanSELab/train-ticket/wiki/FAQ)
-* [Submit an issue](https://github.com/FudanSELab/train-ticket/issues)
-* [Open a pull request](https://github.com/FudanSELab/train-ticket/pulls)
-
-## Information
-
-* [Release Note](https://github.com/FudanSELab/train-ticket/wiki/Release-Note)
-
-## Paper Reference
+Original description:
+> This fault is caused by the error of redis in the operation of getting the saved key/token.
+The microservice always save some key/token to redis.
+However, sometimes the developer may made a mistake and the program may be mis-implemented.
+In such case, the key/token may be wrongly read and deliver a missing/wrong key/token to other microservice, leading to an fault.
+>
+>
+>
+> TrainTicket replicated fault description:
+>
+> We have two types of users in TrainTicket system: normal user and VIP user.
+> Compared to the normal user, the VIP user has one more key/token to be used in ticket-booking process.
+> However, when vip user is processing ticket-reservation logic, the key/token is missing when delivering.
+> Then the fault occurs.
 
 
-Xiang Zhou, Xin Peng, Tao Xie, Jun Sun, Chao Ji, Dewei Liu, Qilin Xiang, and Chuan He. <br/>
-**Latent Error Prediction and Fault Localization for Microservice Applications by Learning from System Trace Logs.**<br/>
-In Proceedings of the 27th ACM Joint European Software Engineering Conference and Symposium on the Foundations of Software Engineering ([ESEC/FSE 2019](https://esec-fse19.ut.ee/)) , Tallinn, Estonia, August 2019. <br/>
-Download: [[PDF](https://cspengxin.github.io/publications/fse19-zhou-microservice.pdf)] [[BibTeX](https://dblp.uni-trier.de/rec/bibtex/conf/sigsoft/Zhou0X0JLXH19)] 
+Original replication steps:
 
-<br/>
+>Setup System:
 
-Xiang Zhou, Xin Peng, Tao Xie, Jun Sun, Chao Ji, Wenhai Li, and Dan Ding. <br/>
-**Fault Analysis and Debugging of Microservice Systems: Industrial Survey, Benchmark System, and Empirical Study.** <br/>
-[IEEE Transactions on Software Engineering](https://www.computer.org/web/tse) , To appear. <img src="image/cup.png" height="20px"/> <img src="image/tse-best-paper-award.png" height="28px"> <br/> 
-Download: [[PDF](https://cspengxin.github.io/publications/tse19-msdebugging.pdf)] 
-
-<br/>
-
-Xiang Zhou, Xin Peng, Tao Xie, Jun Sun, Wenhai Li, Chao Ji, and Dan Ding. <br/>
-**Delta Debugging Microservice Systems.** <br/>
-In Proceedings of 33rd IEEE/ACM International Conference on Automated Software Engineering ([ASE 2018](http://ase2018.com/)) , Short Paper, Montpellier, France, September 2018. <br/>
-Download: [[PDF](https://cspengxin.github.io/publications/ase18-debugmicroservice.pdf)] [[BibTeX](https://dblp.uni-trier.de/rec/bibtex/conf/kbse/ZhouPX0LJD18)] <br/>
-An extended version to appear in IEEE Transactions on Services Computing. 
-
-<br/>
-
-Xiang Zhou, Xin Peng, Tao Xie, Jun Sun, Chenjie Xu, Chao Ji, and Wenyun Zhao. <br/>
-**Poster: Benchmarking Microservice Systems for Software Engineering Research.** <br/>
-In Proceedings of the 40th International Conference on Software Engineering ([ICSE 2018](https://www.icse2018.org/)) , Posters, Gothenburg, Sweden, May 2018. <br/>
-Download: [[PDF](https://cspengxin.github.io/publications/icse18poster-microservices.pdf)] [[BibTeX](https://dblp.uni-trier.de/rec/bibtex/conf/icse/ZhouPX0XJZ18)] 
+>1. Use docker-compose to setup the TrainTicket system.
+>2. Log in and make sure that there is at least one ticket order that fits the following:
+    >   (1) The train number is start with Z or K.
+    >   (2) The order status is PAID.
+>
+>
+>Failure Triggering Usage Steps:
+>
+>1. Log in with the vip username "vip_microservices@163.com" and password "DefaultPassword".
+>2. Click [Flow Two - Ticket Cancel & Ticket Change].
+>3. Click [Refresh Orders].
+>4. Select the order mentioned above and click [Cancel Order].
+>5. Click [Confirm Cancel].
+>6. You will get error alert and see the exception logs on the server console.
+>
+>Failure Triggering Test Case:
+>
+>There are two test cases in ts-ui-test, named [TestFlowFail.java] and [TestFlowSuccess.java].
+>Run [TestFlowFail.java] will reproduce the fault.
+>Run [TestFlowSuccess.java] won't trigger the fault.
 
 
+1. There is no user with username "vip_microservices@163.com" and password "DefaultPassword". There are just the normal logins for a normal user and the admin user.
+2. At least with the normal booking workflow it is impossible to create the scenario as described by the setup step two, because selecting any train connection for further booking fails.
+3. This fail is due to the implementation. In this step of the use case, the contacts-service should send the login token from the user to the sso-service for verification.
+   However, the contacts-service always sends a string "null" to the sso-service, which then fails to verify this token.
 
+Based on the implementation the fault in this branch revolves around failing calls to any of these endpoints from contacts-service:
+* /contacts/findContacts
+* /contacts/delete
+
+One way of triggering this fault is to try to book a ticket for any train. Trying to select any train connection for further booking steps will fail.

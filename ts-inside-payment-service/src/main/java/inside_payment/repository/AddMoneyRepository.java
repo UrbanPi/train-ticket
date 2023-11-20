@@ -1,28 +1,14 @@
 package inside_payment.repository;
 
-import inside_payment.entity.Money;
+import inside_payment.domain.AddMoney;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
 /**
- * @author fdse
+ * Created by Administrator on 2017/6/20.
  */
-public interface AddMoneyRepository extends CrudRepository<Money,String> {
-
-    /**
-     * find by user id
-     *
-     * @param userId user id
-     * @return List<Money>
-     */
-    List<Money> findByUserId(String userId);
-
-    /**
-     * find all
-     *
-     * @return List<Money>
-     */
-    @Override
-    List<Money> findAll();
+public interface AddMoneyRepository extends CrudRepository<AddMoney,String> {
+    List<AddMoney> findByUserId(String userId);
+    List<AddMoney> findAll();
 }
