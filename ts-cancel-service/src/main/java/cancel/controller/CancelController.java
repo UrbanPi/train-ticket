@@ -1,54 +1,75 @@
 package cancel.controller;
 
+import cancel.domain.CalculateRefundResult;
+import cancel.domain.CancelOrderInfo;
+import cancel.domain.CancelOrderResult;
+import cancel.domain.VerifyResult;
 import cancel.service.CancelService;
-import edu.fudan.common.util.Response;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
-import static org.springframework.http.ResponseEntity.ok;
-
-/**
- * @author fdse
- */
 @RestController
-@RequestMapping("/api/v1/cancelservice")
 public class CancelController {
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     @Autowired
     CancelService cancelService;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CancelController.class);
+    @CrossOrigin(origins = "*")
+    @RequestMapping(path = "/cancelCalculateRefund", method = RequestMethod.POST)
+    public CalculateRefundResult calculate(@RequestBody CancelOrderInfo info){
+        System.out.println("[Cancel Order Service][Calculate Cancel Refund] OrderId:" + info.getOrderId());
+        return cancelService.calculateRefund(info);
+    }
 
-    @GetMapping(path = "/welcome")
-    public String home(@RequestHeader HttpHeaders headers) {
-        return "Welcome to [ Cancel Service ] !";
+    @RequestMapping(path = "/cancelCalculateRefund2", method = RequestMethod.POST)
+    public String calculate2(@RequestBody CancelOrderInfo info){
+        return cancelService.calculateRefund2(info);
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping(path = "/cancel/refound/{orderId}")
-    public HttpEntity calculate(@PathVariable String orderId, @RequestHeader HttpHeaders headers) {
-        CancelController.LOGGER.info("[Calculate Cancel Refund] OrderId: {}", orderId);
-        return ok(cancelService.calculateRefund(orderId, headers));
-    }
-
-    @CrossOrigin(origins = "*")
-    @GetMapping(path = "/cancel/{orderId}/{loginId}")
-    public HttpEntity cancelTicket(@PathVariable String orderId, @PathVariable String loginId,
-                                   @RequestHeader HttpHeaders headers) {
-
-        CancelController.LOGGER.info("[Cancel Ticket] info: {}", orderId);
-        try {
-            CancelController.LOGGER.info("[Cancel Ticket] Verify Success");
-            return ok(cancelService.cancelOrder(orderId, loginId, headers));
-        } catch (Exception e) {
-            CancelController.LOGGER.error(e.getMessage());
-            return ok(new Response<>(1, "error", null));
+    @RequestMapping(path = "/cancelOrder", method = RequestMethod.POST)
+    public CancelOrderResult cancelTicket(@RequestBody CancelOrderInfo info, @CookieValue String loginToken, @CookieValue String loginId){
+        System.out.println("[Cancel Order Service][Cancel Ticket] info:" + info.getOrderId());
+        if(loginToken == null ){
+            loginToken = "admin";
         }
+        System.out.println("[Cancel Order Service][Cancel Order] order ID:" + info.getOrderId() + "  loginToken:" + loginToken);
+        if(loginToken == null){
+            System.out.println("[Cancel Order Service][Cancel Order] Not receive any login token");
+            CancelOrderResult result = new CancelOrderResult();
+            result.setStatus(false);
+            result.setMessage("No Login Token");
+            return result;
+        }
+        VerifyResult verifyResult = verifySsoLogin(loginToken);
+        if(verifyResult.isStatus() == false){
+            System.out.println("[Cancel Order Service][Cancel Order] Do not login.");
+            CancelOrderResult result = new CancelOrderResult();
+            result.setStatus(false);
+            result.setMessage("Not Login");
+            return result;
+        }else{
+            System.out.println("[Cancel Order Service][Cancel Ticket] Verify Success");
+            try{
+                return cancelService.cancelOrder(info,loginToken,loginId);
+            }catch(Exception e){
+                e.printStackTrace();
+                return null;
+            }
+
+        }
+    }
+
+    private VerifyResult verifySsoLogin(String loginToken){
+        System.out.println("[Cancel Order Service][Verify Login] Verifying....");
+        VerifyResult tokenResult = restTemplate.getForObject(
+                "http://ts-sso-service:12349/verifyLoginToken/" + loginToken,
+                VerifyResult.class);
+        return tokenResult;
     }
 
 }

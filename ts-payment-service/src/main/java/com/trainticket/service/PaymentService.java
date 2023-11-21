@@ -1,21 +1,22 @@
 package com.trainticket.service;
 
-import com.trainticket.entity.Payment;
-import edu.fudan.common.util.Response;
-import org.springframework.http.HttpHeaders;
+import com.trainticket.domain.AddMoneyInfo;
+import com.trainticket.domain.Payment;
+import com.trainticket.domain.PaymentInfo;
+
+import java.util.List;
 
 /**
- * @author Chenjie
- * @date 2017/4/3
+ * Created by Chenjie Xu on 2017/4/5.
  */
 public interface PaymentService {
 
-    Response pay(Payment info, HttpHeaders headers);
+    boolean pay(PaymentInfo info);
 
-    Response addMoney(Payment info, HttpHeaders headers);
+    boolean addMoney(AddMoneyInfo info);
 
-    Response query(HttpHeaders headers);
+    List<Payment> query();
 
-    void initPayment(Payment payment,HttpHeaders headers);
+    void initPayment(Payment payment);
 
 }

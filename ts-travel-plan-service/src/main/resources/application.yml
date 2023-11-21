@@ -6,6 +6,8 @@ spring:
   application:
     name: ts-travel-plan-service
 
-
-swagger:
-  controllerPackage: travelplan.controller
+  zipkin:
+    baseUrl: http://zipkin:9411/
+  sleuth:
+    sampler:
+      percentage: 1.0

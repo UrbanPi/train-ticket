@@ -1,12 +1,13 @@
 package com.trainticket.repository;
 
-import com.trainticket.entity.Payment;
+
+import com.trainticket.domain.Payment;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
 /**
- * @author fdse
+ * Created by Administrator on 2017/6/20.
  */
 public interface PaymentRepository extends CrudRepository<Payment,String> {
 
@@ -14,7 +15,6 @@ public interface PaymentRepository extends CrudRepository<Payment,String> {
 
     Payment findByOrderId(String orderId);
 
-    @Override
     List<Payment> findAll();
 
     List<Payment> findByUserId(String userId);

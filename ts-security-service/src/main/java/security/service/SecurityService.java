@@ -1,22 +1,19 @@
 package security.service;
 
-import edu.fudan.common.util.Response;
-import org.springframework.http.HttpHeaders;
-import security.entity.*;
+import security.domain.*;
 
-/**
- * @author fdse
- */
 public interface SecurityService {
 
-    Response findAllSecurityConfig(HttpHeaders headers);
+    GetAllSecurityConfigResult findAllSecurityConfig();
 
-    Response addNewSecurityConfig(SecurityConfig info, HttpHeaders headers);
+    CreateSecurityConfigResult addNewSecurityConfig(CreateSecurityConfigInfo info);
 
-    Response modifySecurityConfig(SecurityConfig info, HttpHeaders headers);
+    UpdateSecurityConfigResult modifySecurityConfig(UpdateSecurityConfigInfo info);
 
-    Response deleteSecurityConfig(String id, HttpHeaders headers);
+    DeleteConfigResult deleteSecurityConfig(DeleteConfigInfo info);
 
-    Response check(String accountId, HttpHeaders headers);
+    CheckResult check(CheckInfo info);
+
+    boolean callInsidePayment(CallInsidePaymentInfo info);
 
 }

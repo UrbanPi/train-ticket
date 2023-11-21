@@ -1,56 +1,16 @@
 package config.service;
 
-import config.entity.Config;
-import edu.fudan.common.util.Response;
-import org.springframework.http.HttpHeaders;
+import config.domain.Config;
+import config.domain.Information;
+import config.domain.Information2;
 
+import java.util.List;
 
-/**
- * @author fdse
- */
 public interface ConfigService {
-
-    /**
-     * create by config information and headers
-     *
-     * @param info info
-     * @param headers headers
-     * @return Response
-     */
-    Response create(Config info, HttpHeaders headers);
-
-    /**
-     * update by config information and headers
-     *
-     * @param info info
-     * @param headers headers
-     * @return Response
-     */
-    Response update(Config info, HttpHeaders headers);
-
-    /**
-     * Config retrieve
-     *
-     * @param name name
-     * @param headers headers
-     * @return Response
-     */
-    Response query(String name, HttpHeaders headers);
-
-    /**
-     * delete by name and headers
-     *
-     * @param name name
-     * @param headers headers
-     * @return Response
-     */
-    Response delete(String name, HttpHeaders headers);
-
-    /**
-     * query all by headers
-     *
-     * @param headers headers
-     * @return Response
-     */
-    Response queryAll(HttpHeaders headers);
+    String create(Information info);
+    String update(Information info);
+    Config retrieve(Information2 info);
+    String query(Information2 info);
+    String delete(Information2 info);
+    List<Config> queryAll();
 }
