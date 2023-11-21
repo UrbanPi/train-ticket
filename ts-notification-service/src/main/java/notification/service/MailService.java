@@ -1,8 +1,11 @@
 package notification.service;
 
+/**
+ * Created by Wenyi on 2017/6/19.
+ */
 import javax.mail.internet.MimeMessage;
 
-import notification.entity.Mail;
+import notification.domain.Mail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -13,9 +16,6 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 
-/**
- * @author fdse
- */
 @Service
 public class MailService {
 

@@ -1,48 +1,34 @@
 package consign.service;
 
-import consign.entity.ConsignRecord;
-import consign.entity.Consign;
+import consign.domain.ConsignRecord;
+import consign.domain.ConsignRequest;
+import consign.domain.GetPriceDomain;
+import consign.domain.InsertConsignRecordResult;
 import consign.repository.ConsignRepository;
-import edu.fudan.common.util.Response;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.UUID;
 
-/**
- * @author fdse
- */
 @Service
 public class ConsignServiceImpl implements ConsignService {
     @Autowired
     ConsignRepository repository;
-
     @Autowired
     RestTemplate restTemplate;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConsignServiceImpl.class);
-
     @Override
-    public Response insertConsignRecord(Consign consignRequest, HttpHeaders headers) {
-        ConsignServiceImpl.LOGGER.info("[ Insert new consign record] {}", consignRequest.getOrderId());
+    public InsertConsignRecordResult insertConsignRecord(ConsignRequest consignRequest){
+        System.out.println("[Consign servie] [ Insert new consign record]");
 
         ConsignRecord consignRecord = new ConsignRecord();
-        //Set the record attribute
+        //设置record属性
         consignRecord.setId(UUID.randomUUID());
-        LOGGER.info("Order ID is :" + consignRequest.getOrderId());
-        consignRecord.setOrderId(consignRequest.getOrderId());
         consignRecord.setAccountId(consignRequest.getAccountId());
-        ConsignServiceImpl.LOGGER.info("The handle date is {}", consignRequest.getHandleDate());
-        ConsignServiceImpl.LOGGER.info("The target date is {}", consignRequest.getTargetDate());
+        System.out.printf("The handle date is %s", consignRequest.getHandleDate());
+        System.out.printf("The target date is %s", consignRequest.getTargetDate());
         consignRecord.setHandleDate(consignRequest.getHandleDate());
         consignRecord.setTargetDate(consignRequest.getTargetDate());
         consignRecord.setFrom(consignRequest.getFrom());
@@ -50,31 +36,35 @@ public class ConsignServiceImpl implements ConsignService {
         consignRecord.setConsignee(consignRequest.getConsignee());
         consignRecord.setPhone(consignRequest.getPhone());
         consignRecord.setWeight(consignRequest.getWeight());
-
-        //get the price
-        HttpEntity requestEntity = new HttpEntity(null, headers);
-        ResponseEntity<Response<Double>> re = restTemplate.exchange(
-                "http://ts-consign-price-service:16110/api/v1/consignpriceservice/consignprice/" + consignRequest.getWeight() + "/" + consignRequest.isWithin(),
-                HttpMethod.GET,
-                requestEntity,
-                new ParameterizedTypeReference<Response<Double>>() {
-                });
-        consignRecord.setPrice(re.getBody().getData());
-
-        LOGGER.info("SAVE consign info : " + consignRecord.toString());
+        //获得价格
+        GetPriceDomain domain = new GetPriceDomain();
+        domain.setWeight(consignRequest.getWeight());
+        domain.setWithinRegion(consignRequest.isWithin());
+        double price = restTemplate.postForObject(
+                "http://ts-consign-price-service:16110/consignPrice/getPrice", domain ,double.class);
+        consignRecord.setPrice(price);
+        //存储
         ConsignRecord result = repository.save(consignRecord);
-        LOGGER.info("SAVE consign result : " + result.toString());
-        return new Response<>(1, "You have consigned successfully! The price is " + result.getPrice(), result);
+
+        InsertConsignRecordResult returnResult = new InsertConsignRecordResult();
+        if(result != null){
+            returnResult.setStatus(true);
+            returnResult.setMessage("You have consigned successfully! The price is " + result.getPrice());
+        }
+        else{
+            returnResult.setStatus(false);
+            returnResult.setMessage("Consign failed! Please try again later!");
+        }
+        return returnResult;
     }
 
     @Override
-    public Response updateConsignRecord(Consign consignRequest, HttpHeaders headers) {
-        ConsignServiceImpl.LOGGER.info("[ Update consign record]");
+    public boolean updateConsignRecord(ConsignRequest consignRequest){
+        System.out.println("[Consign servie] [ Update consign record]");
 
         ConsignRecord originalRecord = repository.findById(consignRequest.getId());
-        if (originalRecord == null) {
-            return insertConsignRecord(consignRequest, headers);
-        }
+        if(originalRecord == null)
+            return false;
         originalRecord.setAccountId(consignRequest.getAccountId());
         originalRecord.setHandleDate(consignRequest.getHandleDate());
         originalRecord.setTargetDate(consignRequest.getTargetDate());
@@ -82,57 +72,30 @@ public class ConsignServiceImpl implements ConsignService {
         originalRecord.setTo(consignRequest.getTo());
         originalRecord.setConsignee(consignRequest.getConsignee());
         originalRecord.setPhone(consignRequest.getPhone());
-        //Recalculate price
-        if (originalRecord.getWeight() != consignRequest.getWeight()) {
-            HttpEntity requestEntity = new HttpEntity<>(null, headers);
-            ResponseEntity<Response<Double>> re = restTemplate.exchange(
-                    "http://ts-consign-price-service:16110/api/v1/consignpriceservice/consignprice/" + consignRequest.getWeight() + "/" + consignRequest.isWithin(),
-                    HttpMethod.GET,
-                    requestEntity,
-                    new ParameterizedTypeReference<Response<Double>>() {
-                    });
-
-            originalRecord.setPrice(re.getBody().getData());
-        } else {
+        //重新计算价格
+        if(originalRecord.getWeight() != consignRequest.getWeight()){
+            GetPriceDomain domain = new GetPriceDomain();
+            domain.setWeight(consignRequest.getWeight());
+            domain.setWithinRegion(consignRequest.isWithin());
+            double price = restTemplate.postForObject(
+                    "http://ts-consign-price-service:16110/consignPrice/getPrice", domain ,double.class);
+            originalRecord.setPrice(price);
+        }
+        else{
             originalRecord.setPrice(originalRecord.getPrice());
         }
-        originalRecord.setConsignee(consignRequest.getConsignee());
-        originalRecord.setPhone(consignRequest.getPhone());
         originalRecord.setWeight(consignRequest.getWeight());
         repository.save(originalRecord);
-        return new Response<>(1, "Update consign success", originalRecord);
+        return true;
     }
 
     @Override
-    public Response queryByAccountId(UUID accountId, HttpHeaders headers) {
-        List<ConsignRecord> consignRecords = repository.findByAccountId(accountId);
-        if (consignRecords != null && !consignRecords.isEmpty()) {
-            return new Response<>(1, "Find consign by account id success", consignRecords);
-        }else {
-            LOGGER.warn("No Content according to accountId: {}", accountId);
-            return new Response<>(0, "No Content according to accountId", null);
-        }
+    public ArrayList<ConsignRecord> queryByAccountId(UUID accountId) {
+        return repository.findByAccountId(accountId);
     }
 
     @Override
-    public Response queryByOrderId(UUID orderId, HttpHeaders headers) {
-        ConsignRecord consignRecords = repository.findByOrderId(orderId);
-        if (consignRecords != null ) {
-            return new Response<>(1, "Find consign by order id success", consignRecords);
-        }else {
-            LOGGER.warn("No Content according to orderId: {}", orderId);
-            return new Response<>(0, "No Content according to order id", null);
-        }
-    }
-
-    @Override
-    public Response queryByConsignee(String consignee, HttpHeaders headers) {
-        List<ConsignRecord> consignRecords = repository.findByConsignee(consignee);
-        if (consignRecords != null && !consignRecords.isEmpty()) {
-            return new Response<>(1, "Find consign by consignee success", consignRecords);
-        }else {
-            LOGGER.warn("No Content according to consignee: {}", consignee);
-            return new Response<>(0, "No Content according to consignee", null);
-        }
+    public ArrayList<ConsignRecord> queryByConsignee(String consignee) {
+        return repository.findByConsignee(consignee);
     }
 }
