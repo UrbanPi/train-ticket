@@ -1,0 +1,26 @@
+
+Setup System:
+
+1. Use docker-compose to setup the TrainTicket system.
+
+
+Fault reproduce manually step:
+
+1. Register a new account.
+2. Login with the account.
+2. Input "Shang Hai" as the Starting Place and "Nan Jing" as the end Place.
+3. Randomly select one day between 5 and 30 days from today as the Date.
+4. Click [Search].
+5. Select one contact and click [Select].
+6. Click [Confirm Ticket].
+7. Click [Pay].
+8. Quickly click [Refresh Orders] and cancel this order.
+9. You will get result of cancel. If you get [SUCCESS], it means the fault do not occur.
+                                  If you get [ERROR], it means the fault occurs, and you will see the exception logs on the server console.
+
+
+Failure Triggering Test Case:
+
+There is only one test case in ts-ui-test, named [TestFlowOne.java].
+Just run it and it will do like failure triggering usage steps mentioned above.
+

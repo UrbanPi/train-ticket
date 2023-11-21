@@ -1,37 +1,13 @@
 package adminroute.service;
 
-import adminroute.entity.RouteInfo;
-import edu.fudan.common.util.Response;
-import org.springframework.http.HttpHeaders;
+import adminroute.domain.request.CreateAndModifyRouteRequest;
+import adminroute.domain.request.DeleteRouteRequest;
+import adminroute.domain.response.CreateAndModifyRouteResult;
+import adminroute.domain.response.DeleteRouteResult;
+import adminroute.domain.response.GetRoutesListlResult;
 
-/**
- * @author fdse
- */
 public interface AdminRouteService {
-
-    /**
-     * get all routes with headers
-     *
-     * @param headers headers
-     * @return Response
-     */
-    Response getAllRoutes(HttpHeaders headers);
-
-    /**
-     * get all routes with headers
-     *
-     * @param request route information
-     * @param headers headers
-     * @return Response
-     */
-    Response createAndModifyRoute(RouteInfo request, HttpHeaders headers);
-
-    /**
-     * get all routes with headers
-     *
-     * @param routeId route id
-     * @param headers headers
-     * @return Response
-     */
-    Response deleteRoute(String routeId, HttpHeaders headers);
+    GetRoutesListlResult getAllRoutes(String id);
+    CreateAndModifyRouteResult createAndModifyRoute(CreateAndModifyRouteRequest request);
+    DeleteRouteResult deleteRoute(DeleteRouteRequest request);
 }

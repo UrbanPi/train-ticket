@@ -4,6 +4,31 @@ server:
 spring:
   application:
     name: ts-cancel-service
-
-swagger:
-  controllerPackage: cancel.controller
+  zipkin:
+    baseUrl: http://zipkin:9411/
+  sleuth:
+    sampler:
+      percentage: 1.0
+  rabbitmq:
+    host: rabbitmq
+    listener:
+      retry:
+        enabled: false
+        max-attempts: 1
+    template:
+      retry:
+        enabled: false
+        max-attempts: 1
+  cloud:
+    stream:
+      bindings:
+        output:
+          group: ts-cancel
+          destination: ts-cancel-order
+          contentType: text/plain
+          binder: rabbit
+        input:
+          group: ts-return-cancel
+          destination: ts-return-cancel-order
+          contentType: text/plain
+          binder: rabbit
