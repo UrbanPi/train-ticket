@@ -20,8 +20,7 @@ public class LauncherController {
 
     @RequestMapping(path = "/doErrorQueue/useAccount/{userEmail}/{userPassword}", method = RequestMethod.GET)
     public String doErrorQueueWithOneUser(@PathVariable String userEmail,@PathVariable String userPassword){
-        launcherService.doErrorQueue(userEmail,userPassword);
-        return "[Do Error Queue Complete No Exception]";
+        return launcherService.doErrorQueue(userEmail, userPassword);
     }
 
 

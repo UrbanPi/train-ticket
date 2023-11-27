@@ -22,7 +22,7 @@ public class LauncherServiceImpl implements LauncherService {
     public static int count = 0;
 
     @Override
-    public void doErrorQueue(String email,String password){
+    public String doErrorQueue(String email, String password){
         //0.Regist
         RegisterInfo registerInfo = new RegisterInfo(email,password);
         RegisterResult registerResult = restTemplate.postForObject(
@@ -95,15 +95,18 @@ public class LauncherServiceImpl implements LauncherService {
         try{
             for(;;){
                 if(taskCancelResult.isDone()){
-                    if(taskCancelResult.get().isStatus() & payResult.get().booleanValue() == false){
-                        throw new RuntimeException("[Error Queue]");
+                    if(!taskCancelResult.get().isStatus() ){
+                        throw new RuntimeException("[Error Queue -- The session was invalidated, because the user logged in a second time]");
+                    }else if(!taskCancelResult.get().isStatus() || (taskCancelResult.get().isStatus() & payResult.get().booleanValue() == false)) {
+                        throw new RuntimeException("[Error Queue -- Cancelled ticket reservation before payment was finished]");
                     }else{
-                        return;
+                        return "No error";
                     }
                 }
             }
         }catch (Exception e){
             e.printStackTrace();
+            return e.getMessage();
         }
 
     }
