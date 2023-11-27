@@ -21,8 +21,10 @@ public class InsidePaymentController {
     public boolean pay(@RequestBody PaymentInfo info, HttpServletRequest request){
 
         try{
+            if (Math.random() > 0.5) {
+                Thread.sleep(5000);
+            }
             //模拟延迟
-            Thread.sleep(5000);
         }catch(Exception e){
             e.printStackTrace();
         }
