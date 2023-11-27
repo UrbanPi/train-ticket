@@ -92,7 +92,12 @@ public class PreserveOtherServiceImpl implements PreserveOtherService{
             System.out.println("[Preserve Other Service] [Step 4] Do Order");
             Contacts contacts = gcr.getContacts();
             Order order = new Order();
-            order.setId(UUID.fromString(oti.getOrderId()));
+            // Fall back to generating a random orderId when none is provided
+            if (oti.getOrderId() == null) {
+                order.setId(UUID.randomUUID());
+            } else {
+                order.setId(UUID.fromString(oti.getOrderId()));
+            }
             order.setTrainNumber(oti.getTripId());
             order.setAccountId(UUID.fromString(accountId));
 
