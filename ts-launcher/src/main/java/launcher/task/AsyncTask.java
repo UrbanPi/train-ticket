@@ -10,6 +10,9 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
@@ -66,7 +69,7 @@ public class AsyncTask {
                         "aded7dc5-06a7-4503-8e21-b7cad7a1f386",
                         "Z1234",
                         2,
-                        new Date(1556898022964L),
+                        new Date(Instant.now().plus(1, ChronoUnit.DAYS).toEpochMilli()),
                         "Shang Hai",
                         "Nan Jing",
                         orderId);
