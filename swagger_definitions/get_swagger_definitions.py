@@ -15,7 +15,8 @@ version_groups = {"master_grp": ["master"],
                   "error_grp": ["error-f4", "error-f1", "error-f3", "error-f6", "error-f8", "error-f10", "error-f11",
                                 "error-f12", "error-f13"],
                   "error_grp_2": ["error-f2", "error-f5"],
-                  "error_grp3": ["error-f7"]}
+                  "error_grp3": ["error-f7"],
+                  "error_grp4": ["error-f13"]}  # is the same as the "error_grp" but has an additional Java service without swagger
 
 services = [{"name": "ts-admin-basic-info-service", "port": 30030,
              "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
@@ -115,7 +116,8 @@ services = [{"name": "ts-admin-basic-info-service", "port": 30030,
              "versions": ["error_grp_2"]},
             # {"name": "ts-external-rest-service", "port": 30079,  # No swagger definition, written in JS
             #  "versions": ["error_grp_3"]},
-
+            # {"name": "ts-launcher", "port": 30080, # Java,no swagger definition, executes a workflow which has a chance to trigger the fault.
+            #  "versions": ["error_grp_4"]},
             # {"name": "ts-gateway-service", "port": 30467,  # No swagger definition available (Java)
             #  "versions": ["master_grp"]},
 
