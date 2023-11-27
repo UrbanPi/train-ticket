@@ -2976,4 +2976,73 @@ spec:
 #            initialDelaySeconds: 60
 #            periodSeconds: 10
 #            timeoutSeconds: 5
-#---
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ts-launcher
+  labels:
+    hpc.scch.at/responsibility: urbanke
+spec:
+  selector:
+    matchLabels:
+      app: ts-launcher
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        hpc.scch.at/responsibility: urbanke
+        # hpc.scch.at/service: ts-launcher
+        app: ts-launcher
+    spec:
+      volumes:
+        - name: otel-agent
+          emptyDir: {}
+      initContainers:
+        - name: agent-container
+          image: containers.github.scch.at/contest/trainticket/otel-agent:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: otel-agent
+              mountPath: /agent
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /otel /agent/" ]
+      imagePullSecrets:
+        - name: conregscch
+      containers:
+        - name: ts-launcher
+          image: containers.github.scch.at/contest/trainticket/ts-launcher:error-f13
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: otel-agent
+              mountPath: /otel
+          env:
+            - name: NODE_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+
+            - name: SERVICE_JAR
+              value: "ts-launcher"
+
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file=./app.logs"]
+          envFrom:
+            - configMapRef:
+                name: environment-vars
+          ports:
+            - containerPort: 12898
+          resources:
+            requests:
+              cpu: 100m
+              memory: 250Mi
+            limits:
+              cpu: 500m
+              memory: 500Mi
+          readinessProbe:
+            tcpSocket:
+              port: 12898
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 5
+---

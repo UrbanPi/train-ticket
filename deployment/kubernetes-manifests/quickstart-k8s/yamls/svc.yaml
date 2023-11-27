@@ -733,3 +733,19 @@ spec:
 #  selector:
 #    app: ts-rest-external-service
 #---
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ts-launcher
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      port: 12898
+      nodePort: 30080
+    - name: metric
+      port: 9464
+      nodePort: 30380
+  selector:
+    app: ts-launcher
