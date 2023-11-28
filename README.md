@@ -23,8 +23,9 @@
 
 ### Notes
 
-Works mostly as described. The default upload limit is 100Kb in `admin-route-service: application.yml`, which causes an 
-HTML 500 error. There is a second upload limit of around 1MB enforced by `ts-ui-dashboard`, a nginx webserver.
+Works mostly as described. The default upload limit is 100Kb in `ts-admin-route-service: application.yml`, which causes an 
+HTML 500 error. There is a second upload limit of 1MB enforced by `ts-ui-dashboard`, the nginx webserver. This second 
+upload limit is the default for the nginx webserver.
 
 In the top level of the there is an example file which can be used for testing. To test the file limit the existing entries
 can be copied to inflate the file size. The file contains the following entries:
@@ -36,3 +37,15 @@ shanghai&taiyuan&shanghai,nanjing,shijiazhuang,taiyuan&0,350,1000,1500
 shanghai&taiyuan&shanghai,nanjing,shijiazhuang,taiyuan&0,350,1000,1600
 shanghai&taiyuan&shanghai,nanjing,shijiazhuang,taiyuan&0,350,1000,1700
 ````
+
+The difference to the fault implemented in `ts-error-f15` lies in the location where the failure is triggered and 
+in the upload limit. In `ts-error-f15` the failure always triggers in `ts-ui-dashboard` (the nginx webserver), in 
+`ts-error-f16` it can be triggered by either `ts-ui-dashboard` or `ts-admin-route-service` depending on the file size. 
+In both error branches the request triggering the failure is a POST request.
+
+| Error version | Upload limit | Targets                             | Enforced by               |
+|---------------|--------------|-------------------------------------|---------------------------|
+| ts-error-f15  | 200b         | ts-preserve & ts-preserve-other     | `ts-ui-dashboard`         |
+| ts-error-f15  | 1Mb          | default limit applies to all routes | `ts-ui-dashboard`         |
+| ts-error-f16  | 1Mb          | default limit applies to all routes | `ts-ui-dashboard`         |
+| ts-error-f16  | 100Kb        | ts-admin-route-service              | `ts-admin-route-service`  |
