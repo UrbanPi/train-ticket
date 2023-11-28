@@ -66,5 +66,15 @@ public class InitData implements CommandLineRunner {
         info.setStartingTime(new Date("Mon May 04 07:51:52 GMT+0800 2013"));
         info.setEndTime(new Date("Mon May 04 19:59:52 GMT+0800 2013"));
         service.create(info);
+
+        info.setTripId("K891");
+        info.setTrainTypeId("KuaiSu");
+        info.setRouteId("1367db1f-461e-4ab7-87ad-2bcc05fd9cb7");
+        info.setStartingStationId("shanghaihongqiao");
+        info.setStationsId("shanghaihongqiao,jiaxingnan,hangzhou");
+        info.setTerminalStationId("hangzhou");
+        info.setStartingTime(new Date("Mon May 04 07:00:00 GMT+0800 2013"));
+        info.setEndTime(new Date("Mon May 04 19:59:52 GMT+0800 2013"));
+        service.create(info);
     }
 }

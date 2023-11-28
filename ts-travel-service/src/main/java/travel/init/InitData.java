@@ -60,10 +60,10 @@ public class InitData implements CommandLineRunner{
 
         info.setTripId("D1345");
         info.setTrainTypeId("DongCheOne");
-        info.setRouteId("f3d4d4ef-693b-4456-8eed-59c0d717dd08");
-        info.setStartingStationId("shanghai");
-        info.setStationsId("suzhou");
-        info.setTerminalStationId("taiyuan");
+        info.setRouteId("1367db1f-461e-4ab7-87ad-2bcc05fd9cb7");
+        info.setStartingStationId("shanghaihongqiao");
+        info.setStationsId("shanghaihongqiao,jiaxingnan,hangzhou");
+        info.setTerminalStationId("hangzhou");
         info.setStartingTime(new Date("Mon May 04 07:00:00 GMT+0800 2013"));
         info.setEndTime(new Date("Mon May 04 19:59:52 GMT+0800 2013"));
         service.create(info);

@@ -9,11 +9,12 @@ from json import JSONDecodeError
 from urllib.error import URLError
 
 available_versions = ["master", "error-f1", "error-f2", "error-f3", "error-f4", "error-f5", "error-f6", "error-f7",
-                      "error-f8", "error-f10", "error-f11", "error-f12", "error-f13", "error-f14", "error-f15"]
+                      "error-f8", "error-f10", "error-f11", "error-f12", "error-f13", "error-f14", "error-f15",
+                      "error-f16"]
 
 version_groups = {"master_grp": ["master"],
                   "error_grp": ["error-f4", "error-f1", "error-f3", "error-f6", "error-f8", "error-f10", "error-f11",
-                                "error-f12", "error-f13", "error-f14", "error-f15"],
+                                "error-f12", "error-f13", "error-f14", "error-f15", "error-f16"],
                   "error_grp_2": ["error-f2", "error-f5"],
                   "error_grp3": ["error-f7"],
                   "error_grp4": ["error-f13"]}  # is the same as the "error_grp" but has an additional Java service without swagger
@@ -211,8 +212,8 @@ if __name__ == '__main__':
     args = parser.parse_args()
     version_argument = args.version
     if not version_argument:
-        print("No version selected defaulting to version \"error-f15\"", file=sys.stderr)
-        version_argument = "error-f15"
+        print("No version selected defaulting to version \"error-f16\"", file=sys.stderr)
+        version_argument = "error-f16"
     else:
         print("Selected version: {}".format(version_argument))
     selected_version_group = list(filter(lambda item: version_argument in item[1], version_groups.items()))[0][0]

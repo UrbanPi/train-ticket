@@ -1,0 +1,5 @@
+shanghai&taiyuan&shanghai,nanjing,shijiazhuang,taiyuan&0,350,1000,1300
+shanghai&taiyuan&shanghai,nanjing,shijiazhuang,taiyuan&0,350,1000,1400
+shanghai&taiyuan&shanghai,nanjing,shijiazhuang,taiyuan&0,350,1000,1500
+shanghai&taiyuan&shanghai,nanjing,shijiazhuang,taiyuan&0,350,1000,1600
+shanghai&taiyuan&shanghai,nanjing,shijiazhuang,taiyuan&0,350,1000,1700

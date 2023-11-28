@@ -1,15 +1,4 @@
-Setup system:
+Failure Triggering Usage Steps:
 
-- Use docker-compose to setup the Train-Ticket System.
-
-Fault reproduce manually step:
-
-1. Select [Flow One - Ticket Reserve]
-2. Log in and select a data, Click [Search]
-3. Select one searching results, click the [Booking] button 
-4. Select a contacts, check [Need Food], select [Station Food Stores] and select one food as you like
-5. Check [Consign] and input the corresponding information, click [Select] 
-6. Click the [Confirm Ticket] in step4
-5. You will get the alert which says "Preserve Failed"
-
-If you want to reserve ticket successfully, uncheck the [Need Food] and [Consign]
+1. Open the Train-Ticket page and upload a file to add routes in batches whose size is more than 2MB.
+2. You file will be rejected.

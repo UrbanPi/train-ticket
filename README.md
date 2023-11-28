@@ -1,40 +1,38 @@
-## ts-error-F15
+## ts-error-F16
 ### Original fault description
-> **industrial fault description**:
 > 
-> Symptom：
+> Industrial fault description:
 > 
-> The data-synchronization job quits unexpectedly
+> The file-uploading process fails.
+> The "max-content-length" configuration of spray is only 2 Mb, not allowing to support to upload a big file.
 > 
-> Root Cause：
 > 
-> The spark actor is used for the configuration of actorSystem (part of Apache Spark) instead of the system actor
+> TrainTicket replicated fault description:
 > 
-> **train_ticket replicated fault description**:
+> Our system has the ability to add routes in batches. You can upload the file to add routes in batches.
+> But the size of the permitted file is too small, sometimes your file will be rejected because of the size.
 > 
-> Limit the post json size to 200 bytes in nginx.conf file.
-> If user select the food and consign, the request body will exceed 200 bytes, and the request will be blocked by nginx
 > 
-> **fault replicate steps**:
 > 
-> setup system:
 > 
-> - Use docker-compose to setup the Train-Ticket System.
+> Failure Triggering Usage Steps:
 > 
-> fault reproduce manually step:
-> 
-> 1. Select [Flow One - Ticket Reserve]
-> 2. Log in and select a data, Click [Search]
-> 3. Select one searching results, click the [Booking] button 
-> 4. Select a contacts, check [Need Food], select [Station Food Stores] and select one food as you like
-> 5. Check [Consign] and input the corresponding information, click [Select] 
-> 6. Click the [Confirm Ticket] in step4
-> 5. You will get the alert which says "Preserve Failed"
-> 
-> If you want to reserve ticket successfully, uncheck the [Need Food] and [Consign]
+> 1. Open the Train-Ticket page and upload a file to add routes in batches whose size is more than 2MB.
+> 2. You file will be rejected.
+
 
 ### Notes
 
-Works as described :) 
-Clarification: selecting either food or consigning exceeds the request limit. Selecting a traffic assurance does not 
-exceed the limit.
+Works mostly as described. The default upload limit is 100Kb in `admin-route-service: application.yml`, which causes an 
+HTML 500 error. There is a second upload limit of around 1MB enforced by `ts-ui-dashboard`, a nginx webserver.
+
+In the top level of the there is an example file which can be used for testing. To test the file limit the existing entries
+can be copied to inflate the file size. The file contains the following entries:
+
+````csv
+shanghai&taiyuan&shanghai,nanjing,shijiazhuang,taiyuan&0,350,1000,1300
+shanghai&taiyuan&shanghai,nanjing,shijiazhuang,taiyuan&0,350,1000,1400
+shanghai&taiyuan&shanghai,nanjing,shijiazhuang,taiyuan&0,350,1000,1500
+shanghai&taiyuan&shanghai,nanjing,shijiazhuang,taiyuan&0,350,1000,1600
+shanghai&taiyuan&shanghai,nanjing,shijiazhuang,taiyuan&0,350,1000,1700
+````

@@ -9,4 +9,9 @@ spring:
   sleuth:
     sampler:
       percentage: 1.0
+  http:
+    multipart:
+      maxFileSize: 100Kb
+      maxRequestSize: 100Kb
+
 

@@ -2,14 +2,15 @@
 
 Industrial fault description:
 
-The data-synchronization job quits unexpectedly.
-The spark actor is used for the configuration of actorSystem (part of Apache Spark) instead of the system actor.
+The file-uploading process fails.
+The "max-content-length" configuration of spray is only 2 Mb, not allowing to support to upload a big file.
 
 
 TrainTicket replicated fault description:
 
-Limit the post json size to 200 bytes in nginx.conf file.
-If user select the food and consign, the request body will exceed 200 bytes, and the request will be blocked by nginx.
+Our system has the ability to add routes in batches. You can upload the file to add routes in batches.
+But the size of the permitted file is too small, sometimes your file will be rejected because of the size.
+
 
 
 
