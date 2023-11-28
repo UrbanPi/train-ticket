@@ -1,14 +1,15 @@
+
+
 Industrial fault description:
 
-The result of the Consumer Price Index (CPI) is wrong.
-There is a mistake in including the locked product in CPI calculation.
+The data-synchronization job quits unexpectedly.
+The spark actor is used for the configuration of actorSystem (part of Apache Spark) instead of the system actor.
 
 
 TrainTicket replicated fault description:
 
-In our Train Ticket system, we replicate this fault in ticket price calculating.
-When calculating the second class seat price, the calculating process is wrong, leading to a fault.
-
+Limit the post json size to 200 bytes in nginx.conf file.
+If user select the food and consign, the request body will exceed 200 bytes, and the request will be blocked by nginx.
 
 
 

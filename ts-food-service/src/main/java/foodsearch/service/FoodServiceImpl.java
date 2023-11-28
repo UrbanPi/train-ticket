@@ -53,8 +53,17 @@ public class FoodServiceImpl implements FoodService{
         GetRouteResult  stationResult= restTemplate.getForObject
                                         ("http://ts-travel-service:12346/travel/getRouteByTripId/"+tripId,
                                                 GetRouteResult.class);
-        if( stationResult.isStatus() ){
-            Route route = stationResult.getRoute();
+        GetRouteResult  stationResult2= restTemplate.getForObject
+                ("http://ts-travel2-service:16346/travel2/getRouteByTripId/"+tripId,
+                        GetRouteResult.class);
+        if( stationResult.isStatus() || stationResult2.isStatus()){
+            Route route;
+            if(stationResult.isStatus()){
+                route = stationResult.getRoute();
+            } else {
+                route = stationResult2.getRoute();
+            }
+
             List<String> stations = route.getStations();
             if(null != startStation && !"".equals(startStation)){
                 QueryForId q1=new QueryForId();

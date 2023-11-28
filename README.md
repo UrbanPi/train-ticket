@@ -1,57 +1,40 @@
+## ts-error-F15
 ### Original fault description
-> Industrial fault description:
+> **industrial fault description**:
 > 
-> The result of the Consumer Price Index (CPI) is wrong.
-> There is a mistake in including the locked product in CPI calculation.
+> Symptom：
 > 
-> TrainTicket replicated fault description:
+> The data-synchronization job quits unexpectedly
 > 
-> In our Train Ticket system, we replicate this fault in ticket price calculating.
-> When calculating the second class seat price, the calculating process is wrong, leading to a fault.
+> Root Cause：
 > 
+> The spark actor is used for the configuration of actorSystem (part of Apache Spark) instead of the system actor
 > 
-> Fault replication:
+> **train_ticket replicated fault description**:
 > 
-> Setup System:
+> Limit the post json size to 200 bytes in nginx.conf file.
+> If user select the food and consign, the request body will exceed 200 bytes, and the request will be blocked by nginx
 > 
-> 1. Use docker-compose to setup the TrainTicket system.
+> **fault replicate steps**:
 > 
+> setup system:
 > 
-> Failure Triggering Usage Steps:
+> - Use docker-compose to setup the Train-Ticket System.
 > 
-> 1. Log in.
-> 2. Click [Flow One].
-> 3. Search for ticket from Shang Hai to Su Zhou, train type is High Speed Rail.
-> 4. You will found the price of second class seat is much higher, leading to a fault.
-
+> fault reproduce manually step:
+> 
+> 1. Select [Flow One - Ticket Reserve]
+> 2. Log in and select a data, Click [Search]
+> 3. Select one searching results, click the [Booking] button 
+> 4. Select a contacts, check [Need Food], select [Station Food Stores] and select one food as you like
+> 5. Check [Consign] and input the corresponding information, click [Select] 
+> 6. Click the [Confirm Ticket] in step4
+> 5. You will get the alert which says "Preserve Failed"
+> 
+> If you want to reserve ticket successfully, uncheck the [Need Food] and [Consign]
 
 ### Notes
-The correct way of calculating the ticket price is:
 
-`price = distance * price_per_distance`
-
-The factor `price_per_distance` can be configured by the application administrator. The comfort (first) and economy (second) 
-class tickets have different factors ranging from 0.2 to 0.7 for economy and 1.0 for comfort in the default configuration. 
-For one specific journey the factor for the comfort class is allways higher than the factor for the economy class, leading to
-the assertion:
-
-`comfort_class_price > economy_class_price`
-
-
-In the faulty implementation prices are calculated as:
-
-`economy_class_price = distance`
-`comfort_class_price = distance * comfort_price_per_distance`
-
-The values for `comfort_price_per_distance` in the faulty implementation range from 0.8 to 1.3 (see ts-price-service: InitData).
-
-| Train Type             | Price Per Distance |
-|------------------------|--------------------|
-| GaoTieOne, GaoTieTwo   | 1.3                |
-| DongCheOne             | 1.2                |
-| ZhiDa, TeKuai, KuaiSu  | 0.8                |
-
-For the suggested journey from Shanghai to Su Zhou there are only trains of type GaoTieOne and GaoTieTwo, which makes it 
-difficult to spot the error without further domain knowledge, because the price of the comfort class ticket is still higher 
-than the economy class ticket. In order to clearly see the failure one has to search for tickets from **Shang Hai -> Nan Jing**
-or vice versa. There the assertion `comfort_class_price > economy_class_price` does not hold for the train type ZhiDa. 
+Works as described :) 
+Clarification: selecting either food or consigning exceeds the request limit. Selecting a traffic assurance does not 
+exceed the limit.

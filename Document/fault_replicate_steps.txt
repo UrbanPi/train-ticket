@@ -1,12 +1,15 @@
-Setup System:
+Setup system:
 
-1. Use docker-compose to setup the TrainTicket system.
+- Use docker-compose to setup the Train-Ticket System.
 
+Fault reproduce manually step:
 
-Failure Triggering Usage Steps:
+1. Select [Flow One - Ticket Reserve]
+2. Log in and select a data, Click [Search]
+3. Select one searching results, click the [Booking] button 
+4. Select a contacts, check [Need Food], select [Station Food Stores] and select one food as you like
+5. Check [Consign] and input the corresponding information, click [Select] 
+6. Click the [Confirm Ticket] in step4
+5. You will get the alert which says "Preserve Failed"
 
-1. Log in.
-2. Click [Flow One].
-3. Search for ticket from Shang Hai to Su Zhou, train type is High Speed Rail.
-4. You will found the price of second class seat is much higher, leading to a fault.
-
+If you want to reserve ticket successfully, uncheck the [Need Food] and [Consign]

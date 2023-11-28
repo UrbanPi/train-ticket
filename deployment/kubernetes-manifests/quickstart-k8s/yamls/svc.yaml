@@ -597,20 +597,20 @@ spec:
   selector:
     app: ts-verification-code-service
 ---
-#apiVersion: v1
-#kind: Service
-#metadata:
-#  name: ts-voucher-service
-#spec:
-#  type: NodePort
-#  ports:
-#    - name: http
-#      port: 16101
-#      targetPort: 16101
-#      nodePort: 30071
-#  selector:
-#    app: ts-voucher-service
-#---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ts-voucher-service
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      port: 16101
+      targetPort: 16101
+      nodePort: 30071
+  selector:
+    app: ts-voucher-service
+---
 apiVersion: v1
 kind: Service
 metadata:

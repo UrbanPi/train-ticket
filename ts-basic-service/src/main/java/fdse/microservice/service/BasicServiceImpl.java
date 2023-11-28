@@ -84,11 +84,8 @@ public class BasicServiceImpl implements BasicService{
 
         int distance = route.getDistances().get(indexEnd) - route.getDistances().get(indexStart);
 
-//        double priceForEconomyClass = distance * priceConfig.getBasicPriceRate();
-        double priceForEconomyClass = distance;
-
+        double priceForEconomyClass = distance * priceConfig.getBasicPriceRate();
         double priceForConfortClass= distance * priceConfig.getFirstClassPriceRate();
-//        double priceForConfortClass = distance;
 
         HashMap<String,String> prices = new HashMap<String,String>();
         prices.put("economyClass","" + priceForEconomyClass);
