@@ -4,11 +4,10 @@ import fdse.microservice.domain.*;
 import fdse.microservice.service.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
-/**
- * Created by Chenjie Xu on 2017/5/8.
- */
+
 @RestController
 public class StationController {
 

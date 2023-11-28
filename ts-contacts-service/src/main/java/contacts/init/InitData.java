@@ -22,7 +22,7 @@ public class InitData implements CommandLineRunner{
         contacts_One.setName("Contacts_One");
         contacts_One.setDocumentNumber("DocumentNumber_One");
         contacts_One.setPhoneNumber("ContactsPhoneNum_One");
-        contacts_One.setId(UUID.fromString("aded7dc5-06a7-4503-8e21-b7cad7a1f386"));
+        contacts_One.setId(UUID.fromString("4d2a46c7-71cb-4cf1-a5bb-b68406d9da6f"));
         service.createContacts(contacts_One);
 
         Contacts contacts_Two = new Contacts();

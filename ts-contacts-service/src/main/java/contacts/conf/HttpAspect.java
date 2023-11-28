@@ -19,7 +19,7 @@ public class HttpAspect {
 
     private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(HttpAspect.class);
 
-    @Pointcut("execution(public * contacts.controller.FuckContactsController.*(..))")
+    @Pointcut("execution(public * contacts.controller.ContactsController.*(..))")
     public void webLog(){}
 
     @Before("webLog()")

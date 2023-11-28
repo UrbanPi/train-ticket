@@ -14,12 +14,11 @@ public class PreserveOtherServiceImpl implements PreserveOtherService{
     private RestTemplate restTemplate;
 
     @Override
-    public OrderTicketsResult preserve(OrderTicketsInfoWithOrderId oti,String accountId,String loginToken){
+    public OrderTicketsResult preserve(OrderTicketsInfo oti,String accountId,String loginToken){
         VerifyResult tokenResult = verifySsoLogin(loginToken);
         OrderTicketsResult otr = new OrderTicketsResult();
         if(tokenResult.isStatus() == true){
             System.out.println("[Preserve Other Service][Verify Login] Success");
-            //1.黄牛检测
             System.out.println("[Preserve Service] [Step 1] Check Security");
             CheckInfo checkInfo = new CheckInfo();
             checkInfo.setAccountId(accountId);
@@ -32,7 +31,6 @@ public class PreserveOtherServiceImpl implements PreserveOtherService{
                 return otr;
             }
             System.out.println("[Preserve Service] [Step 1] Check Security Complete. ");
-            //2.查询联系人信息 -- 修改，通过基础信息微服务作为中介
             System.out.println("[Preserve Other Service] [Step 2] Find contacts");
             GetContactsInfo gci = new GetContactsInfo();
             System.out.println("[Preserve Other Service] [Step 2] Contacts Id:" + oti.getContactsId());
@@ -47,7 +45,6 @@ public class PreserveOtherServiceImpl implements PreserveOtherService{
                 return otr;
             }
             System.out.println("[Preserve Other Service][Step 2] Complete");
-            //3.查询座位余票信息和车次的详情
             System.out.println("[Preserve Other Service] [Step 3] Check tickets num");
             GetTripAllDetailInfo gtdi = new GetTripAllDetailInfo();
 
@@ -88,16 +85,10 @@ public class PreserveOtherServiceImpl implements PreserveOtherService{
             }
             Trip trip = gtdr.getTrip();
             System.out.println("[Preserve Other Service] [Step 3] Tickets Enough");
-            //4.下达订单请求 设置order的各个信息
             System.out.println("[Preserve Other Service] [Step 4] Do Order");
             Contacts contacts = gcr.getContacts();
             Order order = new Order();
-            // Fall back to generating a random orderId when none is provided
-            if (oti.getOrderId() == null) {
-                order.setId(UUID.randomUUID());
-            } else {
-                order.setId(UUID.fromString(oti.getOrderId()));
-            }
+            order.setId(UUID.randomUUID());
             order.setTrainNumber(oti.getTripId());
             order.setAccountId(UUID.fromString(accountId));
 
@@ -181,64 +172,61 @@ public class PreserveOtherServiceImpl implements PreserveOtherService{
             otr.setStatus(true);
             otr.setMessage("Success");
             otr.setOrder(cor.getOrder());
-            //5.检查保险的选择
-//            if(oti.getAssurance() == 0){
-//                System.out.println("[Preserve Service][Step 5] Do not need to buy assurance");
-//            }else{
-//                AddAssuranceResult addAssuranceResult = addAssuranceForOrder(
-//                        oti.getAssurance(),cor.getOrder().getId().toString());
-//                if(addAssuranceResult.isStatus() == true){
-//                    System.out.println("[Preserve Service][Step 5] Buy Assurance Success");
-//                }else{
-//                    System.out.println("[Preserve Service][Step 5] Buy Assurance Fail.");
-//                    otr.setMessage("Success.But Buy Assurance Fail.");
-//                }
-//            }
+            if(oti.getAssurance() == 0){
+                System.out.println("[Preserve Service][Step 5] Do not need to buy assurance");
+            }else{
+                AddAssuranceResult addAssuranceResult = addAssuranceForOrder(
+                        oti.getAssurance(),cor.getOrder().getId().toString());
+                if(addAssuranceResult.isStatus() == true){
+                    System.out.println("[Preserve Service][Step 5] Buy Assurance Success");
+                }else{
+                    System.out.println("[Preserve Service][Step 5] Buy Assurance Fail.");
+                    otr.setMessage("Success.But Buy Assurance Fail.");
+                }
+            }
 
-            //6.增加订餐
-//            if(oti.getFoodType() != 0){
-//                AddFoodOrderInfo afoi = new AddFoodOrderInfo();
-//                afoi.setOrderId(cor.getOrder().getId().toString());
-//                afoi.setFoodType(oti.getFoodType());
-//                afoi.setFoodName(oti.getFoodName());
-//                afoi.setPrice(oti.getFoodPrice());
-//                if(oti.getFoodType() == 2){
-//                    afoi.setStationName(oti.getStationName());
-//                    afoi.setStoreName(oti.getStoreName());
-//                }
-//                AddFoodOrderResult afor = createFoodOrder(afoi);
-//                if(afor.isStatus()){
-//                    System.out.println("[Preserve Service][Step 6] Buy Food Success");
-//                } else {
-//                    System.out.println("[Preserve Service][Step 6] Buy Food Fail.");
-//                    otr.setMessage("Success.But Buy Food Fail.");
-//                }
-//            } else {
-//                System.out.println("[Preserve Service][Step 6] Do not need to buy food");
-//            }
-//
-//            //7.增加托运
-//            if(null != oti.getConsigneeName() && !"".equals(oti.getConsigneeName())){
-//                ConsignRequest consignRequest = new ConsignRequest();
-//                consignRequest.setAccountId(cor.getOrder().getAccountId());
-//                consignRequest.setHandleDate(oti.getHandleDate());
-//                consignRequest.setTargetDate(cor.getOrder().getTravelDate().toString());
-//                consignRequest.setFrom(cor.getOrder().getFrom());
-//                consignRequest.setTo(cor.getOrder().getTo());
-//                consignRequest.setConsignee(oti.getConsigneeName());
-//                consignRequest.setPhone(oti.getConsigneePhone());
-//                consignRequest.setWeight(oti.getConsigneeWeight());
-//                consignRequest.setWithin(oti.isWithin());
-//                InsertConsignRecordResult icresult = createConsign(consignRequest);
-//                if(icresult.isStatus()){
-//                    System.out.println("[Preserve Service][Step 7] Consign Success");
-//                } else {
-//                    System.out.println("[Preserve Service][Step 7] Consign Fail.");
-//                    otr.setMessage("Consign Fail.");
-//                }
-//            } else {
-//                System.out.println("[Preserve Service][Step 7] Do not need to consign");
-//            }
+            if(oti.getFoodType() != 0){
+                AddFoodOrderInfo afoi = new AddFoodOrderInfo();
+                afoi.setOrderId(cor.getOrder().getId().toString());
+                afoi.setFoodType(oti.getFoodType());
+                afoi.setFoodName(oti.getFoodName());
+                afoi.setPrice(oti.getFoodPrice());
+                if(oti.getFoodType() == 2){
+                    afoi.setStationName(oti.getStationName());
+                    afoi.setStoreName(oti.getStoreName());
+                }
+                AddFoodOrderResult afor = createFoodOrder(afoi);
+                if(afor.isStatus()){
+                    System.out.println("[Preserve Service][Step 6] Buy Food Success");
+                } else {
+                    System.out.println("[Preserve Service][Step 6] Buy Food Fail.");
+                    otr.setMessage("Success.But Buy Food Fail.");
+                }
+            } else {
+                System.out.println("[Preserve Service][Step 6] Do not need to buy food");
+            }
+
+            if(null != oti.getConsigneeName() && !"".equals(oti.getConsigneeName())){
+                ConsignRequest consignRequest = new ConsignRequest();
+                consignRequest.setAccountId(cor.getOrder().getAccountId());
+                consignRequest.setHandleDate(oti.getHandleDate());
+                consignRequest.setTargetDate(cor.getOrder().getTravelDate().toString());
+                consignRequest.setFrom(cor.getOrder().getFrom());
+                consignRequest.setTo(cor.getOrder().getTo());
+                consignRequest.setConsignee(oti.getConsigneeName());
+                consignRequest.setPhone(oti.getConsigneePhone());
+                consignRequest.setWeight(oti.getConsigneeWeight());
+                consignRequest.setWithin(oti.isWithin());
+                InsertConsignRecordResult icresult = createConsign(consignRequest);
+                if(icresult.isStatus()){
+                    System.out.println("[Preserve Service][Step 7] Consign Success");
+                } else {
+                    System.out.println("[Preserve Service][Step 7] Consign Fail.");
+                    otr.setMessage("Consign Fail.");
+                }
+            } else {
+                System.out.println("[Preserve Service][Step 7] Do not need to consign");
+            }
 
             //8.发送notification
             System.out.println("[Preserve Service]");

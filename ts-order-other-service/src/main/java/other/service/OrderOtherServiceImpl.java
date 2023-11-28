@@ -44,7 +44,7 @@ public class OrderOtherServiceImpl implements OrderOtherService{
             cor.setMessage("Order already exist");
             cor.setOrder(null);
         }else{
-            order.setId(order.getId());
+            order.setId(UUID.randomUUID());
             orderOtherRepository.save(order);
             System.out.println("[Order Other Service][Order Create] Success.");
             System.out.println("[Order Other Service][Order Create] Price:" + order.getPrice());

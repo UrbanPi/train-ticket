@@ -4,43 +4,31 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+
 public class TestFlowOne {
-
     private WebDriver driver;
-
     private String trainType;//0--all,1--GaoTie,2--others
-
     private String baseUrl;
-
-    private List<WebElement> myOrdersList;
-
     public static void login(WebDriver driver,String username,String password){
-
-        String js = "document.getElementsById('flow_one_page')[0].scrollIntoView(false)";
-        ((JavascriptExecutor)driver).executeScript(js);
-
         driver.findElement(By.id("flow_one_page")).click();
         driver.findElement(By.id("flow_preserve_login_email")).clear();
         driver.findElement(By.id("flow_preserve_login_email")).sendKeys(username);
         driver.findElement(By.id("flow_preserve_login_password")).clear();
         driver.findElement(By.id("flow_preserve_login_password")).sendKeys(password);
-
-        try{
-            Thread.sleep(new Random().nextInt(6000));
-        }catch(Exception e){
-
-        }
         driver.findElement(By.id("flow_preserve_login_button")).click();
     }
-
+    //获取指定位数的随机字符串(包含数字,0<length)
     public static String getRandomString(int length) {
+        //随机字符串的随机字符库
         String KeyString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         StringBuffer sb = new StringBuffer();
         int len = KeyString.length();
@@ -49,51 +37,22 @@ public class TestFlowOne {
         }
         return sb.toString();
     }
-
     @BeforeClass
     public void setUp() throws Exception {
         System.setProperty("webdriver.chrome.driver", "D:/Program/chromedriver_win32/chromedriver.exe");
         driver = new ChromeDriver();
-        baseUrl = "http://10.141.212.21/";
-        trainType = "2";//all
+        baseUrl = "http://10.141.212.24/";
+        trainType = "1";//all
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
-
-    private String registName;
-    private String registPassword;
-
-
-
     @Test
-    public void testRegist() throws Exception{
-        driver.get(baseUrl + "/");
-
-
-        registName = getRandomString(8) + "@163.com";
-        registPassword = getRandomString(10);
-
-        String js = "document.getElementsById('register_email')[0].scrollIntoView(false)";
-        ((JavascriptExecutor)driver).executeScript(js);
-
-        driver.findElement(By.id("register_email")).clear();
-        driver.findElement(By.id("register_email")).sendKeys(registName);
-        driver.findElement(By.id("register_password")).clear();
-        driver.findElement(By.id("register_password")).sendKeys(registPassword);
-
-        Thread.sleep(new Random().nextInt(6000));
-        driver.findElement(By.id("register_button")).click();
-
-    }
-
-
-    @Test (dependsOnMethods = {"testRegist"})
     //Test Flow Preserve Step 1: - Login
     public void testLogin()throws Exception{
+        driver.get(baseUrl + "/");
 
-
-        //define username and password - todo
-        String username = registName;
-        String password = registPassword;
+        //define username and password
+        String username = "fdse_microservices@163.com";
+        String password = "DefaultPassword";
 
         //call function login
         login(driver,username,password);
@@ -109,9 +68,8 @@ public class TestFlowOne {
             System.out.println("Failed to Login! Status:"+statusLogin);
         Assert.assertEquals(statusLogin.startsWith("Success"),true);
     }
-
-    //test Flow Preserve Step 2: - Ticket Booking
     @Test (dependsOnMethods = {"testLogin"})
+    //test Flow Preserve Step 2: - Ticket Booking
     public void testBooking() throws Exception{
         //locate booking startingPlace input
         WebElement elementBookingStartingPlace = driver.findElement(By.id("travel_booking_startingPlace"));
@@ -121,11 +79,11 @@ public class TestFlowOne {
         //locate booking terminalPlace input
         WebElement elementBookingTerminalPlace = driver.findElement(By.id("travel_booking_terminalPlace"));
         elementBookingTerminalPlace.clear();
-        elementBookingTerminalPlace.sendKeys("Nan Jing");
+        elementBookingTerminalPlace.sendKeys("Tai Yuan");
 
         //locate booking Date input
         String bookDate = "";
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
         Calendar newDate = Calendar.getInstance();
         Random randDate = new Random();
         int randomDate = randDate.nextInt(26); //int范围类的随机数
@@ -139,12 +97,10 @@ public class TestFlowOne {
         //locate Train Type input
         WebElement elementBookingTraintype = driver.findElement(By.id("search_select_train_type"));
         Select selTraintype = new Select(elementBookingTraintype);
-        selTraintype.selectByValue(trainType); //ALL
+        selTraintype.selectByValue("trainType"); //ALL
 
         //locate Train search button
         WebElement elementBookingSearchBtn = driver.findElement(By.id("travel_booking_button"));
-
-        Thread.sleep(new Random().nextInt(6000));
         elementBookingSearchBtn.click();
         Thread.sleep(1000);
 
@@ -162,8 +118,6 @@ public class TestFlowOne {
             WebElement elementBookingSeat = ticketsList.get(i).findElement(By.xpath("td[10]/select"));
             Select selSeat = new Select(elementBookingSeat);
             selSeat.selectByValue("3"); //2st
-
-            Thread.sleep(new Random().nextInt(6000));
             ticketsList.get(i).findElement(By.xpath("td[13]/button")).click();
             Thread.sleep(1000);
         }
@@ -171,7 +125,7 @@ public class TestFlowOne {
             System.out.println("Tickets search failed!!!");
         Assert.assertEquals(ticketsList.size() > 0,true);
     }
-
+   // @Test(enabled = false)
     @Test (dependsOnMethods = {"testBooking"})
     public void testSelectContacts()throws Exception{
         List<WebElement> contactsList = driver.findElements(By.xpath("//table[@id='contacts_booking_list_table']/tbody/tr"));
@@ -198,8 +152,6 @@ public class TestFlowOne {
 
             contactsList.get(0).findElement(By.xpath("td[4]/input")).sendKeys(idNumber);
             contactsList.get(0).findElement(By.xpath("td[5]/input")).sendKeys(phoneNumber);
-
-            Thread.sleep(new Random().nextInt(6000));
             contactsList.get(0).findElement(By.xpath("td[6]/label/input")).click();
         }
 
@@ -208,14 +160,11 @@ public class TestFlowOne {
             int i = rand.nextInt(100) % (contactsList.size() - 1); //int范围类的随机数
             contactsList.get(i).findElement(By.xpath("td[6]/label/input")).click();
         }
-
-        Thread.sleep(new Random().nextInt(6000));
         driver.findElement(By.id("ticket_select_contacts_confirm_btn")).click();
         System.out.println("Ticket contacts selected btn is clicked");
         Thread.sleep(1000);
     }
-
-    @Test (dependsOnMethods = {"testSelectContacts"})
+    @Test (dependsOnMethods = {"testBooking"})
     public void testTicketConfirm ()throws Exception{
         String itemFrom = driver.findElement(By.id("ticket_confirm_from")).getText();
         String itemTo = driver.findElement(By.id("ticket_confirm_to")).getText();
@@ -242,10 +191,8 @@ public class TestFlowOne {
         }
         Assert.assertEquals(bStatusConfirm,true);
 
-        Thread.sleep(new Random().nextInt(6000));
         driver.findElement(By.id("ticket_confirm_confirm_btn")).click();
-
-        Thread.sleep(10000);
+        Thread.sleep(1000);
         System.out.println("Confirm Ticket!");
         Alert javascriptConfirm = driver.switchTo().alert();
         String statusAlert = driver.switchTo().alert().getText();
@@ -253,7 +200,6 @@ public class TestFlowOne {
         Assert.assertEquals(statusAlert.startsWith("Success"),true);
         javascriptConfirm.accept();
     }
-
     @Test (dependsOnMethods = {"testTicketConfirm"})
     public void testTicketPay ()throws Exception {
         String itemOrderId = driver.findElement(By.id("preserve_pay_orderId")).getAttribute("value");
@@ -267,72 +213,50 @@ public class TestFlowOne {
             System.out.println("Confirming Ticket failed!");
         Assert.assertEquals(bStatusPay,true);
 
-        Thread.sleep(new Random().nextInt(6000));
         driver.findElement(By.id("preserve_pay_button")).click();
-//        Thread.sleep(1000);
-//        String itemCollectOrderId = driver.findElement(By.id("preserve_collect_order_id")).getAttribute("value");
-//        Assert.assertEquals(!"".equals(itemCollectOrderId),true);
-//        System.out.println("Success to pay and book ticket!");
-    }
-
-    @Test (dependsOnMethods = {"testLogin"})
-    public void testViewOrders() throws Exception{
-
-        //Add random delay to emulate the waiting between user click
-        Thread.sleep(new Random().nextInt(6000));
-        driver.findElement(By.id("refresh_my_order_list_button")).click();
-
         Thread.sleep(1000);
-        //gain my oeders
-        myOrdersList = driver.findElements(By.xpath("//div[@id='my_orders_result']/div"));
-        if (myOrdersList.size() > 0) {
-            System.out.printf("Success to show my orders list，the list size is:%d%n",myOrdersList.size());
-        } else {
-            System.out.println("Failed to show my orders list，the list size is 0 or No orders in this user!");
-        }
-        Assert.assertEquals(myOrdersList.size() > 0,true);
+        String itemCollectOrderId = driver.findElement(By.id("preserve_collect_order_id")).getAttribute("value");
+        Assert.assertEquals(!"".equals(itemCollectOrderId),true);
+        System.out.println("Success to pay and book ticket!");
     }
-    @Test (dependsOnMethods = {"testViewOrders"})
-    public void testClickOrderCancel() throws Exception{
+    @Test (dependsOnMethods = {"testTicketPay"})
+    public void testTicketCollect ()throws Exception {
+        String itemCollectOrderId = driver.findElement(By.id("preserve_collect_order_id")).getAttribute("value");
+        boolean bCollectOrderId = !"".equals(itemCollectOrderId);
+        if(bCollectOrderId == false)
+            System.out.println("Ticket payment failed!");
+        Assert.assertEquals(bCollectOrderId,true);
 
-        System.out.printf("The orders list size is:%d%n",myOrdersList.size());
-        String statusOrder  = "";
-        int i;
-        //Find the first not paid order .
-        for(i = 0;i < myOrdersList.size();i++) {
-            //while(!(statusOrder.startsWith("Not")) && i < myOrdersList.size()) {
-            //statusOrder = myOrdersList.get(i).findElement(By.xpath("/div[2]/div/div/form/div[7]/div/label[2]")).getText();
-            statusOrder = myOrdersList.get(i).findElement(By.xpath("div[2]//form[@role='form']/div[7]/div/label[2]")).getText();
-            if(statusOrder.startsWith("Paid"))
-                break;
-        }
-        if(i == myOrdersList.size() || i > myOrdersList.size())
-            System.out.printf("Failed,there is no not paid order!");
-        Assert.assertEquals(i < myOrdersList.size(),true);
-
+        driver.findElement(By.id("preserve_collect_button")).click();
         Thread.sleep(1000);
-        String js = "document.getElementsByClassName('ticket_cancel_btn')[0].scrollIntoView(false)";
-        ((JavascriptExecutor)driver).executeScript(js);
-        Thread.sleep(1000);
+        String statusCollectOrderId = driver.findElement(By.id("preserve_collect_order_status")).getText();
 
-        Thread.sleep(new Random().nextInt(6000));
-        myOrdersList.get(i).findElement(
-                By.xpath("div[2]//form[@role='form']/div[12]/div/button[@class='ticket_cancel_btn btn btn-primary']")
-        ).click();
-        Thread.sleep(500);
-
-        Thread.sleep(new Random().nextInt(6000));
-        driver.findElement(By.id("ticket_cancel_panel_confirm")).click();
-
-//        Thread.sleep(10000);
-//
-//        Alert javascriptConfirm = driver.switchTo().alert();
-//        String statusAlert = driver.switchTo().alert().getText();
-//        System.out.println("The Alert information of Cancel Ticket："+statusAlert);
-//        Assert.assertEquals(statusAlert.startsWith("Success"),true);
-//        javascriptConfirm.accept();
+        if("".equals(statusCollectOrderId))
+            System.out.println("Failed to Collect Ticket! Status is Null!");
+        else if(statusCollectOrderId.startsWith("Success"))
+            System.out.println("Success to Collect Ticket! Status:"+statusCollectOrderId);
+        else
+            System.out.println("Failed to Collect Ticket! Status is:"+statusCollectOrderId);
+        Assert.assertEquals(statusCollectOrderId.startsWith("Success"),true);
     }
+    @Test (dependsOnMethods = {"testTicketCollect"})
+    public void testEnterStation ()throws Exception {
+        String itemEnterOrderId = driver.findElement(By.id("preserve_execute_order_id")).getAttribute("value");
+        if("".equals(itemEnterOrderId))
+            System.out.println("Enter Station,No Order Id,failed");
+        Assert.assertEquals(!"".equals(itemEnterOrderId),true);
 
+        driver.findElement(By.id("preserve_order_button")).click();
+        Thread.sleep(1000);
+        String statusEnterStation = driver.findElement(By.id("preserve_order_status")).getText();
+        if("".equals(statusEnterStation))
+            System.out.println("Failed to Enter Station! Status is Null!");
+        else if(statusEnterStation.startsWith("Success"))
+            System.out.println("Success to Enter Station! Status:"+statusEnterStation);
+        else
+            System.out.println("Failed to Enter Station! Status is:"+statusEnterStation);
+        Assert.assertEquals(statusEnterStation.startsWith("Success"),true);
+    }
     @AfterClass
     public void tearDown() throws Exception {
         driver.quit();

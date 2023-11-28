@@ -8,9 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-/**
- * Created by Administrator on 2017/6/20.
- */
+
 @RestController
 public class InsidePaymentController {
 
@@ -19,15 +17,6 @@ public class InsidePaymentController {
 
     @RequestMapping(value="/inside_payment/pay", method = RequestMethod.POST)
     public boolean pay(@RequestBody PaymentInfo info, HttpServletRequest request){
-
-        try{
-            if (Math.random() > 0.5) {
-                Thread.sleep(5000);
-            }
-            //模拟延迟
-        }catch(Exception e){
-            e.printStackTrace();
-        }
         System.out.println("[Inside Payment Service][Pay] Pay for:" + info.getOrderId());
         return service.pay(info, request);
     }
