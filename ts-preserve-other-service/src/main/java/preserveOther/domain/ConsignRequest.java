@@ -14,6 +14,7 @@ public class ConsignRequest {
     private String phone;
     private double weight;
     private boolean isWithin;
+    private int country;
 
     public ConsignRequest(){
 
@@ -97,5 +98,13 @@ public class ConsignRequest {
 
     public void setWithin(boolean within) {
         isWithin = within;
+    }
+
+    public int getCountry() {
+        return country;
+    }
+
+    public void setCountry(int country) {
+        this.country = country;
     }
 }

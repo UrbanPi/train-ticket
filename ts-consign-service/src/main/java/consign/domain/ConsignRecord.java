@@ -20,7 +20,7 @@ public class ConsignRecord {
     private String consignee;
     private String phone;
     private double weight;
-    private double price;
+    private String price;
 
     public ConsignRecord(){
 
@@ -98,11 +98,11 @@ public class ConsignRecord {
         this.weight = weight;
     }
 
-    public double getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 }

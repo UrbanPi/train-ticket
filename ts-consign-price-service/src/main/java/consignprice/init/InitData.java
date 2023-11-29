@@ -19,10 +19,10 @@ public class InitData implements CommandLineRunner {
         PriceConfig config = new PriceConfig();
         config.setId(UUID.randomUUID());
         config.setIndex(0);
-        config.setInitialPrice(8);
+        config.setInitialPrice(8.1);
         config.setInitialWeight(1);
-        config.setWithinPrice(2);
-        config.setBeyondPrice(4);
+        config.setWithinPrice(2.4);
+        config.setBeyondPrice(4.2);
 
         service.createAndModifyPrice(config);
     }

@@ -253,12 +253,10 @@ function initFoodSelect(tripId){
                 $('#train-food-type-list').empty();
                 $('#food-station-list').empty();
 
-                // To replicate F18, don't judge whether the train-food-list is null
-                // if(null == result.trainFoodList || result.trainFoodList.length == 0){
-                //     //没有
-                //     // $('#train-food-option').disabled(true);
-                // } else {
-                try{
+                if(null == result.trainFoodList || result.trainFoodList.length == 0){
+                    //没有
+                    // $('#train-food-option').disabled(true);
+                } else {
                     var trainFoodList = result.trainFoodList[0]['foodList'];
                     console.log("trainFoodList:" );
                     console.log(trainFoodList[0]);
@@ -279,11 +277,7 @@ function initFoodSelect(tripId){
                         opt2.innerText = trainFoodList[k]['foodName'] + ":$" + trainFoodList[k]['price'];
                         trainFoodSelect.appendChild (opt2);
                     }
-                } catch(err){
-                   alert(err.message);
                 }
-
-                // }
 
 
                 preserveFoodStoreListMap = result.foodStoreListMap;
@@ -523,6 +517,7 @@ $("#ticket_select_contacts_confirm_btn").click(function(){
                     $('#ticket_confirm_consignee_name').text($(" #name_of_consignee ").val());
                     $('#ticket_confirm_consignee_phone').text($(" #phone_of_consignee ").val());
                     $('#ticket_confirm_consign_weight').text($(" #weight_of_consign ").val());
+                    $('#ticket_confirm_consign_price').text($(" #price_of_consign ").val());
                 }
                 else{
                     $('.ticket_confirm_consign_div').css("display", "none");
@@ -594,6 +589,51 @@ $("#ticket_confirm_cancel_btn").click(function () {
     location.hash="anchor_flow_preserve_select_contacts";
 })
 
+//Query the consign price
+$("#ticket_consign_price_query_btn").click(function () {
+    //Get the selected currency format
+    var currencyType = $('#currency_type option:selected') .val();
+    // alert(currencyType);
+    if(currencyType == -1){
+        alert("Please select the target currency type!");
+    }
+    else{
+        $("#ticket_consign_price_query_btn").attr("disabled",true);
+        var consignInfo = new Object();
+        consignInfo.weight = parseFloat($("#weight_of_consign ").val());
+        consignInfo.isWithinRegion = false;
+        consignInfo.country = parseInt(currencyType);
+
+        var consignData = JSON.stringify(consignInfo);
+        console.log("consignData:");
+        console.log(consignData);
+
+        $.ajax({
+            type: "post",
+            url: "/consignPrice/getPrice",
+            contentType: "application/json",
+            data: consignData,
+            dataType: "text",
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (result) {
+                // alert(result);
+                $("#price_of_consign").val(result);
+            },
+            error: function (error) {
+                alert("Error");
+                console.log("error:");
+                console.log(error);
+            },
+            complete: function(){
+                $("#ticket_consign_price_query_btn").attr("disabled",false);
+            }
+        })
+
+    }
+})
+
 $("#ticket_confirm_confirm_btn").click(function () {
     if(getCookie("loginId").length < 1 || getCookie("loginToken").length < 1){
         alert("Please Login");
@@ -649,6 +689,15 @@ $("#ticket_confirm_confirm_btn").click(function () {
         orderTicketInfo.consigneePhone = $("#phone_of_consignee ").val();
         orderTicketInfo.consigneeWeight = parseFloat($("#weight_of_consign ").val());
         orderTicketInfo.isWithin = false;
+        //Get the selected currency format
+        var currencyType = $('#currency_type option:selected') .val();
+        // alert(currencyType);
+        if(currencyType == -1){
+            alert("Please select the target currency type!");
+        }
+        else{
+            orderTicketInfo.country = parseInt(currencyType);
+        }
     }
 
     var orderTicketsData = JSON.stringify(orderTicketInfo);

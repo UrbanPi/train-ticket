@@ -2444,17 +2444,38 @@
                                 </label>
                             </div>
 
-                            <div class="col-sm-3 consign_input" style="display: none">
+                            <div class="col-sm-2 consign_input" style="display: none">
                                 <input id="name_of_consignee" class="form-control" name='' placeholder="Consignee">
                             </div>
 
-                            <div class="col-sm-3 consign_input" style="display: none">
+                            <div class="col-sm-2 consign_input" style="display: none">
                                 <input id="phone_of_consignee" class="form-control" name='' placeholder="Phone">
                             </div>
 
-                            <div class="col-sm-3 consign_input" style="display: none">
+                            <div class="col-sm-2 consign_input" style="display: none">
                                 <input id="weight_of_consign" class="form-control" name='' placeholder="Weight">
                             </div>
+
+                            <div class="col-sm-3 consign_input" style="display: none">
+                                <select id="currency_type" name="currency_type" class="form-control" >
+                                    <option value="-1">--Select Currency Format--</option>
+                                    <option value="0">USD</option>
+                                    <option value="1">FRF</option>
+                                    <option value="2">EUR</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group consign_input" style="display: none">
+                            <div class="col-sm-2" style="visibility:hidden;">
+                                <label>
+                                    Consign Price
+                                </label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input readonly="true" id="price_of_consign" class="form-control" name='' placeholder="Price. Click Query button to see.">
+                            </div>
+                            <button id='ticket_consign_price_query_btn' type='button' class='btn btn-primary'> Query </button>
                         </div>
 
                         <div class='form-group'>
@@ -2581,6 +2602,12 @@
                             <label class='col-sm-2 control-label'>Consign Weight: </label>
                             <div class='col-sm-10'>
                                 <label id='ticket_confirm_consign_weight' class='control-label'></label>
+                            </div>
+                        </div>
+                        <div class='form-group ticket_confirm_consign_div' style="display: none">
+                            <label class='col-sm-2 control-label'>Consign Price: </label>
+                            <div class='col-sm-10'>
+                                <label id='ticket_confirm_consign_price' class='control-label'></label>
                             </div>
                         </div>
 

@@ -1,10 +1,13 @@
 package consignprice.service;
 
+import consignprice.domain.ConstFormat;
 import consignprice.domain.GetPriceDomain;
 import consignprice.domain.PriceConfig;
 import consignprice.repository.ConsignPriceConfigRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.text.DecimalFormat;
 
 @Service
 public class ConsignPriceServiceImpl implements ConsignPriceService {
@@ -12,19 +15,47 @@ public class ConsignPriceServiceImpl implements ConsignPriceService {
     private ConsignPriceConfigRepository repository;
 
     @Override
-    public double getPriceByWeightAndRegion(GetPriceDomain domain) {
+    public String getPriceByWeightAndRegion(GetPriceDomain domain) {
+        System.out.println(String.format("Receive the request to calculate the price. [%s]", domain.toString()));
+        String result;
+
         PriceConfig priceConfig = repository.findByIndex(0);
+        int country = domain.getCountry();
         double initialPrice = priceConfig.getInitialPrice();
         if(domain.getWeight() <= priceConfig.getInitialWeight()){
-            return initialPrice;
+            result = formatNumber(initialPrice,country);
         }
         else{
             double extraWeight = domain.getWeight() - priceConfig.getInitialWeight();
             if(domain.isWithinRegion())
-                return initialPrice + extraWeight * priceConfig.getWithinPrice();
+                result = formatNumber(initialPrice + extraWeight * priceConfig.getWithinPrice(),country);
             else
-                return initialPrice + extraWeight * priceConfig.getBeyondPrice();
+                result = formatNumber(initialPrice + extraWeight * priceConfig.getBeyondPrice(),country);
         }
+        System.out.println(String.format("Calculate the consign price successfully. The price is [%s]", result));
+        return result;
+    }
+
+    //Change the format of price
+    private String formatNumber(double price, int format){
+        DecimalFormat formatter = new DecimalFormat("#,###.00");
+        String temp = formatter.format(price);
+        String ret;
+        switch (format){
+            case ConstFormat.FRENCH_FORMAT :
+                ret = "₣" + temp.replace(","," ");;
+                break;
+            case ConstFormat.GERMAN_FORMAT:
+                temp = temp.replace("."," ");
+                temp = temp.replace(",",".");
+                temp = temp.replace(" ",",");
+                ret = "€" + temp;
+                break;
+            default:
+                ret = "$" + temp;
+                break;
+        }
+        return ret;
     }
 
     @Override

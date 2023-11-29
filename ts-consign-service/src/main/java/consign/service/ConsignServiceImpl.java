@@ -40,8 +40,9 @@ public class ConsignServiceImpl implements ConsignService {
         GetPriceDomain domain = new GetPriceDomain();
         domain.setWeight(consignRequest.getWeight());
         domain.setWithinRegion(consignRequest.isWithin());
-        double price = restTemplate.postForObject(
-                "http://ts-consign-price-service:16110/consignPrice/getPrice", domain ,double.class);
+        domain.setCountry(consignRequest.getCountry());
+        String price = restTemplate.postForObject(
+                "http://ts-consign-price-service:16110/consignPrice/getPrice", domain ,String.class);
         consignRecord.setPrice(price);
         //存储
         ConsignRecord result = repository.save(consignRecord);
@@ -77,8 +78,9 @@ public class ConsignServiceImpl implements ConsignService {
             GetPriceDomain domain = new GetPriceDomain();
             domain.setWeight(consignRequest.getWeight());
             domain.setWithinRegion(consignRequest.isWithin());
-            double price = restTemplate.postForObject(
-                    "http://ts-consign-price-service:16110/consignPrice/getPrice", domain ,double.class);
+            domain.setCountry(consignRequest.getCountry());
+            String price = restTemplate.postForObject(
+                    "http://ts-consign-price-service:16110/consignPrice/getPrice", domain ,String.class);
             originalRecord.setPrice(price);
         }
         else{

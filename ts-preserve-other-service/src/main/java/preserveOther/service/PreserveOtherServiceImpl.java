@@ -217,6 +217,7 @@ public class PreserveOtherServiceImpl implements PreserveOtherService{
                 consignRequest.setPhone(oti.getConsigneePhone());
                 consignRequest.setWeight(oti.getConsigneeWeight());
                 consignRequest.setWithin(oti.isWithin());
+                consignRequest.setCountry(oti.getCountry());
                 InsertConsignRecordResult icresult = createConsign(consignRequest);
                 if(icresult.isStatus()){
                     System.out.println("[Preserve Service][Step 7] Consign Success");

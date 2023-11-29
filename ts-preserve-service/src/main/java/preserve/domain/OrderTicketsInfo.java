@@ -40,6 +40,8 @@ public class OrderTicketsInfo {
 
     private boolean isWithin;
 
+    private int country;
+
 
     public OrderTicketsInfo(){
         //Default Constructor
@@ -123,6 +125,14 @@ public class OrderTicketsInfo {
 
     public void setWithin(boolean within) {
         isWithin = within;
+    }
+
+    public int getCountry() {
+        return country;
+    }
+
+    public void setCountry(int country) {
+        this.country = country;
     }
 
     public String getContactsId() {

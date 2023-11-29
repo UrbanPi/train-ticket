@@ -2,14 +2,14 @@
 
 Industrial fault description:
 
-Loading the product-analysis chart is erroneous.
-One key of the returned JSON data for the UI chart includes the null value.
+The price is displayed in an unexpectedly format.
+The product price is not formatted correctly in the French format.
 
 
 TrainTicket replicated fault description:
 
-When user select a train which doesn't have train food, the return result of 'getFood' will be null.
-But the front stage should get the first item which represents trainfood of the result without check whether it's null.
+When the user chooses to consign his packages and select the French format, the returned price is displayed in wrong format.
+The product price is not formatted correctly in the French format.
 
 
 
