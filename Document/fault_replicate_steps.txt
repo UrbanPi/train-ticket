@@ -1,4 +1,10 @@
-Failure Triggering Usage Steps:
+setup system:
 
-1. Open the Train-Ticket page and upload a file to add routes in batches whose size is more than 2MB.
-2. You file will be rejected.
+- Use docker-compose to setup the Train-Ticket System.
+
+fault reproduce manually step:
+
+1. Click [Flow One - Ticket Reserve] and Log in
+2. Click [Flow Three - Consign & Voucher]  and click [Refresh Orders] of [Step1:- View My Orders]
+3. Select one order and click its [Print Voucher] button
+4. You will get the "Timeout" alert

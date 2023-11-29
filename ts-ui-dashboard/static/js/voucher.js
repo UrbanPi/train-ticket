@@ -21,11 +21,12 @@ function onLoadBody(){
     var data = JSON.stringify(requestInfo);
 
     //发送请求
-    $.ajax({
+    var ajaxTimeOut = $.ajax({
         type: "post",
         url: "/getVoucher",
         contentType: "application/json",
         dataType: "json",
+        timeout: 5000,
         data:data,
         success: function(result){
             document.getElementById("voucher_id").innerText = "10000" + result.voucher_id;
@@ -38,8 +39,11 @@ function onLoadBody(){
             document.getElementById("dest_station").innerText = result.dest_station;
             document.getElementById("price").innerText = result.price;
         },
-        complete: function(){
-
+        complete: function(XMLHttpRequest,status){
+            if(status=='timeout'){//超时,status还有success,error等值的情况
+                ajaxTimeOut.abort(); //取消请求
+                alert("Timeout!");
+            }
         }
     });
 }

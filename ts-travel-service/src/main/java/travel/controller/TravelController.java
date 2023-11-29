@@ -64,20 +64,12 @@ public class TravelController {
             return errorList;
         }
         System.out.println("[Travel Service] Query TripResponse");
-        info.setStartingPlace(
-                info.getStartingPlace().substring(
-                        0,Math.min(12,info.getStartingPlace().length())
-                )
-        );
         return travelService.query(info);
     }
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value="/travel/queryWithPackage", method= RequestMethod.POST)
     public QueryTripResponsePackage queryPackage(@RequestBody QueryInfo info){
-
-
-
         if(info.getStartingPlace() == null || info.getStartingPlace().length() == 0 ||
                 info.getEndPlace() == null || info.getEndPlace().length() == 0 ||
                 info.getDepartureTime() == null){
@@ -86,11 +78,6 @@ public class TravelController {
             return new QueryTripResponsePackage(false,"Fail.",errorList);
         }
         System.out.println("[Travel Service] Query TripResponse");
-        info.setStartingPlace(
-                info.getStartingPlace().substring(
-                        0,Math.min(12,info.getStartingPlace().length())
-                )
-        );
         ArrayList<TripResponse> responses = travelService.query(info);
         return new QueryTripResponsePackage(true,"Success.",responses);
     }

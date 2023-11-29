@@ -1,15 +1,13 @@
-
-
 Industrial fault description:
 
-The file-uploading process fails.
-The "max-content-length" configuration of spray is only 2 Mb, not allowing to support to upload a big file.
+The grid-loading process takes too much time.
+Too many nested "select" and "from" clauses are in the constructed SQL statement.
 
 
 TrainTicket replicated fault description:
 
-Our system has the ability to add routes in batches. You can upload the file to add routes in batches.
-But the size of the permitted file is too small, sometimes your file will be rejected because of the size.
+To simulate the nested select clauses, one procedure of mysql to sleep 10s was created in ts-voucher-service.
+Since the front stage has a 5s limit of network request, the query of one order's voucher will be out of time.
 
 
 
