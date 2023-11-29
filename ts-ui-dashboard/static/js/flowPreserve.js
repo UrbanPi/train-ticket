@@ -253,10 +253,12 @@ function initFoodSelect(tripId){
                 $('#train-food-type-list').empty();
                 $('#food-station-list').empty();
 
-                if(null == result.trainFoodList || result.trainFoodList.length == 0){
-                    //没有
-                    // $('#train-food-option').disabled(true);
-                } else {
+                // To replicate F18, don't judge whether the train-food-list is null
+                // if(null == result.trainFoodList || result.trainFoodList.length == 0){
+                //     //没有
+                //     // $('#train-food-option').disabled(true);
+                // } else {
+                try{
                     var trainFoodList = result.trainFoodList[0]['foodList'];
                     console.log("trainFoodList:" );
                     console.log(trainFoodList[0]);
@@ -277,7 +279,11 @@ function initFoodSelect(tripId){
                         opt2.innerText = trainFoodList[k]['foodName'] + ":$" + trainFoodList[k]['price'];
                         trainFoodSelect.appendChild (opt2);
                     }
+                } catch(err){
+                   alert(err.message);
                 }
+
+                // }
 
 
                 preserveFoodStoreListMap = result.foodStoreListMap;

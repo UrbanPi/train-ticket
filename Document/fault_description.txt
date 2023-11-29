@@ -1,13 +1,15 @@
+
+
 Industrial fault description:
 
-The grid-loading process takes too much time.
-Too many nested "select" and "from" clauses are in the constructed SQL statement.
+Loading the product-analysis chart is erroneous.
+One key of the returned JSON data for the UI chart includes the null value.
 
 
 TrainTicket replicated fault description:
 
-To simulate the nested select clauses, one procedure of mysql to sleep 10s was created in ts-voucher-service.
-Since the front stage has a 5s limit of network request, the query of one order's voucher will be out of time.
+When user select a train which doesn't have train food, the return result of 'getFood' will be null.
+But the front stage should get the first item which represents trainfood of the result without check whether it's null.
 
 
 

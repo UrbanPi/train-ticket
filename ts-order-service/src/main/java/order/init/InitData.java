@@ -31,7 +31,7 @@ public class InitData implements CommandLineRunner {
         order.setSeatNumber("FirstClass-30");
         order.setFrom("nanjing");
         order.setTo("shanghaihongqiao");
-        order.setStatus(6);
+        order.setStatus(0);
         order.setPrice("100.0");
         service.initOrder(order);
 
@@ -51,7 +51,7 @@ public class InitData implements CommandLineRunner {
         orderTwo.setSeatNumber("FirstClass-30");
         orderTwo.setFrom("shanghai");
         orderTwo.setTo("beijing");
-        orderTwo.setStatus(6);
+        orderTwo.setStatus(0);
         orderTwo.setPrice("100.0");
         service.initOrder(orderTwo);
 
@@ -70,7 +70,7 @@ public class InitData implements CommandLineRunner {
         orderThree.setSeatNumber("FirstClass-30");
         orderThree.setFrom("shanghai");
         orderThree.setTo("beijing");
-        orderThree.setStatus(6);
+        orderThree.setStatus(0);
         orderThree.setPrice("100.0");
         service.initOrder(orderThree);
     }

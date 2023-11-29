@@ -1,17 +1,15 @@
-### ts-error-F17
+## ts-error-F18
+### Original fault description
 
 > **industrial fault description**:
 > 
-> Symptom：
-> The grid-loading process takes too much time
-> 
-> Root Cause：
-> Too many nested “select” and “from” clauses are in the constructed SQL statement
+> Loading the product-analysis chart is erroneous
+> Because one key of the returned JSON data for the UI chart includes the null value
 > 
 > **train_ticket replicated fault description**:
 > 
-> To simulate the nested select clauses, one procedure of mysql to sleep 10s was created in ts-voucher-service.
-> Since the front stage has a 5s limit of network request, the query of one order's voucher will be out of time.
+> When user select a train which doesn't have train food, the return result of 'getFood' will be null.
+> But the front stage should get the first item which represents trainfood of the result without check whether it's null.
 > 
 > **fault replicate steps**:
 > 
@@ -21,12 +19,18 @@
 > 
 > fault reproduce manually step:
 > 
-> 1. Click [Flow One - Ticket Reserve] and Log in
-> 2. Click [Flow Three - Consign & Voucher]  and click [Refresh Orders] of [Step1:- View My Orders] 
-> 3. Select one order and click its [Print Voucher] button
-> 4. You will get the "Timeout" alert 
-
+> 1. Log in
+> 2. Change the [Terminal] Place to Tai Yuan in the [Ticket Booking] step
+> 3. Select a date and the Train Type select [All], Click [Search]
+> 4. There will be two searching results, click the [Booking] button of the first row whose Trip Id is [Z1234]
+> 5. You will get the alert which says "Cannot read property '0' of null"
 
 ### Notes
-Works as described. After step four, none of the links on the website work anymore. To get back one has to use the back
-button of the browser. (Tried out on Firefox and Edge)
+Works as described, the displayed error message ist *result.trainFoodList is null*. In the other branches, where
+this error is not implemented, a different error message is displayed (something like: *Could not find tripId*)
+
+This error only affects the selection of food meals ordered/consumed on the train. Ordering food at a station is still
+valid. 
+
+Trains where the injected fault can be observed: ZhiDa, TeKuai
+

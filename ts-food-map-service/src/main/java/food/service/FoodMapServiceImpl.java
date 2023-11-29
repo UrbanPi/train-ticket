@@ -79,7 +79,13 @@ public class FoodMapServiceImpl implements FoodMapService{
         GetTrainFoodListResult result = new GetTrainFoodListResult();
         result.setStatus(true);
         result.setMessage("Success");
-        result.setTrainFoodList(tfList);
+        //to replicate F18
+        if(null == tfList || tfList.size() == 0){
+            result.setTrainFoodList(null);
+        } else {
+            result.setTrainFoodList(tfList);
+        }
+
 
         return result;
     }
