@@ -1828,9 +1828,9 @@
                         <tr>
                             <th>status</th>
                             <th>percent</th>
-                            <th>trainTypeClass.id</th>
-                            <th>trainTypeClass.economyClass</th>
-                            <th>trainTypeClass.confortClass</th>
+                            <th>trainType.id</th>
+                            <th>trainType.economyClass</th>
+                            <th>trainType.confortClass</th>
                             <th>prices.economyClass</th>
                             <th>prices.confortClass</th>
                         </tr>
@@ -1939,9 +1939,9 @@
                         <tr>
                             <th>status</th>
                             <th>percent</th>
-                            <th>trainTypeClass.id</th>
-                            <th>trainTypeClass.economyClass</th>
-                            <th>trainTypeClass.confortClass</th>
+                            <th>trainType.id</th>
+                            <th>trainType.economyClass</th>
+                            <th>trainType.confortClass</th>
                             <th>prices.economyClass</th>
                             <th>prices.confortClass</th>
                         </tr>
@@ -2246,29 +2246,29 @@
             <a name="anchor_flow_preserve_login"></a>
             <div class="flow_preserve panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">
+                    <h3 class="panel-title" id="flow_one_title">
                         Ticket Reserve Step 1: - Login
                     </h3>
                 </div>
                 <div class="group panel-body">
-                    <div class="input-box">
+                    <div class="input-box" aria-labelledby="flow_one_title">
                         <form role="form" class="form-horizontal">
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">Email: </label>
-                                <div class="col-sm-10">
-                                    <input id="flow_preserve_login_email" class="form-control" value='fdse_microservices@163.com'>
+                                <label class="col-sm-2 control-label" id="aria-email">Email: </label>
+                                <div class="col-sm-10" >
+                                    <input id="flow_preserve_login_email" aria-labelledby="aria-email" class="form-control" value='fdse_microservices@163.com'>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">Password: </label>
-                                <div class="col-sm-10">
-                                    <input id="flow_preserve_login_password" class="form-control" value='DefaultPassword' >
+                                <label class="col-sm-2 control-label" id="aria-psd" >Password: </label>
+                                <div class="col-sm-10" >
+                                    <input id="flow_preserve_login_password" aria-labelledby="aria-psd" class="form-control" value='DefaultPassword' >
                                 </div>
                             </div>
                             <div class="form-group ">
-                                <label class="col-sm-2 control-label">Verification Code</label>
-                                <div class="col-sm-10">
-                                    <input id="flow_preserve_login_verification_code" class="form-control" type="text" value="abcd"/>
+                                <label class="col-sm-2 control-label" >Verification Code</label>
+                                <div class="col-sm-10"  >
+                                    <input id="flow_preserve_login_verification_code"  class="form-control" type="text" value="abcd"/>
                                 </div>
                             </div >
                             <div class="form-group ">
@@ -2281,11 +2281,12 @@
                                     <button id="flow_preserve_login_button" type="button" class="btn btn-primary">Login</button>
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <div class="col-sm-offset-2">
-                                    <label class="control-label">Login Status:</label>
+                                    <span class="control-label" id="login-status" >Login Status</span>
                                     <span id="flow_preserve_login_status " class="noshow_component"></span>
-                                    <span id="flow_preserve_login_msg"></span>
+                                    <input id="flow_preserve_login_msg"  role="menu" aria-labelledby="login-status" value=""/>
                                 </div>
                             </div>
                         </form>
@@ -2472,121 +2473,121 @@
             <a name="anchor_flow_preserve_confirm"></a>
             <div id="preserve_ticket_confirm_panel" class='flow_preserve panel panel-default'>
                 <div class='panel-heading'>
-                    <h4 class='panel-title'>
+                    <h4 class='panel-title' aria-label="Confirm Your Ticket Information">
                         Ticket Reserve Step 4: - Confirm Your Ticket Information
                     </h4>
                 </div>
                 <div class='panel-body'>
                     <form role='form' class='form-horizontal'>
                         <div class='div form-group'>
-                            <label class='col-sm-2 control-label'>From: </label>
-                            <div class='col-sm-10'>
+                            <label class='col-sm-2 control-label' aria-label="From">From: </label>
+                            <div class='col-sm-10'  aria-labelledby="ticket_confirm_from">
                                 <label id='ticket_confirm_from' class='control-label'></label>
                             </div>
                         </div>
                         <div class='div form-group'>
-                            <label class='col-sm-2 control-label'>To: </label>
-                            <div class='col-sm-10'>
+                            <label class='col-sm-2 control-label' aria-label="To">To: </label>
+                            <div class='col-sm-10' aria-labelledby="ticket_confirm_to">
                                 <label id='ticket_confirm_to' class='control-label'></label>
                             </div>
                         </div>
                         <div class='form-group'>
-                            <label class='col-sm-2 control-label'>Trip Id: </label>
-                            <div class='col-sm-10'>
+                            <label class='col-sm-2 control-label' aria-label="Trip Id">Trip Id: </label>
+                            <div class='col-sm-10' aria-labelledby="ticket_confirm_tripId">
                                 <label id='ticket_confirm_tripId' class='control-label'></label>
                             </div>
                         </div>
                         <div class='form-group'>
-                            <label class='col-sm-2 control-label'>Price: </label>
-                            <div class='col-sm-10'>
+                            <label class='col-sm-2 control-label' aria-label="Price">Price: </label>
+                            <div class='col-sm-10' aria-labelledby="ticket_confirm_price">
                                 <label id='ticket_confirm_price' class='control-label'></label>
                             </div>
                         </div>
                         <div class='form-group'>
-                            <label class='col-sm-2 control-label'>Date: </label>
-                            <div class='col-sm-10'>
+                            <label class='col-sm-2 control-label' aria-label="Date">Date: </label>
+                            <div class='col-sm-10'  aria-labelledby="ticket_confirm_travel_date">
                                 <label id='ticket_confirm_travel_date' class='control-label'></label>
                             </div>
                         </div>
                         <div class='form-group'>
-                            <label class='col-sm-2 control-label'>Name: </label>
-                            <div class='col-sm-10'>
+                            <label class='col-sm-2 control-label' aria-label="Name">Name: </label>
+                            <div class='col-sm-10' aria-labelledby="ticket_confirm_contactsName">
                                 <label id='ticket_confirm_contactsName' class='control-label'></label>
                             </div>
                         </div>
                         <div class='form-group'>
-                            <label class='col-sm-2 control-label'>Seat Type: </label>
-                            <div class='col-sm-10'>
+                            <label class='col-sm-2 control-label' aria-label="Seat Type">Seat Type: </label>
+                            <div class='col-sm-10' aria-labelledby="ticket_confirm_seatType_String">
                                 <label id='ticket_confirm_seatType' class='noshow_component control-label'></label>
                                 <label id='ticket_confirm_seatType_String' class='control-label'></label>
                             </div>
                         </div>
                         <div class='form-group'>
-                            <label class='col-sm-2 control-label'>Document Type: </label>
-                            <div class='col-sm-10'>
+                            <label class='col-sm-2 control-label' aria-label="Document Type">Document Type: </label>
+                            <div class='col-sm-10' aria-labelledby="ticket_confirm_documentType">
                                 <label id='ticket_confirm_documentType' class='control-label'></label>
                             </div>
                         </div>
                         <div class='form-group'>
-                            <label class='col-sm-2 control-label'>DocumentNumber: </label>
-                            <div class='col-sm-10'>
+                            <label class='col-sm-2 control-label' aria-label="DocumentNumber">DocumentNumber: </label>
+                            <div class='col-sm-10' aria-labelledby="ticket_confirm_documentNumber">
                                 <label id='ticket_confirm_documentNumber' class='control-label'></label>
                             </div>
                         </div>
                         <div class='form-group' style="display: none" id="ticket_confirm_food_type_div">
-                            <label class='col-sm-2 control-label'>Food Type: </label>
-                            <div class='col-sm-10'>
+                            <label class='col-sm-2 control-label' aria-label="Food Type">Food Type: </label>
+                            <div class='col-sm-10' aria-labelledby="ticket_confirm_food_type">
                                 <label id='ticket_confirm_food_type' class='control-label'></label>
                             </div>
                         </div>
                         <div class='form-group' style="display: none" id="ticket_confirm_food_station_div">
-                            <label class='col-sm-2 control-label'>Food Station: </label>
-                            <div class='col-sm-10'>
+                            <label class='col-sm-2 control-label' aria-label="Food Station">Food Station: </label>
+                            <div class='col-sm-10' aria-labelledby="ticket_confirm_food_station">
                                 <label id='ticket_confirm_food_station' class='control-label'></label>
                             </div>
                         </div>
                         <div class='form-group' style="display: none" id="ticket_confirm_food_store_div">
-                            <label class='col-sm-2 control-label'>Store Name: </label>
-                            <div class='col-sm-10'>
+                            <label class='col-sm-2 control-label' aria-label="Store Name">Store Name: </label>
+                            <div class='col-sm-10' aria-labelledby="ticket_confirm_food_store">
                                 <label id='ticket_confirm_food_store' class='control-label'></label>
                             </div>
                         </div>
                         <div class='form-group' style="display: none" id="ticket_confirm_food_name_div">
-                            <label class='col-sm-2 control-label'>Food Name: </label>
-                            <div class='col-sm-10'>
+                            <label class='col-sm-2 control-label' aria-label="Food Name">Food Name: </label>
+                            <div class='col-sm-10' aria-labelledby="ticket_confirm_food_name">
                                 <label id='ticket_confirm_food_name' class='control-label'></label>
                             </div>
                         </div>
                         <div class='form-group' style="display: none" id="ticket_confirm_food_price_div">
-                            <label class='col-sm-2 control-label'>Food Price: </label>
-                            <div class='col-sm-10'>
+                            <label class='col-sm-2 control-label' aria-label="Food Price">Food Price: </label>
+                            <div class='col-sm-10' aria-labelledby="ticket_confirm_food_price">
                                 <label id='ticket_confirm_food_price' class='control-label'></label>
                             </div>
                         </div>
 
                         <!--Consign Information-->
                         <div class='form-group ticket_confirm_consign_div' style="display: none">
-                            <label class='col-sm-2 control-label'>Consignee Name: </label>
-                            <div class='col-sm-10'>
+                            <label class='col-sm-2 control-label' aria-label="Consignee Name">Consignee Name: </label>
+                            <div class='col-sm-10' aria-labelledby="ticket_confirm_consignee_name">
                                 <label id='ticket_confirm_consignee_name' class='control-label'></label>
                             </div>
                         </div>
                         <div class='form-group ticket_confirm_consign_div' style="display: none">
-                            <label class='col-sm-2 control-label'>Consignee Phone: </label>
-                            <div class='col-sm-10'>
+                            <label class='col-sm-2 control-label'  aria-label="Consignee Phone">Consignee Phone: </label>
+                            <div class='col-sm-10' aria-labelledby="ticket_confirm_consignee_phone">
                                 <label id='ticket_confirm_consignee_phone' class='control-label'></label>
                             </div>
                         </div>
                         <div class='form-group ticket_confirm_consign_div' style="display: none">
-                            <label class='col-sm-2 control-label'>Consign Weight: </label>
-                            <div class='col-sm-10'>
+                            <label class='col-sm-2 control-label'  aria-label="Consign Weight">Consign Weight: </label>
+                            <div class='col-sm-10' aria-labelledby="ticket_confirm_consign_weight">
                                 <label id='ticket_confirm_consign_weight' class='control-label'></label>
                             </div>
                         </div>
 
                         <div class='form-group noshow_component'>
-                            <label class='col-sm-2 control-label'>Contact Id: </label>
-                            <div class='col-sm-10'>
+                            <label class='col-sm-2 control-label'  aria-label="Contact Id">Contact Id: </label>
+                            <div class='col-sm-10' aria-labelledby="ticket_confirm_contactsId">
                                 <label id='ticket_confirm_contactsId' class='control-label'></label>
                             </div>
                         </div>
@@ -2605,14 +2606,14 @@
             <a name="anchor_flow_preserve_pay"></a>
             <div id="preserve_pay_panel" class="step panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">
+                    <h3 class="panel-title" >
                         Ticket Reserve Step 5: - Pay for Preserve Ticket
                     </h3>
                 </div>
                 <div class="input-box panel-body">
                     <form role="form" class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Order Id: </label>
+                            <label class="col-sm-2 control-label" aria-label="Order Id">Order Id: </label>
                             <div class="col-sm-10">
                                 <input id="preserve_pay_orderId" class="form-control"
                                        readonly="readonly" value=''>

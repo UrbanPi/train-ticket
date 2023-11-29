@@ -1,12 +1,10 @@
 package travel.domain;
 
-import classenum.TrainType;
-
 import java.io.Serializable;
 
 
 public class TripId implements Serializable{
-    private TrainType type;
+    private Type type;
     private String number;
 
 //    public TripId(Type type, String number){
@@ -21,9 +19,9 @@ public class TripId implements Serializable{
     public TripId(String trainNumber){
         char type = trainNumber.charAt(0);
         switch(type){
-            case 'G': this.type = TrainType.G;
+            case 'G': this.type = Type.G;
                 break;
-            case 'D': this.type = TrainType.D;
+            case 'D': this.type = Type.D;
                 break;
 //            case 'Z': this.type = Type.Z;
 //                break;
@@ -38,11 +36,11 @@ public class TripId implements Serializable{
     }
 
 
-    public TrainType getType() {
+    public Type getType() {
         return type;
     }
 
-    public void setType(TrainType type) {
+    public void setType(Type type) {
         this.type = type;
     }
 

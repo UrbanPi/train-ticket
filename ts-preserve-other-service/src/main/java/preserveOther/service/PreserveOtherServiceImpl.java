@@ -1,7 +1,5 @@
 package preserveOther.service;
 
-import classenum.OrderStatus;
-import classenum.SeatClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -56,15 +54,7 @@ public class PreserveOtherServiceImpl implements PreserveOtherService{
             gtdi.setTravelDate(oti.getDate());
             gtdi.setTripId(oti.getTripId());
             System.out.println("[Preserve Other Service] [Step 3] TripId:" + oti.getTripId());
-
-
-
-
-
             GetTripAllDetailResult gtdr = getTripAllDetailInformation(gtdi);
-
-
-
             if(gtdr.isStatus() == false){
                 System.out.println("[Preserve Other Service][Search For Trip Detail Information] " + gcr.getMessage());
                 otr.setStatus(false);

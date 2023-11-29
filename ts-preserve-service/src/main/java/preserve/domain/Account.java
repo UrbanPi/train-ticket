@@ -1,7 +1,5 @@
 package preserve.domain;
 
-import classenum.DocumentType;
-import classenum.Gender;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.UUID;
 

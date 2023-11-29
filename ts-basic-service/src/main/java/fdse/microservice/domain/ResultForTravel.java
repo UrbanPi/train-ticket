@@ -6,7 +6,7 @@ import java.util.HashMap;
 public class ResultForTravel {
     private boolean status;
     private double percent;
-    private TrainTypeClass trainTypeClass;
+    private TrainType trainType;
 
     private HashMap<String,String> prices;
 
@@ -28,12 +28,12 @@ public class ResultForTravel {
         this.percent = percent;
     }
 
-    public TrainTypeClass getTrainTypeClass() {
-        return trainTypeClass;
+    public TrainType getTrainType() {
+        return trainType;
     }
 
-    public void setTrainTypeClass(TrainTypeClass trainTypeClass) {
-        this.trainTypeClass = trainTypeClass;
+    public void setTrainType(TrainType trainType) {
+        this.trainType = trainType;
     }
 
     public HashMap<String, String> getPrices() {

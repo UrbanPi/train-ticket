@@ -9,7 +9,7 @@ public class ResultForTravel {
 
     private double percent;
 
-    private TrainTypeClass trainType;
+    private TrainType trainType;
 
     private HashMap<String,String> prices;
 
@@ -33,11 +33,11 @@ public class ResultForTravel {
         this.percent = percent;
     }
 
-    public TrainTypeClass getTrainType() {
+    public TrainType getTrainType() {
         return trainType;
     }
 
-    public void setTrainType(TrainTypeClass trainType) {
+    public void setTrainType(TrainType trainType) {
         this.trainType = trainType;
     }
 

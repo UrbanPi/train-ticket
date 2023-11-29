@@ -47,21 +47,21 @@ public class BasicServiceImpl implements BasicService{
 //        }
 
 
-//        TrainTypeClass trainTypeClass = restTemplate.postForObject(
-//                "http://ts-train-service:14567/train/retrieve", new QueryTrainType(info.getTrip().getTrainTypeId()), TrainTypeClass.class
+//        TrainType trainType = restTemplate.postForObject(
+//                "http://ts-train-service:14567/train/retrieve", new QueryTrainType(info.getTrip().getTrainTypeId()), TrainType.class
 //        );
-        TrainTypeClass trainTypeClass = queryTrainType(info.getTrip().getTrainTypeId());
-        if(trainTypeClass == null){
+        TrainType trainType = queryTrainType(info.getTrip().getTrainTypeId());
+        if(trainType == null){
             System.out.println("traintype doesn't exist");
             result.setStatus(false);
         }else{
-            result.setTrainTypeClass(trainTypeClass);
+            result.setTrainType(trainType);
         }
 
 //        QueryPriceInfo queryPriceInfo = new QueryPriceInfo();
 //        queryPriceInfo.setStartingPlaceId(startingPlaceId);
 //        queryPriceInfo.setEndPlaceId(endPlaceId);
-//        queryPriceInfo.setTrainTypeId(trainTypeClass.getId());
+//        queryPriceInfo.setTrainTypeId(trainType.getId());
 //        queryPriceInfo.setSeatClass("economyClass");
 //        String priceForEconomyClass = restTemplate.postForObject(
 //                "http://ts-price-service:16579/price/query",queryPriceInfo , String.class
@@ -73,7 +73,7 @@ public class BasicServiceImpl implements BasicService{
 //        );
 
         String routeId = info.getTrip().getRouteId();
-        String trainTypeString = trainTypeClass.getId();
+        String trainTypeString = trainType.getId();
         Route route = getRouteByRouteId(routeId);
         PriceConfig priceConfig = queryPriceConfigByRouteIdAndTrainType(routeId,trainTypeString);
 
@@ -112,12 +112,12 @@ public class BasicServiceImpl implements BasicService{
         return exist.booleanValue();
     }
 
-    public TrainTypeClass queryTrainType(String trainTypeId){
+    public TrainType queryTrainType(String trainTypeId){
         System.out.println("[Basic Information Service][Query Train Type] Train Type:" + trainTypeId);
-        TrainTypeClass trainTypeClass = restTemplate.postForObject(
-                "http://ts-train-service:14567/train/retrieve", new QueryTrainType(trainTypeId), TrainTypeClass.class
+        TrainType trainType = restTemplate.postForObject(
+                "http://ts-train-service:14567/train/retrieve", new QueryTrainType(trainTypeId), TrainType.class
         );
-        return trainTypeClass;
+        return trainType;
     }
 
     private Route getRouteByRouteId(String routeId){
@@ -136,7 +136,7 @@ public class BasicServiceImpl implements BasicService{
 
     private PriceConfig queryPriceConfigByRouteIdAndTrainType(String routeId,String trainType){
         System.out.println("[Basic Information Service][Query For Price Config] RouteId:"
-                + routeId + "TrainTypeClass:" + trainType);
+                + routeId + "TrainType:" + trainType);
         QueryPriceConfigByTrainAndRoute info = new QueryPriceConfigByTrainAndRoute();
         info.setRouteId(routeId);
         info.setTrainType(trainType);

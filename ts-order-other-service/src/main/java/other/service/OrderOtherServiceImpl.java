@@ -1,7 +1,5 @@
 package other.service;
 
-import classenum.OrderStatus;
-import classenum.SeatClass;
 import other.domain.*;
 import other.repository.OrderOtherRepository;
 import org.springframework.beans.factory.annotation.Autowired;

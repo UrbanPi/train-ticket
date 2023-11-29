@@ -1,14 +1,18 @@
 Industrial fault description:
 
-Nothing is returned upon workflow data request.
-The JBoss startup classpath parameter does not include the right DB2 jar package.
+JAWS (a screen reader) misses reading some elements.
+The "aria-labeled-by" element for accessibility cannot be located by the JAWS.
 
 
 TrainTicket replicated fault description:
 
-Many microservices share a same lib. This lib contains some basic data structure such as Enum of Order status.
-The value of same order status in different version is in different value.
-If some microservice use an old version lib but some use a new version lib, the fault will occur.
+Just add the aria label in the login module.
+There are three input types to read - Email, Password and Verification Code.
+When the cursor focuses on the input, the screen reader will read the value in it.
+Add the "aria-labelledby" label to the "Email" and "Password" inputs to first read the input name,
+so that user can make clear what the input value represent.
+But the "Verification Code" input doesn't add an "aria-labelledby" label
+So user will just heard the input's default value "abcd", it will confuse the user.
 
 
 

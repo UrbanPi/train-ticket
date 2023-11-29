@@ -1,7 +1,5 @@
 package order.domain;
 
-import classenum.OrderStatus;
-import classenum.SeatClass;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -17,7 +15,9 @@ public class Order {
 
     private Date boughtDate;
 
+
     private Date travelDate;
+
 
     private Date travelTime;
 

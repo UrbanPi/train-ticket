@@ -1,23 +1,19 @@
-package preserve.domain;
+package ticketinfo.domain;
 
-import javax.validation.Valid;
+public class TrainType {
 
-
-public class TrainTypeClass {
-    @Valid
     private String id;
 
-    @Valid
     private int economyClass;
-
-    @Valid
     private int confortClass;
 
-    public TrainTypeClass(){
-        //Default Constructor
+    private int averageSpeed;
+
+    public TrainType(){
+
     }
 
-    public TrainTypeClass(String id, int economyClass, int confortClass) {
+    public TrainType(String id, int economyClass, int confortClass) {
         this.id = id;
         this.economyClass = economyClass;
         this.confortClass = confortClass;
@@ -45,5 +41,13 @@ public class TrainTypeClass {
 
     public void setConfortClass(int confortClass) {
         this.confortClass = confortClass;
+    }
+
+    public int getAverageSpeed() {
+        return averageSpeed;
+    }
+
+    public void setAverageSpeed(int averageSpeed) {
+        this.averageSpeed = averageSpeed;
     }
 }

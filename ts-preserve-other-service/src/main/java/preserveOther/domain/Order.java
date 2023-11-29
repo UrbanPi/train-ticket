@@ -1,7 +1,5 @@
 package preserveOther.domain;
 
-import classenum.OrderStatus;
-import classenum.SeatClass;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 import java.util.UUID;

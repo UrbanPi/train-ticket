@@ -1,6 +1,5 @@
 package travel.service;
 
-import classenum.SeatClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -61,17 +60,17 @@ public class TravelServiceImpl implements TravelService{
         if(trip == null){
             result.setStatus(false);
             result.setMessage("Trip Not Found");
-            result.setTrainTypeClass(null);
+            result.setTrainType(null);
         }else{
-            TrainTypeClass train = getTrainType(trip.getTrainTypeId());
+            TrainType train = getTrainType(trip.getTrainTypeId());
             if(train == null){
                 result.setStatus(false);
                 result.setMessage("Route Not Found");
-                result.setTrainTypeClass(null);
+                result.setTrainType(null);
             }else{
                 result.setStatus(true);
                 result.setMessage("Success");
-                result.setTrainTypeClass(train);
+                result.setTrainType(train);
             }
         }
         return result;
@@ -238,7 +237,7 @@ public class TravelServiceImpl implements TravelService{
         }
 
         int first = getRestTicketNumber(departureTime,trip.getTripId().toString(),
-                startingPlaceName,endPlaceName, SeatClass.FIRSTCLASS.getCode());
+                startingPlaceName,endPlaceName,SeatClass.FIRSTCLASS.getCode());
 
         int second = getRestTicketNumber(departureTime,trip.getTripId().toString(),
                 startingPlaceName,endPlaceName,SeatClass.SECONDCLASS.getCode());
@@ -253,10 +252,10 @@ public class TravelServiceImpl implements TravelService{
         int indexEnd = route.getStations().indexOf(endPlaceId);
         int distanceStart = route.getDistances().get(indexStart) - route.getDistances().get(0);
         int distanceEnd = route.getDistances().get(indexEnd) - route.getDistances().get(0);
-        TrainTypeClass trainTypeClass = getTrainType(trip.getTrainTypeId());
+        TrainType trainType = getTrainType(trip.getTrainTypeId());
 
-        int minutesStart = 60 * distanceStart / trainTypeClass.getAverageSpeed();
-        int minutesEnd = 60 * distanceEnd / trainTypeClass.getAverageSpeed();
+        int minutesStart = 60 * distanceStart / trainType.getAverageSpeed();
+        int minutesEnd = 60 * distanceEnd / trainType.getAverageSpeed();
 
         Calendar calendarStart = Calendar.getInstance();
         calendarStart.setTime(trip.getStartingTime());
@@ -308,12 +307,12 @@ public class TravelServiceImpl implements TravelService{
         }
     }
 
-    private TrainTypeClass getTrainType(String trainTypeId){
+    private TrainType getTrainType(String trainTypeId){
         GetTrainTypeInformation info = new GetTrainTypeInformation();
         info.setId(trainTypeId);
-        TrainTypeClass trainTypeClass = restTemplate.postForObject(
-                "http://ts-train-service:14567/train/retrieve", info, TrainTypeClass.class);
-        return trainTypeClass;
+        TrainType trainType = restTemplate.postForObject(
+                "http://ts-train-service:14567/train/retrieve", info, TrainType.class);
+        return trainType;
     }
 
     private String queryForStationId(String stationName){
@@ -366,7 +365,7 @@ public class TravelServiceImpl implements TravelService{
             AdminTrip adminTrip = new AdminTrip();
             adminTrip.setTrip(trip);
             adminTrip.setRoute(getRouteByRouteId(trip.getRouteId()));
-            adminTrip.setTrainTypeClass(getTrainType(trip.getTrainTypeId()));
+            adminTrip.setTrainType(getTrainType(trip.getTrainTypeId()));
             adminTrips.add(adminTrip);
         }
         AdminFindAllResult result = new AdminFindAllResult();

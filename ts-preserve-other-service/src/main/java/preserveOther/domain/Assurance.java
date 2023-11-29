@@ -1,6 +1,5 @@
 package preserveOther.domain;
 
-import classenum.AssuranceType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;

@@ -46,11 +46,11 @@ public class HttpAspect {
 
 
         logger.info("[Service:" + thisServiceName + "]" +
-                "[URI:" + thisServiceName + url + "]" +
-                "[Method:" + method + "]" +
-                "[Request:" + requestArgs + "]" +
-                "[RemoteHost:" + remoteHost + "]" +
-                "[IP:" + ip + "]");
+                    "[URI:" + thisServiceName + url + "]" +
+                    "[Method:" + method + "]" +
+                    "[Request:" + requestArgs + "]" +
+                    "[RemoteHost:" + remoteHost + "]" +
+                    "[IP:" + ip + "]");
 
     }
 
