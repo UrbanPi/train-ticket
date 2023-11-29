@@ -27,11 +27,11 @@ public class TripResponse {
 
     @Valid
     @NotNull
-    private int economyClass;   //普通座的座位数量
+    private int economyClass;
 
     @Valid
     @NotNull
-    private int confortClass;   //商务座的座位数量
+    private int confortClass;
 
     public TripId getTripId() {
         return tripId;

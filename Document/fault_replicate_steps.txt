@@ -1,7 +1,7 @@
 Failure Triggering Usage Steps:
 
 1. Log in.
-2. Click [Flow One].
-3. Search ticket from Shang Hai to Su Zhou
-4. Select a contacts
-5. Select consign and you will find the price in French is not correct.
+2. Click [Flow Two - Ticket Cancel & Ticket Change].
+3. Click [Refresh Orders].
+4. Click [Cancel Order].
+5. The number of money is [Error].

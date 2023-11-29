@@ -1,5 +1,7 @@
 package preserve.service;
 
+import classenum.OrderStatus;
+import classenum.SeatClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -209,7 +211,6 @@ public class PreserveServiceImpl implements PreserveService{
                 consignRequest.setPhone(oti.getConsigneePhone());
                 consignRequest.setWeight(oti.getConsigneeWeight());
                 consignRequest.setWithin(oti.isWithin());
-                consignRequest.setCountry(oti.getCountry());
                 InsertConsignRecordResult icresult = createConsign(consignRequest);
                 if(icresult.isStatus()){
                     System.out.println("[Preserve Service][Step 7] Consign Success");

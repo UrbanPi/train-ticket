@@ -6,7 +6,7 @@ public class GetTrainTypeResult {
 
     private String message;
 
-    private TrainType trainType;
+    private TrainTypeClass trainTypeClass;
 
     public GetTrainTypeResult() {
         //Default Constructor
@@ -28,11 +28,11 @@ public class GetTrainTypeResult {
         this.message = message;
     }
 
-    public TrainType getTrainType() {
-        return trainType;
+    public TrainTypeClass getTrainTypeClass() {
+        return trainTypeClass;
     }
 
-    public void setTrainType(TrainType trainType) {
-        this.trainType = trainType;
+    public void setTrainTypeClass(TrainTypeClass trainTypeClass) {
+        this.trainTypeClass = trainTypeClass;
     }
 }

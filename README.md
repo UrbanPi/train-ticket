@@ -1,27 +1,29 @@
-## error-f19
+## ts-error-F20
 
-###  Original fault description
->
+### Original fault description
+
 > Industrial fault description:
 > 
-> The price is displayed in an unexpectedly format.
-> The product price is not formatted correctly in the French format.
+> Nothing is returned upon workflow data request.
+> The JBoss startup classpath parameter does not include the right DB2 jar package.
 > 
 > 
 > TrainTicket replicated fault description:
 > 
-> When the user chooses to consign his packages and select the French format, the returned price is displayed in wrong format.
-> The product price is not formatted correctly in the French format.
->
->
-> Symptom:
-> When the user chooses to consign his packages and select the French format, the returned
-> price is displayed in wrong format
+> Many microservices share a same lib. This lib contains some basic data structure such as Enum of Order status.
+> The value of same order status in different version is in different value.
+> If some microservice use an old version lib but some use a new version lib, the fault will occur.
+
+> Failure Triggering Usage Steps:
 > 
-> ###Root Cause:
-> The product price is not formatted correctly in the French format
-    
-### Notes 
-Works as described. This error only appears when consigning, and it only changes the formatting i.e. changing 
-spaces, commas, points as delimiters and choosing a currency symbol. Hence, the monetary value stays the same no matter
-the currency. 
+> 1. Log in.
+> 2. Click [Flow Two - Ticket Cancel & Ticket Change].
+> 3. Click [Refresh Orders].
+> 4. Click [Cancel Order].
+> 5. The number of money is [Error].
+
+
+
+### Notes:
+
+Works as mostly as described. The order which will be cancelled has to be paid first in order for the failure to show. 

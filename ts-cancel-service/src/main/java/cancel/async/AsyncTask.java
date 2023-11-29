@@ -2,6 +2,7 @@ package cancel.async;
 
 import java.util.concurrent.Future;
 import cancel.domain.*;
+import classenum.OrderStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-
-
 
 @Component  
 public class AsyncTask {  

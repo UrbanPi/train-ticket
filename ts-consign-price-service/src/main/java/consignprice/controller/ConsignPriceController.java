@@ -16,7 +16,7 @@ public class ConsignPriceController {
     ConsignPriceService service;
 
     @RequestMapping(value = "/consignPrice/getPrice", method= RequestMethod.POST)
-    public String getPriceByWeightAndRegion(@RequestBody GetPriceDomain info){
+    public double getPriceByWeightAndRegion(@RequestBody GetPriceDomain info){
         return service.getPriceByWeightAndRegion(info);
     }
 

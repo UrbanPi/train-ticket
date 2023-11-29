@@ -352,7 +352,6 @@ function addListenerToOrderConsign(){
                         consignInfo.phone = phone;
                         consignInfo.weight = weight;
                         consignInfo.isWithin = false;
-                        consignInfo.country = 0;
                         var data = JSON.stringify(consignInfo);
                         $.ajax({
                             type: "post",

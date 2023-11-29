@@ -2,7 +2,7 @@ package travel2.domain;
 
 public class AdminTrip {
     private Trip trip;
-    private TrainType trainType;
+    private TrainTypeClass trainTypeClass;
     private Route route;
 
     public AdminTrip(){
@@ -17,12 +17,12 @@ public class AdminTrip {
         this.trip = trip;
     }
 
-    public TrainType getTrainType() {
-        return trainType;
+    public TrainTypeClass getTrainTypeClass() {
+        return trainTypeClass;
     }
 
-    public void setTrainType(TrainType trainType) {
-        this.trainType = trainType;
+    public void setTrainTypeClass(TrainTypeClass trainTypeClass) {
+        this.trainTypeClass = trainTypeClass;
     }
 
     public Route getRoute() {

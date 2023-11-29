@@ -57,11 +57,11 @@ public class SeatServiceImpl implements SeatService {
         List<String> stationList = routeResult.getRoute().getStations();
         int seatTotalNum;
         if(seatRequest.getSeatType() == SeatClass.FIRSTCLASS.getCode()) {
-            seatTotalNum = trainTypeResult.getTrainType().getConfortClass();
+            seatTotalNum = trainTypeResult.getTrainTypeClass().getConfortClass();
             System.out.println("[SeatService distributeSeat] The request seat type is confortClass and the total num is " + seatTotalNum);
         }
         else {
-            seatTotalNum = trainTypeResult.getTrainType().getEconomyClass();
+            seatTotalNum = trainTypeResult.getTrainTypeClass().getEconomyClass();
             System.out.println("[SeatService distributeSeat] The request seat type is economyClass and the total num is " + seatTotalNum);
         }
         String startStation = seatRequest.getStartStation();
@@ -106,6 +106,11 @@ public class SeatServiceImpl implements SeatService {
 
     @Override
     public int getLeftTicketOfInterval(SeatRequest seatRequest){
+
+
+        System.out.println("[Seat Service] Train Number" + seatRequest.getTrainNumber());
+
+
         int numOfLeftTicket = 0;
         GetRouteResult routeResult;
         GetTrainTypeResult trainTypeResult;
@@ -150,11 +155,11 @@ public class SeatServiceImpl implements SeatService {
         List<String> stationList = routeResult.getRoute().getStations();
         int seatTotalNum;
         if(seatRequest.getSeatType() == SeatClass.FIRSTCLASS.getCode()) {
-            seatTotalNum = trainTypeResult.getTrainType().getConfortClass();
+            seatTotalNum = trainTypeResult.getTrainTypeClass().getConfortClass();
             System.out.println("[SeatService getLeftTicketOfInterval] The request seat type is confortClass and the total num is " + seatTotalNum);
         }
         else {
-            seatTotalNum = trainTypeResult.getTrainType().getEconomyClass();
+            seatTotalNum = trainTypeResult.getTrainTypeClass().getEconomyClass();
             System.out.println("[SeatService getLeftTicketOfInterval] The request seat type is economyClass and the total num is " + seatTotalNum);
         }
         String startStation = seatRequest.getStartStation();

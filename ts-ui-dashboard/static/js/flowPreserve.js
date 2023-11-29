@@ -250,8 +250,6 @@ function initFoodSelect(tripId){
         success: function(result){
             console.log(result);
             if(result.status){
-                $('#train-food-type-list').empty();
-                $('#food-station-list').empty();
 
                 if(null == result.trainFoodList || result.trainFoodList.length == 0){
                     //没有
@@ -517,7 +515,6 @@ $("#ticket_select_contacts_confirm_btn").click(function(){
                     $('#ticket_confirm_consignee_name').text($(" #name_of_consignee ").val());
                     $('#ticket_confirm_consignee_phone').text($(" #phone_of_consignee ").val());
                     $('#ticket_confirm_consign_weight').text($(" #weight_of_consign ").val());
-                    $('#ticket_confirm_consign_price').text($(" #price_of_consign ").val());
                 }
                 else{
                     $('.ticket_confirm_consign_div').css("display", "none");
@@ -589,51 +586,6 @@ $("#ticket_confirm_cancel_btn").click(function () {
     location.hash="anchor_flow_preserve_select_contacts";
 })
 
-//Query the consign price
-$("#ticket_consign_price_query_btn").click(function () {
-    //Get the selected currency format
-    var currencyType = $('#currency_type option:selected') .val();
-    // alert(currencyType);
-    if(currencyType == -1){
-        alert("Please select the target currency type!");
-    }
-    else{
-        $("#ticket_consign_price_query_btn").attr("disabled",true);
-        var consignInfo = new Object();
-        consignInfo.weight = parseFloat($("#weight_of_consign ").val());
-        consignInfo.isWithinRegion = false;
-        consignInfo.country = parseInt(currencyType);
-
-        var consignData = JSON.stringify(consignInfo);
-        console.log("consignData:");
-        console.log(consignData);
-
-        $.ajax({
-            type: "post",
-            url: "/consignPrice/getPrice",
-            contentType: "application/json",
-            data: consignData,
-            dataType: "text",
-            xhrFields: {
-                withCredentials: true
-            },
-            success: function (result) {
-                // alert(result);
-                $("#price_of_consign").val(result);
-            },
-            error: function (error) {
-                alert("Error");
-                console.log("error:");
-                console.log(error);
-            },
-            complete: function(){
-                $("#ticket_consign_price_query_btn").attr("disabled",false);
-            }
-        })
-
-    }
-})
-
 $("#ticket_confirm_confirm_btn").click(function () {
     if(getCookie("loginId").length < 1 || getCookie("loginToken").length < 1){
         alert("Please Login");
@@ -650,7 +602,7 @@ $("#ticket_confirm_confirm_btn").click(function () {
     orderTicketInfo.assurance = $("#assurance_type").val();
 
     //add the food information
-    if($('#need-food-or-not').is(":checked") && null != $('#ticket_confirm_food_type').text() && "" != $('#ticket_confirm_food_type').text()){
+    if(null != $('#ticket_confirm_food_type').text() && "" != $('#ticket_confirm_food_type').text()){
         if($('#ticket_confirm_food_type').text() == "Train Food"){
             orderTicketInfo.foodType = 1;
             orderTicketInfo.foodName = $('#ticket_confirm_food_name').text();
@@ -689,15 +641,6 @@ $("#ticket_confirm_confirm_btn").click(function () {
         orderTicketInfo.consigneePhone = $("#phone_of_consignee ").val();
         orderTicketInfo.consigneeWeight = parseFloat($("#weight_of_consign ").val());
         orderTicketInfo.isWithin = false;
-        //Get the selected currency format
-        var currencyType = $('#currency_type option:selected') .val();
-        // alert(currencyType);
-        if(currencyType == -1){
-            alert("Please select the target currency type!");
-        }
-        else{
-            orderTicketInfo.country = parseInt(currencyType);
-        }
     }
 
     var orderTicketsData = JSON.stringify(orderTicketInfo);

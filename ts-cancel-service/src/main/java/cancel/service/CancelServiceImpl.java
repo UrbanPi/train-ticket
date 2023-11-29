@@ -2,6 +2,8 @@ package cancel.service;
 
 import cancel.async.AsyncTask;
 import cancel.domain.*;
+import classenum.OrderStatus;
+import classenum.SeatClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -17,6 +19,7 @@ public class CancelServiceImpl implements CancelService{
 
     @Autowired
     private AsyncTask asyncTask;
+
 
     @Override
     public CancelOrderResult cancelOrder(CancelOrderInfo info,String loginToken,String loginId) throws Exception{
@@ -114,78 +117,6 @@ public class CancelServiceImpl implements CancelService{
                     ChangeOrderResult changeOrderResult = cancelFromOtherOrder(changeOrderInfo);
 
 
-//
-//
-//                    String money = calculateRefund(order);
-//                    Future<Boolean> taskDrawBackMoney = asyncTask.drawBackMoneyForOrderCan(money,loginId,order.getId().toString());
-//                    Future<ChangeOrderResult> taskCancelOrder = asyncTask.updateOtherOrderStatusToCancel(changeOrderInfo);
-//
-//                    ChangeOrderResult changeOrderResult = null;
-//                    boolean drawBackMoneyStatus = false;
-//                    while(!taskCancelOrder.isDone() || !taskDrawBackMoney.isDone()){}
-//                    System.out.println("[Cancel Order Service][Cancel Order] Two Process Done");
-//                    drawBackMoneyStatus = taskDrawBackMoney.get();
-//                    changeOrderResult = taskCancelOrder.get();
-//
-//
-//
-
-//                    if(changeOrderResult.isStatus() == true && drawBackMoneyStatus == true){
-//                        CancelOrderResult finalResult = new CancelOrderResult();
-//                        finalResult.setStatus(true);
-//                        finalResult.setMessage("Success.");
-//                        System.out.println("[Cancel Order Service][Cancel Order] Success.");
-//                        System.out.println("[Cancel Order Service][Draw Back Money] Success.");
-//
-//                        GetAccountByIdInfo getAccountByIdInfo = new GetAccountByIdInfo();
-//                        getAccountByIdInfo.setAccountId(order.getAccountId().toString());
-//                        GetAccountByIdResult result = getAccount(getAccountByIdInfo);
-//                        if(result.isStatus() == false){
-//                            return null;
-//                        }
-//
-//                        NotifyInfo notifyInfo = new NotifyInfo();
-//                        notifyInfo.setDate(new Date().toString());
-//
-//
-//                        notifyInfo.setEmail(result.getAccount().getEmail());
-//                        notifyInfo.setStartingPlace(order.getFrom());
-//                        notifyInfo.setEndPlace(order.getTo());
-//                        notifyInfo.setUsername(result.getAccount().getName());
-//                        notifyInfo.setSeatNumber(order.getSeatNumber());
-//                        notifyInfo.setOrderNumber(order.getId().toString());
-//                        notifyInfo.setPrice(order.getPrice());
-//                        notifyInfo.setSeatClass(SeatClass.getNameByCode(order.getSeatClass()));
-//                        notifyInfo.setStartingTime(order.getTravelTime().toString());
-//
-//                        sendEmail(notifyInfo);
-//
-//
-//                        return finalResult;
-//                    }else if(changeOrderResult.isStatus() == true && drawBackMoneyStatus == false){
-//                        CancelOrderResult finalResult = new CancelOrderResult();
-//                        finalResult.setStatus(false);
-//                        finalResult.setMessage("Fail.");
-//                        System.out.println("[Cancel Order Service][Cancel Order] Success.");
-//                        System.out.println("[Cancel Order Service][Draw Back Money] Fail.");
-//                        return finalResult;
-//                    }else if(changeOrderResult.isStatus() == false && drawBackMoneyStatus == true){
-//                        CancelOrderResult finalResult = new CancelOrderResult();
-//                        finalResult.setStatus(false);
-//                        finalResult.setMessage("Fail.");
-//                        System.out.println("[Cancel Order Service][Cancel Order] Fail.");
-//                        System.out.println("[Cancel Order Service][Draw Back Money] Success.");
-//                        return finalResult;
-//                    }else{
-//                        CancelOrderResult finalResult = new CancelOrderResult();
-//                        finalResult.setStatus(false);
-//                        finalResult.setMessage("Fail.");
-//                        System.out.println("[Cancel Order Service][Cancel Order] Fail.");
-//                        System.out.println("[Cancel Order Service][Draw Back Money] Fail.");
-//                        return finalResult;
-//                    }
-
-//
                     if(changeOrderResult.isStatus() == true){
                         CancelOrderResult finalResult = new CancelOrderResult();
                         finalResult.setStatus(true);

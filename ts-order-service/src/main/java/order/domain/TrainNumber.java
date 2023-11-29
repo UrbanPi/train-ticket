@@ -1,5 +1,7 @@
 package order.domain;
 
+import classenum.TrainType;
+
 public class TrainNumber {
 
     private int type;

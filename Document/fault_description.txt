@@ -1,15 +1,14 @@
-
-
 Industrial fault description:
 
-The price is displayed in an unexpectedly format.
-The product price is not formatted correctly in the French format.
+Nothing is returned upon workflow data request.
+The JBoss startup classpath parameter does not include the right DB2 jar package.
 
 
 TrainTicket replicated fault description:
 
-When the user chooses to consign his packages and select the French format, the returned price is displayed in wrong format.
-The product price is not formatted correctly in the French format.
+Many microservices share a same lib. This lib contains some basic data structure such as Enum of Order status.
+The value of same order status in different version is in different value.
+If some microservice use an old version lib but some use a new version lib, the fault will occur.
 
 
 
