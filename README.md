@@ -1,6 +1,6 @@
-## ts-errorF22
+## ts-error-F22
 
-### Original fault description from reamde
+### Original fault description from readme
 > ### Symptom：
 > When the user switch to Flow Three - Consign & Voucher
 > and click the button of "Print Voucher" if any,
@@ -45,12 +45,12 @@
 
 The original description in conjunction with specific interpretation of the term *voucher*, can lead to inability to 
 reproduce the failure. In the previous branches the descriptions contained in the "Document" directory were mostly correct
-but this time the steps to trigger the failure are wrong. The contents of the original readem on the other hand are incomplete,
+but this time the steps to trigger the failure are wrong. The contents of the original readme on the other hand are incomplete,
 because they lack information on the necessary preconditions which have to be fulfilled in order for the "Print Voucher" 
 button to appear. The correct steps are:
 
 1. Log in.
-2. Complete **all** steps in **Flow One - Ticket Reserve**. (Note: tripIds starting with **T** or **Z** are not able to finish all steps). Example journey: Shang Hai -> Su Zhou
+2. Complete **all** steps in **Flow One - Ticket Reserve**. (Note: tripIds starting with **T** or **Z** are **not** able to finish all steps). Example journey: Shang Hai -> Su Zhou
 3. Click [Flow Two - Ticket Cancel & Ticket Change].
 4. Click [Refresh Orders].
 5. Click **Print voucher** on the previously bought and used ticket.
