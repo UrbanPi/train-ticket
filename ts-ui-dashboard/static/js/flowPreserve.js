@@ -59,21 +59,14 @@ $("#flow_preserve_login_button").click(function() {
                 document.cookie = "loginId=" + obj["account"].id;
                 document.cookie = "loginToken=" + obj["token"];
                 $("#flow_preserve_login_status").text(obj["status"]);
-
-                //To replicate F21
-                $("#flow_preserve_login_msg").val(obj["message"]);
-                // $("#flow_preserve_login_msg").text(obj["message"]);
-
+                $("#flow_preserve_login_msg").text(obj["message"]);
                 $("#user_login_id").text(obj["account"].id);
-                // location.hash="anchor_flow_preserve_select_trip";
+                location.hash="anchor_flow_preserve_select_trip";
             }else{
                 // setCookie("loginId", "", -1);
                 // setCookie("loginToken", "", -1);
                 //alert(obj["message"]);
-
-                //To replicate F21
-                $("#flow_preserve_login_msg").val(obj["message"]);
-                // $("#flow_preserve_login_msg").text(obj["message"]);
+                $("#flow_preserve_login_msg").text(obj["message"]);
             }
         }
     });
@@ -257,8 +250,6 @@ function initFoodSelect(tripId){
         success: function(result){
             console.log(result);
             if(result.status){
-                $('#train-food-type-list').empty();
-                $('#food-station-list').empty();
 
                 if(null == result.trainFoodList || result.trainFoodList.length == 0){
                     //没有
@@ -611,7 +602,7 @@ $("#ticket_confirm_confirm_btn").click(function () {
     orderTicketInfo.assurance = $("#assurance_type").val();
 
     //add the food information
-    if($('#need-food-or-not').is(":checked") && null != $('#ticket_confirm_food_type').text() && "" != $('#ticket_confirm_food_type').text()){
+    if(null != $('#ticket_confirm_food_type').text() && "" != $('#ticket_confirm_food_type').text()){
         if($('#ticket_confirm_food_type').text() == "Train Food"){
             orderTicketInfo.foodType = 1;
             orderTicketInfo.foodName = $('#ticket_confirm_food_name').text();

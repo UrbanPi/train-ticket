@@ -1,37 +1,60 @@
-## ts-error-F21
-### Original fault description
-> **industrial fault description**:
+## ts-errorF22
+
+### Original fault description from reamde
+> ### Symptom：
+> When the user switch to Flow Three - Consign & Voucher
+> and click the button of "Print Voucher" if any,
+> the result page displays "Empty. No data!".
 > 
-> Symptom：
-> JAWS (a screen reader) misses reading some elements
-> Root Cause：
-> The “aria-labeled-by” element for accessibility cannot be located by the JAWS
+> ### Root Cause
+> The constructed SQL statement includes a wrong column name
+> in the “select” part according to its “from” part
+
+### Original fault description from "Document" directory
+(Struck through wrong information)
+
+> Industrial fault description:
 > 
-> **train_ticket replicated fault description**:
+> The error of SQL column missing is returned upon some data request.
+> The constructed SQL statement includes a wrong column name in the "select" part according to its "from" part
 > 
-> Just add the aria label in the login module.
-> There are three input types to read —  Email, Password and Verification Code.
-> When the cursor focuses on the input, the screen reader will read the value in it.
-> Add the "aria-labelledby" label to the "Email" and "Password" inputs to first read the input name,
-> so that user can make clear what the input value represent.
-> But the "Verification Code" input doesn't add an "aria-labelledby" label
-> So user will just heard the input's default value "abcd", it will confuse the user.
 > 
-> **fault replicate steps**:
+> TrainTicket replicated fault description:
 > 
-> setup system:
+> The constructed SQL statement includes a wrong column name in the "select" part according to its "from" part.
+> When the user switch to Flow Three - Consign & Voucher and click the button of "Print Voucher" if any, the result page displays "Empty. No data!".
 > 
-> - Use docker-compose to setup the Train-Ticket System.
-> - Install and start a screen reader software
+> ~~Failure Triggering Usage Steps:~~
 > 
-> fault reproduce manually step:
+> ~~1. Log in.~~
+> ~~2. Click [Flow Two - Ticket Cancel & Ticket Change].~~
+> ~~3. Click [Refresh Orders].~~
+> ~~4. Select the order mentioned above and click [Cancel Order].~~
+> ~~5. Click [Confirm Cancel].~~
+> ~~6. You will get result of cancel. If you get SUCCESS, it means the fault does not occur.~~
+>    ~~If you get WRONG, it means the fault occurs, and you will see the exception logs on the server console.~~
 > 
-> 1. Click [Flow one - Ticket Reserve]
-> 2. Click [Tab] and focus the Email input, the screen reader will read the label and default value of this row
-> 3. Continue click [Tab] until cursor focuses on the Verification Code row, 
-> since it misses a "aria-labelledby" label, the screen reader will not read the "Verification Code" string. 
->  
+> 
+> ~~Failure Triggering Test Case:~~
+> 
+> ~~There is only one test case in ts-ui-test, named [TestFlowTwoCancel.java].~~
+> ~~Just run it and it will do as failure triggering usage steps mentioned above.~~
 
 ### Notes
-Email and password input fields have an `aria-labelelledby` attribute while the input for the verification code lacks one.
-Behaviour with screen reader not tested.
+**Clarification**: In the context of this system the term *voucher* has the meaning *receipt* or *invoice* and not *coupon* or *gift card*.
+
+The original description in conjunction with specific interpretation of the term *voucher*, can lead to inability to 
+reproduce the failure. In the previous branches the descriptions contained in the "Document" directory were mostly correct
+but this time the steps to trigger the failure are wrong. The contents of the original readem on the other hand are incomplete,
+because they lack information on the necessary preconditions which have to be fulfilled in order for the "Print Voucher" 
+button to appear. The correct steps are:
+
+1. Log in.
+2. Complete **all** steps in **Flow One - Ticket Reserve**. (Note: tripIds starting with **T** or **Z** are not able to finish all steps). Example journey: Shang Hai -> Su Zhou
+3. Click [Flow Two - Ticket Cancel & Ticket Change].
+4. Click [Refresh Orders].
+5. Click **Print voucher** on the previously bought and used ticket.
+6. The table on the next page should display 'Empty. No data!' instead of the actual ticket data.
+7. (To get to the previous page, you have to use the 'Back' button of your browser.)
+
+

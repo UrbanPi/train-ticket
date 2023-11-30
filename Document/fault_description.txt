@@ -1,18 +1,13 @@
 Industrial fault description:
 
-JAWS (a screen reader) misses reading some elements.
-The "aria-labeled-by" element for accessibility cannot be located by the JAWS.
+The error of SQL column missing is returned upon some data request.
+The constructed SQL statement includes a wrong column name in the "select" part according to its "from" part
 
 
 TrainTicket replicated fault description:
 
-Just add the aria label in the login module.
-There are three input types to read - Email, Password and Verification Code.
-When the cursor focuses on the input, the screen reader will read the value in it.
-Add the "aria-labelledby" label to the "Email" and "Password" inputs to first read the input name,
-so that user can make clear what the input value represent.
-But the "Verification Code" input doesn't add an "aria-labelledby" label
-So user will just heard the input's default value "abcd", it will confuse the user.
+The constructed SQL statement includes a wrong column name in the "select" part according to its "from" part.
+When the user switch to Flow Three - Consign & Voucher and click the button of "Print Voucher" if any, the result page displays "Empty. No data!".
 
 
 

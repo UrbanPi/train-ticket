@@ -72,7 +72,18 @@ class GetVoucherHandler(tornado.web.RequestHandler):
         conn = pymysql.connect(**config)
         cur = conn.cursor()
         #查询语句
-        sql = 'SELECT * FROM voucher where order_id = %s'
+        # sql = 'SELECT voucher_id,order_id,travelDate,contactName,trainNumber,seatNumber,startStation,destStation,price FROM voucher where order_id = %s'
+        sql = ('SELECT '
+               'voucher_id,'
+               'order_id,'
+               'travelDate,'
+               'contactName,'
+               'train_number'
+               ',seat_number,'
+               'start_station,'
+               'dest_station,'
+               'price '
+               'FROM voucher where order_id = %s')
         try:
             cur.execute(sql,(orderId))
             voucher = cur.fetchone()
@@ -85,12 +96,12 @@ class GetVoucherHandler(tornado.web.RequestHandler):
                 voucherData['voucher_id'] = voucher[0]
                 voucherData['order_id'] = voucher[1]
                 voucherData['travelDate'] = voucher[2]
-                voucherData['contactName'] = voucher[4]
-                voucherData['train_number'] = voucher[5]
-                voucherData['seat_number'] = voucher[7]
-                voucherData['start_station'] = voucher[8]
-                voucherData['dest_station'] = voucher[9]
-                voucherData['price'] = voucher[10]
+                voucherData['contactName'] = voucher[3]
+                voucherData['train_number'] = voucher[4]
+                voucherData['seat_number'] = voucher[5]
+                voucherData['start_station'] = voucher[6]
+                voucherData['dest_station'] = voucher[7]
+                voucherData['price'] = voucher[8]
                 jsonStr = json.dumps(voucherData)
                 print(jsonStr)
                 return jsonStr
@@ -131,17 +142,17 @@ def initDatabase():
     #Create the table
     sql = """
     CREATE TABLE if not exists voucherservice.voucher (
-    voucher_id INT NOT NULL AUTO_INCREMENT,
-    order_id VARCHAR(1024) NOT NULL,
-    travelDate VARCHAR(1024) NOT NULL,
-    travelTime VARCHAR(1024) NOT NULL,
-    contactName VARCHAR(1024) NOT NULL,
-    trainNumber VARCHAR(1024) NOT NULL,
-    seatClass INT NOT NULL,
-    seatNumber VARCHAR(1024) NOT NULL,
-    startStation VARCHAR(1024) NOT NULL,
-    destStation VARCHAR(1024) NOT NULL,
-    price FLOAT NOT NULL,
+    voucher_id INT NOT NULL AUTO_INCREMENT,       'voucher_id,'
+    order_id VARCHAR(1024) NOT NULL,       'order_id,'
+    travelDate VARCHAR(1024) NOT NULL,       'travelDate,'
+    travelTime VARCHAR(1024) NOT NULL,       
+    contactName VARCHAR(1024) NOT NULL,       'contactName,'
+    trainNumber VARCHAR(1024) NOT NULL,       'train_number'
+    seatClass INT NOT NULL,       
+    seatNumber VARCHAR(1024) NOT NULL,       ',seat_number,'
+    startStation VARCHAR(1024) NOT NULL,       'start_station,'
+    destStation VARCHAR(1024) NOT NULL,       'dest_station,'
+    price FLOAT NOT NULL,'price '
     PRIMARY KEY (voucher_id));"""
     try:
         cur.execute(sql)
