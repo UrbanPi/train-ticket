@@ -26,7 +26,6 @@ function reset_all {
   kubectl delete -f deployment/kubernetes-manifests/otel -n "$namespace"
   kubectl delete -f deployment/kubernetes-manifests/jaeger -n "$namespace"
   kubectl delete -f deployment/kubernetes-manifests/prometheus
-  kubectl delete -f deployment/kubernetes-manifests/prometheus_micros -n "$namespace"
   delete_tt_micro_services
   helm uninstall rabbitmq -n "$namespace"
 }
@@ -51,7 +50,6 @@ function reset {
 
     if [ $argMonitoring == 1 ]; then
       kubectl delete -f deployment/kubernetes-manifests/prometheus
-      kubectl delete -f deployment/kubernetes-manifests/prometheus_micros -n "$namespace"
 
     fi
     delete_tt_micro_services
