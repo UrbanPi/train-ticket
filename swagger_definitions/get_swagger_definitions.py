@@ -157,6 +157,8 @@ unwanted_paths = [
     "/env.json",
     "/env/{name}",
     "/error",
+    "/features",
+    "/features.json",
     "/health",
     "/health.json",
     "/heapdump",
