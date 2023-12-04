@@ -30,8 +30,7 @@ public class AsyncTask {
     public Future<Boolean> drawBackMoneyForOrderCancel(String money, String userId,String orderId, String loginToken) throws InterruptedException{
 
         /*********************** Fault Reproduction - Error Process Seq *************************/
-        double op = new Random().nextDouble();
-        if(op < 1.0){
+        if(new Random().nextBoolean()){
             System.out.println("[Cancel Order Service] Delay Process，Wrong Cancel Process");
             Thread.sleep(8000);
         } else {
