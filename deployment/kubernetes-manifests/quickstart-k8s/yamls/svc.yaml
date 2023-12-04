@@ -10,6 +10,7 @@ spec:
       nodePort: 30030
     - name: metric
       port: 9464
+      nodePort: 30330
   selector:
     app: ts-admin-basic-info-service
 ---
@@ -25,6 +26,7 @@ spec:
       nodePort: 30031
     - name: metric
       port: 9464
+      nodePort: 30331
   selector:
     app: ts-admin-order-service
 ---
@@ -40,6 +42,7 @@ spec:
       nodePort: 30032
     - name: metric
       port: 9464
+      nodePort: 30332
   selector:
     app: ts-admin-route-service
 ---
@@ -55,6 +58,7 @@ spec:
       nodePort: 30033
     - name: metric
       port: 9464
+      nodePort: 30333
   selector:
     app: ts-admin-travel-service
 ---
@@ -70,6 +74,7 @@ spec:
       nodePort: 30034
     - name: metric
       port: 9464
+      nodePort: 30334
   selector:
     app: ts-admin-user-service
 ---
@@ -85,6 +90,7 @@ spec:
       nodePort: 30035
     - name: metric
       port: 9464
+      nodePort: 30335
   selector:
     app: ts-assurance-service
 ---
@@ -113,6 +119,7 @@ spec:
       nodePort: 30038
     - name: metric
       port: 9464
+      nodePort: 30338
   selector:
     app: ts-basic-service
 ---
@@ -128,6 +135,7 @@ spec:
       nodePort: 30039
     - name: metric
       port: 9464
+      nodePort: 30339
   selector:
     app: ts-cancel-service
 ---
@@ -143,6 +151,7 @@ spec:
       nodePort: 30040
     - name: metric
       port: 9464
+      nodePort: 30340
   selector:
     app: ts-config-service
 ---
@@ -158,6 +167,7 @@ spec:
       nodePort: 30041
     - name: metric
       port: 9464
+      nodePort: 30341
   selector:
     app: ts-consign-price-service
 ---
@@ -173,6 +183,7 @@ spec:
       nodePort: 30042
     - name: metric
       port: 9464
+      nodePort: 30342
   selector:
     app: ts-consign-service
 ---
@@ -188,6 +199,7 @@ spec:
       nodePort: 30043
     - name: metric
       port: 9464
+      nodePort: 30343
   selector:
     app: ts-contacts-service
 ---
@@ -216,6 +228,7 @@ spec:
       nodePort: 30045
     - name: metric
       port: 9464
+      nodePort: 30345
   selector:
     app: ts-execute-service
 ---
@@ -231,6 +244,7 @@ spec:
       nodePort: 30046
     - name: metric
       port: 9464
+      nodePort: 30346
   selector:
     app: ts-food-service
 ---
@@ -246,6 +260,7 @@ spec:
       nodePort: 30047
     - name: metric
       port: 9464
+      nodePort: 30347
   selector:
     app: ts-inside-payment-service
 ---
@@ -261,6 +276,7 @@ spec:
       nodePort: 30048
     - name: metric
       port: 9464
+      nodePort: 30348
   selector:
     app: ts-news-service
 ---
@@ -276,6 +292,7 @@ spec:
       nodePort: 30049
     - name: metric
       port: 9464
+      nodePort: 30349
   selector:
     app: ts-notification-service
 ---
@@ -291,6 +308,7 @@ spec:
       nodePort: 30050
     - name: metric
       port: 9464
+      nodePort: 30350
   selector:
     app: ts-order-other-service
 ---
@@ -306,6 +324,7 @@ spec:
       nodePort: 30051
     - name: metric
       port: 9464
+      nodePort: 30351
   selector:
     app: ts-order-service
 ---
@@ -321,6 +340,7 @@ spec:
       nodePort: 30052
     - name: metric
       port: 9464
+      nodePort: 30352
   selector:
     app: ts-payment-service
 ---
@@ -336,6 +356,7 @@ spec:
       nodePort: 30053
     - name: metric
       port: 9464
+      nodePort: 30353
   selector:
     app: ts-preserve-other-service
 ---
@@ -351,6 +372,7 @@ spec:
       nodePort: 30054
     - name: metric
       port: 9464
+      nodePort: 30354
   selector:
     app: ts-preserve-service
 ---
@@ -366,6 +388,7 @@ spec:
       nodePort: 30055
     - name: metric
       port: 9464
+      nodePort: 30355
   selector:
     app: ts-price-service
 ---
@@ -381,6 +404,7 @@ spec:
       nodePort: 30056
     - name: metric
       port: 9464
+      nodePort: 30356
   selector:
     app: ts-rebook-service
 ---
@@ -396,6 +420,7 @@ spec:
       nodePort: 30057
     - name: metric
       port: 9464
+      nodePort: 30357
   selector:
     app: ts-route-plan-service
 ---
@@ -411,6 +436,7 @@ spec:
       nodePort: 30058
     - name: metric
       port: 9464
+      nodePort: 30358
   selector:
     app: ts-route-service
 ---
@@ -426,6 +452,7 @@ spec:
       nodePort: 30059
     - name: metric
       port: 9464
+      nodePort: 30359
   selector:
     app: ts-seat-service
 ---
@@ -441,6 +468,7 @@ spec:
       nodePort: 30060
     - name: metric
       port: 9464
+      nodePort: 30360
   selector:
     app: ts-security-service
 ---
@@ -456,6 +484,7 @@ spec:
       nodePort: 30062
     - name: metric
       port: 9464
+      nodePort: 30362
   selector:
     app: ts-station-service
 ---
@@ -471,6 +500,7 @@ spec:
       nodePort: 30063
     - name: metric
       port: 9464
+      nodePort: 30363
   selector:
     app: ts-ticket-office-service
 ---
@@ -486,6 +516,7 @@ spec:
       nodePort: 30065
     - name: metric
       port: 9464
+      nodePort: 30365
   selector:
     app: ts-train-service
 ---
@@ -501,6 +532,7 @@ spec:
       nodePort: 30066
     - name: metric
       port: 9464
+      nodePort: 30366
   selector:
     app: ts-travel-plan-service
 ---
@@ -516,6 +548,7 @@ spec:
       nodePort: 30067
     - name: metric
       port: 9464
+      nodePort: 30367
   selector:
     app: ts-travel-service
 ---
@@ -531,6 +564,7 @@ spec:
       nodePort: 30068
     - name: metric
       port: 9464
+      nodePort: 30368
   selector:
     app: ts-travel2-service
 ---
@@ -559,6 +593,7 @@ spec:
       nodePort: 30070
     - name: metric
       port: 9464
+      nodePort: 30370
   selector:
     app: ts-verification-code-service
 ---
@@ -601,6 +636,7 @@ spec:
       nodePort: 30073
     - name: metric
       port: 9464
+      nodePort: 30373
   selector:
     app: ts-food-map-service
 ---
@@ -616,6 +652,7 @@ spec:
       nodePort: 30074
     - name: metric
       port: 9464
+      nodePort: 30374
   selector:
     app: ts-ticketinfo-service
 ---
@@ -631,6 +668,7 @@ spec:
       nodePort: 30075
     - name: metric
       port: 9464
+      nodePort: 30375
   selector:
     app: ts-login-service
 ---
@@ -646,6 +684,7 @@ spec:
       nodePort: 30076
     - name: metric
       port: 9464
+      nodePort: 30376
   selector:
     app: ts-sso-service
 ---
@@ -661,6 +700,7 @@ spec:
       nodePort: 30077
     - name: metric
       port: 9464
+      nodePort: 30377
   selector:
     app: ts-register-service
 ---
@@ -676,6 +716,20 @@ spec:
       nodePort: 30078
     - name: metric
       port: 9464
+      nodePort: 30378
   selector:
     app: ts-click-twice-service
----
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: ts-rest-external-service
+#spec:
+#  type: NodePort
+#  ports:
+#    - name: http
+#      port: 16100
+#      nodePort: 30079
+#  selector:
+#    app: ts-rest-external-service
+#---
