@@ -8,107 +8,118 @@ from http.client import RemoteDisconnected
 from json import JSONDecodeError
 from urllib.error import URLError
 
-available_versions = ["master", "error-f4", "error-f1",  "error-f2"]
+available_versions = ["master", "error-f1", "error-f2", "error-f3", "error-f4", "error-f5", "error-f6", "error-f7",
+                      "error-f8", "error-f10", "error-f11", "error-f12", "error-f13", "error-f14", "error-f15",
+                      "error-f16", "error-f17", "error-f18", "error-f19", "error-f20", "error-f21", "error-f22"]
 
-version_groups = {"master_grp": ["master"], "error_grp": ["error-f4", "error-f1"], "error_grp_2": ["error-f2"]}
+version_groups = {"master_grp": ["master"],
+                  "error_grp": ["error-f1", "error-f3", "error-f4", "error-f6", "error-f8", "error-f10", "error-f11",
+                                "error-f12", "error-f13", "error-f14", "error-f15", "error-f16", "error-f17",
+                                "error-f18",  "error-f19", "error-f20", "error-f21", "error-f22"],
+                  "error_grp_2": ["error-f2", "error-f5"],
+                  "error_grp_3": ["error-f7"],
+                  "error_grp_4": ["error-f13"]}  # is the same as the "error_grp" but has an additional Java service without swagger
 
 services = [{"name": "ts-admin-basic-info-service", "port": 30030,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-admin-order-service", "port": 30031,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-admin-route-service", "port": 30032,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-admin-travel-service", "port": 30033,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-admin-user-service", "port": 30034,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-assurance-service", "port": 30035,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-auth-service", "port": 30036,
              "versions": ["master_grp"]},
             # {"name": "ts-avatar-service", "port": 30037,  # No swagger definition, written in Python
             #  "versions": ["master_grp"]},
             {"name": "ts-basic-service", "port": 30038,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-cancel-service", "port": 30039,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-config-service", "port": 30040,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-consign-price-service", "port": 30041,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-consign-service", "port": 30042,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-contacts-service", "port": 30043,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             # {"name": "ts-delivery-service", "port": 30044,  # No REST endpoints, Java
             #  "versions": ["master_grp"]},
             {"name": "ts-execute-service", "port": 30045,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-food-service", "port": 30046,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-inside-payment-service", "port": 30047,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             # {"name": "ts-news-service", "port": 30048,  # No swagger definition (service is basically an oneliner in written in Go
-            #  "versions": ["master_grp", "error_grp", "error_grp_2"]},
+            #  "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-notification-service", "port": 30049,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-order-other-service", "port": 30050,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-order-service", "port": 30051,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-payment-service", "port": 30052,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-preserve-other-service", "port": 30053,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-preserve-service", "port": 30054,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-price-service", "port": 30055,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-rebook-service", "port": 30056,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-route-plan-service", "port": 30057,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-route-service", "port": 30058,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-seat-service", "port": 30059,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-security-service", "port": 30060,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-station-food-service", "port": 30061,
              "versions": ["master_grp"]},
             {"name": "ts-station-service", "port": 30062,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             # {"name": "ts-ticket-office-service", "port": 30063,  # No swagger definition, written in JS
-            #  "versions": ["master_grp", "error_grp", "error_grp_2"]},
+            #  "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-train-food-service", "port": 30064,
              "versions": ["master_grp"]},
             {"name": "ts-train-service", "port": 30065,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-travel-plan-service", "port": 30066,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-travel-service", "port": 30067,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-travel2-service", "port": 30068,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-user-service", "port": 30069,
              "versions": ["master_grp"]},
             {"name": "ts-verification-code-service", "port": 30070,
-             "versions": ["master_grp", "error_grp", "error_grp_2"]},
+             "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
             # {"name": "ts-voucher-service", "port": 30071,  # No swagger definition, written in Python
             #  "versions": ["master_grp"]},
             {"name": "ts-food-map-service", "port": 30073,
-             "versions": ["error_grp", "error_grp_2"]},
+             "versions": ["error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-ticketinfo-service", "port": 30074,
-             "versions": ["error_grp", "error_grp_2"]},
+             "versions": ["error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-login-service", "port": 30075,
-             "versions": ["error_grp", "error_grp_2"]},
+             "versions": ["error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-sso-service", "port": 30076,
-             "versions": ["error_grp", "error_grp_2"]},
+             "versions": ["error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-register-service", "port": 30077,
-             "versions": ["error_grp", "error_grp_2"]},
+             "versions": ["error_grp", "error_grp_2", "error_grp_3"]},
             {"name": "ts-click-twice-service", "port": 30078,
              "versions": ["error_grp_2"]},
-
+            # {"name": "ts-external-rest-service", "port": 30079,  # No swagger definition, written in JS
+            #  "versions": ["error_grp_3"]},
+            # {"name": "ts-launcher", "port": 30080, # Java,no swagger definition, executes a workflow which has a chance to trigger the fault.
+            #  "versions": ["error_grp_4"]},
             # {"name": "ts-gateway-service", "port": 30467,  # No swagger definition available (Java)
             #  "versions": ["master_grp"]},
 
@@ -146,6 +157,8 @@ unwanted_paths = [
     "/env.json",
     "/env/{name}",
     "/error",
+    "/features",
+    "/features.json",
     "/health",
     "/health.json",
     "/heapdump",
@@ -172,8 +185,11 @@ def retrieve_and_save(service: dict):
     # print("Getting definition of {} from url: {}".format(service.get("name"), url))
     try:
         definition: dict = json.loads(urllib.request.urlopen(url, timeout=30).read().decode("utf8"))
-        definition["tags"] = list(filter(lambda tag: not any(tag.get("name") == not_wanted for not_wanted in unwanted_tags), definition.get("tags")))
-        definition["paths"] = dict(filter(lambda item: not any(item[0] == not_wanted for not_wanted in unwanted_paths), definition.get("paths").items()))
+        definition["tags"] = list(
+            filter(lambda tag: not any(tag.get("name") == not_wanted for not_wanted in unwanted_tags),
+                   definition.get("tags")))
+        definition["paths"] = dict(filter(lambda item: not any(item[0] == not_wanted for not_wanted in unwanted_paths),
+                                          definition.get("paths").items()))
         with open(service.get("name") + ".json", "w", encoding="utf8") as f:
             f.write(json.dumps(definition))
     except KeyError:
@@ -199,7 +215,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     version_argument = args.version
     if not version_argument:
-        print("No version selected defaulting to version \"master\"", file=sys.stderr)
+        print("No version selected defaulting to version \"error-f2\"", file=sys.stderr)
         version_argument = "error-f2"
     else:
         print("Selected version: {}".format(version_argument))
