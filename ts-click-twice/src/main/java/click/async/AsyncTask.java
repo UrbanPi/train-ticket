@@ -13,7 +13,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.concurrent.Future;
 
@@ -29,7 +30,7 @@ public class AsyncTask {
         orderTicketsInfo.setContactsId("4d2a46c7-71cb-4cf1-a5bb-b68406d9da6f");
         orderTicketsInfo.setTripId("Z1234");
         orderTicketsInfo.setSeatType(2);
-        orderTicketsInfo.setDate(new Date(1504137600000L));
+        orderTicketsInfo.setDate(new Date(Instant.now().plus(2, ChronoUnit.DAYS).toEpochMilli()));
         orderTicketsInfo.setFrom("Shang Hai");
         orderTicketsInfo.setTo("Nan Jing");
 
@@ -57,11 +58,7 @@ public class AsyncTask {
         getRoutePlanInfo.setStartingPlace("Shang Hai");
         getRoutePlanInfo.setEndPlace("Nan Jing");
 
-        java.text.SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd");
-        String s = "2020-12-12";
-        Date date = formatter.parse(s);
-
-        //date = new Date(1504137600000L);
+        Date date = new Date(Instant.now().plus(2, ChronoUnit.DAYS).minusSeconds(20).toEpochMilli());
 
         getRoutePlanInfo.setDepartureTime(date);
 
