@@ -22,7 +22,6 @@ function deploy_infrastructures {
 function deploy_monitoring {
   echo "Start deploy prometheus and grafana"
   kubectl apply -f deployment/kubernetes-manifests/prometheus
-  kubectl apply -f deployment/kubernetes-manifests/prometheus_micros -n $namespace
 }
 
 
@@ -48,6 +47,7 @@ function deploy_tt_svc {
 function deploy_tt_dp_otel {
   namespace=$1
   echo "Start to deploy train-ticket deployments with otel agent."
+#  update_tt_otel_dp_cm $nacosRelease $rabbitmqRelease
   kubectl apply -f deployment/kubernetes-manifests/quickstart-k8s/yamls/otel_deploy.yaml -n $namespace > /dev/null
   echo "End deployment Step <3/3>----------------------------------------------------------------------"
 }
