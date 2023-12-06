@@ -1,10 +1,9 @@
-Original description:
+### error-f8
+#### Original fault description:
 > This fault is caused by the error of redis in the operation of getting the saved key/token.
 The microservice always save some key/token to redis.
 However, sometimes the developer may made a mistake and the program may be mis-implemented.
 In such case, the key/token may be wrongly read and deliver a missing/wrong key/token to other microservice, leading to an fault.
->
->
 >
 > TrainTicket replicated fault description:
 >
@@ -12,11 +11,9 @@ In such case, the key/token may be wrongly read and deliver a missing/wrong key/
 > Compared to the normal user, the VIP user has one more key/token to be used in ticket-booking process.
 > However, when vip user is processing ticket-reservation logic, the key/token is missing when delivering.
 > Then the fault occurs.
-
-
-Original replication steps:
-
->Setup System:
+> 
+> 
+> Setup System:
 
 >1. Use docker-compose to setup the TrainTicket system.
 >2. Log in and make sure that there is at least one ticket order that fits the following:
