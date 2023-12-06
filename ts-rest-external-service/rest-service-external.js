@@ -21,7 +21,7 @@ var sleep = function(array, callback) {
     }
     async.mapLimit(tmp, 2, function(item, itemCallback) {
       console.log('Enter: ' + item.name);
-      item.delay = Math.random() > 0.5 ? 2000 : 1000
+      item.delay = Math.random() * 1000 + 1500
       setTimeout(function() {
         console.log('Handle: ' + item.name);
         itemCallback(false, item.name + '!!!');
