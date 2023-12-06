@@ -18,13 +18,10 @@ public class AccountSsoServiceImpl implements AccountSsoService{
     private AccountRepository accountRepository;
 
     @Autowired
-    private LoginUserListRepository loginUserListRepository;
-
-    @Autowired
     private StringRedisTemplate template;
 
-
-    //private static HashMap<String,String > loginUserList = new HashMap<>();
+//    @Autowired
+//    private LoginUserListRepository loginUserListRepository;
 
     @Override
     public Account createAccount(Account account){
@@ -111,15 +108,23 @@ public class AccountSsoServiceImpl implements AccountSsoService{
         PutLoginResult plr = new PutLoginResult();
         //if(loginUserList.keySet().contains(loginId)){
         if(this.template.hasKey(loginId)){
-            System.out.println("[Account-SSO-Service][Login] Already Login, Token:" + loginId);
 
+            String token = UUID.randomUUID().toString();
             ValueOperations<String, String> ops = this.template.opsForValue();
-            String savedToken = ops.get(loginId);
-
+            ops.set(loginId,token);
+            //loginUserList.put(loginId,token);
+            System.out.println("[Account-SSO-Service][Login] Login Success. Id:" + loginId + " Token:" + token);
             plr.setStatus(true);
             plr.setLoginId(loginId);
-            plr.setMsg("Success");
-            plr.setToken(savedToken);
+            plr.setMsg("Success.Already Login");
+            plr.setToken(token);
+
+
+//            System.out.println("[Account-SSO-Service][Login] Already Login, Token:" + loginId);
+//            plr.setStatus(true);
+//            plr.setLoginId(loginId);
+//            plr.setMsg("Already Login");
+//            plr.setToken(null);
 
         }else{
             String token = UUID.randomUUID().toString();
@@ -156,6 +161,7 @@ public class AccountSsoServiceImpl implements AccountSsoService{
         }
         return lr;
     }
+
     @Override
     public VerifyResult verifyLoginToken(String verifyToken){
         System.out.println("[Account-SSO-Service][Verify] Verify token:" + verifyToken);
@@ -174,6 +180,19 @@ public class AccountSsoServiceImpl implements AccountSsoService{
         return vr;
     }
 
+    private boolean isExist(String verifyToken){
+        boolean result = false;
+        ValueOperations<String, String> ops = this.template.opsForValue();
+        Set<String> keys = this.template.keys("*");
+        for(String key : keys){
+            if(ops.get(key).equals(verifyToken)){
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
+
     @Override
     public FindAllAccountResult findAllAccount(){
         FindAllAccountResult findAllAccountResult = new FindAllAccountResult();
@@ -190,10 +209,15 @@ public class AccountSsoServiceImpl implements AccountSsoService{
     @Override
     public GetLoginAccountList findAllLoginAccount(){
         ArrayList<LoginAccountValue> values = new ArrayList<>();
-        for(LoginValue lv : loginUserListRepository.findAll()){
-            LoginAccountValue value = new LoginAccountValue(lv.getId(),lv.getLoginToken());
-            values.add(value);
+        ValueOperations<String, String> ops = this.template.opsForValue();
+
+        Set<String> keys = this.template.keys("*");
+        for(String key : keys){
+            String token = ops.get(key);
+            values.add(new LoginAccountValue(key,token));
         }
+
+
         GetLoginAccountList getLoginAccountList = new GetLoginAccountList();
         getLoginAccountList.setStatus(true);
         getLoginAccountList.setMessage("Success");
@@ -278,22 +302,6 @@ public class AccountSsoServiceImpl implements AccountSsoService{
             result.setStatus(true);
             result.setMessage("Delete account successfully!");
             result.setAccount(account);
-        }
-        return result;
-    }
-
-
-
-
-    private boolean isExist(String verifyToken){
-        boolean result = false;
-        ValueOperations<String, String> ops = this.template.opsForValue();
-        Set<String> keys = this.template.keys("*");
-        for(String key : keys){
-            if(ops.get(key).equals(verifyToken)){
-                result = true;
-                break;
-            }
         }
         return result;
     }

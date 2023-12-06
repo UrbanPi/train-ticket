@@ -61,15 +61,13 @@ public class FuckContactsController {
     @RequestMapping(path = "/contacts/findContacts", method = RequestMethod.GET)
     public ArrayList<Contacts> findContactsByAccountId(@CookieValue String loginId,@CookieValue String loginToken){
         System.out.println("[Contacts Service][Find Contacts By Account Id:" + loginId);
-        VerifyResult tokenResult = verifySsoLogin("null");//传入空的token导致验证出错
-        //VerifyResult tokenResult = verifySsoLogin(loginToken);
+        VerifyResult tokenResult = verifySsoLogin(loginToken);
         if(tokenResult.isStatus() == true){
             System.out.println("[ContactsService][VerifyLogin] Success");
             return contactsService.findContactsByAccountId(UUID.fromString(loginId));
         }else {
             System.out.println("[ContactsService][VerifyLogin] Fail");
-            throw new RuntimeException("Error Verify SSO");
-//            return new ArrayList<Contacts>();
+            return new ArrayList<Contacts>();
         }
     }
 
@@ -117,22 +115,21 @@ public class FuckContactsController {
         }
     }
 
-    @CrossOrigin(origins = "*")
-    @RequestMapping(path = "/contacts/delete", method = RequestMethod.DELETE)
-    public DeleteContactsResult deleteContactsDelete(@RequestBody DeleteContactsInfo dci){
+//    @CrossOrigin(origins = "*")
+//    @RequestMapping(path = "/contacts/delete", method = RequestMethod.DELETE)
+//    public DeleteContactsResult deleteContacts(@RequestBody DeleteContactsInfo dci){
 //        VerifyResult tokenResult = verifySsoLogin(dci.getLoginToken());
-        VerifyResult tokenResult = verifySsoLogin("");//传入空的token导致验证出错
-        if(tokenResult.isStatus() == true){
-            System.out.println("[ContactsService][VerifyLogin] Success");
-            return contactsService.delete(UUID.fromString(dci.getContactsId()));
-        }else{
-            System.out.println("[ContactsService][VerifyLogin] Fail");
-            DeleteContactsResult dcr = new DeleteContactsResult();
-            dcr.setMessage("Not Login");
-            dcr.setStatus(false);
-            return dcr;
-        }
-    }
+//        if(tokenResult.isStatus() == true){
+//            System.out.println("[ContactsService][VerifyLogin] Success");
+//            return contactsService.delete(UUID.fromString(dci.getContactsId()));
+//        }else{
+//            System.out.println("[ContactsService][VerifyLogin] Fail");
+//            DeleteContactsResult dcr = new DeleteContactsResult();
+//            dcr.setMessage("Not Login");
+//            dcr.setStatus(false);
+//            return dcr;
+//        }
+//    }
 //
 //    @CrossOrigin(origins = "*")
 //    @RequestMapping(path = "/contacts/update", method = RequestMethod.PUT)
@@ -158,7 +155,5 @@ public class FuckContactsController {
                      VerifyResult.class);
         return tokenResult;
     }
-
-
 
 }

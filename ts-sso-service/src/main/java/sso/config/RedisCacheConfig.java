@@ -11,13 +11,12 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 @Configuration
 
-@EnableCaching //启用缓存，这个注解很重要；
+@EnableCaching
 
 public class RedisCacheConfig extends CachingConfigurerSupport {
 
 
     /**
-     * 缓存管理器.
      *
      * @param redisTemplate
      * @return
@@ -35,21 +34,8 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
 
 
     /**
-     * redis模板操作类,类似于jdbcTemplate的一个类;
-     * <p>
-     * <p>
-     * <p>
-     * 虽然CacheManager也能获取到Cache对象，但是操作起来没有那么灵活；
-     * <p>
-     * <p>
-     * <p>
-     * 这里在扩展下：RedisTemplate这个类不见得很好操作，我们可以在进行扩展一个我们
-     * <p>
-     * <p>
-     * <p>
-     * 自己的缓存类，比如：RedisStorage类;
      *
-     * @param factory : 通过Spring进行注入，参数在application.properties进行配置；
+     * @param
      * @return
      */
 

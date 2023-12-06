@@ -1,5 +1,4 @@
 FROM node
-MAINTAINER dingding <17212010004@fudan.edu.cn>
 
 RUN mkdir -p /app
 WORKDIR /app
