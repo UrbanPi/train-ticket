@@ -180,16 +180,12 @@ unwanted_paths = [
     "/trace.json",
 ]
 
-ctx = ssl.create_default_context()
-ctx.check_hostname = False
-ctx.verify_mode = ssl.CERT_NONE
-
 
 def retrieve_and_save(service: dict):
-    url = "https://localhost:{}/v2/api-docs".format(service.get("port"))
+    url = "http://localhost:{}/v2/api-docs".format(service.get("port"))
     # print("Getting definition of {} from url: {}".format(service.get("name"), url))
     try:
-        definition: dict = json.loads(urllib.request.urlopen(url, context=ctx, timeout=30).read().decode("utf8"))
+        definition: dict = json.loads(urllib.request.urlopen(url, timeout=30).read().decode("utf8"))
         definition["tags"] = list(filter(lambda tag: not any(tag.get("name") == not_wanted for not_wanted in unwanted_tags),
                                          definition.get("tags")))
         definition["paths"] = dict(filter(lambda item: not any(item[0] == not_wanted for not_wanted in unwanted_paths),
