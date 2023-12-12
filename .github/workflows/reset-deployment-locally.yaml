@@ -41,6 +41,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          sparse-checkout:
+              'deployment/'
+              'hack/'
 
       - name: Set paths and execute reset script
         run: |
