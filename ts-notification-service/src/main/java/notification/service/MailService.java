@@ -1,8 +1,9 @@
 package notification.service;
 
+
 import javax.mail.internet.MimeMessage;
 
-import notification.entity.Mail;
+import notification.domain.Mail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -13,9 +14,6 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 
-/**
- * @author fdse
- */
 @Service
 public class MailService {
 
@@ -40,7 +38,7 @@ public class MailService {
 
         helper.setTo(mail.getMailTo());
         helper.setText(text, true);
-        helper.setFrom(mail.getMailFrom());
+        helper.setFrom("fdse_microservices@163.com");
         helper.setSubject(mail.getMailSubject());
 
         sender.send(message);

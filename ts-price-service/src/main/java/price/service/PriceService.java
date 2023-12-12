@@ -1,26 +1,21 @@
 package price.service;
 
-import edu.fudan.common.util.Response;
-import org.springframework.http.HttpHeaders;
+import price.domain.CreateAndModifyPriceConfig;
+import price.domain.ReturnManyPriceConfigResult;
+import price.domain.ReturnSinglePriceConfigResult;
 
-import price.entity.PriceConfig;
-
-
-/**
- * @author fdse
- */
 public interface PriceService {
 
-    Response createNewPriceConfig(PriceConfig priceConfig, HttpHeaders headers);
+    ReturnSinglePriceConfigResult createNewPriceConfig(CreateAndModifyPriceConfig createAndModifyPriceConfig);
 
-    PriceConfig findById(String id, HttpHeaders headers);
+    ReturnSinglePriceConfigResult findById(String id);
 
-    Response findByRouteIdAndTrainType(String routeId, String trainType, HttpHeaders headers);
+    ReturnSinglePriceConfigResult findByRouteIdAndTrainType(String routeId,String trainType);
 
-    Response findAllPriceConfig(HttpHeaders headers);
+    ReturnManyPriceConfigResult findAllPriceConfig();
 
-    Response deletePriceConfig(PriceConfig c, HttpHeaders headers);
+    boolean deletePriceConfig(CreateAndModifyPriceConfig c);
 
-    Response updatePriceConfig(PriceConfig c, HttpHeaders headers);
+    boolean updatePriceConfig(CreateAndModifyPriceConfig c);
 
 }

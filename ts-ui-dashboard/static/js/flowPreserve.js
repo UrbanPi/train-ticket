@@ -1,3 +1,19 @@
+
+
+$("#display_convert").click(function(){
+
+    //alert("display_convert");
+    var htmlObj = document.getElementsByTagName('html')[0];
+
+    //alert(htmlObj.getAttribute("dir"));
+    if(htmlObj.getAttribute("dir") == "rtl"){
+        htmlObj.setAttribute("dir","ltr");
+    }else{
+        htmlObj.setAttribute("dir","rtl");
+    }
+
+});
+
 /***********************************************************/
 /******************Flow For Preserve Ticket*****************/
 /**Before ***/
@@ -250,10 +266,12 @@ function initFoodSelect(tripId){
         success: function(result){
             console.log(result);
             if(result.status){
+                $('#train-food-type-list').empty();
+                $('#food-station-list').empty();
 
                 if(null == result.trainFoodList || result.trainFoodList.length == 0){
                     //没有
-                    $('#train-food-option').disabled(true);
+                    // $('#train-food-option').disabled(true);
                 } else {
                     var trainFoodList = result.trainFoodList[0]['foodList'];
                     console.log("trainFoodList:" );
@@ -285,7 +303,7 @@ function initFoodSelect(tripId){
                 var opt3 = document.createElement ("option");
                 opt3.value = 0;
                 opt3.innerText = "-- --";
-                foodStationSelect.appendChild(opt1);
+                foodStationSelect.appendChild(opt3);
                 var fsindex = 1;
                 for(var key in  preserveFoodStoreListMap){
                     var opt4 = document.createElement ("option");
@@ -602,7 +620,7 @@ $("#ticket_confirm_confirm_btn").click(function () {
     orderTicketInfo.assurance = $("#assurance_type").val();
 
     //add the food information
-    if(null != $('#ticket_confirm_food_type').text() && "" != $('#ticket_confirm_food_type').text()){
+    if($('#need-food-or-not').is(":checked") && null != $('#ticket_confirm_food_type').text() && "" != $('#ticket_confirm_food_type').text()){
         if($('#ticket_confirm_food_type').text() == "Train Food"){
             orderTicketInfo.foodType = 1;
             orderTicketInfo.foodName = $('#ticket_confirm_food_name').text();
@@ -755,7 +773,7 @@ $("#preserve_collect_button").click(function() {
             $("#preserve_collect_button").attr("disabled",false);
         }
     });
-});
+});;
 
 /**
  * Flow Preserve - Step 7 - Enter Station

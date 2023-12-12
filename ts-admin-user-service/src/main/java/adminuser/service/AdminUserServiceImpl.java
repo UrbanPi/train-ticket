@@ -1,104 +1,92 @@
 package adminuser.service;
 
-import adminuser.dto.UserDto;
-import adminuser.entity.*;
-import edu.fudan.common.util.Response;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import adminuser.domain.request.AddAccountRequest;
+import adminuser.domain.request.AdminDeleteAccountRequest;
+import adminuser.domain.request.DeleteAccountRequest;
+import adminuser.domain.request.UpdateAccountRequest;
+import adminuser.domain.response.DeleteAccountResult;
+import adminuser.domain.response.FindAllAccountResult;
+import adminuser.domain.response.ModifyAccountResult;
+import adminuser.domain.response.RegisterResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-
-import java.util.List;
-
-/**
- * @author fdse
- */
 @Service
 public class AdminUserServiceImpl implements AdminUserService {
     @Autowired
     private RestTemplate restTemplate;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AdminUserServiceImpl.class);
-    private static final String USER_SERVICE_IP_URI = "http://ts-user-service:12342/api/v1/userservice/users";
-
-
     @Override
-    public Response getAllUsers(HttpHeaders headers) {
-        HttpEntity requestEntity = new HttpEntity(null);
-        ResponseEntity<Response<List<User>>> re = restTemplate.exchange(
-                USER_SERVICE_IP_URI,
-                HttpMethod.GET,
-                requestEntity,
-                new ParameterizedTypeReference<Response<List<User>>>() {
-                });
-        if (re.getBody() == null || re.getBody().getStatus() != 1) {
-            AdminUserServiceImpl.LOGGER.error("Get All Users error");
-            return new Response<>(0, "get all users error", null);
+    public FindAllAccountResult getAllUsers(String id) {
+        FindAllAccountResult result = new FindAllAccountResult();
+        if(checkId(id)){
+            System.out.println("[Admin User Service][Get All Users]");
+            result = restTemplate.getForObject(
+                    "http://ts-sso-service:12349/account/findAll",
+                    FindAllAccountResult.class);
+        }else{
+            System.out.println("[Admin User Service][Wrong Admin ID]");
+            result.setStatus(false);
+            result.setMessage("The loginId is Wrong: " + id);
         }
-        AdminUserServiceImpl.LOGGER.info("Get All Users");
-        return re.getBody();
-    }
-
-
-    @Override
-    public Response deleteUser(String userId, HttpHeaders headers) {
-        HttpEntity requestEntity = new HttpEntity(null);
-        ResponseEntity<Response> re = restTemplate.exchange(
-                USER_SERVICE_IP_URI + "/" + userId,
-                HttpMethod.DELETE,
-                requestEntity,
-                Response.class);
-        if (re.getBody() == null || re.getBody().getStatus() != 1) {
-            AdminUserServiceImpl.LOGGER.error("Delete user error, userId: {}", userId);
-            return new Response<>(0, "delete user error", null);
-        }
-        AdminUserServiceImpl.LOGGER.info("Delete user success, userId: {}", userId);
-        return re.getBody();
+        return result;
     }
 
     @Override
-    public Response updateUser(UserDto userDto, HttpHeaders headers) {
-        LOGGER.info("UPDATE USER: " + userDto.toString());
-        HttpEntity requestEntity = new HttpEntity(userDto, null);
-        ResponseEntity<Response> re = restTemplate.exchange(
-                USER_SERVICE_IP_URI,
-                HttpMethod.PUT,
-                requestEntity,
-                Response.class);
+    public DeleteAccountResult deleteUser(DeleteAccountRequest request) {
+        DeleteAccountResult result = new DeleteAccountResult();
+        if(checkId(request.getLoginId())){
+            AdminDeleteAccountRequest adminDeleteAccountRequest = new AdminDeleteAccountRequest();
+            adminDeleteAccountRequest.setAccountId(request.getAccountId());
 
-        String userName = userDto.getUserName();
-        if (re.getBody() == null || re.getBody().getStatus() != 1) {
-            AdminUserServiceImpl.LOGGER.error("Update user error, userName: {}", userName);
-            return new Response<>(0, "Update user error", null);
+            result = restTemplate.postForObject(
+                    "http://ts-sso-service:12349/account/admindelete", adminDeleteAccountRequest,DeleteAccountResult.class);
         }
-        AdminUserServiceImpl.LOGGER.info("Update user success, userName: {}", userName);
-        return re.getBody();
+        else{
+            System.out.println("[Admin User Service][Wrong Admin ID]");
+            result.setStatus(false);
+            result.setMessage("The loginId is Wrong: " + request.getLoginId());
+        }
+        return result;
     }
 
     @Override
-    public Response addUser(UserDto userDto, HttpHeaders headers) {
-        LOGGER.info("ADD USER INFO : "+userDto.toString());
-        HttpEntity requestEntity = new HttpEntity(userDto, null);
-        ResponseEntity<Response<User>> re = restTemplate.exchange(
-                USER_SERVICE_IP_URI + "/register",
-                HttpMethod.POST,
-                requestEntity,
-                new ParameterizedTypeReference<Response<User>>() {
-                });
-
-        String userName = userDto.getUserName();
-        if (re.getBody() == null || re.getBody().getStatus() != 1) {
-            AdminUserServiceImpl.LOGGER.error("Add user error, userName: {}", userName);
-            return new Response<>(0, "Add user error", null);
+    public ModifyAccountResult updateUser(UpdateAccountRequest request) {
+        ModifyAccountResult result = new ModifyAccountResult();
+        if(checkId(request.getLoginId())){
+            result = restTemplate.postForObject(
+                    "http://ts-sso-service:12349/account/modify", request.getModifyAccountInfo() ,ModifyAccountResult.class);
         }
-        AdminUserServiceImpl.LOGGER.info("Add user success, userName: {}", userName);
-        return re.getBody();
+        else{
+            System.out.println("[Admin User Service][Wrong Admin ID]");
+            result.setStatus(false);
+            result.setMessage("The loginId is Wrong: " + request.getLoginId());
+        }
+        return result;
+    }
+
+    @Override
+    public RegisterResult addUser(AddAccountRequest request) {
+        RegisterResult result = new RegisterResult();
+        if(checkId(request.getLoginId())){
+            result = restTemplate.postForObject(
+                    "http://ts-sso-service:12349/account/register", request ,RegisterResult.class);
+        }
+        else{
+            System.out.println("[Admin User Service][Wrong Admin ID]");
+            result.setStatus(false);
+            result.setMessage("The loginId is Wrong: " + request.getLoginId());
+        }
+        return result;
+    }
+
+    private boolean checkId(String id){
+        if("1d1a11c1-11cb-1cf1-b1bb-b11111d1da1f".equals(id)){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

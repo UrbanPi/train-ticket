@@ -1,76 +1,23 @@
 package contacts.service;
 
-import contacts.entity.*;
-import edu.fudan.common.util.Response;
-import org.springframework.http.HttpHeaders;
-
+import contacts.domain.*;
+import java.util.ArrayList;
 import java.util.UUID;
 
-/**
- * @author fdse
- */
 public interface ContactsService {
 
-    /**
-     * create contacts
-     *
-     * @param contacts contacts
-     * @param headers headers
-     * @return Reaponse
-     */
-    Response createContacts(Contacts contacts, HttpHeaders headers);
+    Contacts createContacts(Contacts contacts);
 
-    /**
-     * create
-     *
-     * @param addContacts add contacts
-     * @param headers headers
-     * @return Reaponse
-     */
-    Response create(Contacts addContacts, HttpHeaders headers);
+    Contacts findContactsById(UUID id);
 
-    /**
-     * delete
-     *
-     * @param contactsId contacts id
-     * @param headers headers
-     * @return Reaponse
-     */
-    Response delete(UUID contactsId, HttpHeaders headers);
+    ArrayList<Contacts> findContactsByAccountId(UUID accountId);
 
-    /**
-     * modify
-     *
-     * @param contacts contacts
-     * @param headers headers
-     * @return Reaponse
-     */
-    Response modify(Contacts contacts, HttpHeaders headers);
+    AddContactsResult create(AddContactsInfo aci,String accountId);
 
-    /**
-     * get all contacts
-     *
-     * @param headers headers
-     * @return Reaponse
-     */
-    Response getAllContacts(HttpHeaders headers);
+    DeleteContactsResult delete(UUID contactsId);
 
-    /**
-     * find contacts by id
-     *
-     * @param id id
-     * @param headers headers
-     * @return Reaponse
-     */
-    Response findContactsById(UUID id, HttpHeaders headers);
+    ModifyContactsResult modify(ModifyContactsInfo info);
 
-    /**
-     * find contacts by account id
-     *
-     * @param accountId account id
-     * @param headers headers
-     * @return Reaponse
-     */
-    Response findContactsByAccountId(UUID accountId, HttpHeaders headers);
+    GetAllContactsResult getAllContacts();
 
 }

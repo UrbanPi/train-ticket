@@ -40,19 +40,16 @@ app.factory('loadDataService', function ($http, $q) {
 
         $http({
             method: "get",
-            url: "/api/v1/admintravelservice/admintravel",
-            headers: {"Authorization": "Bearer " + param.admin_token},
+            url: "/admintravel/findAll/" + param.id,
             withCredentials: true,
         }).success(function (data, status, headers, config) {
-            if (data.status == 1) {
-                information.travelRecords = data.data;
+            if (data.status) {
+                information.travelRecords = data.trips;
                 deferred.resolve(information);
             }
-            else {
+            else{
                 alert("Request the order list fail!" + data.message);
             }
-        }).error(function (data, header, config, status) {
-            alert(data.message)
         });
 
         return promise;
@@ -64,9 +61,9 @@ app.factory('loadDataService', function ($http, $q) {
 /*
  * 加载列表
  * */
-app.controller('indexCtrl', function ($scope, $http, $window, loadDataService) {
+app.controller('indexCtrl', function ($scope, $http,$window,loadDataService) {
     var param = {};
-    param.admin_token = sessionStorage.getItem("admin_token");
+    param.id = sessionStorage.getItem("admin_id");
 
     //刷新页面
     $scope.reloadRoute = function () {
@@ -81,46 +78,44 @@ app.controller('indexCtrl', function ($scope, $http, $window, loadDataService) {
 
     $scope.decodeInfo = function (obj) {
         var des = "";
-        for (var name in obj) {
+        for(var name in obj){
             des += name + ":" + obj[name] + ";";
         }
         alert(des);
     }
-
+    
     //Add new travel
     $scope.addNewTravel = function () {
         $('#add_prompt').modal({
             relatedTarget: this,
-            onConfirm: function (e) {
+            onConfirm: function(e) {
                 $http({
                     method: "post",
-                    url: "/api/v1/admintravelservice/admintravel",
-                    headers: {"Authorization": "Bearer " + sessionStorage.getItem("admin_token")},
+                    url: "/admintravel/addTravel",
                     withCredentials: true,
-                    data: {
+                    data:{
+                        loginId: sessionStorage.getItem("admin_id"),
                         tripId: $scope.add_travel_id,
                         trainTypeId: $scope.add_travel_train_type_id,
                         routeId: $scope.add_travel_route_id,
                         startingTime: $scope.add_travel_start_time
                     }
                 }).success(function (data, status, headers, config) {
-                    if (data.status) {
-                        alert(data.status + data.msg);
+                    if(data.status){
+                        alert(data.message);
                         $scope.reloadRoute();
                     }
-                    else {
-                        alert(data.status + data.msg);
+                    else{
+                        alert(data.message);
                     }
-                }).error(function (data, header, config, status) {
-                    alert(data.message)
                 });
             },
-            onCancel: function (e) {
+            onCancel: function(e) {
                 alert('You have canceled the operation!');
             }
         });
     }
-
+    
     //Update exist travel
     $scope.updateTravel = function (record) {
         $scope.update_travel_id = record.trip.tripId.type + "" + record.trip.tripId.number;
@@ -130,61 +125,60 @@ app.controller('indexCtrl', function ($scope, $http, $window, loadDataService) {
 
         $('#update_prompt').modal({
             relatedTarget: this,
-            onConfirm: function (e) {
+            onConfirm: function(e) {
                 $http({
-                    method: "put",
-                    url: "/api/v1/admintravelservice/admintravel",
-                    headers: {"Authorization": "Bearer " + sessionStorage.getItem("admin_token")},
+                    method: "post",
+                    url: "/admintravel/updateTravel",
                     withCredentials: true,
-                    data: {
+                    data:{
+                        loginId: sessionStorage.getItem("admin_id"),
                         tripId: $scope.update_travel_id,
                         trainTypeId: $scope.update_travel_train_type_id,
                         routeId: $scope.update_travel_route_id,
                         startingTime: $scope.update_travel_start_time
                     }
                 }).success(function (data, status, headers, config) {
-                    if (data.status == 1) {
-                        alert(data.msg);
+                    if(data.status){
+                        alert(data.message);
                         $scope.reloadRoute();
                     }
-                    else {
-                        alert(data.msg);
+                    else{
+                        alert(data.message);
                     }
-                }).error(function (data, header, config, status) {
-                    alert(data.message)
                 });
             },
-            onCancel: function (e) {
+            onCancel: function(e) {
                 alert('You have canceled the operation!');
             }
         });
     }
 
     //Delete travel
-    $scope.deleteTravel = function (travelId) {
+    $scope.deleteTravel = function(travelId){
         var tripId = travelId.type + "" + travelId.number;
         $('#delete_confirm').modal({
             relatedTarget: this,
-            onConfirm: function (options) {
+            onConfirm: function(options) {
                 $http({
-                    method: "delete",
-                    url: "/api/v1/admintravelservice/admintravel/" + tripId,
-                    headers: {"Authorization": "Bearer " + sessionStorage.getItem("admin_token")},
-                    withCredentials: true
+                    method: "post",
+                    url: "/admintravel/deleteTravel",
+                    withCredentials: true,
+                    data: {
+                        loginId: sessionStorage.getItem("admin_id"),
+                        tripId: tripId
+                    }
                 }).success(function (data, status, headers, config) {
-                    if (data.status == 1) {
-                        alert(data.msg);
+                    if(data.status){
+                        alert(data.message);
                         $scope.reloadRoute();
                     }
-                    else {
-                        alert(data.msg);
+                    else{
+                        alert(data.message);
                     }
-                }).error(function (data, header, config, status) {
-                    alert(data.message)
                 });
             },
             // closeOnConfirm: false,
-            onCancel: function () {
+            onCancel: function() {
                 alert('You have canceled the operation!');
             }
         });

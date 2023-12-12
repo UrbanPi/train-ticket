@@ -98,3 +98,46 @@
     /*height:200px;*/
     overflow: scroll;
 }
+
+.form-group {
+    direction: rtl;
+}
+
+#logout_button {
+    float: right;
+}
+
+#status_set_list {
+    height: 55px;
+}
+
+/*#status_set {*/
+    /*direction: rtl;*/
+/*}*/
+
+#user_login_label {
+    float: left;
+    margin-top: 8px;
+}
+
+#user_login_id {
+    float: left;
+    margin-top: 8px;
+}
+
+
+
+/*label {*/
+    /*direction: rtl;*/
+    /*unicode-bidi:bidi-override;*/
+/*}*/
+
+/*.input-box{*/
+    /*direction: rtl;*/
+    /*unicode-bidi:bidi-override*/
+/*}*/
+
+/*.form-group{*/
+    /*direction: rtl;*/
+    /*unicode-bidi:bidi-override*/
+/*}*/

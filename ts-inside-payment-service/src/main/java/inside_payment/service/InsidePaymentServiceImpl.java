@@ -1,28 +1,23 @@
 package inside_payment.service;
 
-import edu.fudan.common.util.Response;
-import inside_payment.entity.*;
+import inside_payment.async.AsyncTask;
+import inside_payment.domain.*;
 import inside_payment.repository.AddMoneyRepository;
 import inside_payment.repository.PaymentRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import inside_payment.util.CookieUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
-/**
- * @author fdse
- */
+
 @Service
-public class InsidePaymentServiceImpl implements InsidePaymentService {
+public class InsidePaymentServiceImpl implements InsidePaymentService{
 
     @Autowired
     public AddMoneyRepository addMoneyRepository;
@@ -33,158 +28,160 @@ public class InsidePaymentServiceImpl implements InsidePaymentService {
     @Autowired
     public RestTemplate restTemplate;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(InsidePaymentServiceImpl.class);
+    @Autowired
+    private AsyncTask asyncTask;
 
     @Override
-    public Response pay(PaymentInfo info, HttpHeaders headers) {
+    public boolean pay(PaymentInfo info, HttpServletRequest request){
+//        QueryOrderResult result;
+        String userId = CookieUtil.getCookieByName(request,"loginId").getValue();
 
-        String userId = info.getUserId();
+        GetOrderByIdInfo getOrderByIdInfo = new GetOrderByIdInfo();
+        getOrderByIdInfo.setOrderId(info.getOrderId());
+        GetOrderResult result;
 
-        String requestOrderURL = "";
-        if (info.getTripId().startsWith("G") || info.getTripId().startsWith("D")) {
-            requestOrderURL =  "http://ts-order-service:12031/api/v1/orderservice/order/" + info.getOrderId();
-        } else {
-            requestOrderURL = "http://ts-order-other-service:12032/api/v1/orderOtherService/orderOther/" + info.getOrderId();
+        if(info.getTripId().startsWith("G") || info.getTripId().startsWith("D")){
+            result = restTemplate.postForObject("http://ts-order-service:12031/order/getById",getOrderByIdInfo,GetOrderResult.class);
+             //result = restTemplate.postForObject(
+             //       "http://ts-order-service:12031/order/price", new QueryOrder(info.getOrderId()),QueryOrderResult.class);
+        }else{
+            result = restTemplate.postForObject("http://ts-order-other-service:12032/orderOther/getById",getOrderByIdInfo,GetOrderResult.class);
+            //result = restTemplate.postForObject(
+            //      "http://ts-order-other-service:12032/orderOther/price", new QueryOrder(info.getOrderId()),QueryOrderResult.class);
         }
-        HttpEntity requestGetOrderResults = new HttpEntity(headers);
-        ResponseEntity<Response<Order>> reGetOrderResults = restTemplate.exchange(
-                requestOrderURL,
-                HttpMethod.GET,
-                requestGetOrderResults,
-                new ParameterizedTypeReference<Response<Order>>() {
-                });
-        Response<Order> result = reGetOrderResults.getBody();
 
+        if(result.isStatus()){
 
-        if (result.getStatus() == 1) {
-            Order order = result.getData();
-            if (order.getStatus() != OrderStatus.NOTPAID.getCode()) {
-                InsidePaymentServiceImpl.LOGGER.info("[Inside Payment Service][Pay] Error. Order status Not allowed to Pay.");
-                return new Response<>(0, "Error. Order status Not allowed to Pay.", null);
+            if(result.getOrder().getStatus() != OrderStatus.NOTPAID.getCode()){
+                System.out.println("[Inside Payment Service][Pay] Error. Order status Not allowed to Pay.");
+                return false;
             }
 
             Payment payment = new Payment();
             payment.setOrderId(info.getOrderId());
-            payment.setPrice(order.getPrice());
+            payment.setPrice(result.getOrder().getPrice());
             payment.setUserId(userId);
 
-            //判断一下账户余额够不够，不够要去站外支付
+
             List<Payment> payments = paymentRepository.findByUserId(userId);
-            List<Money> addMonies = addMoneyRepository.findByUserId(userId);
+            List<AddMoney> addMonies = addMoneyRepository.findByUserId(userId);
             Iterator<Payment> paymentsIterator = payments.iterator();
-            Iterator<Money> addMoniesIterator = addMonies.iterator();
+            Iterator<AddMoney> addMoniesIterator = addMonies.iterator();
 
             BigDecimal totalExpand = new BigDecimal("0");
-            while (paymentsIterator.hasNext()) {
+            while(paymentsIterator.hasNext()){
                 Payment p = paymentsIterator.next();
                 totalExpand = totalExpand.add(new BigDecimal(p.getPrice()));
             }
-            totalExpand = totalExpand.add(new BigDecimal(order.getPrice()));
+            totalExpand = totalExpand.add(new BigDecimal(result.getOrder().getPrice()));
 
             BigDecimal money = new BigDecimal("0");
-            while (addMoniesIterator.hasNext()) {
-                Money addMoney = addMoniesIterator.next();
+            while(addMoniesIterator.hasNext()){
+                AddMoney addMoney = addMoniesIterator.next();
                 money = money.add(new BigDecimal(addMoney.getMoney()));
             }
 
-            if (totalExpand.compareTo(money) > 0) {
-                //站外支付
-                Payment outsidePaymentInfo = new Payment();
+            if(totalExpand.compareTo(money) > 0){
+
+                OutsidePaymentInfo outsidePaymentInfo = new OutsidePaymentInfo();
                 outsidePaymentInfo.setOrderId(info.getOrderId());
                 outsidePaymentInfo.setUserId(userId);
-                outsidePaymentInfo.setPrice(order.getPrice());
+                outsidePaymentInfo.setPrice(result.getOrder().getPrice());
 
-                /****这里调用第三方支付***/
 
-                HttpEntity requestEntityOutsidePaySuccess = new HttpEntity(outsidePaymentInfo, headers);
-                ResponseEntity<Response> reOutsidePaySuccess = restTemplate.exchange(
-                        "http://ts-payment-service:19001/api/v1/paymentservice/payment",
-                        HttpMethod.POST,
-                        requestEntityOutsidePaySuccess,
-                        Response.class);
-                Response outsidePaySuccess = reOutsidePaySuccess.getBody();
 
-                InsidePaymentServiceImpl.LOGGER.info("Out pay result: {}", outsidePaySuccess.toString());
-                if (outsidePaySuccess.getStatus() == 1) {
+                boolean outsidePaySuccess = restTemplate.postForObject(
+                        "http://ts-payment-service:19001/payment/pay", outsidePaymentInfo,Boolean.class);
+//                boolean outsidePaySuccess = false;
+//                try{
+//                    System.out.println("[Payment Service][Turn To Outside Patment] Async Task Begin");
+//                    Future<Boolean> task = asyncTask.sendAsyncCallToPaymentService(outsidePaymentInfo);
+//                    outsidePaySuccess = task.get(2000,TimeUnit.MILLISECONDS).booleanValue();
+//
+//                }catch (Exception e){
+//                    System.out.println("[Inside Payment][Turn to Outside Payment] Time Out.");
+//                    //e.printStackTrace();
+//                    return false;
+//                }
+
+
+
+
+                if(outsidePaySuccess){
                     payment.setType(PaymentType.O);
                     paymentRepository.save(payment);
-                    setOrderStatus(info.getTripId(), info.getOrderId(), headers);
-                    return new Response<>(1, "Payment Success " +    outsidePaySuccess.getMsg(), null);
-                } else {
-                    LOGGER.error("Payment failed: {}", outsidePaySuccess.getMsg());
-                    return new Response<>(0, "Payment Failed:  " +  outsidePaySuccess.getMsg(), null);
+                    setOrderStatus(info.getTripId(),info.getOrderId());
+                    return true;
+                }else{
+                    return false;
                 }
-            } else {
-                setOrderStatus(info.getTripId(), info.getOrderId(), headers);
+            }else{
+                setOrderStatus(info.getTripId(),info.getOrderId());
                 payment.setType(PaymentType.P);
                 paymentRepository.save(payment);
             }
-            LOGGER.info("Payment success, orderId: {}", info.getOrderId());
-            return new Response<>(1, "Payment Success", null);
+                return true;
 
-        } else {
-            LOGGER.error("Payment failed: Order not exists, orderId: {}", info.getOrderId());
-            return new Response<>(0, "Payment Failed, Order Not Exists", null);
+        }else{
+            return false;
         }
     }
 
     @Override
-    public Response createAccount(AccountInfo info, HttpHeaders headers) {
-        List<Money> list = addMoneyRepository.findByUserId(info.getUserId());
-        if (list.isEmpty()) {
-            Money addMoney = new Money();
+    public boolean createAccount(CreateAccountInfo info){
+        List<AddMoney> list = addMoneyRepository.findByUserId(info.getUserId());
+        if(list.size() == 0){
+            AddMoney addMoney = new AddMoney();
             addMoney.setMoney(info.getMoney());
             addMoney.setUserId(info.getUserId());
-            addMoney.setType(MoneyType.A);
+            addMoney.setType(AddMoneyType.A);
             addMoneyRepository.save(addMoney);
-            return new Response<>(1, "Create Account Success", null);
-        } else {
-            LOGGER.error("Create Account Failed, Account already Exists, userId: {}", info.getUserId());
-            return new Response<>(0, "Create Account Failed, Account already Exists", null);
+            return true;
+        }else{
+            return false;
         }
     }
 
     @Override
-    public Response addMoney(String userId, String money, HttpHeaders headers) {
-        if (addMoneyRepository.findByUserId(userId) != null) {
-            Money addMoney = new Money();
-            addMoney.setUserId(userId);
-            addMoney.setMoney(money);
-            addMoney.setType(MoneyType.A);
+    public boolean addMoney(AddMoneyInfo info){
+        if(addMoneyRepository.findByUserId(info.getUserId()) != null){
+            AddMoney addMoney = new AddMoney();
+            addMoney.setUserId(info.getUserId());
+            addMoney.setMoney(info.getMoney());
+            addMoney.setType(AddMoneyType.A);
             addMoneyRepository.save(addMoney);
-            return new Response<>(1, "Add Money Success", null);
-        } else {
-            LOGGER.error("Add Money Failed, userId: {}", userId);
-            return new Response<>(0, "Add Money Failed", null);
+            return true;
+        }else{
+            return false;
         }
     }
 
     @Override
-    public Response queryAccount(HttpHeaders headers) {
-        List<Balance> result = new ArrayList<>();
-        List<Money> list = addMoneyRepository.findAll();
-        Iterator<Money> ite = list.iterator();
-        HashMap<String, String> map = new HashMap<>();
-        while (ite.hasNext()) {
-            Money addMoney = ite.next();
-            if (map.containsKey(addMoney.getUserId())) {
+    public List<Balance> queryAccount(){
+        List<Balance> result = new ArrayList<Balance>();
+        List<AddMoney> list = addMoneyRepository.findAll();
+        Iterator<AddMoney> ite = list.iterator();
+        HashMap<String,String> map = new HashMap<String,String>();
+        while(ite.hasNext()){
+            AddMoney addMoney = ite.next();
+            if(map.containsKey(addMoney.getUserId())){
                 BigDecimal money = new BigDecimal(map.get(addMoney.getUserId()));
-                map.put(addMoney.getUserId(), money.add(new BigDecimal(addMoney.getMoney())).toString());
-            } else {
-                map.put(addMoney.getUserId(), addMoney.getMoney());
+                map.put(addMoney.getUserId(),money.add(new BigDecimal(addMoney.getMoney())).toString());
+            }else{
+                map.put(addMoney.getUserId(),addMoney.getMoney());
             }
         }
 
         Iterator ite1 = map.entrySet().iterator();
-        while (ite1.hasNext()) {
+        while(ite1.hasNext()){
             Map.Entry entry = (Map.Entry) ite1.next();
-            String userId = (String) entry.getKey();
-            String money = (String) entry.getValue();
+            String userId = (String)entry.getKey();
+            String money = (String)entry.getValue();
 
             List<Payment> payments = paymentRepository.findByUserId(userId);
             Iterator<Payment> iterator = payments.iterator();
             String totalExpand = "0";
-            while (iterator.hasNext()) {
+            while(iterator.hasNext()){
                 Payment p = iterator.next();
                 BigDecimal expand = new BigDecimal(totalExpand);
                 totalExpand = expand.add(new BigDecimal(p.getPrice())).toString();
@@ -196,59 +193,53 @@ public class InsidePaymentServiceImpl implements InsidePaymentService {
             result.add(balance);
         }
 
-        return new Response<>(1, "Success", result);
+        return result;
     }
 
-    public String queryAccount(String userId, HttpHeaders headers) {
+    public String queryAccount(String userId){
         List<Payment> payments = paymentRepository.findByUserId(userId);
-        List<Money> addMonies = addMoneyRepository.findByUserId(userId);
+        List<AddMoney> addMonies = addMoneyRepository.findByUserId(userId);
         Iterator<Payment> paymentsIterator = payments.iterator();
-        Iterator<Money> addMoniesIterator = addMonies.iterator();
+        Iterator<AddMoney> addMoniesIterator = addMonies.iterator();
 
         BigDecimal totalExpand = new BigDecimal("0");
-        while (paymentsIterator.hasNext()) {
+        while(paymentsIterator.hasNext()){
             Payment p = paymentsIterator.next();
             totalExpand.add(new BigDecimal(p.getPrice()));
         }
 
         BigDecimal money = new BigDecimal("0");
-        while (addMoniesIterator.hasNext()) {
-            Money addMoney = addMoniesIterator.next();
+        while(addMoniesIterator.hasNext()){
+            AddMoney addMoney = addMoniesIterator.next();
             money.add(new BigDecimal(addMoney.getMoney()));
         }
 
-        return money.subtract(totalExpand).toString();
+        String result = money.subtract(totalExpand).toString();
+        return result;
     }
 
     @Override
-    public Response queryPayment(HttpHeaders headers) {
-        List<Payment> payments = paymentRepository.findAll();
-        if (payments != null && !payments.isEmpty()) {
-            return new Response<>(1, "Query Payment Success", payments);
-        }else {
-            LOGGER.error("Query payment failed");
-            return new Response<>(0, "Query Payment Failed", null);
-        }
+    public List<Payment> queryPayment(){
+        return paymentRepository.findAll();
     }
 
     @Override
-    public Response drawBack(String userId, String money, HttpHeaders headers) {
-        if (addMoneyRepository.findByUserId(userId) != null) {
-            Money addMoney = new Money();
-            addMoney.setUserId(userId);
-            addMoney.setMoney(money);
-            addMoney.setType(MoneyType.D);
+    public boolean drawBack(DrawBackInfo info){
+        if(addMoneyRepository.findByUserId(info.getUserId()) != null){
+            AddMoney addMoney = new AddMoney();
+            addMoney.setUserId(info.getUserId());
+            addMoney.setMoney(info.getMoney());
+            addMoney.setType(AddMoneyType.D);
             addMoneyRepository.save(addMoney);
-            return new Response<>(1, "Draw Back Money Success", null);
-        } else {
-            LOGGER.error("Draw Back Money Failed");
-            return new Response<>(0, "Draw Back Money Failed", null);
+            return true;
+        }else{
+            return false;
         }
     }
 
     @Override
-    public Response payDifference(PaymentInfo info, HttpHeaders headers) {
-
+    public boolean payDifference(PaymentDifferenceInfo info, HttpServletRequest request){
+        QueryOrderResult result;
         String userId = info.getUserId();
 
         Payment payment = new Payment();
@@ -258,100 +249,82 @@ public class InsidePaymentServiceImpl implements InsidePaymentService {
 
 
         List<Payment> payments = paymentRepository.findByUserId(userId);
-        List<Money> addMonies = addMoneyRepository.findByUserId(userId);
+        List<AddMoney> addMonies = addMoneyRepository.findByUserId(userId);
         Iterator<Payment> paymentsIterator = payments.iterator();
-        Iterator<Money> addMoniesIterator = addMonies.iterator();
+        Iterator<AddMoney> addMoniesIterator = addMonies.iterator();
 
         BigDecimal totalExpand = new BigDecimal("0");
-        while (paymentsIterator.hasNext()) {
+        while(paymentsIterator.hasNext()){
             Payment p = paymentsIterator.next();
             totalExpand.add(new BigDecimal(p.getPrice()));
         }
         totalExpand.add(new BigDecimal(info.getPrice()));
 
         BigDecimal money = new BigDecimal("0");
-        while (addMoniesIterator.hasNext()) {
-            Money addMoney = addMoniesIterator.next();
+        while(addMoniesIterator.hasNext()){
+            AddMoney addMoney = addMoniesIterator.next();
             money.add(new BigDecimal(addMoney.getMoney()));
         }
 
-        if (totalExpand.compareTo(money) > 0) {
-            //站外支付
-            Payment outsidePaymentInfo = new Payment();
+        if(totalExpand.compareTo(money) > 0){
+
+            OutsidePaymentInfo outsidePaymentInfo = new OutsidePaymentInfo();
             outsidePaymentInfo.setOrderId(info.getOrderId());
             outsidePaymentInfo.setUserId(userId);
             outsidePaymentInfo.setPrice(info.getPrice());
-
-            HttpEntity requestEntityOutsidePaySuccess = new HttpEntity(outsidePaymentInfo, headers);
-            ResponseEntity<Response> reOutsidePaySuccess = restTemplate.exchange(
-                    "http://ts-payment-service:19001/api/v1/paymentservice/payment",
-                    HttpMethod.POST,
-                    requestEntityOutsidePaySuccess,
-                    Response.class);
-            Response outsidePaySuccess = reOutsidePaySuccess.getBody();
-
-            if (outsidePaySuccess.getStatus() == 1) {
+            boolean outsidePaySuccess = restTemplate.postForObject(
+                    "http://ts-payment-service:19001/payment/pay", outsidePaymentInfo,Boolean.class);
+            if(outsidePaySuccess){
                 payment.setType(PaymentType.E);
                 paymentRepository.save(payment);
-                return new Response<>(1, "Pay Difference Success", null);
-            } else {
-                LOGGER.error("Pay Difference Failed, orderId: {}", info.getOrderId());
-                return new Response<>(0, "Pay Difference Failed", null);
+                return true;
+            }else{
+                return false;
             }
-        } else {
+        }else{
             payment.setType(PaymentType.E);
             paymentRepository.save(payment);
         }
-        return new Response<>(1, "Pay Difference Success", null);
+
+        return true;
+
+
     }
 
     @Override
-    public Response queryAddMoney(HttpHeaders headers) {
-        List<Money> monies = addMoneyRepository.findAll();
-        if (monies != null && !monies.isEmpty()) {
-            return new Response<>(1, "Query Money Success", null);
-        } else {
-            LOGGER.error("Query money failed");
-            return new Response<>(0, "Query money failed", null);
-        }
+    public List<AddMoney> queryAddMoney(){
+        return addMoneyRepository.findAll();
     }
 
-    private Response setOrderStatus(String tripId, String orderId, HttpHeaders headers) {
+    private ModifyOrderStatusResult setOrderStatus(String tripId,String orderId){
+        ModifyOrderStatusInfo info = new ModifyOrderStatusInfo();
+        info.setOrderId(orderId);
+        info.setStatus(1);   //order paid and not collected
 
-        //order paid and not collected
-        int orderStatus = 1;
-        Response result;
-        if (tripId.startsWith("G") || tripId.startsWith("D")) {
-
-            HttpEntity requestEntityModifyOrderStatusResult = new HttpEntity(headers);
-            ResponseEntity<Response> reModifyOrderStatusResult = restTemplate.exchange(
-                    "http://ts-order-service:12031/api/v1/orderservice/order/status/" + orderId + "/" + orderStatus,
-                    HttpMethod.GET,
-                    requestEntityModifyOrderStatusResult,
-                    Response.class);
-            result = reModifyOrderStatusResult.getBody();
-
-        } else {
-            HttpEntity requestEntityModifyOrderStatusResult = new HttpEntity(headers);
-            ResponseEntity<Response> reModifyOrderStatusResult = restTemplate.exchange(
-                    "http://ts-order-other-service:12032/api/v1/orderOtherService/orderOther/status/" + orderId + "/" + orderStatus,
-                    HttpMethod.GET,
-                    requestEntityModifyOrderStatusResult,
-                    Response.class);
-            result = reModifyOrderStatusResult.getBody();
-
+        ModifyOrderStatusResult result;
+        if(tripId.startsWith("G") || tripId.startsWith("D")){
+            result = restTemplate.postForObject(
+                    "http://ts-order-service:12031/order/modifyOrderStatus", info, ModifyOrderStatusResult.class);
+        }else{
+            result = restTemplate.postForObject(
+                    "http://ts-order-other-service:12032/orderOther/modifyOrderStatus", info, ModifyOrderStatusResult.class);
         }
         return result;
     }
 
     @Override
-    public void initPayment(Payment payment, HttpHeaders headers) {
+    public void initPayment(Payment payment){
         Payment paymentTemp = paymentRepository.findById(payment.getId());
-        if (paymentTemp == null) {
+        if(paymentTemp == null){
             paymentRepository.save(payment);
-        } else {
-            InsidePaymentServiceImpl.LOGGER.error("[Init Payment] Already Exists, paymentId: {}, orderId: {}", payment.getId(), payment.getOrderId());
+        }else{
+            System.out.println("[Inside Payment Service][Init Payment] Already Exists:" + payment.getId());
         }
     }
 
+//    private boolean sendOrderCreateEmail(){
+//        result = restTemplate.postForObject(
+//                "http://ts-notification-service:12031/order/modifyOrderStatus", info, ModifyOrderStatusResult.class);
+//        return true;
+//    }
 }
