@@ -43,9 +43,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          sparse-checkout:
-              'deployment/'
-              'hack/'
+          sparse-checkout: |
+            deployment
+            hack
 
       - name: Get kubeconfig with active session
         env:
