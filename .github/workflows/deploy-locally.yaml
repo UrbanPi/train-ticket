@@ -17,24 +17,23 @@ on:
         description: 'Kubernetes namespace'
         default: 'default'
       deploy-args:
-        required: false
+        required: true
         type: choice
         description: 'Deployment arguments'
-        default: ''
+        default: '--with-otel --with-monitoring'
         options:
-          -
-          - --independent-db
-          - --with-monitoring
-          - --with-tracing
-          - --with-otel
-          - --independent-db --with-tracing
-          - --independent-db --with-monitoring
-          - --independent-db --with_otel
-          - --with-otel --with-tracing
+#          - --independent-db
+#          - --with-monitoring
+#          - --with-tracing
+#          - --with-otel
+#          - --independent-db --with-tracing
+#          - --independent-db --with-monitoring
+#          - --independent-db --with_otel
+#          - --with-otel --with-tracing
           - --with-otel --with-monitoring
-          - --with-tracing --with-monitoring
-          - --with-tracing --with-monitoring --with_otel
-          - --all
+#          - --with-tracing --with-monitoring
+#          - --with-tracing --with-monitoring --with_otel
+#          - --all
 
 jobs:
   deploy:
