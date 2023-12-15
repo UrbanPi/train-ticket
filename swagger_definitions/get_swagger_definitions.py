@@ -107,6 +107,15 @@ services = [{"name": "ts-admin-basic-info-service", "port": 30030,
             {"name": "ts-register-service", "port": 30077,
              "versions": ["error_grp"]},
 
+             "versions": ["error_grp", "error_grp_2", "error_grp_3"]},
+            # {"name": "ts-rest-external-service", "port": 30079,  # No swagger definition, written in JS
+            #  "versions": ["error_grp_3"]},
+            # {"name": "ts-launcher", "port": 30080, # Java,no swagger definition, executes a workflow which has a chance to trigger the fault.
+            #  "versions": ["error_grp_4"]},
+            {"name": "ts-food-delivery-service", "port": 30081,
+             "versions": ["master_grp"]},
+            {"name": "ts-wait-order-service", "port": 30082,
+             "versions": ["master_grp"]},
             # {"name": "ts-gateway-service", "port": 30467,  # No swagger definition available (Java)
             #  "versions": ["master_grp"]},
 

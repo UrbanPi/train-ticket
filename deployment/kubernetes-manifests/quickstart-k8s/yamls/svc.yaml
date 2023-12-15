@@ -276,6 +276,9 @@ spec:
     - name: http
       port: 18888
       nodePort: 30467
+    - name: metric
+      port: 9464
+      nodePort: 30468
   selector:
     app: ts-gateway-service
   type: NodePort
@@ -797,3 +800,36 @@ spec:
 #  selector:
 #    app: ts-rest-external-service
 #---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ts-food-delivery-service
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      port: 18957
+      nodePort: 30081
+    - name: metric
+      port: 9464
+      nodePort: 30381
+  selector:
+    app: ts-food-delivery-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ts-wait-order-service
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      port: 17525
+      nodePort: 30082
+    - name: metric
+      port: 9464
+      nodePort: 30382
+  selector:
+    app: ts-wait-order-service
+---
