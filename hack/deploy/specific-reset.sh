@@ -11,7 +11,6 @@ args="$2"
 argNone=1
 argDB=0
 argMonitoring=0
-argTracing=0
 argOTEL=0
 argAll=0
 
@@ -36,7 +35,6 @@ function reset_all {
   delete_tt_micro_services
   kubectl delete -f deployment/kubernetes-manifests/skywalking -n "$namespace"
   kubectl delete -f deployment/kubernetes-manifests/prometheus
-  kubectl delete -f deployment/kubernetes-manifests/prometheus_micros -n "$namespace"
 }
 
 function reset {
@@ -58,10 +56,7 @@ function reset {
     fi
 
 
-    if [ $argTracing == 1 ]; then
-      update_tt_sw_dp_cm $nacosRelease $rabbitmqRelease
-      kubectl delete -f deployment/kubernetes-manifests/skywalking -n "$namespace"
-    elif [ $argOTEL == 1 ]; then
+    if [ $argOTEL == 1 ]; then
       update_tt_otel_dp_cm $nacosRelease $rabbitmqRelease
       kubectl delete -f deployment/kubernetes-manifests/otel -n "$namespace"
       kubectl delete -f deployment/kubernetes-manifests/jaeger -n "$namespace"
@@ -71,7 +66,6 @@ function reset {
 
     if [ $argMonitoring == 1 ]; then
       kubectl delete -f deployment/kubernetes-manifests/prometheus
-      kubectl delete -f deployment/kubernetes-manifests/prometheus_micros -n "$namespace"
 
     fi
     delete_tt_micro_services
@@ -95,9 +89,6 @@ function parse_args {
         ;;
       "--with-monitoring")
         argMonitoring=1
-        ;;
-      "--with-tracing")
-        argTracing=1
         ;;
       "--with-otel")
         argOTEL=1

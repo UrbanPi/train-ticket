@@ -48,13 +48,6 @@ function deploy_infrastructures {
 function deploy_monitoring {
   echo "Start deploy prometheus and grafana"
   kubectl apply -f deployment/kubernetes-manifests/prometheus
-  kubectl apply -f deployment/kubernetes-manifests/prometheus_micros -n $namespace
-}
-
-function deploy_tracing {
-  echo "Start deploy skywalking"
-  namespace=$1
-  kubectl apply -f deployment/kubernetes-manifests/skywalking -n $namespace
 }
 
 function deploy_otel_collector {
@@ -117,14 +110,6 @@ function deploy_tt_dp {
   echo "Start to deploy train-ticket deployments."
   update_tt_dp_cm $nacosRelease $rabbitmqRelease
   kubectl apply -f deployment/kubernetes-manifests/quickstart-k8s/yamls/deploy.yaml -n $namespace > /dev/null
-  echo "End deployment Step <3/3>----------------------------------------------------------------------"
-}
-
-function deploy_tt_dp_sw {
-  namespace=$1
-  echo "Start to deploy train-ticket deployments with skywalking agent."
-  update_tt_sw_dp_cm $nacosRelease $rabbitmqRelease
-  kubectl apply -f deployment/kubernetes-manifests/quickstart-k8s/yamls/sw_deploy.yaml -n $namespace > /dev/null
   echo "End deployment Step <3/3>----------------------------------------------------------------------"
 }
 

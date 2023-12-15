@@ -12,6 +12,56 @@ data:
     - /etc/config/rules/*.rules
 
     scrape_configs:
+    - job_name: TrainTicketServices
+      static_configs:
+            - targets:
+              - ts-admin-basic-info-service.default.svc.cluster.local:9464
+              - ts-admin-order-service.default.svc.cluster.local:9464
+              - ts-admin-route-service.default.svc.cluster.local:9464
+              - ts-admin-travel-service.default.svc.cluster.local:9464
+              - ts-admin-user-service.default.svc.cluster.local:9464
+              - ts-assurance-service.default.svc.cluster.local:9464
+              - ts-auth-service.default.svc.cluster.local:9464
+              - ts-basic-service.default.svc.cluster.local:9464
+              - ts-cancel-service.default.svc.cluster.local:9464
+              - ts-config-service.default.svc.cluster.local:9464
+              - ts-consign-price-service.default.svc.cluster.local:9464
+              - ts-consign-service.default.svc.cluster.local:9464
+              - ts-contacts-service.default.svc.cluster.local:9464
+              - ts-delivery-service.default.svc.cluster.local:9464
+              - ts-execute-service.default.svc.cluster.local:9464
+              - ts-food-service.default.svc.cluster.local:9464
+              - ts-gateway-service.default.svc.cluster.local:9464
+              - ts-inside-payment-service.default.svc.cluster.local:9464
+              - ts-notification-service.default.svc.cluster.local:9464
+              - ts-order-other-service.default.svc.cluster.local:9464
+              - ts-order-service.default.svc.cluster.local:9464
+              - ts-payment-service.default.svc.cluster.local:9464
+              - ts-preserve-other-service.default.svc.cluster.local:9464
+              - ts-preserve-service.default.svc.cluster.local:9464
+              - ts-price-service.default.svc.cluster.local:9464
+              - ts-rebook-service.default.svc.cluster.local:9464
+              - ts-route-plan-service.default.svc.cluster.local:9464
+              - ts-route-service.default.svc.cluster.local:9464
+              - ts-seat-service.default.svc.cluster.local:9464
+              - ts-security-service.default.svc.cluster.local:9464
+              - ts-station-food-service.default.svc.cluster.local:9464
+              - ts-station-service.default.svc.cluster.local:9464
+              - ts-train-food-service.default.svc.cluster.local:9464
+              - ts-train-service.default.svc.cluster.local:9464
+              - ts-travel-plan-service.default.svc.cluster.local:9464
+              - ts-travel-service.default.svc.cluster.local:9464
+              - ts-travel2-service.default.svc.cluster.local:9464
+              - ts-user-service.default.svc.cluster.local:9464
+              - ts-verification-code-service.default.svc.cluster.local:9464
+    #          - ts-food-map-service.default.svc.cluster.local:9464
+    #          - ts-ticketinfo-service.default.svc.cluster.local:9464
+    #          - ts-login-service.default.svc.cluster.local:9464
+    #          - ts-sso-service.default.svc.cluster.local:9464
+    #          - ts-register-servic.default.svc.cluster.local:9464
+              - ts-food-delivery-service.default.svc.cluster.local:9464
+              - ts-wait-order-service.default.svc.cluster.local:9464
+  
     - job_name: prometheus
       static_configs:
       - targets:
