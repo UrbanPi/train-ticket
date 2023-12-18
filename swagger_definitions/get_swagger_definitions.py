@@ -8,17 +8,23 @@ from http.client import RemoteDisconnected
 from json import JSONDecodeError
 from urllib.error import URLError
 
-available_versions = ["master", "error-f1", "error-f2", "error-f3", "error-f4", "error-f5", "error-f6", "error-f7",
-                      "error-f8", "error-f9", "error-f10", "error-f11", "error-f12", "error-f13", "error-f14", "error-f15",
-                      "error-f16", "error-f17", "error-f18", "error-f19", "error-f20", "error-f21", "error-f22"]
+available_versions = ["master", "ts-error-F1", "ts-error-F2", "ts-error-F3", "ts-error-F4", "ts-error-F5",
+                      "ts-error-F6", "ts-error-F7",
+                      "ts-error-F8", "ts-error-F9", "ts-error-F10", "ts-error-F11", "ts-error-F12", "ts-error-F13",
+                      "ts-error-F14", "ts-error-F15",
+                      "ts-error-F16", "ts-error-F17", "ts-error-F18", "ts-error-F19", "ts-error-F20", "ts-error-F21",
+                      "ts-error-F22"]
 
 version_groups = {"master_grp": ["master"],
-                  "error_grp": ["error-f1", "error-f3", "error-f4", "error-f6", "error-f8", "error-f9", "error-f10", "error-f11",
-                                "error-f12", "error-f13", "error-f14", "error-f15", "error-f16", "error-f17",
-                                "error-f18",  "error-f19", "error-f20", "error-f21", "error-f22"],
-                  "error_grp_2": ["error-f2", "error-f5"],
-                  "error_grp_3": ["error-f7"],
-                  "error_grp_4": ["error-f13"]}  # is the same as the "error_grp" but has an additional Java service without swagger
+                  "error_grp": ["ts-error-F1", "ts-error-F3", "ts-error-F4", "ts-error-F6", "ts-error-F8",
+                                "ts-error-F9", "ts-error-F10", "ts-error-F11",
+                                "ts-error-F12", "ts-error-F13", "ts-error-F14", "ts-error-F15", "ts-error-F16",
+                                "ts-error-F17",
+                                "ts-error-F18", "ts-error-F19", "ts-error-F20", "ts-error-F21", "ts-error-F22"],
+                  "error_grp_2": ["ts-error-F2", "ts-error-F5"],
+                  "error_grp_3": ["ts-error-F7"],
+                  "error_grp_4": [
+                      "ts-error-F13"]}  # is the same as the "error_grp" but has an additional Java service without swagger
 
 services = [{"name": "ts-admin-basic-info-service", "port": 30030,
              "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
@@ -189,8 +195,9 @@ def retrieve_and_save(service: dict):
     # print("Getting definition of {} from url: {}".format(service.get("name"), url))
     try:
         definition: dict = json.loads(urllib.request.urlopen(url, timeout=30).read().decode("utf8"))
-        definition["tags"] = list(filter(lambda tag: not any(tag.get("name") == not_wanted for not_wanted in unwanted_tags),
-                                         definition.get("tags")))
+        definition["tags"] = list(
+            filter(lambda tag: not any(tag.get("name") == not_wanted for not_wanted in unwanted_tags),
+                   definition.get("tags")))
         definition["paths"] = dict(filter(lambda item: not any(item[0] == not_wanted for not_wanted in unwanted_paths),
                                           definition.get("paths").items()))
         with open(service.get("name") + ".json", "w", encoding="utf8") as f:
