@@ -26,12 +26,15 @@ for pid in ${pids[*]}; do
     wait "$pid"
 done
 
-# Push to registry
+# Push to registry (direct docker push is not possible because the image is not stored. However, it should be in the cache.
+# Since nothing changed, the build step should finish fast.
 for dir in ts-*; do
     if [[ -d $dir ]]; then
         if [[ -n $(ls "$dir" | grep -i Dockerfile) ]]; then
             echo "Pushing ${dir}"
-            docker push "$1"/"${dir}":"${tag}"
+            docker build --push -t "$1"/"${dir}":"${tag}" "$dir"\
+                        --label "org.opencontainers.image.source=https://github.scch.at/ConTest/TrainTicket" \
+                        --label "org.opencontainers.image.url=https://github.scch.at/ConTest/TrainTicket"
         fi
     fi
 done
