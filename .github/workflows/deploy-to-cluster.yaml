@@ -18,16 +18,23 @@ on:
         description: 'Kubernetes namespace (scch-sws for dependabot)'
         default: ''
       deploy-args:
-        required: false
+        required: true
         type: choice
         description: 'Deployment arguments'
-        default: ''
+        default: '--with-otel --with-monitoring'
         options:
-          -
-          - --with-monitoring
-          - --with-otel
+#          - --independent-db
+#          - --with-monitoring
+#          - --with-tracing
+#          - --with-otel
+#          - --independent-db --with-tracing
+#          - --independent-db --with-monitoring
+#          - --independent-db --with_otel
+#          - --with-otel --with-tracing
           - --with-otel --with-monitoring
-
+#          - --with-tracing --with-monitoring
+#          - --with-tracing --with-monitoring --with_otel
+#          - --all
 
 jobs:
   deploy:
@@ -35,6 +42,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          sparse-checkout: |
+            deployment
+            hack
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
