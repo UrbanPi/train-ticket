@@ -10,7 +10,7 @@ import sso.service.AccountSsoService;
 import java.util.UUID;
 
 @Component
-public class initData implements CommandLineRunner {
+public class InitData implements CommandLineRunner {
 
     @Autowired
     private AccountSsoService ssoService;
