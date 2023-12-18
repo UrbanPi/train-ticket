@@ -7,7 +7,7 @@ import security.domain.CreateSecurityConfigInfo;
 import security.service.SecurityService;
 
 @Component
-public class initData implements CommandLineRunner {
+public class InitData implements CommandLineRunner {
 
     @Autowired
     private SecurityService securityService;
