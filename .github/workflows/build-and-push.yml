@@ -9,6 +9,7 @@ on:
         default: 'dependabot'
         options:
           - local-runner
+          - austin
           - dependabot
 
 jobs:
