@@ -41,4 +41,4 @@ jobs:
         run: ./apache-maven-3.9.4/bin/mvn clean package -Dmaven.test.skip=true
 
       - name: Push to container registry
-        run: ./script/publish-docker-images.sh containers.github.scch.at/contest/trainticket
+        run: ./script/publish-docker-images.sh containers.github.scch.at/contest/trainticket ${{ github.ref_name }}
