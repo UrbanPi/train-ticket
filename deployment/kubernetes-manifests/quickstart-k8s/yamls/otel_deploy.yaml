@@ -46,7 +46,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-admin-basic-info-service
-          image: containers.github.scch.at/contest/trainticket/ts-admin-basic-info-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-admin-basic-info-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -115,7 +115,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-admin-order-service
-          image: containers.github.scch.at/contest/trainticket/ts-admin-order-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-admin-order-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -185,7 +185,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-admin-route-service
-          image: containers.github.scch.at/contest/trainticket/ts-admin-route-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-admin-route-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -255,7 +255,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-admin-travel-service
-          image: containers.github.scch.at/contest/trainticket/ts-admin-travel-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-admin-travel-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -325,7 +325,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-admin-user-service
-          image: containers.github.scch.at/contest/trainticket/ts-admin-user-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-admin-user-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -395,7 +395,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-assurance-service
-          image: containers.github.scch.at/contest/trainticket/ts-assurance-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-assurance-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -469,7 +469,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-basic-service
-          image: containers.github.scch.at/contest/trainticket/ts-basic-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-basic-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -539,7 +539,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-cancel-service
-          image: containers.github.scch.at/contest/trainticket/ts-cancel-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-cancel-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -611,7 +611,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-config-service
-          image: containers.github.scch.at/contest/trainticket/ts-config-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-config-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -685,7 +685,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-consign-price-service
-          image: containers.github.scch.at/contest/trainticket/ts-consign-price-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-consign-price-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -759,7 +759,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-consign-service
-          image: containers.github.scch.at/contest/trainticket/ts-consign-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-consign-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -833,7 +833,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-contacts-service
-          image: containers.github.scch.at/contest/trainticket/ts-contacts-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-contacts-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -907,7 +907,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-execute-service
-          image: containers.github.scch.at/contest/trainticket/ts-execute-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-execute-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -977,7 +977,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-food-service
-          image: containers.github.scch.at/contest/trainticket/ts-food-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-food-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -1052,7 +1052,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-inside-payment-service
-          image: containers.github.scch.at/contest/trainticket/ts-inside-payment-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-inside-payment-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -1114,7 +1114,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-news-service
-          image: containers.github.scch.at/contest/trainticket/ts-news-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-news-service:ts-error-F8
           imagePullPolicy: Always
           env:
             - name: NODE_IP
@@ -1171,7 +1171,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-notification-service
-          image: containers.github.scch.at/contest/trainticket/ts-notification-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-notification-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -1244,7 +1244,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-order-other-service
-          image: containers.github.scch.at/contest/trainticket/ts-order-other-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-order-other-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -1315,7 +1315,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-order-service
-          image: containers.github.scch.at/contest/trainticket/ts-order-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-order-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -1386,7 +1386,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-payment-service
-          image: containers.github.scch.at/contest/trainticket/ts-payment-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-payment-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -1459,7 +1459,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-preserve-other-service
-          image: containers.github.scch.at/contest/trainticket/ts-preserve-other-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-preserve-other-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -1532,7 +1532,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-preserve-service
-          image: containers.github.scch.at/contest/trainticket/ts-preserve-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-preserve-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -1605,7 +1605,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-price-service
-          image: containers.github.scch.at/contest/trainticket/ts-price-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-price-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -1672,7 +1672,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-rebook-service
-          image: containers.github.scch.at/contest/trainticket/ts-rebook-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-rebook-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -1743,7 +1743,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-route-plan-service
-          image: containers.github.scch.at/contest/trainticket/ts-route-plan-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-route-plan-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -1813,7 +1813,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-route-service
-          image: containers.github.scch.at/contest/trainticket/ts-route-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-route-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -1887,7 +1887,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-seat-service
-          image: containers.github.scch.at/contest/trainticket/ts-seat-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-seat-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -1957,7 +1957,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-security-service
-          image: containers.github.scch.at/contest/trainticket/ts-security-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-security-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -2031,7 +2031,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-station-service
-          image: containers.github.scch.at/contest/trainticket/ts-station-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-station-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -2088,7 +2088,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-ticket-office-service
-          image: containers.github.scch.at/contest/trainticket/ts-ticket-office-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-ticket-office-service:ts-error-F8
           imagePullPolicy: Always
           env:
             - name: NODE_IP
@@ -2145,7 +2145,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-train-service
-          image: containers.github.scch.at/contest/trainticket/ts-train-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-train-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -2219,7 +2219,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-travel-plan-service
-          image: containers.github.scch.at/contest/trainticket/ts-travel-plan-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-travel-plan-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -2289,7 +2289,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-travel-service
-          image: containers.github.scch.at/contest/trainticket/ts-travel-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-travel-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -2363,7 +2363,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-travel2-service
-          image: containers.github.scch.at/contest/trainticket/ts-travel2-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-travel2-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -2437,7 +2437,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-verification-code-service
-          image: containers.github.scch.at/contest/trainticket/ts-verification-code-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-verification-code-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -2496,7 +2496,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-ui-dashboard
-          image: containers.github.scch.at/contest/trainticket/ts-ui-dashboard:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-ui-dashboard:ts-error-F8
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
@@ -2542,7 +2542,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-ticketinfo-service
-          image: containers.github.scch.at/contest/trainticket/ts-ticketinfo-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-ticketinfo-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -2616,7 +2616,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-food-map-service
-          image: containers.github.scch.at/contest/trainticket/ts-food-map-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-food-map-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -2690,7 +2690,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-login-service
-          image: containers.github.scch.at/contest/trainticket/ts-login-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-login-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -2759,7 +2759,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-sso-service
-          image: containers.github.scch.at/contest/trainticket/ts-sso-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-sso-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -2828,7 +2828,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-register-service
-          image: containers.github.scch.at/contest/trainticket/ts-register-service:error-f8
+          image: containers.github.scch.at/contest/trainticket/ts-register-service:ts-error-F8
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -2897,7 +2897,7 @@ spec:
 #        - name: conregscch
 #      containers:
 #        - name: ts-click-twice-service
-#          image: containers.github.scch.at/contest/trainticket/ts-click-twice:error-f8
+#          image: containers.github.scch.at/contest/trainticket/ts-click-twice:ts-error-F8
 #          imagePullPolicy: Always
 #          volumeMounts:
 #            - name: otel-agent
@@ -2954,7 +2954,7 @@ spec:
 #        - name: conregscch
 #      containers:
 #        - name: ts-rest-external-service
-#          image: containers.github.scch.at/contest/trainticket/ts-rest-external-service:error-f8
+#          image: containers.github.scch.at/contest/trainticket/ts-rest-external-service:ts-error-F8
 #          imagePullPolicy: Always
 #          env:
 #            - name: NODE_IP
