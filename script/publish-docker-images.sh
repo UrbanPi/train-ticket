@@ -3,9 +3,9 @@ set -eux
 # Problem: Building and pushing each container sequentially is awfully slow but building and pushing
 # in parallel is too fast (hits the request limit of the GitHub instance).
 # Hence, we build in parallel and wait for each process to finish and then push sequentially.
-tag="ts-error-F22"
+tag=$2
 echo
-echo "Publishing images, Repo: $1, Tag: " ${tag}
+echo "Publishing images, Repo: $1, Tag: " "${tag}"
 echo
 pids=()
 for dir in ts-*; do
