@@ -45,7 +45,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-admin-basic-info-service
-          image: containers.github.scch.at/contest/trainticket/ts-admin-basic-info-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-admin-basic-info-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -116,7 +116,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-admin-order-service
-          image: containers.github.scch.at/contest/trainticket/ts-admin-order-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-admin-order-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -187,7 +187,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-admin-route-service
-          image: containers.github.scch.at/contest/trainticket/ts-admin-route-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-admin-route-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -258,7 +258,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-admin-travel-service
-          image: containers.github.scch.at/contest/trainticket/ts-admin-travel-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-admin-travel-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -329,7 +329,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-admin-user-service
-          image: containers.github.scch.at/contest/trainticket/ts-admin-user-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-admin-user-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -400,7 +400,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-assurance-service
-          image: containers.github.scch.at/contest/trainticket/ts-assurance-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-assurance-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -473,7 +473,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-auth-service
-          image: containers.github.scch.at/contest/trainticket/ts-auth-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-auth-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -534,7 +534,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-avatar-service
-          image:  containers.github.scch.at/contest/trainticket/ts-avatar-service:latest
+          image:  containers.github.scch.at/contest/trainticket/ts-avatar-service:master
           imagePullPolicy: Always
           env:
             - name: NODE_IP
@@ -596,7 +596,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-basic-service
-          image: containers.github.scch.at/contest/trainticket/ts-basic-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-basic-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -667,7 +667,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-cancel-service
-          image: containers.github.scch.at/contest/trainticket/ts-cancel-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-cancel-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -738,7 +738,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-config-service
-          image: containers.github.scch.at/contest/trainticket/ts-config-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-config-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -811,7 +811,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-consign-price-service
-          image: containers.github.scch.at/contest/trainticket/ts-consign-price-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-consign-price-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -884,7 +884,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-consign-service
-          image: containers.github.scch.at/contest/trainticket/ts-consign-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-consign-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -957,7 +957,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-contacts-service
-          image: containers.github.scch.at/contest/trainticket/ts-contacts-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-contacts-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -1030,7 +1030,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-delivery-service
-          image: containers.github.scch.at/contest/trainticket/ts-delivery-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-delivery-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -1105,7 +1105,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-execute-service
-          image: containers.github.scch.at/contest/trainticket/ts-execute-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-execute-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -1176,7 +1176,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-food-delivery-service
-          image: containers.github.scch.at/contest/trainticket/ts-food-delivery-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-food-delivery-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -1249,7 +1249,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-food-service
-          image: containers.github.scch.at/contest/trainticket/ts-food-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-food-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -1325,7 +1325,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-gateway-service
-          image: containers.github.scch.at/contest/trainticket/ts-gateway-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-gateway-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -1396,7 +1396,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-inside-payment-service
-          image: containers.github.scch.at/contest/trainticket/ts-inside-payment-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-inside-payment-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -1457,7 +1457,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-news-service
-          image: containers.github.scch.at/contest/trainticket/ts-news-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-news-service:master
           imagePullPolicy: Always
           env:
             - name: NODE_IP
@@ -1519,7 +1519,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-notification-service
-          image: containers.github.scch.at/contest/trainticket/ts-notification-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-notification-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -1594,7 +1594,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-order-other-service
-          image: containers.github.scch.at/contest/trainticket/ts-order-other-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-order-other-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -1669,7 +1669,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-order-service
-          image: containers.github.scch.at/contest/trainticket/ts-order-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-order-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -1744,7 +1744,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-payment-service
-          image: containers.github.scch.at/contest/trainticket/ts-payment-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-payment-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -1817,7 +1817,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-preserve-other-service
-          image: containers.github.scch.at/contest/trainticket/ts-preserve-other-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-preserve-other-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -1890,7 +1890,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-preserve-service
-          image: containers.github.scch.at/contest/trainticket/ts-preserve-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-preserve-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -1963,7 +1963,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-price-service
-          image: containers.github.scch.at/contest/trainticket/ts-price-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-price-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -2036,7 +2036,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-rebook-service
-          image: containers.github.scch.at/contest/trainticket/ts-rebook-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-rebook-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -2109,7 +2109,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-route-plan-service
-          image: containers.github.scch.at/contest/trainticket/ts-route-plan-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-route-plan-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -2180,7 +2180,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-route-service
-          image: containers.github.scch.at/contest/trainticket/ts-route-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-route-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -2253,7 +2253,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-seat-service
-          image: containers.github.scch.at/contest/trainticket/ts-seat-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-seat-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -2324,7 +2324,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-security-service
-          image: containers.github.scch.at/contest/trainticket/ts-security-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-security-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -2397,7 +2397,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-station-food-service
-          image: containers.github.scch.at/contest/trainticket/ts-station-food-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-station-food-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -2470,7 +2470,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-station-service
-          image: containers.github.scch.at/contest/trainticket/ts-station-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-station-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -2531,7 +2531,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-ticket-office-service
-          image: containers.github.scch.at/contest/trainticket/ts-ticket-office-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-ticket-office-service:master
           imagePullPolicy: Always
           env:
             - name: NODE_IP
@@ -2596,7 +2596,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-train-food-service
-          image: containers.github.scch.at/contest/trainticket/ts-train-food-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-train-food-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -2669,7 +2669,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-train-service
-          image: containers.github.scch.at/contest/trainticket/ts-train-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-train-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -2742,7 +2742,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-travel-plan-service
-          image: containers.github.scch.at/contest/trainticket/ts-travel-plan-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-travel-plan-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -2813,7 +2813,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-travel-service
-          image: containers.github.scch.at/contest/trainticket/ts-travel-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-travel-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -2886,7 +2886,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-travel2-service
-          image: containers.github.scch.at/contest/trainticket/ts-travel2-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-travel2-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -2959,7 +2959,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-user-service
-          image: containers.github.scch.at/contest/trainticket/ts-user-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-user-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -3032,7 +3032,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-verification-code-service
-          image: containers.github.scch.at/contest/trainticket/ts-verification-code-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-verification-code-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
@@ -3091,7 +3091,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-voucher-service
-          image: containers.github.scch.at/contest/trainticket/ts-voucher-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-voucher-service:master
           imagePullPolicy: Always
           env:
             - name: NODE_IP
@@ -3155,7 +3155,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-wait-order-service
-          image: containers.github.scch.at/contest/trainticket/ts-wait-order-service:latest
+          image: containers.github.scch.at/contest/trainticket/ts-wait-order-service:master
           imagePullPolicy: Always
           volumeMounts:
             - name: otel-agent
