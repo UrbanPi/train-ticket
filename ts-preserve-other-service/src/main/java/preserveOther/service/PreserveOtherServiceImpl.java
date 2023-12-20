@@ -317,10 +317,10 @@ public class PreserveOtherServiceImpl implements PreserveOtherService {
 
             sendEmail(notifyInfo);
 
-            /**********If user create a contact with duplicate ID，throw exception***********/
-            if(oti.getIsCreateContacts().equals("true") && addContactsResult.isExists() == true){
-                throw new RuntimeException("[Normal Error] Reproduction Of Error Normal");
-            }
+//            /**********If user create a contact with duplicate ID，throw exception***********/
+//            if(oti.getIsCreateContacts().equals("true") && addContactsResult.isExists() == true){
+//                throw new RuntimeException("[Normal Error] Reproduction Of Error Normal");
+//            }
 
         }else{
             System.out.println("[Preserve Other Service][Verify Login] Fail");

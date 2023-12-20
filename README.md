@@ -1,6 +1,6 @@
 ### error-f10
 
-Original description (ts-error-logic-F10)
+#### Original description (ts-error-logic-F10)
 > F10 is simply a normal logic fault in one business process.
 > This kind of fault occurs due to the defects in the implementation of a business process.
 >
@@ -31,7 +31,7 @@ Original description (ts-error-logic-F10)
 > 9. Click [Confirm Ticket] and wait for the ERROR alert.
 
 
-Original description (ts-error-normal-F10)
+#### Original description (ts-error-normal-F10)
 >Reproduce Process:
 >    1. Login
 >    2. Search for "Nan Jing" and "Other"
@@ -42,14 +42,15 @@ Original description (ts-error-normal-F10)
         >       But Step4&5 success, this is a fault.
 >    7. Find out why and fix it.
 
-
+#### Notes
 1. The code or git branch used in this fault is not the one mentioned in the [fault replication repository](https://github.com/FudanSELab/train-ticket-fault-replicate#f10-ts-error-logic-f10)
    The repository states that **ts-error-logic-f10** should be the correct branch but the code in this branch does not show the expected behaviour.
-2. The probably correct branch and code is **ts-error-normal-F10** in the fault replication repository, which is probably (at least the contents of `PreserveOtherServiceImpl`, which is the root cause of the injected error, are identical)
-   also contained in the corresponding zip package at https://fudanselab.github.io/research/MSFaultEmpiricalStudy/.
+2. The probably correct branch and code is **ts-error-normal-F10** in the fault replication repository, which is most likely contained in the
+   corresponding zip package at https://fudanselab.github.io/research/MSFaultEmpiricalStudy/ (at least the contents of `PreserveOtherServiceImpl`, which is the root cause of the injected error, are identical).
 
 #### Adapted implementation
-To successfully reproducing this fault the following lines in ``PreserveOtherServiceImpl`` had to be commented in / activated:
+There is no need to adapt the implementation because the application allows duplicate document ids.
+To deactivate this fault the following lines in ``PreserveOtherServiceImpl`` have to be commented in / activated:
 
 ```java
 /**********If user create a contact with duplicate ID，throw exception***********/
@@ -58,5 +59,11 @@ if(oti.getIsCreateContacts().equals("true") && addContactsResult.isExists() == t
 }
 ```
 
-Beware that, these are the only lines which have to be commented in / activated, although there are further sections of
-commented out code in this file, which might look like they have to be active too. 
+Beware that these are the only lines which have to be commented in / activated, although there are further sections of
+commented out code in this file, which might look like they have to be active too.
+
+#### Thoughts
+Thinking about the fault, I would expect the application to throw an exception/error when someone creates a contact info
+with a duplicate document number. Hence, the actual fault happens when no exception is thrown i.e., when the system does
+not prevent duplicate document ids. The description of (ts-error-normal-F10) hints at this behaviour but in combination
+with the other descriptions there is room for interpretation. 
