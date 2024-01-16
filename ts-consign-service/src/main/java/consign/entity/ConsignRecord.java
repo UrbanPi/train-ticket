@@ -15,7 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Table(schema = "ts-consign-mysql")
+@Table(name = "consign_record", schema = "ts-consign-mysql")
 public class ConsignRecord {
 
     @Id

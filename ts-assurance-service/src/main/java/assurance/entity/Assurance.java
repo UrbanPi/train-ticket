@@ -13,6 +13,7 @@ import java.util.UUID;
  */
 @Data
 @Entity
+@Table(name = "assurance")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Assurance {
 

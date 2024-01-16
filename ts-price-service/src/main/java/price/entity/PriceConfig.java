@@ -15,7 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Table(indexes = {@Index(name = "route_type_idx", columnList = "train_type, route_id", unique = true)})
+@Table(name = "price_config", indexes = {@Index(name = "route_type_idx", columnList = "train_type, route_id", unique = true)})
 public class PriceConfig {
 
     @Id

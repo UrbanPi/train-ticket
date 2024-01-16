@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 import java.util.UUID;
 
@@ -16,6 +13,7 @@ import java.util.UUID;
  */
 @Data
 @Entity
+@Table(name = "security_config")
 @GenericGenerator(name = "jpa-uuid", strategy = "org.hibernate.id.UUIDGenerator")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SecurityConfig {

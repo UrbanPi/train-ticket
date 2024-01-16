@@ -13,6 +13,7 @@ import java.util.UUID;
 
 @Data
 @Entity
+@Table(name = "train_food")
 @GenericGenerator(name = "jpa-uuid", strategy = "org.hibernate.id.UUIDGenerator")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TrainFood {

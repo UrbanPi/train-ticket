@@ -12,6 +12,7 @@ import edu.fudan.common.entity.Food;
 
 @Data
 @Entity
+@Table(name = "food_delivery_order")
 @GenericGenerator(name = "jpa-uuid", strategy = "uuid")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor

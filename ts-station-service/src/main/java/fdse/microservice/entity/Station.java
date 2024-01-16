@@ -3,10 +3,7 @@ package fdse.microservice.entity;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.Locale;
@@ -14,6 +11,7 @@ import java.util.UUID;
 
 @Data
 @Entity
+@Table(name = "station")
 @GenericGenerator(name = "jpa-uuid", strategy = "org.hibernate.id.UUIDGenerator")
 public class Station {
     @Id

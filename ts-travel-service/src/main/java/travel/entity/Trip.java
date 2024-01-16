@@ -17,6 +17,7 @@ import java.util.UUID;
  */
 @Data
 @Entity
+@Table(name = "trip")
 @GenericGenerator(name = "jpa-uuid", strategy = "org.hibernate.id.UUIDGenerator")
 public class Trip {
     @Valid

@@ -18,7 +18,7 @@ import java.util.UUID;
 @Entity
 @GenericGenerator(name = "jpa-uuid", strategy = "org.hibernate.id.UUIDGenerator")
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Table(indexes = {@Index(name = "account_document_idx", columnList = "account_id, document_number, document_type", unique = true)})
+@Table(name = "contacts", indexes = {@Index(name = "account_document_idx", columnList = "account_id, document_number, document_type", unique = true)})
 public class Contacts {
 
     @Id

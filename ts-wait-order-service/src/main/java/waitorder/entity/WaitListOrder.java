@@ -13,6 +13,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @Entity
+@Table(name = "wait_list_order")
 @GenericGenerator(name = "jpa-uuid", strategy ="uuid")
 public class WaitListOrder {
     @Id

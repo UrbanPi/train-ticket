@@ -15,7 +15,7 @@ import java.util.List;
 @GenericGenerator(name = "jpa-uuid", strategy = "org.hibernate.id.UUIDGenerator")
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Table(indexes = {@Index(name = "station_store_idx", columnList = "station_name, store_name", unique = true)})
+@Table(name = "station_food_store", indexes = {@Index(name = "station_store_idx", columnList = "station_name, store_name", unique = true)})
 public class StationFoodStore {
 
     @Id

@@ -4,17 +4,14 @@ import lombok.Data;
 import lombok.NonNull;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @Data
 @Entity
+@Table(name = "train_type")
 @GenericGenerator(name = "jpa-uuid", strategy = "org.hibernate.id.UUIDGenerator")
 public class TrainType {
     @Id

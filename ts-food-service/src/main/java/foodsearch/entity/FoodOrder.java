@@ -5,15 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @Entity
+@Table(name = "food_order")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @GenericGenerator(name = "jpa-uuid", strategy = "org.hibernate.id.UUIDGenerator")
 public class FoodOrder {
