@@ -19,6 +19,15 @@ function delete_tt_micro_services {
     helm ls -n "$namespace" | grep ^ts- | awk '{print $1}' | xargs helm uninstall -n "$namespace"
 }
 
+function delete_pvc {
+    kubectl delete pvc data-tsdb-mysql-0 -n "$namespace"
+    kubectl delete pvc data-tsdb-mysql-1 -n "$namespace"
+    kubectl delete pvc data-tsdb-mysql-2 -n "$namespace"
+    kubectl delete pvc data-nacosdb-mysql-0 -n "$namespace"
+    kubectl delete pvc data-nacosdb-mysql-1 -n "$namespace"
+    kubectl delete pvc data-nacosdb-mysql-2 -n "$namespace"
+}
+
 function quick_end {
   echo "quick end"
   tsMysqlName="ts-db"
@@ -26,7 +35,6 @@ function quick_end {
   update_tt_dp_cm $nacosRelease $rabbitmqRelease
   gen_secret_for_services $tsUser $tsPassword $tsDB "${tsMysqlName}-mysql-leader"
   delete_tt_micro_services
-
 }
 
 function reset_all {
@@ -40,12 +48,13 @@ function reset_all {
 function reset {
     if [ $argNone == 1 ]; then
       quick_end
+      delete_pvc
       exit $?
     fi
 
     if [ $argAll == 1 ]; then
       reset_all
-
+      delete_pvc
       exit $?
     fi
 
@@ -72,7 +81,7 @@ function reset {
     helm uninstall $rabbitmqRelease -n "$namespace"
     helm uninstall $nacosRelease -n "$namespace"
     helm uninstall $nacosDBRelease -n "$namespace"
-
+    delete_pvc
 }
 #reset
 function parse_args {
