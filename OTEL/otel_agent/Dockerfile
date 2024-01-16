@@ -4,4 +4,4 @@ LABEL authors="Stefan Fischer, Pirmin Urbanke"
 
 WORKDIR /otel
 
-COPY javax.servlet-api-4.0.1.jar ./opentelemetry-javaagent.jar ./scch-testAgent.properties  /otel/
+COPY ./opentelemetry-javaagent.jar ./scch-testAgent.properties  /otel/
