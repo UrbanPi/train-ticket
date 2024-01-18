@@ -8,7 +8,7 @@ data:
   OTEL_METRICS_EXPORTER: "prometheus" # Opens a server with URL "localhost:9464/metrics", which can be scraped by prometheus
   OTEL_LOGS_EXPORTER: "logging"
   OTEL_JAVAAGENT_LOGGING: "application"
-  JAVA_TOOL_OPTIONS: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
+#  JAVA_TOOL_OPTIONS: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
 
 ---
 apiVersion: apps/v1
@@ -32,6 +32,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -41,6 +49,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -50,15 +90,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "adminbasic.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-admin-basic-info-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -68,6 +118,10 @@ spec:
             - containerPort: 18767
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -77,8 +131,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 18767
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -103,6 +157,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -112,6 +174,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -121,15 +215,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "adminorder.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-admin-order-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -139,6 +243,10 @@ spec:
             - containerPort: 16112
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -148,8 +256,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 16112
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -174,6 +282,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -183,6 +299,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -192,15 +340,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "adminroute.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-admin-route-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -210,6 +368,10 @@ spec:
             - containerPort: 16113
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -219,8 +381,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 16113
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -245,6 +407,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -254,6 +424,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -263,15 +465,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "admintravel.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-admin-travel-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -281,6 +493,10 @@ spec:
             - containerPort: 16114
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -290,8 +506,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 16114
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -316,6 +532,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -325,6 +549,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -334,15 +590,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "adminuser.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-admin-user-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -352,6 +618,10 @@ spec:
             - containerPort: 16115
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -361,8 +631,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 16115
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -387,6 +657,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -396,6 +674,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -405,15 +715,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "assurance.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-assurance-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -425,6 +745,10 @@ spec:
             - containerPort: 18888
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -434,8 +758,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 18888
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -460,6 +784,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -469,6 +801,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -478,15 +842,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "auth.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-auth-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -498,6 +872,10 @@ spec:
             - containerPort: 12340
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -507,8 +885,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 12340
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -583,6 +961,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -592,6 +978,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -601,15 +1019,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "fdse.microservice.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-basic-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -619,6 +1047,10 @@ spec:
             - containerPort: 15680
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -628,8 +1060,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 15680
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -654,6 +1086,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -663,6 +1103,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -672,15 +1144,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "cancel.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-cancel-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -690,6 +1172,10 @@ spec:
             - containerPort: 18885
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -699,8 +1185,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 18885
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -725,6 +1211,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -734,6 +1228,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -743,15 +1269,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "config.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-config-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -763,6 +1299,10 @@ spec:
             - containerPort: 15679
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -772,8 +1312,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 15679
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -798,6 +1338,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -807,6 +1355,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -816,15 +1396,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "consignprice.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-consign-price-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -836,6 +1426,10 @@ spec:
             - containerPort: 16110
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -845,8 +1439,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 16110
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -871,6 +1465,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -880,6 +1482,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -889,15 +1523,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "consign.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-consign-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -909,6 +1553,10 @@ spec:
             - containerPort: 16111
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -918,8 +1566,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 16111
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -944,6 +1592,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -953,6 +1609,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -962,15 +1650,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "contacts.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-contacts-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -982,6 +1680,10 @@ spec:
             - containerPort: 12347
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -991,8 +1693,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 12347
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -1017,6 +1719,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -1026,6 +1736,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -1035,15 +1777,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "delivery.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-delivery-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1057,6 +1809,10 @@ spec:
             - containerPort: 18808
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -1066,8 +1822,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 18808
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -1092,6 +1848,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -1101,6 +1865,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -1110,15 +1906,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "execute.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-execute-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1128,6 +1934,10 @@ spec:
             - containerPort: 12386
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -1137,8 +1947,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 12386
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -1163,6 +1973,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -1172,6 +1990,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -1181,15 +2031,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "food_delivery.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-food-delivery-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1201,6 +2061,10 @@ spec:
             - containerPort: 18957
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -1210,8 +2074,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 18957
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -1236,6 +2100,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -1245,6 +2117,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -1254,15 +2158,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "foodsearch.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-food-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1276,6 +2190,10 @@ spec:
             - containerPort: 18856
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -1285,8 +2203,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 18856
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -1337,6 +2255,8 @@ spec:
                   fieldPath: status.hostIP
             - name: SERVICE_JAR
               value: "ts-gateway-service"
+            - name: JAVA_TOOL_OPTIONS
+              value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
           args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
           envFrom:
@@ -1383,6 +2303,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -1392,6 +2320,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -1401,15 +2361,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "inside_payment.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-inside-payment-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1421,6 +2391,10 @@ spec:
             - containerPort: 18673
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -1430,8 +2404,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 18673
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -1506,6 +2480,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -1515,6 +2497,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -1524,15 +2538,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "notification.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-notification-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1546,6 +2570,10 @@ spec:
             - containerPort: 17853
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -1555,8 +2583,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 17853
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -1581,6 +2609,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -1590,6 +2626,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -1599,15 +2667,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "other.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-order-other-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1621,6 +2699,10 @@ spec:
             - containerPort: 12032
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -1630,8 +2712,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 12032
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -1656,6 +2738,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -1665,6 +2755,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -1674,15 +2796,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "order.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-order-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1696,6 +2828,10 @@ spec:
             - containerPort: 12031
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -1705,8 +2841,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 12031
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -1731,6 +2867,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -1740,6 +2884,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -1749,15 +2925,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "com.trainticket.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-payment-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1769,6 +2955,10 @@ spec:
             - containerPort: 19001
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -1778,8 +2968,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 19001
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -1804,6 +2994,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -1813,6 +3011,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -1822,15 +3052,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "preserveOther.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-preserve-other-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1842,6 +3082,10 @@ spec:
             - containerPort: 14569
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -1851,8 +3095,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 14569
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -1877,6 +3121,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -1886,6 +3138,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -1895,15 +3179,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "preserve.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-preserve-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1915,6 +3209,10 @@ spec:
             - containerPort: 14568
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -1924,8 +3222,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 14568
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -1950,6 +3248,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -1959,6 +3265,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -1968,15 +3306,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "price.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-price-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1988,6 +3336,10 @@ spec:
             - containerPort: 16579
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -1997,8 +3349,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 16579
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 5
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -2023,6 +3375,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -2032,6 +3392,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -2041,15 +3433,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "rebook.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-rebook-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2061,6 +3463,10 @@ spec:
             - containerPort: 18886
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -2070,8 +3476,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 18886
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -2096,6 +3502,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -2105,6 +3519,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -2114,15 +3560,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "plan.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-route-plan-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2132,6 +3588,10 @@ spec:
             - containerPort: 14578
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -2141,8 +3601,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 14578
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -2167,6 +3627,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -2176,6 +3644,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -2185,15 +3685,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "route.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-route-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2205,6 +3715,10 @@ spec:
             - containerPort: 11178
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -2214,8 +3728,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 11178
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -2240,6 +3754,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -2249,6 +3771,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -2258,15 +3812,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "seat.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-seat-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2276,6 +3840,10 @@ spec:
             - containerPort: 18898
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -2285,8 +3853,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 18898
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -2311,6 +3879,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -2320,6 +3896,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -2329,15 +3937,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "security.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-security-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2349,6 +3967,10 @@ spec:
             - containerPort: 11188
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -2358,8 +3980,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 11188
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -2384,6 +4006,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -2393,6 +4023,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -2402,15 +4064,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "food.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-station-food-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2422,6 +4094,10 @@ spec:
             - containerPort: 18855
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -2431,8 +4107,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 18855
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -2457,6 +4133,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -2466,6 +4150,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -2475,15 +4191,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "fdse.microservice.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-station-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2495,6 +4221,10 @@ spec:
             - containerPort: 12345
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -2504,8 +4234,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 12345
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -2583,6 +4313,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -2592,6 +4330,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -2601,15 +4371,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "trainFood.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-train-food-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2621,6 +4401,10 @@ spec:
             - containerPort: 19999
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -2630,8 +4414,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 19999
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -2656,6 +4440,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -2665,6 +4457,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -2674,15 +4498,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "train.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-train-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2694,6 +4528,10 @@ spec:
             - containerPort: 14567
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -2703,8 +4541,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 14567
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -2729,6 +4567,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -2738,6 +4584,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -2747,15 +4625,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "travelplan.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-travel-plan-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2765,6 +4653,10 @@ spec:
             - containerPort: 14322
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -2774,8 +4666,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 14322
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -2800,6 +4692,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -2809,6 +4709,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -2818,15 +4750,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "travel.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-travel-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2838,6 +4780,10 @@ spec:
             - containerPort: 12346
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -2847,8 +4793,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 12346
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -2873,6 +4819,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -2882,6 +4836,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -2891,15 +4877,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "travel2.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-travel2-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2911,6 +4907,10 @@ spec:
             - containerPort: 16346
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -2920,8 +4920,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 16346
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -2946,6 +4946,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -2955,6 +4963,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -2964,15 +5004,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "user.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-user-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2984,6 +5034,10 @@ spec:
             - containerPort: 12342
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -2993,8 +5047,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 12342
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -3019,6 +5073,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -3028,6 +5090,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -3037,15 +5131,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "verifycode.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-verification-code-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -3055,6 +5159,10 @@ spec:
             - containerPort: 15678
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -3064,8 +5172,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 15678
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -3107,6 +5215,10 @@ spec:
             - containerPort: 16101
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -3142,6 +5254,14 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
+        - name: evomaster-vol
+          emptyDir: {}
+        - name: persistenceinit-vol
+          emptyDir: {}
+        - name: microservicecontroller-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -3151,6 +5271,38 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
+        - name: evomaster-container
+          image: containers.github.scch.at/contest/trainticket/evomaster:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: evomaster-vol
+              mountPath: /evomaster-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
+        - name: persistenceinit-container
+          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: persistenceinit-vol
+              mountPath: /persinit-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: microservicecontroller-container
+          image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /microservicecontroller /microservicecontroller-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -3160,15 +5312,25 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
+            - name: evomaster-vol
+              mountPath: /evomaster
+            - name: persistenceinit-vol
+              mountPath: /persinit
+            - name: microservicecontroller-vol
+              mountPath: /microservicecontroller
           env:
             - name: NODE_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: EVO_MASTER_CONTROLLER
+              value: "waitorder.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-wait-order-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -3180,6 +5342,10 @@ spec:
             - containerPort: 17525
             - name: metric
               containerPort: 9464
+            - name: evomaster
+              containerPort: 40100
+            - name: mscontr
+              containerPort: 9090
           resources:
             requests:
               cpu: 100m
@@ -3189,8 +5355,8 @@ spec:
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
-              port: 17525
-            initialDelaySeconds: 60
+              port: 9090
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 ---
@@ -3217,7 +5383,7 @@ spec:
         - name: conregscch
       containers:
         - name: ts-ui-dashboard
-          image: containers.github.scch.at/contest/trainticket/ts-ui-dashboard:latest
+          image: containers.github.scch.at/contest/trainticket/ts-ui-dashboard:master
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

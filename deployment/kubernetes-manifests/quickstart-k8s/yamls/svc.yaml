@@ -11,6 +11,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30330
+    - name: evomaster
+      port: 40100
+      nodePort: 30530
+    - name: mscontr
+      port: 9090
+      nodePort: 30630
   selector:
     app: ts-admin-basic-info-service
 ---
@@ -27,6 +33,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30331
+    - name: evomaster
+      port: 40100
+      nodePort: 30531
+    - name: mscontr
+      port: 9090
+      nodePort: 30631
   selector:
     app: ts-admin-order-service
 ---
@@ -43,6 +55,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30332
+    - name: evomaster
+      port: 40100
+      nodePort: 30532
+    - name: mscontr
+      port: 9090
+      nodePort: 30632
   selector:
     app: ts-admin-route-service
 ---
@@ -59,6 +77,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30333
+    - name: evomaster
+      port: 40100
+      nodePort: 30533
+    - name: mscontr
+      port: 9090
+      nodePort: 30633
   selector:
     app: ts-admin-travel-service
 ---
@@ -75,6 +99,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30334
+    - name: evomaster
+      port: 40100
+      nodePort: 30534
+    - name: mscontr
+      port: 9090
+      nodePort: 30634
   selector:
     app: ts-admin-user-service
 ---
@@ -91,6 +121,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30335
+    - name: evomaster
+      port: 40100
+      nodePort: 30535
+    - name: mscontr
+      port: 9090
+      nodePort: 30635
   selector:
     app: ts-assurance-service
 ---
@@ -107,6 +143,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30336
+    - name: evomaster
+      port: 40100
+      nodePort: 30536
+    - name: mscontr
+      port: 9090
+      nodePort: 30636
   selector:
     app: ts-auth-service
 ---
@@ -136,6 +178,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30338
+    - name: evomaster
+      port: 40100
+      nodePort: 30538
+    - name: mscontr
+      port: 9090
+      nodePort: 30638
   selector:
     app: ts-basic-service
 ---
@@ -152,6 +200,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30339
+    - name: evomaster
+      port: 40100
+      nodePort: 30539
+    - name: mscontr
+      port: 9090
+      nodePort: 30639
   selector:
     app: ts-cancel-service
 ---
@@ -168,6 +222,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30340
+    - name: evomaster
+      port: 40100
+      nodePort: 30540
+    - name: mscontr
+      port: 9090
+      nodePort: 30640
   selector:
     app: ts-config-service
 ---
@@ -184,6 +244,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30341
+    - name: evomaster
+      port: 40100
+      nodePort: 30541
+    - name: mscontr
+      port: 9090
+      nodePort: 30641
   selector:
     app: ts-consign-price-service
 ---
@@ -200,6 +266,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30342
+    - name: evomaster
+      port: 40100
+      nodePort: 30542
+    - name: mscontr
+      port: 9090
+      nodePort: 30642
   selector:
     app: ts-consign-service
 ---
@@ -216,6 +288,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30343
+    - name: evomaster
+      port: 40100
+      nodePort: 30543
+    - name: mscontr
+      port: 9090
+      nodePort: 30643
   selector:
     app: ts-contacts-service
 ---
@@ -232,6 +310,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30344
+    - name: evomaster
+      port: 40100
+      nodePort: 30544
+    - name: mscontr
+      port: 9090
+      nodePort: 30644
   selector:
     app: ts-delivery-service
 ---
@@ -248,6 +332,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30345
+    - name: evomaster
+      port: 40100
+      nodePort: 30545
+    - name: mscontr
+      port: 9090
+      nodePort: 30645
   selector:
     app: ts-execute-service
 ---
@@ -264,6 +354,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30346
+    - name: evomaster
+      port: 40100
+      nodePort: 30546
+    - name: mscontr
+      port: 9090
+      nodePort: 30646
   selector:
     app: ts-food-service
 ---
@@ -296,6 +392,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30347
+    - name: evomaster
+      port: 40100
+      nodePort: 30547
+    - name: mscontr
+      port: 9090
+      nodePort: 30647
   selector:
     app: ts-inside-payment-service
 ---
@@ -312,6 +414,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30348
+    - name: evomaster
+      port: 40100
+      nodePort: 30548
+    - name: mscontr
+      port: 9090
+      nodePort: 30648
   selector:
     app: ts-news-service
 ---
@@ -328,6 +436,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30349
+    - name: evomaster
+      port: 40100
+      nodePort: 30549
+    - name: mscontr
+      port: 9090
+      nodePort: 30649
   selector:
     app: ts-notification-service
 ---
@@ -344,6 +458,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30350
+    - name: evomaster
+      port: 40100
+      nodePort: 30550
+    - name: mscontr
+      port: 9090
+      nodePort: 30650
   selector:
     app: ts-order-other-service
 ---
@@ -360,6 +480,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30351
+    - name: evomaster
+      port: 40100
+      nodePort: 30551
+    - name: mscontr
+      port: 9090
+      nodePort: 30651
   selector:
     app: ts-order-service
 ---
@@ -376,6 +502,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30352
+    - name: evomaster
+      port: 40100
+      nodePort: 30552
+    - name: mscontr
+      port: 9090
+      nodePort: 30652
   selector:
     app: ts-payment-service
 ---
@@ -392,6 +524,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30353
+    - name: evomaster
+      port: 40100
+      nodePort: 30553
+    - name: mscontr
+      port: 9090
+      nodePort: 30653
   selector:
     app: ts-preserve-other-service
 ---
@@ -408,6 +546,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30354
+    - name: evomaster
+      port: 40100
+      nodePort: 30554
+    - name: mscontr
+      port: 9090
+      nodePort: 30654
   selector:
     app: ts-preserve-service
 ---
@@ -424,6 +568,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30355
+    - name: evomaster
+      port: 40100
+      nodePort: 30555
+    - name: mscontr
+      port: 9090
+      nodePort: 30655
   selector:
     app: ts-price-service
 ---
@@ -440,6 +590,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30356
+    - name: evomaster
+      port: 40100
+      nodePort: 30556
+    - name: mscontr
+      port: 9090
+      nodePort: 30656
   selector:
     app: ts-rebook-service
 ---
@@ -456,6 +612,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30357
+    - name: evomaster
+      port: 40100
+      nodePort: 30557
+    - name: mscontr
+      port: 9090
+      nodePort: 30657
   selector:
     app: ts-route-plan-service
 ---
@@ -472,6 +634,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30358
+    - name: evomaster
+      port: 40100
+      nodePort: 30558
+    - name: mscontr
+      port: 9090
+      nodePort: 30658
   selector:
     app: ts-route-service
 ---
@@ -488,6 +656,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30359
+    - name: evomaster
+      port: 40100
+      nodePort: 30559
+    - name: mscontr
+      port: 9090
+      nodePort: 30659
   selector:
     app: ts-seat-service
 ---
@@ -504,6 +678,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30360
+    - name: evomaster
+      port: 40100
+      nodePort: 30560
+    - name: mscontr
+      port: 9090
+      nodePort: 30660
   selector:
     app: ts-security-service
 ---
@@ -520,6 +700,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30361
+    - name: evomaster
+      port: 40100
+      nodePort: 30561
+    - name: mscontr
+      port: 9090
+      nodePort: 30661
   selector:
     app: ts-station-food-service
 ---
@@ -536,6 +722,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30362
+    - name: evomaster
+      port: 40100
+      nodePort: 30562
+    - name: mscontr
+      port: 9090
+      nodePort: 30662
   selector:
     app: ts-station-service
 ---
@@ -564,7 +756,13 @@ spec:
       nodePort: 30064
     - name: metric
       port: 9464
-      nodePort: 30363
+      nodePort: 30364
+    - name: evomaster
+      port: 40100
+      nodePort: 30564
+    - name: mscontr
+      port: 9090
+      nodePort: 30664
   selector:
     app: ts-train-food-service
 ---
@@ -581,6 +779,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30365
+    - name: evomaster
+      port: 40100
+      nodePort: 30565
+    - name: mscontr
+      port: 9090
+      nodePort: 30665
   selector:
     app: ts-train-service
 ---
@@ -597,6 +801,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30366
+    - name: evomaster
+      port: 40100
+      nodePort: 30566
+    - name: mscontr
+      port: 9090
+      nodePort: 30666
   selector:
     app: ts-travel-plan-service
 ---
@@ -613,6 +823,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30367
+    - name: evomaster
+      port: 40100
+      nodePort: 30567
+    - name: mscontr
+      port: 9090
+      nodePort: 30667
   selector:
     app: ts-travel-service
 ---
@@ -629,6 +845,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30368
+    - name: evomaster
+      port: 40100
+      nodePort: 30568
+    - name: mscontr
+      port: 9090
+      nodePort: 30668
   selector:
     app: ts-travel2-service
 ---
@@ -645,6 +867,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30369
+    - name: evomaster
+      port: 40100
+      nodePort: 30569
+    - name: mscontr
+      port: 9090
+      nodePort: 30669
   selector:
     app: ts-user-service
 ---
@@ -661,6 +889,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30370
+    - name: evomaster
+      port: 40100
+      nodePort: 30570
+    - name: mscontr
+      port: 9090
+      nodePort: 30670
   selector:
     app: ts-verification-code-service
 ---
@@ -704,6 +938,12 @@ spec:
 #    - name: metric
 #      port: 9464
 #      nodePort: 30373
+#    - name: evomaster
+#      port: 40100
+#      nodePort: 30573
+#    - name: mscontr
+#      port: 9090
+#      nodePort: 30673
 #  selector:
 #    app: ts-food-map-service
 #---
@@ -720,6 +960,12 @@ spec:
 #    - name: metric
 #      port: 9464
 #      nodePort: 30374
+#    - name: evomaster
+#      port: 40100
+#      nodePort: 30574
+#    - name: mscontr
+#      port: 9090
+#      nodePort: 30674
 #  selector:
 #    app: ts-ticketinfo-service
 #---
@@ -736,6 +982,12 @@ spec:
 #    - name: metric
 #      port: 9464
 #      nodePort: 30375
+#    - name: evomaster
+#      port: 40100
+#      nodePort: 30575
+#    - name: mscontr
+#      port: 9090
+#      nodePort: 30675
 #  selector:
 #    app: ts-login-service
 #---
@@ -752,6 +1004,12 @@ spec:
 #    - name: metric
 #      port: 9464
 #      nodePort: 30376
+#    - name: evomaster
+#      port: 40100
+#      nodePort: 30576
+#    - name: mscontr
+#      port: 9090
+#      nodePort: 30676
 #  selector:
 #    app: ts-sso-service
 #---
@@ -768,6 +1026,12 @@ spec:
 #    - name: metric
 #      port: 9464
 #      nodePort: 30377
+#    - name: evomaster
+#      port: 40100
+#      nodePort: 30577
+#    - name: mscontr
+#      port: 9090
+#      nodePort: 30677
 #  selector:
 #    app: ts-register-service
 #---
@@ -784,6 +1048,12 @@ spec:
 #    - name: metric
 #      port: 9464
 #      nodePort: 30378
+#    - name: evomaster
+#      port: 40100
+#      nodePort: 30578
+#    - name: mscontr
+#      port: 9090
+#      nodePort: 30678
 #  selector:
 #    app: ts-click-twice-service
 #---
@@ -814,6 +1084,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30381
+    - name: evomaster
+      port: 40100
+      nodePort: 30581
+    - name: mscontr
+      port: 9090
+      nodePort: 30681
   selector:
     app: ts-food-delivery-service
 ---
@@ -830,6 +1106,12 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30382
+    - name: evomaster
+      port: 40100
+      nodePort: 30582
+    - name: mscontr
+      port: 9090
+      nodePort: 30682
   selector:
     app: ts-wait-order-service
 ---
