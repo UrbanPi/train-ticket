@@ -20,9 +20,9 @@ function delete_tt_micro_services {
 }
 
 function delete_pvc {
-    kubectl delete pvc data-tsdb-mysql-0 -n "$namespace"
-    kubectl delete pvc data-tsdb-mysql-1 -n "$namespace"
-    kubectl delete pvc data-tsdb-mysql-2 -n "$namespace"
+    kubectl delete pvc data-ts-db-mysql-0 -n "$namespace"
+    kubectl delete pvc data-ts-db-mysql-1 -n "$namespace"
+    kubectl delete pvc data-ts-db-mysql-2 -n "$namespace"
     kubectl delete pvc data-nacosdb-mysql-0 -n "$namespace"
     kubectl delete pvc data-nacosdb-mysql-1 -n "$namespace"
     kubectl delete pvc data-nacosdb-mysql-2 -n "$namespace"
