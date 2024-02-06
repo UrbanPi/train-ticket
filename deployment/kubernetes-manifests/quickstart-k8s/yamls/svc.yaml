@@ -310,12 +310,6 @@ spec:
     - name: metric
       port: 9464
       nodePort: 30344
-    - name: evomaster
-      port: 40100
-      nodePort: 30544
-    - name: mscontr
-      port: 9090
-      nodePort: 30644
   selector:
     app: ts-delivery-service
 ---
