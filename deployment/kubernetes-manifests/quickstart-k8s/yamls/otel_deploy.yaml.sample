@@ -2192,6 +2192,8 @@ spec:
       volumes:
         - name: otel-agent
           emptyDir: {}
+        - name: javaxservlet-vol
+          emptyDir: {}
       initContainers:
         - name: agent-container
           image: containers.github.scch.at/contest/trainticket/otel-agent:latest
@@ -2201,6 +2203,14 @@ spec:
               mountPath: /agent
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /otel /agent/" ]
+        - name: javaxservlet-container
+          image: containers.github.scch.at/contest/trainticket/javaxservlet:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: javaxservlet-vol
+              mountPath: /javaxservlet-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /javax /javaxservlet-mnt/" ]
       imagePullSecrets:
         - name: conregscch
       containers:
@@ -2210,6 +2220,8 @@ spec:
           volumeMounts:
             - name: otel-agent
               mountPath: /otel
+            - name: javaxservlet-vol
+              mountPath: /javax
           env:
             - name: NODE_IP
               valueFrom:
@@ -2220,7 +2232,7 @@ spec:
             - name: JAVA_TOOL_OPTIONS
               value: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /otel/otel/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cd /app/; java -Xmx200m -Xverify:none -jar $(SERVICE_JAR)-1.0.jar --logging.file.name=app.logs"]
           envFrom:
             - configMapRef:
                 name: environment-vars
