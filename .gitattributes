@@ -3,3 +3,6 @@ JavaxServlet/**/*.jar filter=lfs diff=lfs merge=lfs -text
 EvoMaster/**/*.jar filter=lfs diff=lfs merge=lfs -text
 PersistenceInit/**/*tar.gz filter=lfs diff=lfs merge=lfs -text
 *.svg filter=lfs diff=lfs merge=lfs -text
+image/lfs/*.png filter=lfs diff=lfs merge=lfs -text
+image/lfs/*.jpg filter=lfs diff=lfs merge=lfs -text
+
