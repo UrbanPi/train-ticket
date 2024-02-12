@@ -18,21 +18,21 @@ argAll=0
 
 function quick_start {
   echo "quick start"
+  deploy_tt_svc $namespace
   deploy_infrastructures  $namespace
   deploy_tt_mysql_all_in_one  $namespace
   deploy_tt_secret  $namespace
-  deploy_tt_svc $namespace
   deploy_tt_dp  $namespace
 }
 
 function deploy_all {
+  deploy_tt_svc $namespace
+  deploy_monitoring
   deploy_infrastructures  $namespace
   deploy_tt_mysql_each_service  $namespace
   deploy_tt_secret  $namespace
-  deploy_tt_svc $namespace
   deploy_tt_dp_sw  $namespace
   deploy_tracing  $namespace
-  deploy_monitoring
 }
 
 
@@ -47,6 +47,12 @@ function deploy {
       exit $?
     fi
 
+    deploy_tt_svc $namespace
+
+    if [ $argMonitoring == 1 ]; then
+      deploy_monitoring
+    fi
+
     deploy_infrastructures $namespace
 
     if [ $argDB == 1 ]; then
@@ -56,7 +62,6 @@ function deploy {
     fi
 
     deploy_tt_secret  $namespace
-    deploy_tt_svc $namespace
 
     if [ $argTracing == 1 ]; then
       deploy_tt_dp_sw  $namespace
@@ -69,9 +74,7 @@ function deploy {
       deploy_tt_dp $namespace
     fi
 
-    if [ $argMonitoring == 1 ]; then
-      deploy_monitoring
-    fi
+
 }
 
 #deploy
