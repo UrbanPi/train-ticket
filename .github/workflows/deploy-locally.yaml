@@ -11,6 +11,7 @@ on:
         options:
           - local-runner
           - austin
+          - march
       namespace:
         required: false
         type: text
