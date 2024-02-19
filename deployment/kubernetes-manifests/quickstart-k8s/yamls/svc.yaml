@@ -364,9 +364,6 @@ spec:
     - name: http
       port: 12862
       nodePort: 30048
-    - name: metric
-      port: 9464
-      nodePort: 30348
   selector:
     app: ts-news-service
 ---
@@ -666,9 +663,6 @@ spec:
     - name: http
       port: 16108
       nodePort: 30063
-    - name: metric
-      port: 9464
-      nodePort: 30363
   selector:
     app: ts-ticket-office-service
 ---

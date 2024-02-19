@@ -104,14 +104,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "adminbasic.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-admin-basic-info-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -123,7 +122,6 @@ spec:
               containerPort: 40100
             - name: mscontr
               containerPort: 9090
-
           resources:
             requests:
               cpu: 100m
@@ -230,14 +228,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "adminorder.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-admin-order-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -356,14 +353,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "adminroute.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-admin-route-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -482,14 +478,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "admintravel.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-admin-travel-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -608,14 +603,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "adminuser.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-admin-user-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -734,14 +728,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "assurance.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-assurance-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -864,14 +857,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "fdse.microservice.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-basic-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -990,14 +982,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "cancel.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-cancel-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1118,14 +1109,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "config.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-config-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1248,14 +1238,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "consignprice.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-consign-price-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1378,14 +1367,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "consign.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-consign-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1508,14 +1496,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "contacts.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-contacts-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1638,14 +1625,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "execute.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-execute-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1764,7 +1750,6 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
               value: "foodsearch.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
@@ -1773,7 +1758,7 @@ spec:
             - name: rabbitmq_port
               value: "5672"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1895,14 +1880,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "inside_payment.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-inside-payment-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2070,16 +2054,15 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "notification.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-notification-service"
 
             - name: rabbitmq_port
               value: "5672"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2199,14 +2182,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "other.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-order-other-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2326,14 +2308,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "order.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-order-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2453,13 +2434,12 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "com.trainticket.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-payment-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2582,16 +2562,15 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "preserveOther.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-preserve-other-service"
 
             - name: rabbitmq_port
               value: "5672"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2711,16 +2690,15 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "preserve.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-preserve-service"
 
             - name: rabbitmq_port
               value: "5672"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2841,11 +2819,11 @@ spec:
                 fieldRef:
                   fieldPath: status.hostIP
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "price.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-price-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2963,14 +2941,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "rebook.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-rebook-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -3090,14 +3067,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "plan.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-route-plan-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -3216,14 +3192,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "route.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-route-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -3346,14 +3321,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "seat.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-seat-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -3472,14 +3446,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "security.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-security-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -3602,14 +3575,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "fdse.microservice.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-station-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -3772,14 +3744,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "train.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-train-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -3902,14 +3873,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "travelplan.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-travel-plan-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -4028,14 +3998,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "travel.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-travel-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -4158,14 +4127,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "travel2.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-travel2-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -4288,14 +4256,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "com.trainticket.verificationcode.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-verification-code-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -4449,14 +4416,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "ticketinfo.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-ticketinfo-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -4579,14 +4545,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "food.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-food-map-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -4709,14 +4674,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "login.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-login-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -4834,14 +4798,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "sso.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-sso-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -4959,14 +4922,13 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
-
             - name: EVO_MASTER_CONTROLLER
-              value: "foodsearch.EmbeddedEvoMasterController"
+              value: "register.EmbeddedEvoMasterController"
             - name: SERVICE_JAR
               value: "ts-register-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/complete.sql /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
