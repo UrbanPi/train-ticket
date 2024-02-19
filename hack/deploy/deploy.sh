@@ -16,15 +16,14 @@ argAll=0
 
 function quick_start {
   echo "quick start"
-  deploy_infrastructures  $namespace
-#  deploy_tt_secret  $namespace
   deploy_tt_svc $namespace
-  deploy_tt_dp  $namespace
+  deploy_infrastructures  $namespace
+  deploy_tt_dp_otel  $namespace
 }
 
 function deploy_all {
-  deploy_infrastructures  $namespace
   deploy_tt_svc $namespace
+  deploy_infrastructures  $namespace
   deploy_monitoring
   deploy_otel_collector $namespace
   deploy_jaeger $namespace
@@ -43,16 +42,14 @@ function deploy {
       exit $?
     fi
 
+    deploy_tt_svc $namespace
     deploy_infrastructures $namespace
 
-    deploy_tt_svc $namespace
+    deploy_tt_dp_otel $namespace
 
     if [ $argOTEL == 1 ]; then
       deploy_otel_collector $namespace
       deploy_jaeger $namespace
-      deploy_tt_dp_otel $namespace
-    else
-      deploy_tt_dp $namespace
     fi
 
     if [ $argMonitoring == 1 ]; then
