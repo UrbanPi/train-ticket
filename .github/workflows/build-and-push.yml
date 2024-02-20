@@ -14,6 +14,9 @@ on:
 jobs:
   build-and-deploy:
     runs-on: [ self-hosted, "${{ inputs.chosen-runner }}" ]
+    permissions:
+        contents: read
+        packages: write
 
     steps:
       - uses: actions/checkout@v3
