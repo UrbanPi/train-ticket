@@ -8,7 +8,6 @@ data:
   OTEL_METRICS_EXPORTER: "prometheus" # Opens a server with URL "localhost:9464/metrics", which can be scraped by prometheus
   OTEL_LOGS_EXPORTER: "logging"
   OTEL_JAVAAGENT_LOGGING: "application"
-  JAVA_TOOL_OPTIONS: "-javaagent:/otel/otel/opentelemetry-javaagent.jar"
 
 ---
 
