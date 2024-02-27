@@ -38,6 +38,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -66,13 +68,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -96,6 +106,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -109,7 +121,7 @@ spec:
               value: "ts-admin-basic-info-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -162,6 +174,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -190,13 +204,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -220,6 +242,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -233,7 +257,7 @@ spec:
               value: "ts-admin-order-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -287,6 +311,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -315,13 +341,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -345,6 +379,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -358,7 +394,7 @@ spec:
               value: "ts-admin-route-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -412,6 +448,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -440,13 +478,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -470,6 +516,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -483,7 +531,7 @@ spec:
               value: "ts-admin-travel-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -537,6 +585,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -565,13 +615,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -595,6 +653,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -608,7 +668,7 @@ spec:
               value: "ts-admin-user-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -662,6 +722,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -690,13 +752,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -720,6 +790,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -733,7 +805,7 @@ spec:
               value: "ts-assurance-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -791,6 +863,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -819,13 +893,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -849,6 +931,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -862,7 +946,7 @@ spec:
               value: "ts-basic-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -916,6 +1000,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -944,13 +1030,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -974,6 +1068,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -987,7 +1083,7 @@ spec:
               value: "ts-cancel-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1043,6 +1139,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -1071,13 +1169,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -1101,6 +1207,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -1114,7 +1222,7 @@ spec:
               value: "ts-config-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1172,6 +1280,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -1200,13 +1310,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -1230,6 +1348,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -1243,7 +1363,7 @@ spec:
               value: "ts-consign-price-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1301,6 +1421,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -1329,13 +1451,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -1359,6 +1489,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -1372,7 +1504,7 @@ spec:
               value: "ts-consign-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1430,6 +1562,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -1458,13 +1592,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -1488,6 +1630,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -1501,7 +1645,7 @@ spec:
               value: "ts-contacts-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1559,6 +1703,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -1587,13 +1733,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -1617,6 +1771,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -1630,7 +1786,7 @@ spec:
               value: "ts-execute-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1684,6 +1840,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -1712,13 +1870,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -1742,6 +1908,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -1757,7 +1925,7 @@ spec:
             - name: rabbitmq_port
               value: "5672"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1814,6 +1982,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -1842,13 +2012,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -1872,6 +2050,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -1885,7 +2065,7 @@ spec:
               value: "ts-inside-payment-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1988,6 +2168,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -2016,13 +2198,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -2046,6 +2236,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -2061,7 +2253,7 @@ spec:
             - name: rabbitmq_port
               value: "5672"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2116,6 +2308,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -2144,13 +2338,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -2174,6 +2376,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -2187,7 +2391,7 @@ spec:
               value: "ts-order-other-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2242,6 +2446,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -2270,13 +2476,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -2300,6 +2514,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -2313,7 +2529,7 @@ spec:
               value: "ts-order-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2368,6 +2584,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -2396,13 +2614,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -2426,6 +2652,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -2438,7 +2666,7 @@ spec:
             - name: SERVICE_JAR
               value: "ts-payment-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2496,6 +2724,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -2524,13 +2754,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -2554,6 +2792,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -2569,7 +2809,7 @@ spec:
             - name: rabbitmq_port
               value: "5672"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2624,6 +2864,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -2652,13 +2894,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -2682,6 +2932,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -2697,7 +2949,7 @@ spec:
             - name: rabbitmq_port
               value: "5672"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2752,6 +3004,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -2780,13 +3034,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -2810,6 +3072,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -2822,7 +3086,7 @@ spec:
             - name: SERVICE_JAR
               value: "ts-price-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2875,6 +3139,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -2903,13 +3169,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -2933,6 +3207,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -2946,7 +3222,7 @@ spec:
               value: "ts-rebook-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -3001,6 +3277,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -3029,13 +3307,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -3059,6 +3345,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -3072,7 +3360,7 @@ spec:
               value: "ts-route-plan-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -3126,6 +3414,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -3154,13 +3444,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -3184,6 +3482,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -3197,7 +3497,7 @@ spec:
               value: "ts-route-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -3255,6 +3555,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -3283,13 +3585,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -3313,6 +3623,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -3326,7 +3638,7 @@ spec:
               value: "ts-seat-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -3380,6 +3692,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -3408,13 +3722,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -3438,6 +3760,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -3451,7 +3775,7 @@ spec:
               value: "ts-security-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -3509,6 +3833,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -3537,13 +3863,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -3567,6 +3901,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -3580,7 +3916,7 @@ spec:
               value: "ts-station-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -3678,6 +4014,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -3706,13 +4044,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -3736,6 +4082,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -3749,7 +4097,7 @@ spec:
               value: "ts-train-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -3807,6 +4155,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -3835,13 +4185,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -3865,6 +4223,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -3878,7 +4238,7 @@ spec:
               value: "ts-travel-plan-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -3932,6 +4292,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -3960,13 +4322,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -3990,6 +4360,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -4003,7 +4375,7 @@ spec:
               value: "ts-travel-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -4061,6 +4433,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -4089,13 +4463,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -4119,6 +4501,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -4132,7 +4516,7 @@ spec:
               value: "ts-travel2-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -4190,6 +4574,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -4218,13 +4604,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -4248,6 +4642,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -4261,7 +4657,7 @@ spec:
               value: "ts-verification-code-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -4350,6 +4746,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -4378,13 +4776,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -4408,6 +4814,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -4421,7 +4829,7 @@ spec:
               value: "ts-ticketinfo-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -4479,6 +4887,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -4507,13 +4917,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -4537,6 +4955,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -4550,7 +4970,7 @@ spec:
               value: "ts-food-map-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -4608,6 +5028,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -4636,13 +5058,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -4666,6 +5096,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -4679,7 +5111,7 @@ spec:
               value: "ts-login-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -4732,6 +5164,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -4760,13 +5194,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -4790,6 +5232,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -4803,7 +5247,7 @@ spec:
               value: "ts-sso-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -4856,6 +5300,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -4884,13 +5330,21 @@ spec:
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /evomaster /evomaster-mnt/" ]
         - name: persistenceinit-container
-          image: containers.github.scch.at/contest/trainticket/persinit:latest
+          image: containers.github.scch.at/contest/trainticket/persinit:ts-error-F1
           imagePullPolicy: Always
           volumeMounts:
             - name: persistenceinit-vol
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -4914,6 +5368,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -4927,7 +5383,7 @@ spec:
               value: "ts-register-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
