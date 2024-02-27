@@ -38,6 +38,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -73,6 +75,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -96,6 +106,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -162,6 +174,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -197,6 +211,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -220,6 +242,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -287,6 +311,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -322,6 +348,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -345,6 +379,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -412,6 +448,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -447,6 +485,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -470,6 +516,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -537,6 +585,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -572,6 +622,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -595,6 +653,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -662,6 +722,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -697,6 +759,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -720,6 +790,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -791,6 +863,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -826,6 +900,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -849,6 +931,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -916,6 +1000,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -951,6 +1037,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -974,6 +1068,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -1043,6 +1139,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -1078,6 +1176,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -1101,6 +1207,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -1172,6 +1280,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -1207,6 +1317,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -1230,6 +1348,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -1301,6 +1421,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -1336,6 +1458,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -1359,6 +1489,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -1430,6 +1562,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -1465,6 +1599,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -1488,6 +1630,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -1559,6 +1703,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -1594,6 +1740,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -1617,6 +1771,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -1684,6 +1840,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -1719,6 +1877,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -1742,6 +1908,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -1814,6 +1982,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -1849,6 +2019,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -1872,6 +2050,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -1988,6 +2168,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -2023,6 +2205,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -2046,6 +2236,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -2116,6 +2308,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -2151,6 +2345,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -2174,6 +2376,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -2242,6 +2446,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -2277,6 +2483,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -2300,6 +2514,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -2368,6 +2584,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -2403,6 +2621,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -2426,6 +2652,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -2496,6 +2724,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -2531,6 +2761,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -2554,6 +2792,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -2624,6 +2864,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -2659,6 +2901,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -2682,6 +2932,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -2752,6 +3004,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -2787,6 +3041,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -2810,6 +3072,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -2875,6 +3139,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -2910,6 +3176,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -2933,6 +3207,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -3001,6 +3277,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -3036,6 +3314,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -3059,6 +3345,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -3126,6 +3414,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -3161,6 +3451,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -3184,6 +3482,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -3255,6 +3555,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -3290,6 +3592,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -3313,6 +3623,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -3380,6 +3692,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -3415,6 +3729,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -3438,6 +3760,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -3509,6 +3833,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -3544,6 +3870,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -3567,6 +3901,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -3678,6 +4014,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -3713,6 +4051,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -3736,6 +4082,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -3807,6 +4155,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -3842,6 +4192,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -3865,6 +4223,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -3932,6 +4292,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -3967,6 +4329,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -3990,6 +4360,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -4061,6 +4433,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -4096,6 +4470,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -4119,6 +4501,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -4190,6 +4574,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -4225,6 +4611,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -4248,6 +4642,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -4350,6 +4746,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -4385,6 +4783,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -4408,6 +4814,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -4479,6 +4887,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -4514,6 +4924,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -4537,6 +4955,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -4608,6 +5028,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -4643,6 +5065,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -4666,6 +5096,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -4732,6 +5164,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -4767,6 +5201,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -4790,6 +5232,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -4856,6 +5300,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -4891,6 +5337,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -4914,6 +5368,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
@@ -4980,6 +5436,8 @@ spec:
           emptyDir: {}
         - name: persistenceinit-vol
           emptyDir: {}
+        - name: mongorestore-vol
+          emptyDir: {}
         - name: microservicecontroller-vol
           emptyDir: {}
       initContainers:
@@ -5015,6 +5473,14 @@ spec:
               mountPath: /persinit-mnt
           command: [ "/bin/sh" ]
           args: [ "-c", "cp -R /persinit /persinit-mnt/" ]
+        - name: mongorestore-container
+          image: containers.github.scch.at/contest/trainticket/mongorestore:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: mongorestore-vol
+              mountPath: /mongorestore-mnt
+          command: [ "/bin/sh" ]
+          args: [ "-c", "cp -R /mongorestore_dir /mongorestore-mnt/" ]
         - name: microservicecontroller-container
           image: containers.github.scch.at/contest/trainticket/microservicecontroller:latest
           imagePullPolicy: Always
@@ -5038,6 +5504,8 @@ spec:
               mountPath: /evomaster
             - name: persistenceinit-vol
               mountPath: /persinit
+            - name: mongorestore-vol
+              mountPath: /mongorestore
             - name: microservicecontroller-vol
               mountPath: /microservicecontroller
           env:
