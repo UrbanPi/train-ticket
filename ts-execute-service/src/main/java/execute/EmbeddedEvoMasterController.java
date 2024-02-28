@@ -3,7 +3,7 @@ package execute;
 import org.evomaster.client.java.controller.EmbeddedSutController;
 import org.evomaster.client.java.controller.InstrumentedSutStarter;
 import org.evomaster.client.java.controller.api.dto.AuthenticationDto;
-import org.evomaster.client.java.controller.api.dto.JsonTokenPostLoginDto;
+import org.evomaster.client.java.controller.api.dto.CookieLoginDto;
 import org.evomaster.client.java.controller.api.dto.SutInfoDto;
 import org.evomaster.client.java.controller.api.dto.database.schema.DatabaseType;
 import org.evomaster.client.java.controller.db.DbCleaner;
@@ -22,6 +22,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.*;
 
+
+
 public class EmbeddedEvoMasterController extends EmbeddedSutController {
     public static void main(String[] args) {
 
@@ -38,7 +40,7 @@ public class EmbeddedEvoMasterController extends EmbeddedSutController {
     private static final String schemaName = "ts";
     private ConfigurableApplicationContext ctx;
     private Connection sqlConnection;
-    private String INIT_DB_SCRIPT_PATH = "./complete.sql";
+    private String MONGO_DUMPS_ROOT = "./dumps";
     private List<DbSpecification> dbSpecification = new ArrayList<>();
     private String sqlScript;
     public EmbeddedEvoMasterController() {
@@ -52,53 +54,9 @@ public class EmbeddedEvoMasterController extends EmbeddedSutController {
 
     @Override
     public String startSut() {
-        try {
-            sqlScript = String.join("\n", Files.readAllLines(Paths.get(INIT_DB_SCRIPT_PATH)));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        if (sqlScript.isEmpty()) {
-            throw new RuntimeException("SQL script is empty");
-        }
-
         ctx = SpringApplication.run(ExecuteApplication.class, new String[]{
                 "--logging.file.name=app.logs"
         });
-
-        if (sqlConnection != null) {
-            try {
-                sqlConnection.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        try {
-            sqlConnection = DriverManager.getConnection("jdbc:mysql://ts-db-mysql-leader:3306/ts?useSSL=false", "ts", "Ts_123456");
-//            Alternative to hardcoded SQL connection, get connection from spring context (code below).
-//            Beware, some services do not have a direct connection to the DB but still modify it through other services
-//            (e.g. ts-admin-basic-info-service). These services still need to reset the DB somehow.
-//            When deploying the application with individual databases a different approach is needed e.g. store all
-//            DB connection info here and reset each individually.
-
-//            JdbcTemplate jdbc = ctx.getBean(JdbcTemplate.class);
-//            sqlConnection = jdbc.getDataSource().getConnection();
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        /*
-            the application will be initialized some data in database
-            to consistently manage data by evomaster
-         */
-
-        DbCleaner.clearDatabase(sqlConnection, schemaName, null, DatabaseType.MYSQL);
-
-        dbSpecification = Arrays.asList(new DbSpecification(DatabaseType.MYSQL, sqlConnection)
-                .withInitSqlScript(sqlScript)
-                .withSchemas(schemaName));
-
         return "http://localhost:" + getSutPort();
     }
 
@@ -126,8 +84,26 @@ public class EmbeddedEvoMasterController extends EmbeddedSutController {
 
     @Override
     public void resetStateOfSUT() {
-        DbCleaner.clearDatabase(sqlConnection, schemaName, null, DatabaseType.MYSQL);
-        SqlScriptRunner.runScript(sqlConnection, new StringReader(sqlScript));
+        try (Stream<Path> stream = Files.list(Paths.get("./dumps"))) {
+            List<Process> processes = stream
+                    .filter(Files::isDirectory)
+                    .map(Path::getFileName)
+                    .map(Path::toString)
+                    .map(mongoDB -> {
+                        ProcessBuilder pb = new ProcessBuilder("/bin/bash", "-c",
+                                "cd /app;./mongorestore --drop mongodb://" + mongoDB + " ./dumps/" + mongoDB +"/");
+                        try {
+                            return pb.start();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }).collect(Collectors.toList());
+            for (Process process : processes) {
+                process.waitFor();
+            }
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -143,32 +119,19 @@ public class EmbeddedEvoMasterController extends EmbeddedSutController {
 
     @Override
     public List<AuthenticationDto> getInfoForAuthentication() {
-        String loginEndpoint = "http://ts-auth-service:12340/api/v1/users/login";
-        String headerPrefix = "Bearer ";
-        String jwtLocation = "/data/token"; // JSON Pointer
-
         AuthenticationDto basicUserAuth = new AuthenticationDto("basicUser");
-        JsonTokenPostLoginDto basicUserInfo = new JsonTokenPostLoginDto();
-        basicUserInfo.endpoint = loginEndpoint;
-        basicUserInfo.userId = "4d2a46c7-71cb-4cf1-b5bb-b68406d9da6f";
-        basicUserInfo.jsonPayload = "{\"username\":\"fdse_microservice\",\"password\":\"111111\",\"verificationCode\":\"1234\"}";
-        basicUserInfo.headerPrefix = headerPrefix;
-        basicUserInfo.extractTokenField = jwtLocation;
-        basicUserAuth.jsonTokenPostLogin = basicUserInfo;
-
-
-        AuthenticationDto adminUserAuth = new AuthenticationDto("AdminUser");
-        JsonTokenPostLoginDto adminUserInfo = new JsonTokenPostLoginDto();
-        adminUserInfo.endpoint = loginEndpoint;
-        adminUserInfo.userId = "randomUUID";
-        adminUserInfo.jsonPayload = "{\"username\":\"admin\",\"password\":\"222222\"}";
-        adminUserInfo.headerPrefix = headerPrefix;
-        adminUserInfo.extractTokenField = jwtLocation;
-        adminUserAuth.jsonTokenPostLogin = adminUserInfo;
+        CookieLoginDto cookieLoginDto = new CookieLoginDto();
+        cookieLoginDto.contentType = CookieLoginDto.ContentType.JSON;
+        cookieLoginDto.httpVerb = CookieLoginDto.HttpVerb.POST;
+        cookieLoginDto.loginEndpointUrl = "http://ts-login-service:12342/api/v1/users/login";
+        cookieLoginDto.usernameField = "email";
+        cookieLoginDto.username = "fdse_microservices@163.com";
+        cookieLoginDto.passwordField = "password";
+        cookieLoginDto.password = "DefaultPassword";
+        basicUserAuth.cookieLogin = cookieLoginDto;
 
         return Arrays.asList(
-                basicUserAuth,
-                adminUserAuth
+                basicUserAuth
         );
     }
 
