@@ -3,7 +3,7 @@ package adminorder;
 import org.evomaster.client.java.controller.EmbeddedSutController;
 import org.evomaster.client.java.controller.InstrumentedSutStarter;
 import org.evomaster.client.java.controller.api.dto.AuthenticationDto;
-import org.evomaster.client.java.controller.api.dto.JsonTokenPostLoginDto;
+import org.evomaster.client.java.controller.api.dto.CookieLoginDto;
 import org.evomaster.client.java.controller.api.dto.SutInfoDto;
 import org.evomaster.client.java.controller.api.dto.database.schema.DatabaseType;
 import org.evomaster.client.java.controller.db.DbCleaner;
@@ -143,32 +143,19 @@ public class EmbeddedEvoMasterController extends EmbeddedSutController {
 
     @Override
     public List<AuthenticationDto> getInfoForAuthentication() {
-        String loginEndpoint = "http://ts-auth-service:12340/api/v1/users/login";
-        String headerPrefix = "Bearer ";
-        String jwtLocation = "/data/token"; // JSON Pointer
-
         AuthenticationDto basicUserAuth = new AuthenticationDto("basicUser");
-        JsonTokenPostLoginDto basicUserInfo = new JsonTokenPostLoginDto();
-        basicUserInfo.endpoint = loginEndpoint;
-        basicUserInfo.userId = "4d2a46c7-71cb-4cf1-b5bb-b68406d9da6f";
-        basicUserInfo.jsonPayload = "{\"username\":\"fdse_microservice\",\"password\":\"111111\",\"verificationCode\":\"1234\"}";
-        basicUserInfo.headerPrefix = headerPrefix;
-        basicUserInfo.extractTokenField = jwtLocation;
-        basicUserAuth.jsonTokenPostLogin = basicUserInfo;
-
-
-        AuthenticationDto adminUserAuth = new AuthenticationDto("AdminUser");
-        JsonTokenPostLoginDto adminUserInfo = new JsonTokenPostLoginDto();
-        adminUserInfo.endpoint = loginEndpoint;
-        adminUserInfo.userId = "randomUUID";
-        adminUserInfo.jsonPayload = "{\"username\":\"admin\",\"password\":\"222222\"}";
-        adminUserInfo.headerPrefix = headerPrefix;
-        adminUserInfo.extractTokenField = jwtLocation;
-        adminUserAuth.jsonTokenPostLogin = adminUserInfo;
+        CookieLoginDto cookieLoginDto = new CookieLoginDto();
+        cookieLoginDto.contentType = CookieLoginDto.ContentType.JSON;
+        cookieLoginDto.httpVerb = CookieLoginDto.HttpVerb.POST;
+        cookieLoginDto.loginEndpointUrl = "http://ts-login-service:12342/api/v1/users/login";
+        cookieLoginDto.usernameField = "email";
+        cookieLoginDto.username = "fdse_microservices@163.com";
+        cookieLoginDto.passwordField = "password";
+        cookieLoginDto.password = "DefaultPassword";
+        basicUserAuth.cookieLogin = cookieLoginDto;
 
         return Arrays.asList(
-                basicUserAuth,
-                adminUserAuth
+                basicUserAuth
         );
     }
 
