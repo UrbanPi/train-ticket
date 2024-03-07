@@ -138,8 +138,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -275,8 +275,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -412,8 +412,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -549,8 +549,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -686,8 +686,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -827,8 +827,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -964,8 +964,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -1103,8 +1103,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -1246,8 +1246,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -1389,8 +1389,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -1530,8 +1530,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -1671,8 +1671,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -1808,8 +1808,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -1950,8 +1950,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -2091,8 +2091,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -2227,8 +2227,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 12862
@@ -2367,8 +2367,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -2505,8 +2505,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -2643,8 +2643,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -2786,8 +2786,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -2926,8 +2926,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -3066,8 +3066,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -3209,8 +3209,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -3347,8 +3347,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -3484,8 +3484,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -3625,8 +3625,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -3762,8 +3762,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -3903,8 +3903,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -4044,8 +4044,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -4184,8 +4184,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 16108
@@ -4325,8 +4325,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -4462,8 +4462,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -4603,8 +4603,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -4744,8 +4744,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -4881,8 +4881,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -4922,8 +4922,8 @@ spec:
               cpu: 50m
               memory: 100Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -5057,8 +5057,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -5200,8 +5200,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -5336,8 +5336,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -5472,8 +5472,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
@@ -5608,8 +5608,8 @@ spec:
               cpu: 100m
               memory: 250Mi
             limits:
-              cpu: 500m
-              memory: 500Mi
+          cpu: 500m
+          memory: 2500Mi
           readinessProbe:
             tcpSocket:
               port: 9090
