@@ -52,7 +52,7 @@ public class EmbeddedEvoMasterController extends EmbeddedSutController {
         ctx = SpringApplication.run(ConfigApplication.class, new String[]{
                 "--logging.file.name=app.logs"
         });
-        return "http://localhost:" + getSutPort();
+        return "https://localhost:" + getSutPort();
     }
 
     protected int getSutPort() {
@@ -104,7 +104,7 @@ public class EmbeddedEvoMasterController extends EmbeddedSutController {
     @Override
     public ProblemInfo getProblemInfo() {
         return new RestProblem(
-                "http://localhost:" + getSutPort() + "/v2/api-docs", null);
+                "https://localhost:" + getSutPort() + "/v2/api-docs", null);
     }
 
     @Override
@@ -118,7 +118,7 @@ public class EmbeddedEvoMasterController extends EmbeddedSutController {
         CookieLoginDto cookieLoginDto = new CookieLoginDto();
         cookieLoginDto.contentType = CookieLoginDto.ContentType.JSON;
         cookieLoginDto.httpVerb = CookieLoginDto.HttpVerb.POST;
-        cookieLoginDto.loginEndpointUrl = "http://ts-login-service:12342/api/v1/users/login";
+        cookieLoginDto.loginEndpointUrl = "https://ts-login-service:12342/api/v1/users/login";
         cookieLoginDto.usernameField = "email";
         cookieLoginDto.username = "fdse_microservices@163.com";
         cookieLoginDto.passwordField = "password";
