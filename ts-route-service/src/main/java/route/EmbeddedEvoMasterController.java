@@ -15,13 +15,16 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.Connection;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
 public class EmbeddedEvoMasterController extends EmbeddedSutController {
+    private static final String schemaName = "ts";
+    private static final String MONGO_DUMPS_ROOT = "./dumps";
+    private ConfigurableApplicationContext ctx;
+
     public static void main(String[] args) {
 
         int port = 40100;
@@ -34,12 +37,7 @@ public class EmbeddedEvoMasterController extends EmbeddedSutController {
 
         starter.start();
     }
-    private static final String schemaName = "ts";
-    private ConfigurableApplicationContext ctx;
-    private Connection sqlConnection;
-    private String MONGO_DUMPS_ROOT = "./dumps";
-    private List<DbSpecification> dbSpecification = new ArrayList<>();
-    private String sqlScript;
+
     public EmbeddedEvoMasterController() {
         this(40100);
     }
@@ -88,7 +86,7 @@ public class EmbeddedEvoMasterController extends EmbeddedSutController {
                     .map(Path::toString)
                     .map(mongoDB -> {
                         ProcessBuilder pb = new ProcessBuilder("/bin/bash", "-c",
-                                "cd /app;./mongorestore --drop mongodb://" + mongoDB + " ./dumps/" + mongoDB +"/");
+                                "cd /app;./mongorestore --drop mongodb://" + mongoDB + " " + MONGO_DUMPS_ROOT + mongoDB +"/");
                         try {
                             return pb.start();
                         } catch (IOException e) {
@@ -134,6 +132,6 @@ public class EmbeddedEvoMasterController extends EmbeddedSutController {
 
     @Override
     public List<DbSpecification> getDbSpecifications() {
-        return dbSpecification;
+        return null;
     }
 }
