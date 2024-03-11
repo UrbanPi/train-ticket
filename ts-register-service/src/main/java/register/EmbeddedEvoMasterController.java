@@ -21,7 +21,6 @@ import java.util.stream.Stream;
 
 
 public class EmbeddedEvoMasterController extends EmbeddedSutController {
-    private static final String schemaName = "ts";
     private static final String MONGO_DUMPS_ROOT = "./dumps";
     private ConfigurableApplicationContext ctx;
 
@@ -50,7 +49,7 @@ public class EmbeddedEvoMasterController extends EmbeddedSutController {
     @Override
     public String startSut() {
         ctx = SpringApplication.run(RegisterApplication.class, new String[]{
-                "--logging.file.name=app.logs"
+                "--logging.file.name=app.logs", "--logging.file=app.logs"
         });
         return "http://localhost:" + getSutPort();
     }
