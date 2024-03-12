@@ -117,7 +117,7 @@ public class EmbeddedEvoMasterController extends EmbeddedSutController {
         CookieLoginDto cookieLoginDto = new CookieLoginDto();
         cookieLoginDto.contentType = CookieLoginDto.ContentType.JSON;
         cookieLoginDto.httpVerb = CookieLoginDto.HttpVerb.POST;
-        cookieLoginDto.loginEndpointUrl = "https://ts-login-service:12342/api/v1/users/login";
+        cookieLoginDto.loginEndpointUrl = "https://ts-login-service:12342/login";
         cookieLoginDto.usernameField = "email";
         cookieLoginDto.username = "fdse_microservices@163.com";
         cookieLoginDto.passwordField = "password";
