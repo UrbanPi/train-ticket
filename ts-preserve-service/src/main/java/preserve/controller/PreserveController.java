@@ -19,13 +19,11 @@ public class PreserveController {
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value="/preserve", method = RequestMethod.POST)
-    public OrderTicketsResult preserve(@RequestBody OrderTicketsInfoPlus otiPlus) throws Exception {
+    public OrderTicketsResult preserve(@RequestBody OrderTicketsInfoPlus otiPlus, @CookieValue String loginToken) throws Exception {
 
         OrderTicketsInfo oti = otiPlus.getInfo();
 
         String loginId = otiPlus.getLoginId();
-
-        String loginToken = otiPlus.getLoginToken();
 
 
         System.out.println("[Preserve Service][Preserve] Account " + loginId + " order from " +
