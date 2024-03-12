@@ -73,8 +73,8 @@ public class ContactsController {
 
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/contacts/getContactsById", method = RequestMethod.POST)
-    public GetContactsResult getContactsByContactsId(@RequestBody GetContactsInfo gci){
-        VerifyResult tokenResult = verifySsoLogin(gci.getLoginToken());
+    public GetContactsResult getContactsByContactsId(@RequestBody GetContactsInfo gci,@CookieValue String loginToken){
+        VerifyResult tokenResult = verifySsoLogin(loginToken);
         GetContactsResult gcr = new GetContactsResult();
         if(tokenResult.isStatus() == true){
             System.out.println("[ContactsService][VerifyLogin] Success.");

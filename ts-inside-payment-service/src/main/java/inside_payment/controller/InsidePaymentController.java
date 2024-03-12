@@ -60,7 +60,8 @@ public class InsidePaymentController {
     }
 
     @RequestMapping(value="/inside_payment/drawBack", method = RequestMethod.POST)
-    public boolean drawBack(@RequestBody DrawBackInfo info){
+    public boolean drawBack(@RequestBody DrawBackInfo info,@CookieValue String loginToken){
+        info.setLoginToken(loginToken);
         return service.drawBack(info);
     }
 
