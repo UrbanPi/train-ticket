@@ -59,7 +59,7 @@ public class FuckContactsController {
 
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/contacts/findContacts", method = RequestMethod.GET)
-    public ArrayList<Contacts> findContactsByAccountId(@CookieValue String loginId,@CookieValue String loginToken){
+    public ArrayList<Contacts> findContactsByAccountId(@CookieValue String loginId, @CookieValue String loginToken){
         System.out.println("[Contacts Service][Find Contacts By Account Id:" + loginId);
         VerifyResult tokenResult = verifySsoLogin(loginToken);
         if(tokenResult.isStatus() == true){
@@ -73,8 +73,8 @@ public class FuckContactsController {
 
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/contacts/getContactsById", method = RequestMethod.POST)
-    public GetContactsResult getContactsByContactsId(@RequestBody GetContactsInfo gci){
-        VerifyResult tokenResult = verifySsoLogin(gci.getLoginToken());
+    public GetContactsResult getContactsByContactsId(@RequestBody GetContactsInfo gci, @CookieValue String loginToken){
+        VerifyResult tokenResult = verifySsoLogin(loginToken);
         GetContactsResult gcr = new GetContactsResult();
         if(tokenResult.isStatus() == true){
             System.out.println("[ContactsService][VerifyLogin] Success.");
