@@ -31,10 +31,10 @@ public class OrderController {
 
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/order/create", method = RequestMethod.POST)
-    public CreateOrderResult createNewOrder(@RequestBody CreateOrderInfo coi){
+    public CreateOrderResult createNewOrder(@RequestBody CreateOrderInfo coi,@CookieValue String loginToken){
         System.out.println("[Order Service][Create Order] Create Order form " + coi.getOrder().getFrom() + " --->"
             + coi.getOrder().getTo() + " at " + coi.getOrder().getTravelDate());
-        VerifyResult tokenResult = verifySsoLogin(coi.getLoginToken());
+        VerifyResult tokenResult = verifySsoLogin(loginToken);
         if(tokenResult.isStatus() == true){
             System.out.println("[Order Service][Verify Login] Success");
             return orderService.create(coi.getOrder());
@@ -113,8 +113,8 @@ public class OrderController {
 
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/order/update", method = RequestMethod.POST)
-    public ChangeOrderResult saveOrderInfo(@RequestBody ChangeOrderInfo orderInfo){
-        VerifyResult tokenResult = verifySsoLogin(orderInfo.getLoginToken());
+    public ChangeOrderResult saveOrderInfo(@RequestBody ChangeOrderInfo orderInfo,@CookieValue String loginToken){
+        VerifyResult tokenResult = verifySsoLogin(loginToken);
         if(tokenResult.isStatus() == true){
             System.out.println("[Order Service][Verify Login] Success");
             return orderService.saveChanges(orderInfo.getOrder());
