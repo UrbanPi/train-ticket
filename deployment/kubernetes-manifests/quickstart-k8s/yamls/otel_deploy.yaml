@@ -121,7 +121,7 @@ spec:
               value: "ts-admin-basic-info-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -257,7 +257,7 @@ spec:
               value: "ts-admin-order-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -394,7 +394,7 @@ spec:
               value: "ts-admin-route-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -531,7 +531,7 @@ spec:
               value: "ts-admin-travel-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -668,7 +668,7 @@ spec:
               value: "ts-admin-user-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -805,7 +805,7 @@ spec:
               value: "ts-assurance-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -946,7 +946,7 @@ spec:
               value: "ts-basic-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1083,7 +1083,7 @@ spec:
               value: "ts-cancel-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1222,7 +1222,7 @@ spec:
               value: "ts-config-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1363,7 +1363,7 @@ spec:
               value: "ts-consign-price-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1504,7 +1504,7 @@ spec:
               value: "ts-consign-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1645,7 +1645,7 @@ spec:
               value: "ts-contacts-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1786,7 +1786,7 @@ spec:
               value: "ts-execute-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -1925,7 +1925,7 @@ spec:
             - name: rabbitmq_port
               value: "5672"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2065,7 +2065,7 @@ spec:
               value: "ts-inside-payment-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2253,7 +2253,7 @@ spec:
             - name: rabbitmq_port
               value: "5672"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2391,7 +2391,7 @@ spec:
               value: "ts-order-other-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2529,7 +2529,7 @@ spec:
               value: "ts-order-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2666,7 +2666,7 @@ spec:
             - name: SERVICE_JAR
               value: "ts-payment-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2809,7 +2809,7 @@ spec:
             - name: rabbitmq_port
               value: "5672"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -2949,7 +2949,7 @@ spec:
             - name: rabbitmq_port
               value: "5672"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -3086,7 +3086,7 @@ spec:
             - name: SERVICE_JAR
               value: "ts-price-service"
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -3222,7 +3222,7 @@ spec:
               value: "ts-rebook-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -3360,7 +3360,7 @@ spec:
               value: "ts-route-plan-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -3497,7 +3497,7 @@ spec:
               value: "ts-route-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -3638,7 +3638,7 @@ spec:
               value: "ts-seat-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -3775,7 +3775,7 @@ spec:
               value: "ts-security-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -3916,7 +3916,7 @@ spec:
               value: "ts-station-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -4097,7 +4097,7 @@ spec:
               value: "ts-train-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -4238,7 +4238,7 @@ spec:
               value: "ts-travel-plan-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -4375,7 +4375,7 @@ spec:
               value: "ts-travel-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -4516,7 +4516,7 @@ spec:
               value: "ts-travel2-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -4657,7 +4657,7 @@ spec:
               value: "ts-verification-code-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -4829,7 +4829,7 @@ spec:
               value: "ts-ticketinfo-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -4970,7 +4970,7 @@ spec:
               value: "ts-food-map-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -5111,7 +5111,7 @@ spec:
               value: "ts-login-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -5247,7 +5247,7 @@ spec:
               value: "ts-sso-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -5383,7 +5383,7 @@ spec:
               value: "ts-register-service"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
@@ -5519,7 +5519,7 @@ spec:
               value: "ts-launcher"
 
           command: [ "/bin/sh" ]
-          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -R /persinit/persinit/ /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
+          args: [ "-c", "cp /otel/otel/scch-testAgent.properties /app/; cp /javax/javax/javax.servlet-api-4.0.1.jar /app/; cp /evomaster/evomaster/evomaster-client-java-controller-2.0.0.jar /app/; cp /evomaster/evomaster/evomaster.jar /app/; cp -r /persinit/persinit/ /app/dumps/; cp /mongorestore/mongorestore_dir/mongorestore /app/; cp /microservicecontroller/microservicecontroller/microservicecontroller-1.0.jar /app/; cd /app/; java -jar microservicecontroller-1.0.jar"]
           envFrom:
             - configMapRef:
                 name: environment-vars
