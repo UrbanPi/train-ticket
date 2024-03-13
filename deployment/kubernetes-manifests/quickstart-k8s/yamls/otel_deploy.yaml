@@ -135,10 +135,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -272,10 +271,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -409,10 +407,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -546,10 +543,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -683,10 +679,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -824,10 +819,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -961,10 +955,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -1100,10 +1093,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -1241,10 +1233,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -1382,10 +1373,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -1523,10 +1513,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -1664,10 +1653,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -1801,10 +1789,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -1943,10 +1930,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -2084,10 +2070,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -2129,10 +2114,9 @@ spec:
             - containerPort: 12862
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -2269,10 +2253,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -2407,10 +2390,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -2545,10 +2527,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -2685,10 +2666,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -2825,10 +2805,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -2965,10 +2944,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -3100,10 +3078,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -3238,10 +3215,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -3375,10 +3351,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -3516,10 +3491,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -3653,10 +3627,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -3794,10 +3767,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -3930,10 +3902,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -3975,10 +3946,9 @@ spec:
             - containerPort: 16108
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -4116,10 +4086,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -4253,10 +4222,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -4394,10 +4362,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -4535,10 +4502,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -4672,10 +4638,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -4716,7 +4681,6 @@ spec:
               cpu: 50m
               memory: 100Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
 ---
 apiVersion: apps/v1
@@ -4848,10 +4812,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -4989,10 +4952,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -5125,10 +5087,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -5261,10 +5222,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
@@ -5397,10 +5357,9 @@ spec:
               containerPort: 9090
           resources:
             requests:
-              cpu: 100m
-              memory: 250Mi
+              cpu: 50m
+              memory: 200Mi
             limits:
-              cpu: 500m
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
