@@ -125,9 +125,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -250,9 +249,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -375,9 +373,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -500,9 +497,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -625,9 +621,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -752,9 +747,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -879,9 +873,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -929,9 +922,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -1054,9 +1046,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -1179,9 +1170,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -1306,9 +1296,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -1433,9 +1422,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -1560,9 +1548,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -1687,9 +1674,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -1778,9 +1764,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -1903,9 +1888,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -2030,9 +2014,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -2159,9 +2142,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -2245,7 +2227,7 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
               cpu: 4000m
               memory: 4000Mi
@@ -2372,9 +2354,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -2422,9 +2403,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -2551,9 +2531,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -2680,9 +2659,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -2809,9 +2787,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -2936,9 +2913,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -3063,9 +3039,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -3190,9 +3165,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -3317,9 +3291,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -3444,9 +3417,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -3569,9 +3541,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -3696,9 +3667,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -3821,9 +3791,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -3948,9 +3917,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -4075,9 +4043,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -4202,9 +4169,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -4255,9 +4221,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -4382,9 +4347,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -4509,9 +4473,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -4634,9 +4597,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -4761,9 +4723,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -4888,9 +4849,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -5015,9 +4975,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -5140,9 +5099,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -5196,9 +5154,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -5323,9 +5280,8 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 250Mi
             limits:
-              cpu: 500m
               memory: 2000Mi
           readinessProbe:
             tcpSocket:
@@ -5366,5 +5322,4 @@ spec:
               cpu: 50m
               memory: 100Mi
             limits:
-              cpu: 500m
               memory: 500Mi
