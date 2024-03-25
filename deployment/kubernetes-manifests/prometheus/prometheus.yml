@@ -296,8 +296,7 @@ spec:
             cpu: 100m
             memory: 100Mi
           limits:
-            cpu: 200m
-            memory: 1000Mi
+            memory: 2500Mi
       serviceAccountName: prometheus    
       volumes:
       - name: timezone
