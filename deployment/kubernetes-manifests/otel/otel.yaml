@@ -2,8 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: otel-collector
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -12,8 +10,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        hpc.scch.at/service: otel-collector
         app: otel-collector
     spec:
       imagePullSecrets:
