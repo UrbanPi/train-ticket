@@ -15,8 +15,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-admin-basic-info-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -25,8 +23,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-admin-basic-info-service
         app: ts-admin-basic-info-service
     spec:
       volumes:
@@ -150,8 +146,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-admin-order-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -160,8 +154,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-admin-order-service
         app: ts-admin-order-service
     spec:
       volumes:
@@ -286,8 +278,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-admin-route-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -296,8 +286,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-admin-route-service
         app: ts-admin-route-service
     spec:
       volumes:
@@ -422,8 +410,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-admin-travel-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -432,8 +418,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-admin-travel-service
         app: ts-admin-travel-service
     spec:
       volumes:
@@ -558,8 +542,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-admin-user-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -568,8 +550,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-admin-user-service
         app: ts-admin-user-service
     spec:
       volumes:
@@ -694,8 +674,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-assurance-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -704,8 +682,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-assurance-service
         app: ts-assurance-service
     spec:
       volumes:
@@ -829,8 +805,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-basic-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -839,8 +813,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-basic-service
         app: ts-basic-service
     spec:
       volumes:
@@ -965,8 +937,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-cancel-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -975,8 +945,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-cancel-service
         app: ts-cancel-service
     spec:
       volumes:
@@ -1103,8 +1071,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-config-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -1113,8 +1079,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-config-service
         app: ts-config-service
     spec:
       volumes:
@@ -1238,8 +1202,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-consign-price-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -1248,8 +1210,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-consign-price-service
         app: ts-consign-price-service
     spec:
       volumes:
@@ -1373,8 +1333,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-consign-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -1383,8 +1341,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-consign-service
         app: ts-consign-service
     spec:
       volumes:
@@ -1508,8 +1464,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-contacts-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -1518,8 +1472,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-contacts-service
         app: ts-contacts-service
     spec:
       volumes:
@@ -1643,8 +1595,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-execute-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -1653,8 +1603,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-execute-service
         app: ts-execute-service
     spec:
       volumes:
@@ -1779,8 +1727,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-food-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -1789,8 +1735,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-food-service
         app: ts-food-service
     spec:
       volumes:
@@ -1918,8 +1862,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-inside-payment-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -1928,8 +1870,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-inside-payment-service
         app: ts-inside-payment-service
     spec:
       volumes:
@@ -2053,8 +1993,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-news-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -2063,8 +2001,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-news-service
         app: ts-news-service
     spec:
       imagePullSecrets:
@@ -2097,8 +2033,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-notification-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -2107,8 +2041,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-notification-service
         app: ts-notification-service
     spec:
       volumes:
@@ -2236,8 +2168,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-order-other-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -2246,8 +2176,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-order-other-service
         app: ts-order-other-service
     spec:
       volumes:
@@ -2373,8 +2301,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-order-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -2383,8 +2309,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-order-service
         app: ts-order-service
     spec:
       volumes:
@@ -2510,8 +2434,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-payment-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -2520,8 +2442,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-payment-service
         app: ts-payment-service
     spec:
       volumes:
@@ -2644,8 +2564,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-preserve-other-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -2654,8 +2572,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-preserve-other-service
         app: ts-preserve-other-service
     spec:
       volumes:
@@ -2783,8 +2699,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-preserve-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -2793,8 +2707,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-preserve-service
         app: ts-preserve-service
     spec:
       volumes:
@@ -2922,8 +2834,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-price-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -2932,8 +2842,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-price-service
         app: ts-price-service
     spec:
       volumes:
@@ -3056,8 +2964,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-rebook-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -3066,8 +2972,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-rebook-service
         app: ts-rebook-service
     spec:
       volumes:
@@ -3193,8 +3097,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-route-plan-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -3203,8 +3105,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-route-plan-service
         app: ts-route-plan-service
     spec:
       volumes:
@@ -3329,8 +3229,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-route-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -3339,8 +3237,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-route-service
         app: ts-route-service
     spec:
       volumes:
@@ -3464,8 +3360,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-seat-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -3474,8 +3368,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-seat-service
         app: ts-seat-service
     spec:
       volumes:
@@ -3600,8 +3492,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-security-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -3610,8 +3500,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-security-service
         app: ts-security-service
     spec:
       volumes:
@@ -3735,8 +3623,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-station-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -3745,8 +3631,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-station-service
         app: ts-station-service
     spec:
       volumes:
@@ -3870,8 +3754,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-ticket-office-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -3880,8 +3762,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-ticket-office-service
         app: ts-ticket-office-service
     spec:
       imagePullSecrets:
@@ -3914,8 +3794,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-train-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -3924,8 +3802,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-train-service
         app: ts-train-service
     spec:
       volumes:
@@ -4049,8 +3925,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-travel-plan-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -4059,8 +3933,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-travel-plan-service
         app: ts-travel-plan-service
     spec:
       volumes:
@@ -4185,8 +4057,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-travel-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -4195,8 +4065,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-travel-service
         app: ts-travel-service
     spec:
       volumes:
@@ -4320,8 +4188,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-travel2-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -4330,8 +4196,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-travel2-service
         app: ts-travel2-service
     spec:
       volumes:
@@ -4455,8 +4319,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-verification-code-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -4465,8 +4327,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-verification-code-service
         app: ts-verification-code-service
     spec:
       volumes:
@@ -4591,8 +4451,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-voucher-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -4601,8 +4459,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-voucher-service
         app: ts-voucher-service
     spec:
       imagePullSecrets:
@@ -4642,7 +4498,6 @@ kind: Deployment
 metadata:
   name: ts-ui-dashboard
   labels:
-    hpc.scch.at/responsibility: urbanke
     hpecp.hpe.com/hpecp-internal-gateway: "true"
 spec:
   selector:
@@ -4652,8 +4507,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-ui-dashboard
         app: ts-ui-dashboard
     spec:
       imagePullSecrets:
@@ -4675,8 +4528,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-ticketinfo-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -4685,8 +4536,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-ticketinfo-service
         app: ts-ticketinfo-service
     spec:
       volumes:
@@ -4810,8 +4659,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-food-map-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -4820,8 +4667,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-station-food-service
         app: ts-food-map-service
     spec:
       volumes:
@@ -4945,8 +4790,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-login-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -4955,8 +4798,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-login-service
         app: ts-login-service
     spec:
       volumes:
@@ -5080,8 +4921,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-sso-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -5090,8 +4929,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-sso-service
         app: ts-sso-service
     spec:
       volumes:
@@ -5215,8 +5052,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-register-service
-  labels:
-    hpc.scch.at/responsibility: urbanke
 spec:
   selector:
     matchLabels:
@@ -5225,8 +5060,6 @@ spec:
   template:
     metadata:
       labels:
-        hpc.scch.at/responsibility: urbanke
-        # hpc.scch.at/service: ts-register-service
         app: ts-register-service
     spec:
       volumes:
