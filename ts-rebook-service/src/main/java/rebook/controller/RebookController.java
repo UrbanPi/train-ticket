@@ -8,6 +8,7 @@ import rebook.service.RebookService;
 
 @RestController
 public class RebookController {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(RebookController.class);
 
     @Autowired
     RebookService service;
@@ -19,7 +20,7 @@ public class RebookController {
 
     @RequestMapping(value="/rebook/rebook", method = RequestMethod.POST)
     public RebookResult rebook(@RequestBody RebookInfo info, @CookieValue String loginId, @CookieValue String loginToken){
-        System.out.println("[Rebook Service] OrderId:" + info.getOrderId() + "Old Trip Id:" + info.getOldTripId() + " New Trip Id:" + info.getTripId() + " Date:" + info.getDate() + " Seat Type:" + info.getSeatType());
+        logger.info("[Rebook Service] OrderId:" + info.getOrderId() + "Old Trip Id:" + info.getOldTripId() + " New Trip Id:" + info.getTripId() + " Date:" + info.getDate() + " Seat Type:" + info.getSeatType());
         return service.rebook(info, loginId, loginToken);
     }
 }

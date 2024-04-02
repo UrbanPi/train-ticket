@@ -22,6 +22,7 @@ import java.util.UUID;
 
 @Service
 public class AccountLoginServiceImpl implements AccountLoginService {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(AccountLoginServiceImpl.class);
 
     @Autowired
     private RestTemplate restTemplate;
@@ -42,7 +43,7 @@ public class AccountLoginServiceImpl implements AccountLoginService {
                 String.class
         );
         String verifyResult = (String)rssResponse.getBody();
-        System.out.println("[Login Service][Login] Verification Result:" + verifyResult);
+        logger.info("[Login Service][Login] Verification Result:" + verifyResult);
         if(!verifyResult.contains("true")){
             LoginResult verifyCodeLr = new LoginResult();
             verifyCodeLr.setAccount(null);
@@ -54,11 +55,11 @@ public class AccountLoginServiceImpl implements AccountLoginService {
         LoginResult lr = restTemplate.postForObject(
                 "http://ts-sso-service:12349/account/login",
                 li,LoginResult.class);
-        System.out.println("[Login Service] Status:" + lr.getStatus());
+        logger.info("[Login Service] Status:" + lr.getStatus());
         if(lr.getStatus() == false){
-            System.out.println("[Login Service] Status: false. Cookie wrong.");
+            logger.info("[Login Service] Status: false. Cookie wrong.");
         }else{
-            System.out.println("[Login Service] Status: true. Put Cookie.");
+            logger.info("[Login Service] Status: true. Put Cookie.");
             CookieUtil.addCookie(response, "loginId", lr.getAccount().getId().toString(), COOKIE_EXPIRED);
             CookieUtil.addCookie(response, "loginToken", lr.getToken(), COOKIE_EXPIRED);
         }
@@ -69,9 +70,9 @@ public class AccountLoginServiceImpl implements AccountLoginService {
     public LogoutResult logout(LogoutInfo li,HttpServletRequest request,HttpServletResponse response){
         LogoutResult lr = restTemplate.postForObject("http://ts-sso-service:12349/logout",li,LogoutResult.class);
         if(lr.isStatus()){
-            System.out.println("[Login Service][Logout] Success");
+            logger.info("[Login Service][Logout] Success");
         }else{
-            System.out.println("[Login Service][Logout] Fail.Reason:" + lr.getMessage());
+            logger.info("[Login Service][Logout] Fail.Reason:" + lr.getMessage());
         }
         handleLogOutResponse(request, response);
         return lr;

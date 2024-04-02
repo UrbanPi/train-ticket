@@ -9,6 +9,7 @@ import java.util.UUID;
 
 @Service
 public class ContactsServiceImpl implements ContactsService{
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(ContactsServiceImpl.class);
 
     @Autowired
     private ContactsRepository contactsRepository;
@@ -21,7 +22,7 @@ public class ContactsServiceImpl implements ContactsService{
     @Override
     public ArrayList<Contacts> findContactsByAccountId(UUID accountId){
         ArrayList<Contacts> arr = contactsRepository.findByAccountId(accountId);
-        System.out.println("[Contacts-Query-Service][Query-Contacts] Result Size:" + arr.size());
+        logger.info("[Contacts-Query-Service][Query-Contacts] Result Size:" + arr.size());
         return arr;
     }
 
@@ -29,7 +30,7 @@ public class ContactsServiceImpl implements ContactsService{
     public Contacts createContacts(Contacts contacts){
         Contacts contactsTemp = contactsRepository.findById(contacts.getId());
         if(contactsTemp != null){
-            System.out.println("[Contacts Service][Init Contacts] Already Exists Id:" + contacts.getId());
+            logger.info("[Contacts Service][Init Contacts] Already Exists Id:" + contacts.getId());
         }else{
             contactsRepository.save(contacts);
         }
@@ -49,13 +50,13 @@ public class ContactsServiceImpl implements ContactsService{
         ArrayList<Contacts> accountContacts = contactsRepository.findByAccountId(UUID.fromString(accountId));
         AddContactsResult acr = new AddContactsResult();
         if(accountContacts.contains(contacts)){
-            System.out.println("[Contacts-Add&Delete-Service][AddContacts] Fail.Contacts already exists");
+            logger.info("[Contacts-Add&Delete-Service][AddContacts] Fail.Contacts already exists");
             acr.setStatus(false);
             acr.setMessage("Contacts Already Exists");
             acr.setContacts(null);
         }else{
             contactsRepository.save(contacts);
-            System.out.println("[Contacts-Add&Delete-Service][AddContacts] Success.");
+            logger.info("[Contacts-Add&Delete-Service][AddContacts] Success.");
             acr.setStatus(true);
             acr.setMessage("Success");
             acr.setContacts(contacts);
@@ -69,11 +70,11 @@ public class ContactsServiceImpl implements ContactsService{
         Contacts contacts = contactsRepository.findById(contactsId);
         DeleteContactsResult dcr = new DeleteContactsResult();
         if(contacts == null){
-            System.out.println("[Contacts-Add&Delete-Service][DeleteContacts] Success.");
+            logger.info("[Contacts-Add&Delete-Service][DeleteContacts] Success.");
             dcr.setStatus(true);
             dcr.setMessage("Success");
         }else{
-            System.out.println("[Contacts-Add&Delete-Service][DeleteContacts] Fail.Reason not clear.");
+            logger.info("[Contacts-Add&Delete-Service][DeleteContacts] Fail.Reason not clear.");
             dcr.setStatus(false);
             dcr.setMessage("Reason Not clear");
         }
@@ -85,7 +86,7 @@ public class ContactsServiceImpl implements ContactsService{
         Contacts oldContacts = findContactsById(UUID.fromString(info.getContactsId()));
         ModifyContactsResult mcr = new ModifyContactsResult();
         if(oldContacts == null){
-            System.out.println("[Contacts-Modify-Service][ModifyContacts] Fail.Contacts not found.");
+            logger.info("[Contacts-Modify-Service][ModifyContacts] Fail.Contacts not found.");
             mcr.setStatus(false);
             mcr.setMessage("Contacts not found");
             mcr.setContacts(null);
@@ -95,7 +96,7 @@ public class ContactsServiceImpl implements ContactsService{
             oldContacts.setDocumentNumber(info.getDocumentNumber());
             oldContacts.setPhoneNumber(info.getPhoneNumber());
             contactsRepository.save(oldContacts);
-            System.out.println("[Contacts-Modify-Service][ModifyContacts] Success.");
+            logger.info("[Contacts-Modify-Service][ModifyContacts] Success.");
             mcr.setStatus(true);
             mcr.setMessage("Success");
             mcr.setContacts(oldContacts);

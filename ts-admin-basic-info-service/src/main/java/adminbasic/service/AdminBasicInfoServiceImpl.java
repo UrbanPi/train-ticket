@@ -12,6 +12,7 @@ import java.util.List;
 
 @Service
 public class AdminBasicInfoServiceImpl implements AdminBasicInfoService{
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(AdminBasicInfoServiceImpl.class);
 
     @Autowired
     private RestTemplate restTemplate;
@@ -231,7 +232,7 @@ public class AdminBasicInfoServiceImpl implements AdminBasicInfoService{
         GetAllPriceResult result = new GetAllPriceResult();
         if (adminID.equals(loginId)) {
             result = restTemplate.getForObject("http://ts-price-service:16579/price/queryAll", GetAllPriceResult.class);
-            System.out.println("[!!!!GetAllPriceResult] " + result.getPriceConfig());
+            logger.info("[!!!!GetAllPriceResult] " + result.getPriceConfig());
             return result;
         } else {
             result.setStatus(false);
