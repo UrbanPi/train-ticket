@@ -21,6 +21,7 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 @Service
 public class InsidePaymentServiceImpl implements InsidePaymentService{
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(InsidePaymentServiceImpl.class);
 
     @Autowired
     public AddMoneyRepository addMoneyRepository;
@@ -63,7 +64,7 @@ public class InsidePaymentServiceImpl implements InsidePaymentService{
         if(result.isStatus()){
 
             if(result.getOrder().getStatus() != OrderStatus.NOTPAID.getCode()){
-                System.out.println("[Inside Payment Service][Pay] Error. Order status Not allowed to Pay.");
+                logger.info("[Inside Payment Service][Pay] Error. Order status Not allowed to Pay.");
                 return false;
             }
 
@@ -223,9 +224,9 @@ public class InsidePaymentServiceImpl implements InsidePaymentService{
         equal.set(0);
         //设置订单状态为已退款
         GetOrderByIdInfo getOrderInfo = new GetOrderByIdInfo();
-        System.out.println();
-        System.out.println("info.getOrderId()"+info.getOrderId());
-        System.out.println();
+        logger.info();
+        logger.info("info.getOrderId()"+info.getOrderId());
+        logger.info();
         getOrderInfo.setOrderId(info.getOrderId());
         GetOrderResult cor = restTemplate.postForObject(
                 "http://ts-order-other-service:12032/orderOther/getById/"
@@ -267,14 +268,14 @@ public class InsidePaymentServiceImpl implements InsidePaymentService{
             addMoneyRepository.save(addMoney);
 
             try {
-                System.out.println("一条应该走上的道路");
+                logger.info("一条应该走上的道路");
                 if(enableAutoCheck == false){
                     //If do not recheck do nothing
                 }else{
                     Future<ChangeOrderResult> changeOrderResultFuture = asyncTask.reCalculateRefundMoney(info.getOrderId(), info.getMoney(), info.getLoginToken());
                     ChangeOrderResult changeOrderResult1 = changeOrderResultFuture.get();
 //                reCalculateRefundMoney(info.getOrderId(), info.getMoney(), info.getLoginToken());
-                    System.out.println("reCalculateRefundMoney:Done");
+                    logger.info("reCalculateRefundMoney:Done");
                 }
 
             } catch (InterruptedException e) {
@@ -292,9 +293,9 @@ public class InsidePaymentServiceImpl implements InsidePaymentService{
 //                while(!changeOrderResultFuture.isDone()){
 //
 //                }
-                System.out.println("一条不该走上的道路");
+                logger.info("一条不该走上的道路");
                 reCalculateRefundMoney(info.getOrderId(), info.getMoney(), info.getLoginToken());
-                System.out.println("reCalculateRefundMoney:Done");
+                logger.info("reCalculateRefundMoney:Done");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -386,7 +387,7 @@ public class InsidePaymentServiceImpl implements InsidePaymentService{
         if(paymentTemp == null){
             paymentRepository.save(payment);
         }else{
-            System.out.println("[Inside Payment Service][Init Payment] Already Exists:" + payment.getId());
+            logger.info("[Inside Payment Service][Init Payment] Already Exists:" + payment.getId());
         }
     }
 
@@ -428,10 +429,10 @@ public class InsidePaymentServiceImpl implements InsidePaymentService{
         info.setOrderId(orderId);
         String result = restTemplate.postForObject("http://ts-cancel-service:18885/cancelCalculateRefund2",info,String.class);
 
-        System.out.println();
-        System.out.println("money:"+money);
-        System.out.println("result.getRefund():"+result);
-        System.out.println();
+        logger.info();
+        logger.info("money:"+money);
+        logger.info("result.getRefund():"+result);
+        logger.info();
 
         if(!result.equals(money)){
             equal.set(2);
@@ -459,13 +460,13 @@ public class InsidePaymentServiceImpl implements InsidePaymentService{
             ChangeOrderInfo changeOrderInfo = new ChangeOrderInfo();
             changeOrderInfo.setOrder(order);
             changeOrderInfo.setLoginToken(loginToken);
-            System.out.println();
-            System.out.println("http://ts-order-other-service:12032/orderOther/update before");
-            System.out.println();
+            logger.info();
+            logger.info("http://ts-order-other-service:12032/orderOther/update before");
+            logger.info();
             changeOrderResult = restTemplate.postForObject("http://ts-order-other-service:12032/orderOther/update",changeOrderInfo,ChangeOrderResult.class);
-            System.out.println();
-            System.out.println("http://ts-order-other-service:12032/orderOther/update after");
-            System.out.println();
+            logger.info();
+            logger.info("http://ts-order-other-service:12032/orderOther/update after");
+            logger.info();
         }else{
             equal.set(1);
             changeOrderResult = new ChangeOrderResult();

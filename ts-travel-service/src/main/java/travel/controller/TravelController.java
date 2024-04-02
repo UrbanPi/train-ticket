@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 public class TravelController {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TravelController.class);
 
     @Autowired
     private TravelService travelService;
@@ -20,7 +21,7 @@ public class TravelController {
 
     @RequestMapping(value = "/travel/getRouteByTripId/{tripId}", method = RequestMethod.GET)
     public GetRouteResult getRouteByTripId(@PathVariable String tripId){
-        System.out.println("[Get Route By Trip ID] TripId:" + tripId);
+        logger.info("[Get Route By Trip ID] TripId:" + tripId);
         return travelService.getRouteByTripId(tripId);
     }
 
@@ -61,11 +62,11 @@ public class TravelController {
         if(info.getStartingPlace() == null || info.getStartingPlace().length() == 0 ||
                 info.getEndPlace() == null || info.getEndPlace().length() == 0 ||
                 info.getDepartureTime() == null){
-            System.out.println("[Travel Service][Travel Query] Fail.Something null.");
+            logger.info("[Travel Service][Travel Query] Fail.Something null.");
             ArrayList<TripResponse> errorList = new ArrayList<>();
             return errorList;
         }
-        System.out.println("[Travel Service] Query TripResponse");
+        logger.info("[Travel Service] Query TripResponse");
         return travelService.query(info);
     }
 
@@ -75,11 +76,11 @@ public class TravelController {
         if(info.getStartingPlace() == null || info.getStartingPlace().length() == 0 ||
                 info.getEndPlace() == null || info.getEndPlace().length() == 0 ||
                 info.getDepartureTime() == null){
-            System.out.println("[Travel Service][Travel Query] Fail.Something null.");
+            logger.info("[Travel Service][Travel Query] Fail.Something null.");
             ArrayList<TripResponse> errorList = new ArrayList<>();
             return new QueryTripResponsePackage(false,"Fail.",errorList);
         }
-        System.out.println("[Travel Service] Query TripResponse");
+        logger.info("[Travel Service] Query TripResponse");
         ArrayList<TripResponse> responses = travelService.query(info);
         return new QueryTripResponsePackage(true,"Success.",responses);
     }

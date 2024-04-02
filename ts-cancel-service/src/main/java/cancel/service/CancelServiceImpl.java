@@ -13,6 +13,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class CancelServiceImpl implements CancelService{
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(CancelServiceImpl.class);
 
     @Autowired
     private RestTemplate restTemplate;
@@ -31,7 +32,7 @@ public class CancelServiceImpl implements CancelService{
         getFromOrderInfo.setOrderId(info.getOrderId());
         GetOrderResult orderResult = getOrderByIdFromOrder(getFromOrderInfo);
         if(orderResult.isStatus() == true){
-            System.out.println("[Cancel Order Service][Cancel Order] Order found G|H");
+            logger.info("[Cancel Order Service][Cancel Order] Order found G|H");
             Order order = orderResult.getOrder();
             if(order.getStatus() == OrderStatus.NOTPAID.getCode()
                     || order.getStatus() == OrderStatus.PAID.getCode() || order.getStatus() == OrderStatus.CHANGE.getCode()){
@@ -45,12 +46,12 @@ public class CancelServiceImpl implements CancelService{
                     CancelOrderResult finalResult = new CancelOrderResult();
                     finalResult.setStatus(true);
                     finalResult.setMessage("Success.");
-                    System.out.println("[Cancel Order Service][Cancel Order] Success.");
+                    logger.info("[Cancel Order Service][Cancel Order] Success.");
                     //Draw back money
                     String money = calculateRefund(order);
                     boolean status = drawbackMoney(money,loginId);
                     if(status == true){
-                        System.out.println("[Cancel Order Service][Draw Back Money] Success.");
+                        logger.info("[Cancel Order Service][Draw Back Money] Success.");
 
                         GetAccountByIdInfo getAccountByIdInfo = new GetAccountByIdInfo();
                         getAccountByIdInfo.setAccountId(order.getAccountId().toString());
@@ -76,7 +77,7 @@ public class CancelServiceImpl implements CancelService{
                         sendEmail(notifyInfo);
 
                     }else{
-                        System.out.println("[Cancel Order Service][Draw Back Money] Fail.");
+                        logger.info("[Cancel Order Service][Draw Back Money] Fail.");
                     }
 
 
@@ -86,7 +87,7 @@ public class CancelServiceImpl implements CancelService{
                     CancelOrderResult finalResult = new CancelOrderResult();
                     finalResult.setStatus(false);
                     finalResult.setMessage(changeOrderResult.getMessage());
-                    System.out.println("[Cancel Order Service][Cancel Order] Fail.Reason:" + changeOrderResult.getMessage());
+                    logger.info("[Cancel Order Service][Cancel Order] Fail.Reason:" + changeOrderResult.getMessage());
                     checkStatus(wrongStatus);
                     return finalResult;
                 }
@@ -95,7 +96,7 @@ public class CancelServiceImpl implements CancelService{
                 CancelOrderResult result = new CancelOrderResult();
                 result.setStatus(false);
                 result.setMessage("Order Status Cancel Not Permitted");
-                System.out.println("[Cancel Order Service][Cancel Order] Order Status Not Permitted.");
+                logger.info("[Cancel Order Service][Cancel Order] Order Status Not Permitted.");
                 checkStatus(wrongStatus);
                 return result;
             }
@@ -104,13 +105,13 @@ public class CancelServiceImpl implements CancelService{
             getFromOtherOrderInfo.setOrderId(info.getOrderId());
             GetOrderResult orderOtherResult = getOrderByIdFromOrderOther(getFromOtherOrderInfo);
             if(orderOtherResult.isStatus() == true){
-                System.out.println("[Cancel Order Service][Cancel Order] Order found Z|K|Other");
+                logger.info("[Cancel Order Service][Cancel Order] Order found Z|K|Other");
 
                 Order order = orderOtherResult.getOrder();
                 if(order.getStatus() == OrderStatus.NOTPAID.getCode()
                         || order.getStatus() == OrderStatus.PAID.getCode() || order.getStatus() == OrderStatus.CHANGE.getCode()){
 
-                    System.out.println("[Cancel Order Service][Cancel Order] Order status ok");
+                    logger.info("[Cancel Order Service][Cancel Order] Order status ok");
 
                     order.setStatus(OrderStatus.CANCEL.getCode());
                     ChangeOrderInfo changeOrderInfo = new ChangeOrderInfo();
@@ -164,8 +165,8 @@ public class CancelServiceImpl implements CancelService{
                         CancelOrderResult finalResult = new CancelOrderResult();
                         finalResult.setStatus(true);
                         finalResult.setMessage("Success.");
-                        System.out.println("[Cancel Order Service][Cancel Order] Success.");
-                        System.out.println("[Cancel Order Service][Draw Back Money] Success.");
+                        logger.info("[Cancel Order Service][Cancel Order] Success.");
+                        logger.info("[Cancel Order Service][Draw Back Money] Success.");
                         if(wrongStatus == true){
                             throw  new RuntimeException("[Ts Bomupdate Error]");
                         }else{
@@ -175,8 +176,8 @@ public class CancelServiceImpl implements CancelService{
                         CancelOrderResult finalResult = new CancelOrderResult();
                         finalResult.setStatus(false);
                         finalResult.setMessage("Fail.");
-                        System.out.println("[Cancel Order Service][Cancel Order] Success.");
-                        System.out.println("[Cancel Order Service][Draw Back Money] Fail.");
+                        logger.info("[Cancel Order Service][Cancel Order] Success.");
+                        logger.info("[Cancel Order Service][Draw Back Money] Fail.");
                         if(wrongStatus == true){
                             throw  new RuntimeException("[Ts Bomupdate Error]");
                         }else{
@@ -188,28 +189,28 @@ public class CancelServiceImpl implements CancelService{
 //                        CancelOrderResult finalResult = new CancelOrderResult();
 //                        finalResult.setStatus(true);
 //                        finalResult.setMessage("Success.");
-//                        System.out.println("[Cancel Order Service][Cancel Order] Success.");
+//                        logger.info("[Cancel Order Service][Cancel Order] Success.");
 //                        //Draw back money
 //                        String money = calculateRefund(order);
 //                        boolean status = drawbackMoney(money,loginId);
 //                        if(status == true){
-//                            System.out.println("[Cancel Order Service][Draw Back Money] Success.");
+//                            logger.info("[Cancel Order Service][Draw Back Money] Success.");
 //                        }else{
-//                            System.out.println("[Cancel Order Service][Draw Back Money] Fail.");
+//                            logger.info("[Cancel Order Service][Draw Back Money] Fail.");
 //                        }
 //                        return finalResult;
 //                    }else{
 //                        CancelOrderResult finalResult = new CancelOrderResult();
 //                        finalResult.setStatus(false);
 //                        finalResult.setMessage(changeOrderResult.getMessage());
-//                        System.out.println("[Cancel Order Service][Cancel Order] Fail.Reason:" + changeOrderResult.getMessage());
+//                        logger.info("[Cancel Order Service][Cancel Order] Fail.Reason:" + changeOrderResult.getMessage());
 //                        return finalResult;
 //                    }
                 }else{
                     CancelOrderResult result = new CancelOrderResult();
                     result.setStatus(false);
                     result.setMessage("Order Status Cancel Not Permitted");
-                    System.out.println("[Cancel Order Service][Cancel Order] Order Status Not Permitted.");
+                    logger.info("[Cancel Order Service][Cancel Order] Order Status Not Permitted.");
                     if(wrongStatus == true){
                         throw  new RuntimeException("[Ts Bomupdate Error]");
                     }else{
@@ -222,7 +223,7 @@ public class CancelServiceImpl implements CancelService{
                 CancelOrderResult result = new CancelOrderResult();
                 result.setStatus(false);
                 result.setMessage("Order Not Found");
-                System.out.println("[Cancel Order Service][Cancel Order] Order Not Found.");
+                logger.info("[Cancel Order Service][Cancel Order] Order Not Found.");
                 if(wrongStatus == true){
                     throw  new RuntimeException("[Ts Bomupdate Error]");
                 }else{
@@ -235,7 +236,7 @@ public class CancelServiceImpl implements CancelService{
     }
 
     public boolean sendEmail(NotifyInfo notifyInfo){
-        System.out.println("[Cancel Order Service][Send Email]");
+        logger.info("[Cancel Order Service][Send Email]");
         boolean result = restTemplate.postForObject(
                 "http://ts-notification-service:17853/notification/order_cancel_success",
                 notifyInfo,
@@ -265,14 +266,14 @@ public class CancelServiceImpl implements CancelService{
                     result.setStatus(true);
                     result.setMessage("Success");
                     result.setRefund("0");
-                    System.out.println("[Cancel Order][Refund Price] From Order Service.Not Paid.");
+                    logger.info("[Cancel Order][Refund Price] From Order Service.Not Paid.");
                     return result;
                 }else{
                     CalculateRefundResult result = new CalculateRefundResult();
                     result.setStatus(true);
                     result.setMessage("Success");
                     result.setRefund(calculateRefund(order));
-                    System.out.println("[Cancel Order][Refund Price] From Order Service.Paid.");
+                    logger.info("[Cancel Order][Refund Price] From Order Service.Paid.");
                     return result;
                 }
             }else{
@@ -280,7 +281,7 @@ public class CancelServiceImpl implements CancelService{
                 result.setStatus(false);
                 result.setMessage("Order Status Cancel Not Permitted");
                 result.setRefund("error");
-                System.out.println("[Cancel Order][Refund Price] Order. Cancel Not Permitted.");
+                logger.info("[Cancel Order][Refund Price] Order. Cancel Not Permitted.");
 
                 return result;
             }
@@ -297,14 +298,14 @@ public class CancelServiceImpl implements CancelService{
                         result.setStatus(true);
                         result.setMessage("Success");
                         result.setRefund("0");
-                        System.out.println("[Cancel Order][Refund Price] From Order Other Service.Not Paid.");
+                        logger.info("[Cancel Order][Refund Price] From Order Other Service.Not Paid.");
                         return result;
                     }else{
                         CalculateRefundResult result = new CalculateRefundResult();
                         result.setStatus(true);
                         result.setMessage("Success");
                         result.setRefund(calculateRefund(order));
-                        System.out.println("[Cancel Order][Refund Price] From Order Other Service.Paid.");
+                        logger.info("[Cancel Order][Refund Price] From Order Other Service.Paid.");
                         return result;
                     }
                 }else{
@@ -312,7 +313,7 @@ public class CancelServiceImpl implements CancelService{
                     result.setStatus(false);
                     result.setMessage("Order Status Cancel Not Permitted");
                     result.setRefund("error");
-                    System.out.println("[Cancel Order][Refund Price] Order Other. Cancel Not Permitted.");
+                    logger.info("[Cancel Order][Refund Price] Order Other. Cancel Not Permitted.");
                     return result;
                 }
             }else{
@@ -320,7 +321,7 @@ public class CancelServiceImpl implements CancelService{
                 result.setStatus(false);
                 result.setMessage("Order Not Found");
                 result.setRefund("error");
-                System.out.println("[Cancel Order][Refund Price] Order not found.");
+                logger.info("[Cancel Order][Refund Price] Order not found.");
                 return result;
             }
         }
@@ -330,7 +331,7 @@ public class CancelServiceImpl implements CancelService{
         if(order.getStatus() == OrderStatus.NOTPAID.getCode()){
             return "0.00";
         }
-        System.out.println("[Cancel Order] Order Travel Date:" + order.getTravelDate().toString());
+        logger.info("[Cancel Order] Order Travel Date:" + order.getTravelDate().toString());
         Date nowDate = new Date();
         Calendar cal = Calendar.getInstance();
         cal.setTime(order.getTravelDate());
@@ -348,10 +349,10 @@ public class CancelServiceImpl implements CancelService{
                 hour,
                 minute,
                 second);
-        System.out.println("[Cancel Order] nowDate  :" + nowDate.toString());
-        System.out.println("[Cancel Order] startTime:" + startTime.toString());
+        logger.info("[Cancel Order] nowDate  :" + nowDate.toString());
+        logger.info("[Cancel Order] startTime:" + startTime.toString());
         if(nowDate.after(startTime)){
-            System.out.println("[Cancel Order] Ticket expire refund 0");
+            logger.info("[Cancel Order] Ticket expire refund 0");
             return "0";
         }else{
             double totalPrice = Double.parseDouble(order.getPrice());
@@ -368,9 +369,9 @@ public class CancelServiceImpl implements CancelService{
 
             DecimalFormat priceFormat = new java.text.DecimalFormat("0.00");
             String str = priceFormat.format(price);
-            System.out.println();
-            System.out.println("[Cancel Order]calculate refund - " + str);
-            System.out.println();
+            logger.info();
+            logger.info("[Cancel Order]calculate refund - " + str);
+            logger.info();
             return str;
         }
     }
@@ -378,19 +379,19 @@ public class CancelServiceImpl implements CancelService{
 
 
     private ChangeOrderResult cancelFromOrder(ChangeOrderInfo info){
-        System.out.println("[Cancel Order Service][Change Order Status] Changing....");
+        logger.info("[Cancel Order Service][Change Order Status] Changing....");
         ChangeOrderResult result = restTemplate.postForObject("http://ts-order-service:12031/order/update",info,ChangeOrderResult.class);
         return result;
     }
 
     private ChangeOrderResult cancelFromOtherOrder(ChangeOrderInfo info){
-        System.out.println("[Cancel Order Service][Change Order Status] Changing....");
+        logger.info("[Cancel Order Service][Change Order Status] Changing....");
         ChangeOrderResult result = restTemplate.postForObject("http://ts-order-other-service:12032/orderOther/update",info,ChangeOrderResult.class);
         return result;
     }
 
     public boolean drawbackMoney(String money,String userId){
-        System.out.println("[Cancel Order Service][Draw Back Money] Draw back money...");
+        logger.info("[Cancel Order Service][Draw Back Money] Draw back money...");
         DrawBackInfo info = new DrawBackInfo();
         info.setMoney(money);
         info.setUserId(userId);
@@ -403,7 +404,7 @@ public class CancelServiceImpl implements CancelService{
     }
 
     public GetAccountByIdResult getAccount(GetAccountByIdInfo info){
-        System.out.println("[Cancel Order Service][Get By Id]");
+        logger.info("[Cancel Order Service][Get By Id]");
         GetAccountByIdResult result = restTemplate.postForObject(
                 "http://ts-sso-service:12349/account/findById",
                 info,
@@ -413,7 +414,7 @@ public class CancelServiceImpl implements CancelService{
     }
 
     private GetOrderResult getOrderByIdFromOrder(GetOrderByIdInfo info){
-        System.out.println("[Cancel Order Service][Get Order] Getting....");
+        logger.info("[Cancel Order Service][Get Order] Getting....");
         GetOrderResult cor = restTemplate.postForObject(
                 "http://ts-order-service:12031/order/getById/"
                 ,info,GetOrderResult.class);
@@ -421,7 +422,7 @@ public class CancelServiceImpl implements CancelService{
     }
 
     private GetOrderResult getOrderByIdFromOrderOther(GetOrderByIdInfo info){
-        System.out.println("[Cancel Order Service][Get Order] Getting....");
+        logger.info("[Cancel Order Service][Get Order] Getting....");
         GetOrderResult cor = restTemplate.postForObject(
                 "http://ts-order-other-service:12032/orderOther/getById/"
                 ,info,GetOrderResult.class);

@@ -16,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
  */  
 @Component  
 public class AsyncTask {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(AsyncTask.class);
     
     @Autowired
 	private RestTemplate restTemplate;
@@ -25,7 +26,7 @@ public class AsyncTask {
 
         Thread.sleep(2000);
 
-        System.out.println("[Cancel Order Service][Change Order Status] Getting....");
+        logger.info("[Cancel Order Service][Change Order Status] Getting....");
         ChangeOrderResult result = restTemplate.postForObject("http://ts-order-other-service:12032/orderOther/update",info,ChangeOrderResult.class);
         return new AsyncResult<>(result);
     }

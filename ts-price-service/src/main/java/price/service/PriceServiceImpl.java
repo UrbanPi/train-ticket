@@ -12,13 +12,14 @@ import java.util.UUID;
 
 @Service
 public class PriceServiceImpl implements PriceService{
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(PriceServiceImpl.class);
 
     @Autowired
     private PriceConfigRepository priceConfigRepository;
 
     @Override
     public ReturnSinglePriceConfigResult createNewPriceConfig(CreateAndModifyPriceConfig createAndModifyPriceConfig) {
-        System.out.println("[Price Service][Create New Price Config]");
+        logger.info("[Price Service][Create New Price Config]");
         ReturnSinglePriceConfigResult result = new ReturnSinglePriceConfigResult();
         if(createAndModifyPriceConfig.getId() == null || createAndModifyPriceConfig.getId().length() < 10){
             PriceConfig priceConfig = new PriceConfig();
@@ -51,7 +52,7 @@ public class PriceServiceImpl implements PriceService{
 
     @Override
     public ReturnSinglePriceConfigResult findById(String id) {
-        System.out.println("[Price Service][Find By Id] ID:" + id);
+        logger.info("[Price Service][Find By Id] ID:" + id);
         PriceConfig priceConfig = priceConfigRepository.findById(UUID.fromString(id));
         ReturnSinglePriceConfigResult result = new ReturnSinglePriceConfigResult();
         if(priceConfig == null){
@@ -68,20 +69,20 @@ public class PriceServiceImpl implements PriceService{
 
     @Override
     public ReturnSinglePriceConfigResult findByRouteIdAndTrainType(String routeId, String trainType) {
-        System.out.println("[Price Service][Find By Route And Train Type] Rote:" + routeId + "Train Type:" + trainType);
+        logger.info("[Price Service][Find By Route And Train Type] Rote:" + routeId + "Train Type:" + trainType);
         PriceConfig priceConfig = priceConfigRepository.findByRouteIdAndTrainType(routeId,trainType);
         ReturnSinglePriceConfigResult result = new ReturnSinglePriceConfigResult();
         if(priceConfig == null){
             result.setStatus(false);
             result.setMessage("Price Config Not Found");
             result.setPriceConfig(null);
-            System.out.println("[Price Service][Find By Route Id And Train Type] Fail");
+            logger.info("[Price Service][Find By Route Id And Train Type] Fail");
 
         }else{
             result.setStatus(true);
             result.setMessage("Success");
             result.setPriceConfig(priceConfig);
-            System.out.println("[Price Service][Find By Route Id And Train Type] Success");
+            logger.info("[Price Service][Find By Route Id And Train Type] Success");
         }
         return result;
     }

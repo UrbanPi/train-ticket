@@ -13,31 +13,32 @@ import travelplan.service.TravelPlanService;
 
 @RestController
 public class TravelPlanController {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TravelPlanController.class);
 
     @Autowired
     TravelPlanService travelPlanService;
 
     @RequestMapping(value="/travelPlan/getTransferResult", method= RequestMethod.POST)
     public TransferTravelSearchResult getTransferResult(@RequestBody TransferTravelSearchInfo info) {
-        System.out.println("[Search Transit]");
+        logger.info("[Search Transit]");
         return travelPlanService.getTransferSearch(info);
     }
 
     @RequestMapping(value="/travelPlan/getCheapest", method= RequestMethod.POST)
     public TravelAdvanceResult getByCheapest(@RequestBody QueryInfo queryInfo) {
-        System.out.println("[Search Cheapest]");
+        logger.info("[Search Cheapest]");
         return travelPlanService.getCheapest(queryInfo);
     }
 
     @RequestMapping(value="/travelPlan/getQuickest", method= RequestMethod.POST)
     public TravelAdvanceResult getByQuickest(@RequestBody QueryInfo queryInfo) {
-        System.out.println("[Search Quickest]");
+        logger.info("[Search Quickest]");
         return travelPlanService.getQuickest(queryInfo);
     }
 
     @RequestMapping(value="/travelPlan/getMinStation", method= RequestMethod.POST)
     public TravelAdvanceResult getByMinStation(@RequestBody QueryInfo queryInfo) {
-        System.out.println("[Search Min Station]");
+        logger.info("[Search Min Station]");
         return travelPlanService.getMinStation(queryInfo);
     }
 
