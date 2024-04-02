@@ -13,14 +13,14 @@ available_versions = ["master", "ts-error-F1", "ts-error-F2", "ts-error-F3", "ts
                       "ts-error-F8", "ts-error-F9", "ts-error-F10", "ts-error-F11", "ts-error-F12", "ts-error-F13",
                       "ts-error-F14", "ts-error-F15",
                       "ts-error-F16", "ts-error-F17", "ts-error-F18", "ts-error-F19", "ts-error-F20", "ts-error-F21",
-                      "ts-error-F22"]
+                      "ts-error-F22", "ts-error-cleaned"]
 
 version_groups = {"master_grp": ["master"],
                   "error_grp": ["ts-error-F1", "ts-error-F3", "ts-error-F4", "ts-error-F6", "ts-error-F8",
                                 "ts-error-F9", "ts-error-F10", "ts-error-F11",
                                 "ts-error-F12", "ts-error-F13", "ts-error-F14", "ts-error-F15", "ts-error-F16",
-                                "ts-error-F17",
-                                "ts-error-F18", "ts-error-F19", "ts-error-F20", "ts-error-F21", "ts-error-F22"],
+                                "ts-error-F17", "ts-error-F18", "ts-error-F19", "ts-error-F20", "ts-error-F21",
+                                "ts-error-F22", "ts-error-cleaned"],
                   "error_grp_2": ["ts-error-F2", "ts-error-F5"],
                   "error_grp_3": ["ts-error-F7"],
                   "error_grp_4": [
@@ -225,8 +225,8 @@ if __name__ == '__main__':
     args = parser.parse_args()
     version_argument = args.version
     if not version_argument:
-        print("No version selected defaulting to version \"ts-error-F1\"", file=sys.stderr)
-        version_argument = "ts-error-F1"
+        print("No version selected defaulting to version \"ts-error-cleaned\"", file=sys.stderr)
+        version_argument = "ts-error-cleaned"
     else:
         print("Selected version: {}".format(version_argument))
     selected_version_group = list(filter(lambda item: version_argument in item[1], version_groups.items()))[0][0]
