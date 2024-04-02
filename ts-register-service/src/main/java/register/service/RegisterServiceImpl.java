@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RegisterServiceImpl implements RegisterService {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(RegisterServiceImpl.class);
 
     @Autowired
     private RestTemplate restTemplate;
@@ -33,7 +34,7 @@ public class RegisterServiceImpl implements RegisterService {
                 String.class
         );
         String verifyResult = (String)rssResponse.getBody();
-        System.out.println("[Register Service][Register] Verification Result:" + verifyResult);
+        logger.info("[Register Service][Register] Verification Result:" + verifyResult);
         if(!verifyResult.contains("true")){
             RegisterResult verifyCodeLr = new RegisterResult();
             verifyCodeLr.setAccount(null);
@@ -45,12 +46,12 @@ public class RegisterServiceImpl implements RegisterService {
                 "http://ts-sso-service:12349/account/register",
                 ri,RegisterResult.class);
         if(rr.isStatus() == true){
-            System.out.println("[Register Service] Register Success.");
-            System.out.println("[Register Service] Get Price Account.");
+            logger.info("[Register Service] Register Success.");
+            logger.info("[Register Service] Get Price Account.");
             CreateAccountInfo createAccountInfo = new CreateAccountInfo();
             createAccountInfo.setUserId(rr.getAccount().getId().toString());
             createAccountInfo.setMoney("10000");
-            System.out.println("[Register Service] Get Price Account.");
+            logger.info("[Register Service] Get Price Account.");
             boolean  createAccountSuccess = restTemplate.postForObject(
                     "http://ts-inside-payment-service:18673/inside_payment/createAccount",
                     createAccountInfo,Boolean.class);

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class TestServicePayment {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TestServicePayment.class);
     private WebDriver driver;
     private String baseUrl;
     public static void login(WebDriver driver,String username,String password){
@@ -43,11 +44,11 @@ public class TestServicePayment {
         //get login status
         String statusLogin = driver.findElement(By.id("flow_preserve_login_msg")).getText();
         if("".equals(statusLogin))
-            System.out.println("Failed to Login! Status is Null!");
+            logger.info("Failed to Login! Status is Null!");
         else if(statusLogin.startsWith("Success"))
-            System.out.println("Success to Login! Status:"+statusLogin);
+            logger.info("Success to Login! Status:"+statusLogin);
         else
-            System.out.println("Failed to Login! Status:"+statusLogin);
+            logger.info("Failed to Login! Status:"+statusLogin);
 
         Assert.assertEquals(statusLogin.startsWith("Success"),true);
         driver.findElement(By.id("microservice_page")).click();
@@ -66,9 +67,9 @@ public class TestServicePayment {
 
         String statusPayment = driver.findElement(By.id("payment_result")).getText();
         if (!"".equals(statusPayment))
-            System.out.println("Status of payment: "+statusPayment);
+            logger.info("Status of payment: "+statusPayment);
         else
-            System.out.println("False, status of  payment result is null!");
+            logger.info("False, status of  payment result is null!");
         Assert.assertEquals(!"".equals(statusPayment),true);
     }
     @Test (dependsOnMethods = {"testPayment"})
@@ -80,7 +81,7 @@ public class TestServicePayment {
         if (paymentList.size() > 0)
             System.out.printf("Success to Query PaymentList and Payment list size is %d.%n",paymentList.size());
         else
-            System.out.println("Failed to Query PaymentList or Payment list size is 0");
+            logger.info("Failed to Query PaymentList or Payment list size is 0");
         Assert.assertEquals(paymentList.size() > 0,true);
     }
     @AfterClass

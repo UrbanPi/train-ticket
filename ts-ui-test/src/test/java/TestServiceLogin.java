@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 
 public class TestServiceLogin {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TestServiceLogin.class);
     private WebDriver driver;
     private String baseUrl;
     public static void ServiceLogin(WebDriver driver,String username,String password){
@@ -51,10 +52,10 @@ public class TestServiceLogin {
         //get login status
         String statusSignIn = driver.findElement(By.id("login_result_msg")).getText();
         if (!"".equals(statusSignIn))
-            System.out.println("Sign Up btn status: "+statusSignIn);
+            logger.info("Sign Up btn status: "+statusSignIn);
         else
-            System.out.println("False，Status of Sign In btn is NULL!");
-        System.out.println(expectText);
+            logger.info("False，Status of Sign In btn is NULL!");
+        logger.info(expectText);
         Assert.assertEquals(statusSignIn.startsWith("Success"),expectText);
     }
     @AfterClass

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ConsignPriceServiceImpl implements ConsignPriceService {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(ConsignPriceServiceImpl.class);
     @Autowired
     private ConsignPriceConfigRepository repository;
 
@@ -45,7 +46,7 @@ public class ConsignPriceServiceImpl implements ConsignPriceService {
 
     @Override
     public boolean createAndModifyPrice(PriceConfig config) {
-        System.out.println("[Consign Price Service][Create New Price Config]");
+        logger.info("[Consign Price Service][Create New Price Config]");
 
         PriceConfig originalConfig;
         if(repository.findByIndex(0) != null)

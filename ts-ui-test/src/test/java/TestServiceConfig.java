@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class TestServiceConfig {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TestServiceConfig.class);
     private WebDriver driver;
     private String baseUrl;
     @BeforeClass
@@ -33,10 +34,10 @@ public class TestServiceConfig {
         Thread.sleep(1000);
 //        String statusSignIn = driver.findElement(By.id("login_result_msg")).getText();
 //        if(statusSignIn ==null || statusSignIn.length() <= 0) {
-//            System.out.println("Failed,Status of Sign In btn is NULL!");
+//            logger.info("Failed,Status of Sign In btn is NULL!");
 //            driver.quit();
 //        }else
-//            System.out.println("Sign Up btn status:"+statusSignIn);
+//            logger.info("Sign Up btn status:"+statusSignIn);
     }
     @Test (dependsOnMethods = {"testConfig"})
     public void testQueryConfig() throws Exception{
@@ -47,7 +48,7 @@ public class TestServiceConfig {
         if (configList.size() > 0)
             System.out.printf("Success to Query Config and Config list size is %d.%n",configList.size());
         else
-            System.out.println("Failed to Query Config or Config list size is 0");
+            logger.info("Failed to Query Config or Config list size is 0");
         Assert.assertEquals(configList.size() > 0,true);
     }
     @AfterClass
