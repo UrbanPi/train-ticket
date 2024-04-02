@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 public class AccountLoginController {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(AccountLoginController.class);
 
     @Autowired
     private AccountLoginService accountService;
@@ -31,14 +32,14 @@ public class AccountLoginController {
             errorResult.setToken(null);
             return errorResult;
         }
-        System.out.println("[Login Service][Login] Verification Code:" + li.getVerificationCode() +
+        logger.info("[Login Service][Login] Verification Code:" + li.getVerificationCode() +
                 " VerifyCookie:" + YsbCaptcha);
         return accountService.login(li,YsbCaptcha, response);
     }
 
     @RequestMapping(path = "/logout", method = RequestMethod.POST)
     public LogoutResult logout(@RequestBody LogoutInfo li, HttpServletRequest request, HttpServletResponse response){
-        System.out.println("[Login Service][Logout] Logout ID:" + li.getId() + " Token:" + li.getToken());
+        logger.info("[Login Service][Logout] Logout ID:" + li.getId() + " Token:" + li.getToken());
         return accountService.logout(li,request,response);
     }
 
