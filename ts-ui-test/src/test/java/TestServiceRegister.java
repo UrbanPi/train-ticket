@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
  * Created by ZDH on 2017/7/21.
  */
 public class TestServiceRegister {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TestServiceRegister.class);
     private WebDriver driver;
     private String baseUrl;
     public static void login(WebDriver driver,String username,String password){
@@ -50,9 +51,9 @@ public class TestServiceRegister {
 
         String statusSignUp = driver.findElement(By.id("register_result_msg")).getText();
         if ("".equals(statusSignUp))
-            System.out.println("Failed,Status of Sign Up btn is NULL!");
+            logger.info("Failed,Status of Sign Up btn is NULL!");
         else
-            System.out.println("Sign Up btn status:"+statusSignUp);
+            logger.info("Sign Up btn status:"+statusSignUp);
         Assert.assertEquals(statusSignUp.startsWith("Success"),true);
     }
     @Test (dependsOnMethods = {"testRegister"},dataProvider="user")
@@ -64,13 +65,13 @@ public class TestServiceRegister {
         //get login status
         String statusLogin = driver.findElement(By.id("flow_preserve_login_msg")).getText();
         if(statusLogin.startsWith("Success")) {
-            System.out.println("Login status:"+statusLogin);
+            logger.info("Login status:"+statusLogin);
             driver.findElement(By.id("microservice_page")).click();
         }
         else if("".equals(statusLogin))
-            System.out.println("False,Failed to login! StatusLogin is NULL");
+            logger.info("False,Failed to login! StatusLogin is NULL");
         else
-            System.out.println("Failed to login!" + "Wrong login Id or password!");
+            logger.info("Failed to login!" + "Wrong login Id or password!");
 
         Assert.assertEquals(statusLogin.startsWith("Success"),true);
     }

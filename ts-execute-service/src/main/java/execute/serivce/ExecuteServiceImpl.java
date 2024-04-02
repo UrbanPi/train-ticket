@@ -7,6 +7,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class ExecuteServiceImpl implements ExecuteService{
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(ExecuteServiceImpl.class);
 
     @Autowired
     private RestTemplate restTemplate;
@@ -137,7 +138,7 @@ public class ExecuteServiceImpl implements ExecuteService{
 
 
     private ModifyOrderStatusResult executeOrder(ModifyOrderStatusInfo info){
-        System.out.println("[Execute Service][Execute Order] Executing....");
+        logger.info("[Execute Service][Execute Order] Executing....");
         ModifyOrderStatusResult cor = restTemplate.postForObject(
                 "http://ts-order-service:12031/order/modifyOrderStatus"
                 ,info,ModifyOrderStatusResult.class);
@@ -145,7 +146,7 @@ public class ExecuteServiceImpl implements ExecuteService{
     }
 
     private ModifyOrderStatusResult executeOrderOther(ModifyOrderStatusInfo info){
-        System.out.println("[Execute Service][Execute Order] Executing....");
+        logger.info("[Execute Service][Execute Order] Executing....");
         ModifyOrderStatusResult cor = restTemplate.postForObject(
                 "http://ts-order-other-service:12032/order/modifyOrderStatus"
                 ,info,ModifyOrderStatusResult.class);
@@ -153,7 +154,7 @@ public class ExecuteServiceImpl implements ExecuteService{
     }
 
     private GetOrderResult getOrderByIdFromOrder(GetOrderByIdInfo info){
-        System.out.println("[Execute Service][Get Order] Getting....");
+        logger.info("[Execute Service][Get Order] Getting....");
         GetOrderResult cor = restTemplate.postForObject(
                 "http://ts-order-service:12031/order/getById/"
                 ,info,GetOrderResult.class);
@@ -161,7 +162,7 @@ public class ExecuteServiceImpl implements ExecuteService{
     }
 
     private GetOrderResult getOrderByIdFromOrderOther(GetOrderByIdInfo info){
-        System.out.println("[Execute Service][Get Order] Getting....");
+        logger.info("[Execute Service][Get Order] Getting....");
         GetOrderResult cor = restTemplate.postForObject(
                 "http://ts-order-other-service:12032/orderOther/getById/"
                 ,info,GetOrderResult.class);

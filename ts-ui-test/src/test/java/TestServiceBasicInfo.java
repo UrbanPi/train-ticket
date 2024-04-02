@@ -15,6 +15,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class TestServiceBasicInfo {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TestServiceBasicInfo.class);
     private WebDriver driver;
     private String baseUrl;
     @BeforeClass
@@ -60,7 +61,7 @@ public class TestServiceBasicInfo {
         if (basicInfoList.size() > 0)
             System.out.printf("Success to Query BasicInfo and BasicInfo list size is %d.%n",basicInfoList.size());
         else
-            System.out.println("Failed to Query BasicInfo or BasicInfo list size is 0");
+            logger.info("Failed to Query BasicInfo or BasicInfo list size is 0");
         Assert.assertEquals(basicInfoList.size() > 0,true);
     }
     @AfterClass

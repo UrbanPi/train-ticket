@@ -14,6 +14,7 @@ import java.util.List;
 
 @Service
 public class PaymentServiceImpl implements PaymentService{
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(PaymentServiceImpl.class);
 
     @Autowired
     PaymentRepository paymentRepository;
@@ -55,7 +56,7 @@ public class PaymentServiceImpl implements PaymentService{
         if(paymentTemp == null){
             paymentRepository.save(payment);
         }else{
-            System.out.println("[Payment Service][Init Payment] Already Exists:" + payment.getId());
+            logger.info("[Payment Service][Init Payment] Already Exists:" + payment.getId());
         }
     }
 }

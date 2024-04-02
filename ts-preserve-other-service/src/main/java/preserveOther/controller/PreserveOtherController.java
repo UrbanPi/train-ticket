@@ -8,6 +8,7 @@ import preserveOther.service.PreserveOtherService;
 
 @RestController
 public class PreserveOtherController {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(PreserveOtherController.class);
 
     @Autowired
     private PreserveOtherService preserveService;
@@ -15,7 +16,7 @@ public class PreserveOtherController {
     @CrossOrigin(origins = "*")
     @RequestMapping(value="/preserveOther", method = RequestMethod.POST)
     public OrderTicketsResult preserve(@RequestBody OrderTicketsInfo oti,@CookieValue String loginId,@CookieValue String loginToken){
-        System.out.println("[Preserve Other Service][Preserve] Account " + loginId + " order from " +
+        logger.info("[Preserve Other Service][Preserve] Account " + loginId + " order from " +
                 oti.getFrom() + " -----> " + oti.getTo() + " at " + oti.getDate());
         return preserveService.preserve(oti,loginId,loginToken);
     }

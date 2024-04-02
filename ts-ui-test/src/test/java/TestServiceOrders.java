@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 
 public class TestServiceOrders {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TestServiceOrders.class);
     private WebDriver driver;
     private String baseUrl;
 
@@ -33,7 +34,7 @@ public class TestServiceOrders {
         elementOrdertypePT.click();
         if(elementOrdertypeGTCJ.isEnabled() || elementOrdertypePT.isEnabled()){
             elementRefreshOrdersBtn.click();
-            System.out.println("Show Orders according database!");
+            logger.info("Show Orders according database!");
         }
         else {
             elementRefreshOrdersBtn.click();
@@ -47,7 +48,7 @@ public class TestServiceOrders {
         if (ordersList.size() > 0) {
             System.out.printf("Success,Orders List's size is %d.%n", ordersList.size());
         } else
-            System.out.println("False,Security Config List's size is 0 or Failed");
+            logger.info("False,Security Config List's size is 0 or Failed");
         Assert.assertEquals(ordersList.size() > 0, true);
 
     }
