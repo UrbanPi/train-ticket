@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class AdminUserServiceImpl implements AdminUserService {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(AdminUserServiceImpl.class);
     @Autowired
     private RestTemplate restTemplate;
 
@@ -21,12 +22,12 @@ public class AdminUserServiceImpl implements AdminUserService {
     public FindAllAccountResult getAllUsers(String id) {
         FindAllAccountResult result = new FindAllAccountResult();
         if(checkId(id)){
-            System.out.println("[Admin User Service][Get All Users]");
+            logger.info("[Admin User Service][Get All Users]");
             result = restTemplate.getForObject(
                     "https://ts-sso-service:12349/account/findAll",
                     FindAllAccountResult.class);
         }else{
-            System.out.println("[Admin User Service][Wrong Admin ID]");
+            logger.info("[Admin User Service][Wrong Admin ID]");
             result.setStatus(false);
             result.setMessage("The loginId is Wrong: " + id);
         }
@@ -44,7 +45,7 @@ public class AdminUserServiceImpl implements AdminUserService {
                     "https://ts-sso-service:12349/account/admindelete", adminDeleteAccountRequest,DeleteAccountResult.class);
         }
         else{
-            System.out.println("[Admin User Service][Wrong Admin ID]");
+            logger.info("[Admin User Service][Wrong Admin ID]");
             result.setStatus(false);
             result.setMessage("The loginId is Wrong: " + request.getLoginId());
         }
@@ -59,7 +60,7 @@ public class AdminUserServiceImpl implements AdminUserService {
                     "https://ts-sso-service:12349/account/modify", request.getModifyAccountInfo() ,ModifyAccountResult.class);
         }
         else{
-            System.out.println("[Admin User Service][Wrong Admin ID]");
+            logger.info("[Admin User Service][Wrong Admin ID]");
             result.setStatus(false);
             result.setMessage("The loginId is Wrong: " + request.getLoginId());
         }
@@ -74,7 +75,7 @@ public class AdminUserServiceImpl implements AdminUserService {
                     "https://ts-sso-service:12349/account/register", request ,RegisterResult.class);
         }
         else{
-            System.out.println("[Admin User Service][Wrong Admin ID]");
+            logger.info("[Admin User Service][Wrong Admin ID]");
             result.setStatus(false);
             result.setMessage("The loginId is Wrong: " + request.getLoginId());
         }

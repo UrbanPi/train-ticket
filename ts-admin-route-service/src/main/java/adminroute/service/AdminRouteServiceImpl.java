@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class AdminRouteServiceImpl implements AdminRouteService {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(AdminRouteServiceImpl.class);
     @Autowired
     private RestTemplate restTemplate;
 
@@ -24,7 +25,7 @@ public class AdminRouteServiceImpl implements AdminRouteService {
                     GetRoutesListlResult.class);
             return result;
         }else {
-            System.out.println("[Admin Route Service][Wrong Admin ID]");
+            logger.info("[Admin Route Service][Wrong Admin ID]");
             GetRoutesListlResult result = new GetRoutesListlResult();
             result.setStatus(false);
             result.setMessage("The loginId is Wrong: " + id);
@@ -47,7 +48,7 @@ public class AdminRouteServiceImpl implements AdminRouteService {
             return result;
         }
         else {
-            System.out.println("[Admin Route Service][Wrong Admin ID]");
+            logger.info("[Admin Route Service][Wrong Admin ID]");
             CreateAndModifyRouteResult result = new CreateAndModifyRouteResult();
             result.setStatus(false);
             result.setMessage("The loginId is Wrong: " + request.getLoginId());
@@ -66,7 +67,7 @@ public class AdminRouteServiceImpl implements AdminRouteService {
             return result;
         }
         else {
-            System.out.println("[Admin Route Service][Wrong Admin ID]");
+            logger.info("[Admin Route Service][Wrong Admin ID]");
             DeleteRouteResult result = new DeleteRouteResult();
             result.setStatus(false);
             result.setMessage("The loginId is Wrong: " + request.getLoginId());

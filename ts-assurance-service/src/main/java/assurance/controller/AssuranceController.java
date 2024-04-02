@@ -10,6 +10,7 @@ import java.util.UUID;
 
 @RestController
 public class AssuranceController {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(AssuranceController.class);
 
     @Autowired
     private AssuranceService assuranceService;
@@ -25,35 +26,35 @@ public class AssuranceController {
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/assurance/findAll", method = RequestMethod.GET)
     public GetAllAssuranceResult getAllAssurances(){
-        System.out.println("[Assurances Service][Get All Assurances]");
+        logger.info("[Assurances Service][Get All Assurances]");
         return assuranceService.getAllAssurances();
     }
 
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/assurance/getAllAssuranceType", method = RequestMethod.GET)
     public List<AssuranceTypeBean> getAllAssuranceType(){
-        System.out.println("[Assurances Service][Get Assurance Type]");
+        logger.info("[Assurances Service][Get Assurance Type]");
         return assuranceService.getAllAssuranceTypes();
     }
 
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/assurance/deleteAssurance", method = RequestMethod.POST)
     public DeleteAssuranceResult deleteAssurance(@RequestParam(value="assuranceId",required = true) String assuranceId){
-        System.out.println("[Assurances Service][Delete Assurance]");
+        logger.info("[Assurances Service][Delete Assurance]");
         return assuranceService.deleteById(UUID.fromString(assuranceId));
     }
 
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/assurance/deleteAssuranceByOrderId", method = RequestMethod.POST)
     public DeleteAssuranceResult deleteAssuranceByOrderId(@RequestParam(value="orderId",required = true) String orderId){
-        System.out.println("[Assurances Service][Delete Assurance by orderId]");
+        logger.info("[Assurances Service][Delete Assurance by orderId]");
         return assuranceService.deleteByOrderId(UUID.fromString(orderId));
     }
 
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/assurance/modifyAssurance", method = RequestMethod.POST)
     public ModifyAssuranceResult modifyAssurance(@RequestBody ModifyAssuranceInfo modifyAssuranceInfo){
-        System.out.println("[Assurances Service][Modify Assurance]");
+        logger.info("[Assurances Service][Modify Assurance]");
         return assuranceService.modify(modifyAssuranceInfo);
     }
 
@@ -64,10 +65,10 @@ public class AssuranceController {
     public AddAssuranceResult createNewAssurance(@RequestBody AddAssuranceInfo addAssuranceInfo){
 //        VerifyResult tokenResult = verifySsoLogin(loginToken);
 //        if(tokenResult.isStatus() == true){
-//            System.out.println("[AssuranceService][VerifyLogin] Success.");
+//            logger.info("[AssuranceService][VerifyLogin] Success.");
             return assuranceService.create(addAssuranceInfo);
 //        }else {
-//            System.out.println("[AssuranceService][VerifyLogin] Fail.");
+//            logger.info("[AssuranceService][VerifyLogin] Fail.");
 //            AddAssuranceResult aar = new AddAssuranceResult();
 //            return aar;
 //        }
@@ -78,10 +79,10 @@ public class AssuranceController {
     public Assurance getAssuranceById(@RequestBody GetAssuranceById gabi, @CookieValue String loginId, @CookieValue String loginToken){
 //        VerifyResult tokenResult = verifySsoLogin(loginToken);
 //        if(tokenResult.isStatus() == true){
-//            System.out.println("[AssuranceService][VerifyLogin] Success.");
+//            logger.info("[AssuranceService][VerifyLogin] Success.");
             return assuranceService.findAssuranceById(UUID.fromString(gabi.getAssuranceId()));
 //        }else {
-//            System.out.println("[AssuranceService][VerifyLogin] Fail.");
+//            logger.info("[AssuranceService][VerifyLogin] Fail.");
 //            Assurance resultAssurance = new Assurance();
 //            return resultAssurance;
 //        }
@@ -92,17 +93,17 @@ public class AssuranceController {
     public Assurance findAssuranceByOrderId(@RequestBody FindAssuranceByOrderId gabi){
 //        VerifyResult tokenResult = verifySsoLogin(gabi.getLoginToken());
 //        if(tokenResult.isStatus() == true){
-//            System.out.println("[AssuranceService][VerifyLogin] Success.");
+//            logger.info("[AssuranceService][VerifyLogin] Success.");
             return assuranceService.findAssuranceByOrderId(UUID.fromString(gabi.getOrderId()));
 //        }else {
-//            System.out.println("[AssuranceService][VerifyLogin] Fail.");
+//            logger.info("[AssuranceService][VerifyLogin] Fail.");
 //            Assurance resultAssurance = new Assurance();
 //            return resultAssurance;
 //        }
     }
 
     private VerifyResult verifySsoLogin(String loginToken){
-        System.out.println("[Assurance Service][Verify Login] Verifying....");
+        logger.info("[Assurance Service][Verify Login] Verifying....");
         VerifyResult tokenResult = restTemplate.getForObject(
                 "https://ts-sso-service:12349/verifyLoginToken/" + loginToken,
                 VerifyResult.class);

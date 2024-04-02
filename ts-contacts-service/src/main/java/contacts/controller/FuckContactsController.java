@@ -10,6 +10,7 @@ import java.util.UUID;
 
 @RestController
 public class FuckContactsController {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(FuckContactsController.class);
 
     @Autowired
     private ContactsService contactsService;
@@ -27,7 +28,7 @@ public class FuckContactsController {
     @RequestMapping(path = "/contacts/admincreate", method = RequestMethod.POST)
     public AddContactsResult createNewContactsAdmin(@RequestBody Contacts aci){
         aci.setId(UUID.randomUUID());
-        System.out.println("[ContactsService][Create Contacts In Admin]");
+        logger.info("[ContactsService][Create Contacts In Admin]");
         aci = contactsService.createContacts(aci);
         AddContactsResult acr = new AddContactsResult();
         acr.setStatus(true);
@@ -39,14 +40,14 @@ public class FuckContactsController {
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/contacts/findAll", method = RequestMethod.GET)
     public GetAllContactsResult getAllContacts(){
-        System.out.println("[Contacts Service][Get All Contacts]");
+        logger.info("[Contacts Service][Get All Contacts]");
         return contactsService.getAllContacts();
     }
 
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/contacts/modifyContacts", method = RequestMethod.POST)
     public ModifyContactsResult modifyContacts(@RequestBody ModifyContactsInfo info){
-        System.out.println("[Contacts Service][Modify Contacts] ContactsId:" + info.getContactsId());
+        logger.info("[Contacts Service][Modify Contacts] ContactsId:" + info.getContactsId());
         return contactsService.modify(info);
     }
 
@@ -60,13 +61,13 @@ public class FuckContactsController {
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/contacts/findContacts", method = RequestMethod.GET)
     public ArrayList<Contacts> findContactsByAccountId(@CookieValue String loginId,@CookieValue String loginToken){
-        System.out.println("[Contacts Service][Find Contacts By Account Id:" + loginId);
+        logger.info("[Contacts Service][Find Contacts By Account Id:" + loginId);
         VerifyResult tokenResult = verifySsoLogin(loginToken);
         if(tokenResult.isStatus() == true){
-            System.out.println("[ContactsService][VerifyLogin] Success");
+            logger.info("[ContactsService][VerifyLogin] Success");
             return contactsService.findContactsByAccountId(UUID.fromString(loginId));
         }else {
-            System.out.println("[ContactsService][VerifyLogin] Fail");
+            logger.info("[ContactsService][VerifyLogin] Fail");
             return new ArrayList<Contacts>();
         }
     }
@@ -77,8 +78,8 @@ public class FuckContactsController {
         VerifyResult tokenResult = verifySsoLogin(loginToken);
         GetContactsResult gcr = new GetContactsResult();
         if(tokenResult.isStatus() == true){
-            System.out.println("[ContactsService][VerifyLogin] Success.");
-            System.out.println("[ContactsService][Contacts Id Print] " + gci.getContactsId());
+            logger.info("[ContactsService][VerifyLogin] Success.");
+            logger.info("[ContactsService][Contacts Id Print] " + gci.getContactsId());
             Contacts contacts = contactsService.findContactsById(UUID.fromString(gci.getContactsId()));
             if(contacts == null){
                 gcr.setStatus(false);
@@ -90,7 +91,7 @@ public class FuckContactsController {
                 gcr.setContacts(contacts);
             }
         }else{
-            System.out.println("[ContactsService][VerifyLogin] Fail.");
+            logger.info("[ContactsService][VerifyLogin] Fail.");
             gcr.setStatus(false);
             gcr.setMessage("Not Login.");
             gcr.setContacts(null);
@@ -103,10 +104,10 @@ public class FuckContactsController {
     public AddContactsResult createNewContacts(@RequestBody AddContactsInfo aci,@CookieValue String loginId,@CookieValue String loginToken){
         VerifyResult tokenResult = verifySsoLogin(loginToken);
         if(tokenResult.isStatus() == true){
-            System.out.println("[ContactsService][VerifyLogin] Success");
+            logger.info("[ContactsService][VerifyLogin] Success");
             return contactsService.create(aci,loginId);
         }else{
-            System.out.println("[ContactsService][VerifyLogin] Fail");
+            logger.info("[ContactsService][VerifyLogin] Fail");
             AddContactsResult acr = new AddContactsResult();
             acr.setStatus(false);
             acr.setMessage("Not Login");
@@ -120,10 +121,10 @@ public class FuckContactsController {
 //    public DeleteContactsResult deleteContacts(@RequestBody DeleteContactsInfo dci){
 //        VerifyResult tokenResult = verifySsoLogin(dci.getLoginToken());
 //        if(tokenResult.isStatus() == true){
-//            System.out.println("[ContactsService][VerifyLogin] Success");
+//            logger.info("[ContactsService][VerifyLogin] Success");
 //            return contactsService.delete(UUID.fromString(dci.getContactsId()));
 //        }else{
-//            System.out.println("[ContactsService][VerifyLogin] Fail");
+//            logger.info("[ContactsService][VerifyLogin] Fail");
 //            DeleteContactsResult dcr = new DeleteContactsResult();
 //            dcr.setMessage("Not Login");
 //            dcr.setStatus(false);
@@ -136,10 +137,10 @@ public class FuckContactsController {
 //    public ModifyContactsResult saveContactsInfo(@RequestBody ModifyContactsInfo contactsInfo){
 //        VerifyResult tokenResult = verifySsoLogin(contactsInfo.getLoginToken());
 //        if(tokenResult.isStatus() == true){
-//            System.out.println("[ContactsService][VerifyLogin] Success");
+//            logger.info("[ContactsService][VerifyLogin] Success");
 //            return contactsService.saveChanges(contactsInfo.getContacts());
 //        }else{
-//            System.out.println("[ContactsService][VerifyLogin] Fail");
+//            logger.info("[ContactsService][VerifyLogin] Fail");
 //            ModifyContactsResult mcr = new ModifyContactsResult();
 //            mcr.setStatus(false);
 //            mcr.setMessage("Not Login");
@@ -149,7 +150,7 @@ public class FuckContactsController {
 //    }
 
     private VerifyResult verifySsoLogin(String loginToken){
-        System.out.println("[ContactsService][VerifyLogin] Verifying....");
+        logger.info("[ContactsService][VerifyLogin] Verifying....");
         VerifyResult tokenResult = restTemplate.getForObject(
                 "https://ts-sso-service:12349/verifyLoginToken/" + loginToken,
                      VerifyResult.class);

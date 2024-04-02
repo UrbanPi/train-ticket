@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 @Service
 public class AdminTravelServiceImpl implements AdminTravelService {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(AdminTravelServiceImpl.class);
     @Autowired
     private RestTemplate restTemplate;
 
@@ -21,26 +22,26 @@ public class AdminTravelServiceImpl implements AdminTravelService {
         AdminFindAllResult result = new AdminFindAllResult();
         ArrayList<AdminTrip> trips = new ArrayList<AdminTrip>();
         if(checkId(id)){
-            System.out.println("[Admin Travel Service][Get All Travels]");
+            logger.info("[Admin Travel Service][Get All Travels]");
             result = restTemplate.getForObject(
                     "https://ts-travel-service:12346/travel/adminQueryAll",
                     AdminFindAllResult.class);
             if(result.isStatus()){
-                System.out.println("[Admin Travel Service][Get Travel From ts-travel-service successfully!]");
+                logger.info("[Admin Travel Service][Get Travel From ts-travel-service successfully!]");
                 trips.addAll(result.getTrips());
             }
             else
-                System.out.println("[Admin Travel Service][Get Travel From ts-travel-service fail!]");
+                logger.info("[Admin Travel Service][Get Travel From ts-travel-service fail!]");
 
             result = restTemplate.getForObject(
                     "https://ts-travel2-service:16346/travel2/adminQueryAll",
                     AdminFindAllResult.class);
             if(result.isStatus()){
-                System.out.println("[Admin Travel Service][Get Travel From ts-travel2-service successfully!]");
+                logger.info("[Admin Travel Service][Get Travel From ts-travel2-service successfully!]");
                 trips.addAll(result.getTrips());
             }
             else
-                System.out.println("[Admin Travel Service][Get Travel From ts-travel2-service fail!]");
+                logger.info("[Admin Travel Service][Get Travel From ts-travel2-service fail!]");
             result.setTrips(trips);
         }
         else{
@@ -64,11 +65,11 @@ public class AdminTravelServiceImpl implements AdminTravelService {
                         "https://ts-travel2-service:16346/travel2/create", request ,String.class);
 
             }
-            System.out.println("[Admin Travel Service][Admin add new travel]");
+            logger.info("[Admin Travel Service][Admin add new travel]");
             responseBean.setStatus(true);
         }else{
             result = "Admin add new travel fail: wrong login id";
-            System.out.println("[Admin Travel Service][Admin add new travel fail]");
+            logger.info("[Admin Travel Service][Admin add new travel fail]");
             responseBean.setStatus(false);
         }
         responseBean.setMessage(result);
@@ -88,11 +89,11 @@ public class AdminTravelServiceImpl implements AdminTravelService {
                         "https://ts-travel2-service:16346/travel2/update", request ,String.class);
 
             }
-            System.out.println("[Admin Travel Service][Admin update travel]");
+            logger.info("[Admin Travel Service][Admin update travel]");
             responseBean.setStatus(true);
         }else{
             result = "Admin update travel fail: wrong login id";
-            System.out.println("[Admin Travel Service][Admin update travel fail]");
+            logger.info("[Admin Travel Service][Admin update travel fail]");
             responseBean.setStatus(false);
         }
         responseBean.setMessage(result);
@@ -112,11 +113,11 @@ public class AdminTravelServiceImpl implements AdminTravelService {
                         "https://ts-travel2-service:16346/travel2/delete", request ,String.class);
 
             }
-            System.out.println("[Admin Travel Service][Admin delete travel]");
+            logger.info("[Admin Travel Service][Admin delete travel]");
             responseBean.setStatus(true);
         }else{
             result = "Admin delete travel fail: wrong login id";
-            System.out.println("[Admin Travel Service][Admin delete travel fail]");
+            logger.info("[Admin Travel Service][Admin delete travel fail]");
             responseBean.setStatus(false);
         }
         responseBean.setMessage(result);
