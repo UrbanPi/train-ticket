@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 
 public class TestServiceStation {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TestServiceStation.class);
     private WebDriver driver;
     private String baseUrl;
     @BeforeClass
@@ -33,10 +34,10 @@ public class TestServiceStation {
         Thread.sleep(1000);
  //       String statusStation = driver.findElement(By.id("login_result_msg")).getText();
 //        if(statusSignIn ==null || statusSignIn.length() <= 0) {
-//            System.out.println("Failed,Status of Sign In btn is NULL!");
+//            logger.info("Failed,Status of Sign In btn is NULL!");
 //            driver.quit();
 //        }else
-//            System.out.println("Sign Up btn status:"+statusSignIn);
+//            logger.info("Sign Up btn status:"+statusSignIn);
     }
     @Test (dependsOnMethods = {"testStation"})
     public void testQueryStation() throws Exception{
@@ -48,7 +49,7 @@ public class TestServiceStation {
         if (stationList.size() > 0)
             System.out.printf("Success to Query Station and Station list size is %d.%n",stationList.size());
         else
-            System.out.println("Failed to Query Station or Station list size is 0");
+            logger.info("Failed to Query Station or Station list size is 0");
         Assert.assertEquals(stationList.size() > 0,true);
     }
     @AfterClass

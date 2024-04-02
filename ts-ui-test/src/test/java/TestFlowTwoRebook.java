@@ -15,6 +15,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class TestFlowTwoRebook {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TestFlowTwoRebook.class);
     private WebDriver driver;
     private String baseUrl;
     private String trainType;//0--all,1--GaoTie,2--others
@@ -52,11 +53,11 @@ public class TestFlowTwoRebook {
         //get login status
         String statusLogin = driver.findElement(By.id("flow_preserve_login_msg")).getText();
         if("".equals(statusLogin))
-            System.out.println("Failed to Login! Status is Null!");
+            logger.info("Failed to Login! Status is Null!");
         else if(statusLogin.startsWith("Success"))
-            System.out.println("Success to Login! Status:"+statusLogin);
+            logger.info("Success to Login! Status:"+statusLogin);
         else
-            System.out.println("Failed to Login! Status:"+statusLogin);
+            logger.info("Failed to Login! Status:"+statusLogin);
         Assert.assertEquals(statusLogin.startsWith("Success"),true);
         driver.findElement(By.id("flow_two_page")).click();
     }
@@ -71,7 +72,7 @@ public class TestFlowTwoRebook {
             System.out.printf("Success to show my orders list，the list size is:%d%n",myOrdersList.size());
         }
         else
-            System.out.println("Failed to show my orders list，the list size is 0 or No orders in this user!");
+            logger.info("Failed to show my orders list，the list size is 0 or No orders in this user!");
         Assert.assertEquals(myOrdersList.size() > 0,true);
     }
     @Test (dependsOnMethods = {"testViewOrders"})
@@ -98,7 +99,7 @@ public class TestFlowTwoRebook {
         boolean bTerminalPlace = !"".equals(inputTerminalPlace);
         boolean bchangeStatus = bStartingPlace && bTerminalPlace;
         if(bchangeStatus == false)
-            System.out.println("Step-Change Your Order,The input is null!!");
+            logger.info("Step-Change Your Order,The input is null!!");
         Assert.assertEquals(bchangeStatus,true);
 
         String bookDate = "";
@@ -124,7 +125,7 @@ public class TestFlowTwoRebook {
             System.out.printf("Success to search tickets，the tickets list size is:%d%n",changeTicketsSearchList.size());
         }
         else
-            System.out.println("Failed to search tickets，the tickets list size is 0 or No tickets available!");
+            logger.info("Failed to search tickets，the tickets list size is 0 or No tickets available!");
         Assert.assertEquals(changeTicketsSearchList.size() > 0,true);
 
 
@@ -151,33 +152,33 @@ public class TestFlowTwoRebook {
         boolean bStatusConfirm = bTripId && bNewTripId && bDate &&  bSeatType;
         if(bStatusConfirm == false){
             driver.findElement(By.id("ticket_rebook_confirm_cancel_btn")).click();
-            System.out.println("Confirming Ticket Canceled!");
+            logger.info("Confirming Ticket Canceled!");
         }
         Assert.assertEquals(bStatusConfirm,true);
 
         driver.findElement(By.id("ticket_rebook_confirm_confirm_btn")).click();
         Thread.sleep(1000);
-        System.out.println("Confirm Ticket!");
+        logger.info("Confirm Ticket!");
         Alert javascriptConfirm = driver.switchTo().alert();
         String statusAlert = driver.switchTo().alert().getText();
         //System.out.println("The Alert information of Confirming Ticket："+statusAlert);
 
         if("".equals(statusAlert)){
-            System.out.println("Failed,Status of tickets confirm alert is NULL!");
+            logger.info("Failed,Status of tickets confirm alert is NULL!");
             Assert.assertEquals(!"".equals(statusAlert), true);
         }
         else if(statusAlert.startsWith("Success")){
-            System.out.println("Rebook status:" + statusAlert);
+            logger.info("Rebook status:" + statusAlert);
             javascriptConfirm.accept();
         }
         else if(statusAlert.startsWith("Please")) {
-            System.out.println(statusAlert);
+            logger.info(statusAlert);
             javascriptConfirm.accept();
 
             String itemPrice = driver.findElement(By.id("rebook_money_pay")).getAttribute("value");
             boolean bPrice = !"".equals(itemPrice);
             if(bPrice == false)
-                System.out.println("Confirming Ticket failed!");
+                logger.info("Confirming Ticket failed!");
             Assert.assertEquals(bPrice,true);
 
             driver.findElement(By.id("ticket_rebook_pay_panel_confirm")).click();
@@ -191,7 +192,7 @@ public class TestFlowTwoRebook {
                         .alertIsPresent());
                 javascriptPay = driver.switchTo().alert();
                 statusPayAlert = driver.switchTo().alert().getText();
-                System.out.println("Rebook payment status:"+statusPayAlert);
+                logger.info("Rebook payment status:"+statusPayAlert);
                 javascriptPay.accept();
                 Thread.sleep(1000);
                 Assert.assertEquals(statusPayAlert.startsWith("Success"),true);
@@ -200,7 +201,7 @@ public class TestFlowTwoRebook {
             }
         }
         else
-            System.out.println("Failed,Rebook status:" + statusAlert);
+            logger.info("Failed,Rebook status:" + statusAlert);
     }
     @AfterClass
     public void tearDown() throws Exception {

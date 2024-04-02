@@ -14,6 +14,7 @@ import java.util.UUID;
 
 @Service
 public class ConsignServiceImpl implements ConsignService {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(ConsignServiceImpl.class);
     @Autowired
     ConsignRepository repository;
     @Autowired
@@ -21,7 +22,7 @@ public class ConsignServiceImpl implements ConsignService {
 
     @Override
     public InsertConsignRecordResult insertConsignRecord(ConsignRequest consignRequest){
-        System.out.println("[Consign servie] [ Insert new consign record]");
+        logger.info("[Consign servie] [ Insert new consign record]");
 
         ConsignRecord consignRecord = new ConsignRecord();
 
@@ -60,7 +61,7 @@ public class ConsignServiceImpl implements ConsignService {
 
     @Override
     public boolean updateConsignRecord(ConsignRequest consignRequest){
-        System.out.println("[Consign servie] [ Update consign record]");
+        logger.info("[Consign servie] [ Update consign record]");
 
         ConsignRecord originalRecord = repository.findById(consignRequest.getId());
         if(originalRecord == null)

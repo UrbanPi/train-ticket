@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 import java.util.concurrent.TimeUnit;
 
 public class TestServiceNotification {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TestServiceNotification.class);
     private WebDriver driver;
     private String baseUrl;
     @BeforeClass
@@ -52,11 +53,11 @@ public class TestServiceNotification {
         //get Notification status
         String statusSendemail = driver.findElement(By.id("notification_result")).getText();
         if("".equals(statusSendemail))
-            System.out.println("Failed to Send email! Send email status is NULL");
+            logger.info("Failed to Send email! Send email status is NULL");
         else if(statusSendemail.startsWith("true"))
-            System.out.println("Send email status:"+statusSendemail);
+            logger.info("Send email status:"+statusSendemail);
         else
-            System.out.println("Failed to Send email! Send email status："+statusSendemail);
+            logger.info("Failed to Send email! Send email status："+statusSendemail);
         Assert.assertEquals(statusSendemail.startsWith("true"),true);
     }
     @AfterClass

@@ -13,6 +13,7 @@ import java.util.List;
 
 @Service
 public class FoodMapServiceImpl implements FoodMapService{
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(FoodMapServiceImpl.class);
 
     @Autowired
     FoodStoreRepository foodStoreRepository;
@@ -24,7 +25,7 @@ public class FoodMapServiceImpl implements FoodMapService{
     public FoodStore createFoodStore(FoodStore fs) {
         FoodStore fsTemp = foodStoreRepository.findById(fs.getId());
         if(fsTemp != null){
-            System.out.println("[Food Map Service][Init FoodStore] Already Exists Id:" + fs.getId());
+            logger.info("[Food Map Service][Init FoodStore] Already Exists Id:" + fs.getId());
         } else{
             foodStoreRepository.save(fs);
         }
@@ -35,7 +36,7 @@ public class FoodMapServiceImpl implements FoodMapService{
     public TrainFood createTrainFood(TrainFood tf) {
         TrainFood tfTemp = trainFoodRepository.findById(tf.getId());
         if(tfTemp != null){
-            System.out.println("[Food Map Service][Init TrainFood] Already Exists Id:" + tf.getId());
+            logger.info("[Food Map Service][Init TrainFood] Already Exists Id:" + tf.getId());
         } else {
             trainFoodRepository.save(tf);
         }
