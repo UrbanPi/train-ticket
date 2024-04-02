@@ -14,6 +14,7 @@ import java.util.Random;
 
 @Service
 public class TicketInfoServiceImpl implements TicketInfoService{
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TicketInfoServiceImpl.class);
 
     @Autowired
     private RestTemplate restTemplate;
@@ -60,7 +61,7 @@ public class TicketInfoServiceImpl implements TicketInfoService{
 //                System.out.print("[Order Service]最大内存=" + run.maxMemory() / 1024 / 1024 + "M,");
 //                System.out.print("[Order Service]已分配内存=" + run.totalMemory() / 1024 / 1024 + "M,");
 //                System.out.print("[Order Service]剩余空间内存=" + run.freeMemory() / 1024 / 1024 + "M");
-//                System.out.println(
+//                logger.info(
 //                        "[Order Service]最大可用内存=" + (run.maxMemory() - run.totalMemory() + run.freeMemory()) / 1024 / 1024 + "M");
 //            }
 //        }

@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 public class StationController {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(StationController.class);
 
     //private static final Logger log = LoggerFactory.getLogger(Application.class);
 
@@ -48,14 +49,14 @@ public class StationController {
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/station/queryById",method = RequestMethod.POST)
     public QueryStation queryById(@RequestBody QueryById queryById){
-        System.out.println("[Station Service] Query By Id:" + queryById.getStationId());
+        logger.info("[Station Service] Query By Id:" + queryById.getStationId());
         return stationService.queryById(queryById.getStationId());
     }
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/station/queryByIdForName",method = RequestMethod.POST)
     public String queryByIdForName(@RequestBody QueryById queryById){
-        System.out.println("[Station Service] Query By Id For Name:" + queryById.getStationId());
+        logger.info("[Station Service] Query By Id For Name:" + queryById.getStationId());
         return stationService.queryById(queryById.getStationId()).getName();
     }
 }

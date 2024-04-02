@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class BasicController {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(BasicController.class);
 
     @Autowired
     BasicService service;
@@ -21,13 +22,13 @@ public class BasicController {
 
     @RequestMapping(value="/basic/queryForTravel", method= RequestMethod.POST)
     public ResultForTravel queryForTravel(@RequestBody QueryForTravel info){
-        System.out.println("/basic/queryForTravel");
+        logger.info("/basic/queryForTravel");
         return service.queryForTravel(info);
     }
 
     @RequestMapping(value="/basic/queryForStationId", method= RequestMethod.POST)
     public String queryForStationId(@RequestBody QueryStation info){
-        System.out.println("/basic/queryForStationId");
+        logger.info("/basic/queryForStationId");
         return service.queryForStationId(info);
     }
 }

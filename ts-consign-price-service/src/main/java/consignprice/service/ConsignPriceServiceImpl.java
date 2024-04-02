@@ -10,6 +10,7 @@ import java.util.UUID;
 
 @Service
 public class ConsignPriceServiceImpl implements ConsignPriceService {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(ConsignPriceServiceImpl.class);
     @Autowired
     private ConsignPriceConfigRepository repository;
 
@@ -50,7 +51,7 @@ public class ConsignPriceServiceImpl implements ConsignPriceService {
     //创建价格
     @Override
     public boolean createAndModifyPrice(PriceConfig config) {
-        System.out.println("[Consign Price Service][Create New Price Config]");
+        logger.info("[Consign Price Service][Create New Price Config]");
         //更新price
         PriceConfig originalConfig;
         if(repository.findByIndex(0) != null)

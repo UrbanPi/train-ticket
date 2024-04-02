@@ -17,6 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 
 public class TestFlowOOM {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TestFlowOOM.class);
     private WebDriver driver;
     private String trainType;//0--all,1--GaoTie,2--others
     private String baseUrl;
@@ -64,11 +65,11 @@ public class TestFlowOOM {
         //get login status
         String statusLogin = driver.findElement(By.id("flow_preserve_login_msg")).getText();
         if("".equals(statusLogin))
-            System.out.println("Failed to Login! Status is Null!");
+            logger.info("Failed to Login! Status is Null!");
         else if(statusLogin.startsWith("Success"))
-            System.out.println("Success to Login! Status:"+statusLogin);
+            logger.info("Success to Login! Status:"+statusLogin);
         else
-            System.out.println("Failed to Login! Status:"+statusLogin);
+            logger.info("Failed to Login! Status:"+statusLogin);
         Assert.assertEquals(statusLogin.startsWith("Success"),true);
     }
 
@@ -126,7 +127,7 @@ public class TestFlowOOM {
 //            Thread.sleep(1000);
 //        }
 //        else
-//            System.out.println("Tickets search failed!!!");
+//            logger.info("Tickets search failed!!!");
 //        Assert.assertEquals(ticketsList.size() > 0,true);
     }
     // @Test(enabled = false)
@@ -140,7 +141,7 @@ public class TestFlowOOM {
 //            contactsList = driver.findElements(By.xpath("//table[@id='contacts_booking_list_table']/tbody/tr"));
 //        }
 //        if(contactsList.size() == 0)
-//            System.out.println("Show Contacts failed!");
+//            logger.info("Show Contacts failed!");
 //        Assert.assertEquals(contactsList.size() > 0,true);
 //
 //        if (contactsList.size() == 1){
@@ -165,7 +166,7 @@ public class TestFlowOOM {
 //            contactsList.get(i).findElement(By.xpath("td[7]/label/input")).click();
 //        }
 //        driver.findElement(By.id("ticket_select_contacts_confirm_btn")).click();
-//        System.out.println("Ticket contacts selected btn is clicked");
+//        logger.info("Ticket contacts selected btn is clicked");
 //        Thread.sleep(1000);
 //    }
 //
@@ -192,16 +193,16 @@ public class TestFlowOOM {
 //        boolean bStatusConfirm = bFrom && bTo && bTripId && bPrice && bDate && bName && bSeatType && bDocumentType && bDocumentNum;
 //        if(bStatusConfirm == false){
 //            driver.findElement(By.id("ticket_confirm_cancel_btn")).click();
-//            System.out.println("Confirming Ticket Canceled!");
+//            logger.info("Confirming Ticket Canceled!");
 //        }
 //        Assert.assertEquals(bStatusConfirm,true);
 //
 //        driver.findElement(By.id("ticket_confirm_confirm_btn")).click();
 //        Thread.sleep(1000);
-//        System.out.println("Confirm Ticket!");
+//        logger.info("Confirm Ticket!");
 //        Alert javascriptConfirm = driver.switchTo().alert();
 //        String statusAlert = driver.switchTo().alert().getText();
-//        System.out.println("The Alert information of Confirming Ticket："+statusAlert);
+//        logger.info("The Alert information of Confirming Ticket："+statusAlert);
 //        Assert.assertEquals(statusAlert.startsWith("Success"),true);
 //        javascriptConfirm.accept();
 //    }

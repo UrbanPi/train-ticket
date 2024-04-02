@@ -11,6 +11,7 @@ import ticketinfo.service.TicketInfoService;
 
 @RestController
 public class TicketInfoController {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TicketInfoController.class);
 
     @Autowired
     TicketInfoService service;
@@ -22,14 +23,14 @@ public class TicketInfoController {
 
     @RequestMapping(value="/ticketinfo/queryForTravel", method = RequestMethod.POST)
     public ResultForTravel queryForTravel(@RequestBody QueryForTravel info){
-        System.out.println("/ticketinfo/queryForTravel");
+        logger.info("/ticketinfo/queryForTravel");
 
         return service.queryForTravel(info);
     }
 
     @RequestMapping(value="/ticketinfo/queryForStationId", method = RequestMethod.POST)
     public String queryForStationId(@RequestBody QueryForStationId info){
-        System.out.println("/ticketinfo/queryForStationId");
+        logger.info("/ticketinfo/queryForStationId");
         return service.queryForStationId(info);
     }
 }

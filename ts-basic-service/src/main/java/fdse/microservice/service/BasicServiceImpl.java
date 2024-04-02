@@ -12,6 +12,7 @@ import java.util.Random;
 
 @Service
 public class BasicServiceImpl implements BasicService{
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(BasicServiceImpl.class);
 
     @Autowired
     private RestTemplate restTemplate;
@@ -60,7 +61,7 @@ public class BasicServiceImpl implements BasicService{
 //        );
         TrainType trainType = queryTrainType(info.getTrip().getTrainTypeId());
         if(trainType == null){
-            System.out.println("traintype doesn't exist");
+            logger.info("traintype doesn't exist");
             result.setStatus(false);
         }else{
             result.setTrainType(trainType);
@@ -115,21 +116,21 @@ public class BasicServiceImpl implements BasicService{
 
     @Override
     public String queryForStationId(QueryStation info){
-        System.out.println("[Basic Information Service][Query For Station Id] Station Id:" + info.getName());
+        logger.info("[Basic Information Service][Query For Station Id] Station Id:" + info.getName());
         String id = restTemplate.postForObject(
                 "http://ts-station-service:12345/station/queryForId", info, String.class);
         return id;
     }
 
     public boolean checkStationExists(String stationName){
-        System.out.println("[Basic Information Service][Check Station Exists] Station Name:" + stationName);
+        logger.info("[Basic Information Service][Check Station Exists] Station Name:" + stationName);
         Boolean exist = restTemplate.postForObject(
                 "http://ts-station-service:12345/station/exist", new QueryStation(stationName), Boolean.class);
         return exist.booleanValue();
     }
 
     public TrainType queryTrainType(String trainTypeId){
-        System.out.println("[Basic Information Service][Query Train Type] Train Type:" + trainTypeId);
+        logger.info("[Basic Information Service][Query Train Type] Train Type:" + trainTypeId);
         TrainType trainType = restTemplate.postForObject(
                 "http://ts-train-service:14567/train/retrieve", new QueryTrainType(trainTypeId), TrainType.class
         );
@@ -137,21 +138,21 @@ public class BasicServiceImpl implements BasicService{
     }
 
     private Route getRouteByRouteId(String routeId){
-        System.out.println("[Basic Information Service][Get Route By Id] Route ID：" + routeId);
+        logger.info("[Basic Information Service][Get Route By Id] Route ID：" + routeId);
         GetRouteByIdResult result = restTemplate.getForObject(
                 "http://ts-route-service:11178/route/queryById/" + routeId,
                 GetRouteByIdResult.class);
         if(result.isStatus() == false){
-            System.out.println("[Basic Information Service][Get Route By Id] Fail." + result.getMessage());
+            logger.info("[Basic Information Service][Get Route By Id] Fail." + result.getMessage());
             return null;
         }else{
-            System.out.println("[Basic Information Service][Get Route By Id] Success.");
+            logger.info("[Basic Information Service][Get Route By Id] Success.");
             return result.getRoute();
         }
     }
 
     private PriceConfig queryPriceConfigByRouteIdAndTrainType(String routeId,String trainType){
-        System.out.println("[Basic Information Service][Query For Price Config] RouteId:"
+        logger.info("[Basic Information Service][Query For Price Config] RouteId:"
                 + routeId + "TrainType:" + trainType);
         QueryPriceConfigByTrainAndRoute info = new QueryPriceConfigByTrainAndRoute();
         info.setRouteId(routeId);
@@ -184,7 +185,7 @@ public class BasicServiceImpl implements BasicService{
                 System.out.print("[Order Service]Max RAM=" + run.maxMemory() / 1024 / 1024 + "M,");
                 System.out.print("[Order Service]Allocated RAM=" + run.totalMemory() / 1024 / 1024 + "M,");
                 System.out.print("[Order Service]Rest RAM=" + run.freeMemory() / 1024 / 1024 + "M");
-                System.out.println(
+                logger.info(
                         "[Order Service]Max available RAM=" + (run.maxMemory() - run.totalMemory() + run.freeMemory()) / 1024 / 1024 + "M");
             }
         }

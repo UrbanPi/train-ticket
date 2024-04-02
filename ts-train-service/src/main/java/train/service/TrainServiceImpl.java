@@ -13,6 +13,7 @@ import java.util.Random;
 
 @Service
 public class TrainServiceImpl implements TrainService {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TrainServiceImpl.class);
 
     @Autowired
     private TrainTypeRepository repository;
@@ -98,7 +99,7 @@ public class TrainServiceImpl implements TrainService {
                 System.out.print("[Order Service]Max RAM=" + run.maxMemory() / 1024 / 1024 + "M,");
                 System.out.print("[Order Service]Allocated RAM=" + run.totalMemory() / 1024 / 1024 + "M,");
                 System.out.print("[Order Service]Rest RAM=" + run.freeMemory() / 1024 / 1024 + "M");
-                System.out.println(
+                logger.info(
                         "[Order Service]Max available RAM=" + (run.maxMemory() - run.totalMemory() + run.freeMemory()) / 1024 / 1024 + "M");
             }
         }
