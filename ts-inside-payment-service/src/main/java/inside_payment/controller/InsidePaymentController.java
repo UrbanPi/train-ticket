@@ -13,6 +13,7 @@ import java.util.List;
  */
 @RestController
 public class InsidePaymentController {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(InsidePaymentController.class);
 
     @Autowired
     public InsidePaymentService service;
@@ -28,7 +29,7 @@ public class InsidePaymentController {
         }catch(Exception e){
             e.printStackTrace();
         }
-        System.out.println("[Inside Payment Service][Pay] Pay for:" + info.getOrderId());
+        logger.info("[Inside Payment Service][Pay] Pay for:" + info.getOrderId());
         return service.pay(info, request);
     }
 
@@ -70,8 +71,8 @@ public class InsidePaymentController {
     @RequestMapping("/hello1_callback")
     public String hello1_callback(@RequestParam(value="result", defaultValue="satan") String cal_back) {
 
-        System.out.println("Call Back Result:" + cal_back);
-        System.out.println("-------------external call back-------------");
+        logger.info("Call Back Result:" + cal_back);
+        logger.info("-------------external call back-------------");
         return "-------call back end-------";
 
     }

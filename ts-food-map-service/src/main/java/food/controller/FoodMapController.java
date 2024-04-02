@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class FoodMapController {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(FoodMapController.class);
 
     @Autowired
     FoodMapService foodMapService;
@@ -26,28 +27,28 @@ public class FoodMapController {
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/foodmap/getAllFoodStores", method = RequestMethod.GET)
     public GetFoodStoresListResult getAllFoodStores(){
-        System.out.println("[Food Map Service][Get All FoodStores]");
+        logger.info("[Food Map Service][Get All FoodStores]");
         return foodMapService.listFoodStores();
     }
 
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/foodmap/getAllTrainFood", method = RequestMethod.GET)
     public GetTrainFoodListResult getAllTrainFood(){
-        System.out.println("[Food Map Service][Get All TrainFoods]");
+        logger.info("[Food Map Service][Get All TrainFoods]");
         return foodMapService.listTrainFood();
     }
 
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/foodmap/getFoodStoresOfStation", method = RequestMethod.POST)
     public GetFoodStoresListResult getFoodStoresOfStation(@RequestBody QueryFoodStoresInfo qfs){
-        System.out.println("[Food Map Service][Get FoodStores By StationId]");
+        logger.info("[Food Map Service][Get FoodStores By StationId]");
         return foodMapService.listFoodStoresByStationId(qfs.getStationId());
     }
 
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/foodmap/getTrainFoodOfTrip", method = RequestMethod.POST)
     public GetTrainFoodListResult getTrainFoodOfTrip(@RequestBody QueryTrainFoodInfo qtf){
-        System.out.println("[Food Map Service][Get TrainFoods By TripId]");
+        logger.info("[Food Map Service][Get TrainFoods By TripId]");
         return foodMapService.listTrainFoodByTripId(qtf.getTripId());
     }
 

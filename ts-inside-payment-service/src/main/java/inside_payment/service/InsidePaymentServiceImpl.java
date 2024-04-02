@@ -20,6 +20,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 public class InsidePaymentServiceImpl implements InsidePaymentService{
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(InsidePaymentServiceImpl.class);
 
     @Autowired
     public AddMoneyRepository addMoneyRepository;
@@ -55,7 +56,7 @@ public class InsidePaymentServiceImpl implements InsidePaymentService{
         if(result.isStatus()){
 
             if(result.getOrder().getStatus() != OrderStatus.NOTPAID.getCode()){
-                System.out.println("[Inside Payment Service][Pay] Error. Order status Not allowed to Pay.");
+                logger.info("[Inside Payment Service][Pay] Error. Order status Not allowed to Pay.");
                 return false;
             }
 
@@ -96,12 +97,12 @@ public class InsidePaymentServiceImpl implements InsidePaymentService{
                         "http://ts-payment-service:19001/payment/pay", outsidePaymentInfo,Boolean.class);
 //                boolean outsidePaySuccess = false;
 //                try{
-//                    System.out.println("[Payment Service][Turn To Outside Patment] Async Task Begin");
+//                    logger.info("[Payment Service][Turn To Outside Patment] Async Task Begin");
 //                    Future<Boolean> task = asyncTask.sendAsyncCallToPaymentService(outsidePaymentInfo);
 //                    outsidePaySuccess = task.get(2000,TimeUnit.MILLISECONDS).booleanValue();
 //
 //                }catch (Exception e){
-//                    System.out.println("[Inside Payment][Turn to Outside Payment] Time Out.");
+//                    logger.info("[Inside Payment][Turn to Outside Payment] Time Out.");
 //                    //e.printStackTrace();
 //                    return false;
 //                }
@@ -320,7 +321,7 @@ public class InsidePaymentServiceImpl implements InsidePaymentService{
         if(paymentTemp == null){
             paymentRepository.save(payment);
         }else{
-            System.out.println("[Inside Payment Service][Init Payment] Already Exists:" + payment.getId());
+            logger.info("[Inside Payment Service][Init Payment] Already Exists:" + payment.getId());
         }
     }
 

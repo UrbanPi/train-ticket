@@ -12,6 +12,7 @@ import java.util.concurrent.Future;
 
 @Service
 public class LauncherServiceImpl implements LauncherService {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(LauncherServiceImpl.class);
 
     @Autowired
     private RestTemplate restTemplate;
@@ -28,7 +29,7 @@ public class LauncherServiceImpl implements LauncherService {
         RegisterResult registerResult = restTemplate.postForObject(
                 "http://ts-register-service:12344/register",
                 registerInfo,RegisterResult.class);
-        System.out.println("[Register Result] " + registerResult.getMessage());
+        logger.info("[Register Result] " + registerResult.getMessage());
 
         //0.1 randomly register for one or two account
         if(new Random().nextBoolean()){
@@ -37,14 +38,14 @@ public class LauncherServiceImpl implements LauncherService {
             RegisterResult registerResultExtraOne = restTemplate.postForObject(
                     "http://ts-register-service:12344/register",
                     registerInfoExtraOne,RegisterResult.class);
-            System.out.println("[Random First Account]" + registerResultExtraOne.getMessage());
+            logger.info("[Random First Account]" + registerResultExtraOne.getMessage());
             if(new Random().nextBoolean()){
                 String randomEmailTwo = new Random().nextInt(10000000) + "@fudan.edu.cn";
                 RegisterInfo registerInfoExtraTwo = new RegisterInfo(randomEmailTwo,"passwordpassword");
                 RegisterResult registerResultExtraTwo = restTemplate.postForObject(
                         "http://ts-register-service:12344/register",
                         registerInfoExtraTwo,RegisterResult.class);
-                System.out.println("[Random Second Account]" + registerResultExtraTwo.getMessage());
+                logger.info("[Random Second Account]" + registerResultExtraTwo.getMessage());
             }
         }
 
@@ -59,7 +60,7 @@ public class LauncherServiceImpl implements LauncherService {
         );
         String loginId = loginResult.getAccount().getId().toString();
         String loginToken = loginResult.getToken();
-        System.out.println("[Login Result] " + loginResult.getMessage());
+        logger.info("[Login Result] " + loginResult.getMessage());
 
         String orderId = UUID.randomUUID().toString();
 

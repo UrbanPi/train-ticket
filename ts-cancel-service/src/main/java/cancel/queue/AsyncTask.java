@@ -7,13 +7,14 @@ import org.springframework.stereotype.Component;
 
 @Component  
 public class AsyncTask {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(AsyncTask.class);
 
     @Autowired
     private MsgSendingBean sendingBean;
 
     @Async("mySimpleAsync")
     public void asyncSendLoginInfoDataToSso(ChangeOrderInfo info){
-        System.out.println("[Cancel Service][Async Send Login Info]");
+        logger.info("[Cancel Service][Async Send Login Info]");
         sendingBean.sendCancelInfoToOrderOther(info);
     }
       

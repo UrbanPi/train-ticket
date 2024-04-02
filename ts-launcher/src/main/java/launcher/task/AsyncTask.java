@@ -20,6 +20,7 @@ import java.util.concurrent.Future;
 
 @Component
 public class AsyncTask {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(AsyncTask.class);
 
     @Autowired
     private RestTemplate restTemplate;
@@ -39,7 +40,7 @@ public class AsyncTask {
                 "http://ts-order-service:12031/order/query",
                 HttpMethod.POST, requestEntityQueryOrder, ArrayList.class);
         ArrayList<Order> queryOrderResult = (ArrayList<Order>) rssResponseQueryOrder.getBody();
-        System.out.println("[查询结果Order数量 ?? Order result size] " + queryOrderResult.size());
+        logger.info("[查询结果Order数量 ?? Order result size] " + queryOrderResult.size());
         return new AsyncResult(queryOrderResult);
     }
 
@@ -58,7 +59,7 @@ public class AsyncTask {
                 "http://ts-order-other-service:12032/orderOther/query",
                 HttpMethod.POST, requestEntityQueryOrder, ArrayList.class);
         ArrayList<Order> queryOrderResult = (ArrayList<Order>) rssResponseQueryOrder.getBody();
-        System.out.println("[查询结果OrderOther数量 ?? OrderOther result size] " + queryOrderResult.size());
+        logger.info("[查询结果OrderOther数量 ?? OrderOther result size] " + queryOrderResult.size());
         return new AsyncResult(queryOrderResult);
     }
 
@@ -81,7 +82,7 @@ public class AsyncTask {
                 "http://ts-preserve-other-service:14569/preserveOther",
                 HttpMethod.POST, requestEntityPreserveOrder, OrderTicketsResult.class);
         OrderTicketsResult orderTicketsResult = (OrderTicketsResult)rssResponsePreserveOrder.getBody();
-        System.out.println("[预定结果 ?? Predetermined / Reservation result] " + orderTicketsResult.getMessage()); //
+        logger.info("[预定结果 ?? Predetermined / Reservation result] " + orderTicketsResult.getMessage()); //
         return new AsyncResult(orderTicketsResult);
     }
 
@@ -97,7 +98,7 @@ public class AsyncTask {
                 HttpMethod.POST,requestEntityInsidePayment, Boolean.class
         );
         boolean result = (Boolean)rssResponseInsidePayment.getBody();
-        System.out.println("[支付结果 ?? Payment result] " + result);
+        logger.info("[支付结果 ?? Payment result] " + result);
         return new AsyncResult(result);
     }
 
@@ -112,7 +113,7 @@ public class AsyncTask {
                 "http://ts-cancel-service:18885/cancelOrder",
                 HttpMethod.POST, requestEntityCancelOrder, CancelOrderResult.class);
         CancelOrderResult cancelOrderResult = (CancelOrderResult) rssResponseCancelOrder.getBody();
-        System.out.println("[退票结果 ?? Refund result] " + cancelOrderResult.getMessage());
+        logger.info("[退票结果 ?? Refund result] " + cancelOrderResult.getMessage());
         return new AsyncResult(cancelOrderResult);
     }
 

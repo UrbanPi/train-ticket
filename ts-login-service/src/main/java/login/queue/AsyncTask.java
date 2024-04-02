@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
  */  
 @Component  
 public class AsyncTask {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(AsyncTask.class);
 
     @Autowired
     private MsgSendingBean sendingBean;
@@ -19,7 +20,7 @@ public class AsyncTask {
     
     @Async("mySimpleAsync")
     public void asyncSendLoginInfoDataToSso(LoginInfo loginInfo){
-        System.out.println("[Login Service][Async Send Login Info]");
+        logger.info("[Login Service][Async Send Login Info]");
         sendingBean.sendLoginInfoToSso(loginInfo);
     }
       

@@ -7,6 +7,7 @@ import sso.service.AccountSsoService;
 
 @RestController
 public class AccountSsoController {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(AccountSsoController.class);
 
     @Autowired
     private AccountSsoService ssoService;
@@ -43,19 +44,19 @@ public class AccountSsoController {
     public LoginResult login(@RequestBody LoginInfo li) {
         LoginResult lr = ssoService.login(li);
         if(lr.getStatus() == false){
-            System.out.println("[SSO Service][Login] Login Fail. No token generate.");
+            logger.info("[SSO Service][Login] Login Fail. No token generate.");
             return lr;
         }else{
             //Post token to the sso
-            System.out.println("[SSO Service][Login] Password Right. Put token to sso.");
+            logger.info("[SSO Service][Login] Password Right. Put token to sso.");
             PutLoginResult tokenResult = loginPutToken(lr.getAccount().getId().toString());
-            System.out.println("[SSO Service] PutLoginResult Status: " + tokenResult.isStatus());
+            logger.info("[SSO Service] PutLoginResult Status: " + tokenResult.isStatus());
             if(tokenResult.isStatus() == true){
-                System.out.println("[SSO Service][Login] Post to sso:" + tokenResult.getToken());
+                logger.info("[SSO Service][Login] Post to sso:" + tokenResult.getToken());
                 lr.setToken(tokenResult.getToken());
                 lr.setMessage(tokenResult.getMsg());
             }else{
-                System.out.println("[SSO Service][Login] Token Result Fail.");
+                logger.info("[SSO Service][Login] Token Result Fail.");
                 lr.setToken(null);
                 lr.setStatus(false);
                 lr.setMessage(tokenResult.getMsg());
@@ -67,13 +68,13 @@ public class AccountSsoController {
 
     @RequestMapping(path = "/logout", method = RequestMethod.POST)
     public LogoutResult logoutDeleteToken(@RequestBody LogoutInfo li){
-        System.out.println("[SSO Service][Logout Delete Token] ID:" + li.getId() + "Token:" + li.getToken());
+        logger.info("[SSO Service][Logout Delete Token] ID:" + li.getId() + "Token:" + li.getToken());
         return ssoService.logoutDeleteToken(li);
     }
 
     @RequestMapping(path = "/account/findById", method = RequestMethod.POST)
     public GetAccountByIdResult getAccountById(@RequestBody GetAccountByIdInfo info){
-        System.out.println("[SSO Service][Find Account By Id] Account Id:" + info.getAccountId());
+        logger.info("[SSO Service][Find Account By Id] Account Id:" + info.getAccountId());
         return ssoService.getAccountById(info);
     }
 
@@ -90,14 +91,14 @@ public class AccountSsoController {
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/account/adminlogin", method = RequestMethod.POST)
     public Contacts adminLogin(@RequestBody AdminLoginInfo ali){
-        System.out.println("[SSO Service][Admin Login]");
+        logger.info("[SSO Service][Admin Login]");
         return ssoService.adminLogin(ali.getName(), ali.getPassword());
     }
 
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/account/admindelete", method = RequestMethod.POST)
     public DeleteAccountResult adminDelete(@RequestBody AdminDeleteAccountRequest request){
-        System.out.println("[SSO Service][Admin Delete Account]");
+        logger.info("[SSO Service][Admin Delete Account]");
         return ssoService.deleteAccount(request.getAccountId());
     }
 

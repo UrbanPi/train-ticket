@@ -12,6 +12,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class TestFlowOne {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TestFlowOne.class);
 
     private WebDriver driver;
 
@@ -102,11 +103,11 @@ public class TestFlowOne {
         //get login status
         String statusLogin = driver.findElement(By.id("flow_preserve_login_msg")).getText();
         if("".equals(statusLogin))
-            System.out.println("Failed to Login! Status is Null!");
+            logger.info("Failed to Login! Status is Null!");
         else if(statusLogin.startsWith("Success"))
-            System.out.println("Success to Login! Status:"+statusLogin);
+            logger.info("Success to Login! Status:"+statusLogin);
         else
-            System.out.println("Failed to Login! Status:"+statusLogin);
+            logger.info("Failed to Login! Status:"+statusLogin);
         Assert.assertEquals(statusLogin.startsWith("Success"),true);
     }
 
@@ -168,7 +169,7 @@ public class TestFlowOne {
             Thread.sleep(1000);
         }
         else
-            System.out.println("Tickets search failed!!!");
+            logger.info("Tickets search failed!!!");
         Assert.assertEquals(ticketsList.size() > 0,true);
     }
 
@@ -182,7 +183,7 @@ public class TestFlowOne {
             contactsList = driver.findElements(By.xpath("//table[@id='contacts_booking_list_table']/tbody/tr"));
         }
         if(contactsList.size() == 0)
-            System.out.println("Show Contacts failed!");
+            logger.info("Show Contacts failed!");
         Assert.assertEquals(contactsList.size() > 0,true);
 
         if (contactsList.size() == 1){
@@ -211,7 +212,7 @@ public class TestFlowOne {
 
         Thread.sleep(new Random().nextInt(6000));
         driver.findElement(By.id("ticket_select_contacts_confirm_btn")).click();
-        System.out.println("Ticket contacts selected btn is clicked");
+        logger.info("Ticket contacts selected btn is clicked");
         Thread.sleep(1000);
     }
 
@@ -238,7 +239,7 @@ public class TestFlowOne {
         boolean bStatusConfirm = bFrom && bTo && bTripId && bPrice && bDate && bName && bSeatType && bDocumentType && bDocumentNum;
         if(bStatusConfirm == false){
             driver.findElement(By.id("ticket_confirm_cancel_btn")).click();
-            System.out.println("Confirming Ticket Canceled!");
+            logger.info("Confirming Ticket Canceled!");
         }
         Assert.assertEquals(bStatusConfirm,true);
 
@@ -246,10 +247,10 @@ public class TestFlowOne {
         driver.findElement(By.id("ticket_confirm_confirm_btn")).click();
 
         Thread.sleep(10000);
-        System.out.println("Confirm Ticket!");
+        logger.info("Confirm Ticket!");
         Alert javascriptConfirm = driver.switchTo().alert();
         String statusAlert = driver.switchTo().alert().getText();
-        System.out.println("The Alert information of Confirming Ticket："+statusAlert);
+        logger.info("The Alert information of Confirming Ticket："+statusAlert);
         Assert.assertEquals(statusAlert.startsWith("Success"),true);
         javascriptConfirm.accept();
     }
@@ -264,7 +265,7 @@ public class TestFlowOne {
         boolean bTripId = !"".equals(itemTripId);
         boolean bStatusPay = bOrderId && bPrice && bTripId;
         if(bStatusPay == false)
-            System.out.println("Confirming Ticket failed!");
+            logger.info("Confirming Ticket failed!");
         Assert.assertEquals(bStatusPay,true);
 
         Thread.sleep(new Random().nextInt(6000));
@@ -272,7 +273,7 @@ public class TestFlowOne {
 //        Thread.sleep(1000);
 //        String itemCollectOrderId = driver.findElement(By.id("preserve_collect_order_id")).getAttribute("value");
 //        Assert.assertEquals(!"".equals(itemCollectOrderId),true);
-//        System.out.println("Success to pay and book ticket!");
+//        logger.info("Success to pay and book ticket!");
     }
 
     @Test (dependsOnMethods = {"testLogin"})
@@ -288,7 +289,7 @@ public class TestFlowOne {
         if (myOrdersList.size() > 0) {
             System.out.printf("Success to show my orders list，the list size is:%d%n",myOrdersList.size());
         } else {
-            System.out.println("Failed to show my orders list，the list size is 0 or No orders in this user!");
+            logger.info("Failed to show my orders list，the list size is 0 or No orders in this user!");
         }
         Assert.assertEquals(myOrdersList.size() > 0,true);
     }
@@ -328,7 +329,7 @@ public class TestFlowOne {
 //
 //        Alert javascriptConfirm = driver.switchTo().alert();
 //        String statusAlert = driver.switchTo().alert().getText();
-//        System.out.println("The Alert information of Cancel Ticket："+statusAlert);
+//        logger.info("The Alert information of Cancel Ticket："+statusAlert);
 //        Assert.assertEquals(statusAlert.startsWith("Success"),true);
 //        javascriptConfirm.accept();
     }

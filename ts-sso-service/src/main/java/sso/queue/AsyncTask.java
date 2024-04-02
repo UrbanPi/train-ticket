@@ -10,6 +10,7 @@ import sso.service.AccountSsoService;
 
 @Component  
 public class AsyncTask {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(AsyncTask.class);
 
     @Autowired
     private MsgSendingBean sendingBean;
@@ -20,7 +21,7 @@ public class AsyncTask {
     @Async("mySimpleAsync")
     public void putLoginResultIntoReturnQueue(LoginInfo loginInfo){
         //1.调用service进行执行执行
-        System.out.println("[SSO Service][Async Task] SSO准备开始执行登录操作");
+        logger.info("[SSO Service][Async Task] SSO准备开始执行登录操作");
         LoginResult loginResult = service.login(loginInfo);
         PutLoginResult tokenResult = service.loginPutToken(loginResult.getAccount().getId().toString());
         if(tokenResult.isStatus() == true){

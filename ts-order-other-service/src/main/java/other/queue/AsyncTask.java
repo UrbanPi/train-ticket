@@ -9,6 +9,7 @@ import other.service.OrderOtherService;
 
 @Component  
 public class AsyncTask {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(AsyncTask.class);
 
     @Autowired
     private MsgSendingBean sendingBean;
@@ -19,7 +20,7 @@ public class AsyncTask {
     @Async("mySimpleAsync")
     public void putResultIntoReturnQueue(ChangeOrderInfo changeOrderInfo){
         //1.调用service进行执行执行
-        System.out.println("[Order Other Service][Async Task] 准备开始修改状态");
+        logger.info("[Order Other Service][Async Task] 准备开始修改状态");
         ChangeOrderResult changeOrderResult = service.saveChanges(changeOrderInfo.getOrder());
         //2.获取result
         sendingBean.sendLoginInfoToSso(changeOrderResult);
