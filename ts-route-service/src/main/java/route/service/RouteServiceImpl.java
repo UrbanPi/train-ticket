@@ -9,13 +9,14 @@ import java.util.UUID;
 
 @Service
 public class RouteServiceImpl implements RouteService {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(RouteServiceImpl.class);
 
     @Autowired
     private RouteRepository routeRepository;
 
     @Override
     public CreateAndModifyRouteResult createAndModify(CreateAndModifyRouteInfo info){
-        System.out.println("[Route Service] Create And Modify Start:" + info.getStartStation() + " End:" + info.getEndStation());
+        logger.info("[Route Service] Create And Modify Start:" + info.getStartStation() + " End:" + info.getEndStation());
         CreateAndModifyRouteResult result;
         String[] stations = info.getStationList().split(",");
         String[] distances = info.getDistanceList().split(",");
@@ -90,7 +91,7 @@ public class RouteServiceImpl implements RouteService {
     public GetRoutesListlResult getRouteByStartAndTerminal(GetRouteByStartAndTerminalInfo info){
 //        ArrayList<Route> routes = routeRepository.findByStartStationIdAndTerminalStationId(info.getStartId(),info.getTerminalId());
         ArrayList<Route> routes = routeRepository.findAll();
-        System.out.println("[Route Service] Find All:" + routes.size());
+        logger.info("[Route Service] Find All:" + routes.size());
         ArrayList<Route> resultList = new ArrayList<>();
         for(Route route : routes){
             if(route.getStations().contains(info.getStartId()) &&

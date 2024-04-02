@@ -11,6 +11,7 @@ import java.util.Set;
 
 @Service
 public class SeatServiceImpl implements SeatService {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(SeatServiceImpl.class);
     @Autowired
     RestTemplate restTemplate;
 
@@ -22,25 +23,25 @@ public class SeatServiceImpl implements SeatService {
 
         String trainNumber = seatRequest.getTrainNumber();
         if(trainNumber.startsWith("G") || trainNumber.startsWith("D") ){
-            System.out.println("[SeatService distributeSeat] TrainNumber start with G|D");
+            logger.info("[SeatService distributeSeat] TrainNumber start with G|D");
 
             routeResult = restTemplate.getForObject(
                     "http://ts-travel-service:12346/travel/getRouteByTripId/"+ seatRequest.getTrainNumber() ,GetRouteResult.class);
-            System.out.println("[SeatService distributeSeat] The result of getRouteResult is " + routeResult.getMessage());
+            logger.info("[SeatService distributeSeat] The result of getRouteResult is " + routeResult.getMessage());
 
             leftTicketInfo = restTemplate.postForObject(
                     "http://ts-order-service:12031/order/getTicketListByDateAndTripId", seatRequest ,LeftTicketInfo.class);
 
             trainTypeResult = restTemplate.getForObject(
                     "http://ts-travel-service:12346/travel/getTrainTypeByTripId/" + seatRequest.getTrainNumber() ,GetTrainTypeResult.class);
-            System.out.println("[SeatService distributeSeat] The result of getTrainTypeResult is " + trainTypeResult.getMessage());
+            logger.info("[SeatService distributeSeat] The result of getTrainTypeResult is " + trainTypeResult.getMessage());
         }
         else{
-            System.out.println("[SeatService] TrainNumber start with other capital");
+            logger.info("[SeatService] TrainNumber start with other capital");
 
             routeResult = restTemplate.getForObject(
                     "http://ts-travel2-service:16346/travel2/getRouteByTripId/" + seatRequest.getTrainNumber() ,GetRouteResult.class);
-            System.out.println("[SeatService distributeSeat] The result of getRouteResult is " + routeResult.getMessage());
+            logger.info("[SeatService distributeSeat] The result of getRouteResult is " + routeResult.getMessage());
 
 
             leftTicketInfo = restTemplate.postForObject(
@@ -49,7 +50,7 @@ public class SeatServiceImpl implements SeatService {
 
             trainTypeResult = restTemplate.getForObject(
                     "http://ts-travel2-service:16346/travel2/getTrainTypeByTripId/" + seatRequest.getTrainNumber(), GetTrainTypeResult.class);
-            System.out.println("[SeatService distributeSeat] The result of getTrainTypeResult is " + trainTypeResult.getMessage());
+            logger.info("[SeatService distributeSeat] The result of getTrainTypeResult is " + trainTypeResult.getMessage());
         }
 
 
@@ -58,11 +59,11 @@ public class SeatServiceImpl implements SeatService {
         int seatTotalNum;
         if(seatRequest.getSeatType() == SeatClass.FIRSTCLASS.getCode()) {
             seatTotalNum = trainTypeResult.getTrainTypeClass().getConfortClass();
-            System.out.println("[SeatService distributeSeat] The request seat type is confortClass and the total num is " + seatTotalNum);
+            logger.info("[SeatService distributeSeat] The request seat type is confortClass and the total num is " + seatTotalNum);
         }
         else {
             seatTotalNum = trainTypeResult.getTrainTypeClass().getEconomyClass();
-            System.out.println("[SeatService distributeSeat] The request seat type is economyClass and the total num is " + seatTotalNum);
+            logger.info("[SeatService distributeSeat] The request seat type is economyClass and the total num is " + seatTotalNum);
         }
         String startStation = seatRequest.getStartStation();
         Ticket ticket = new Ticket();
@@ -76,7 +77,7 @@ public class SeatServiceImpl implements SeatService {
 
             if(stationList.indexOf(soldTicketDestStation) < stationList.indexOf(startStation)){
                 ticket.setSeatNo(soldTicket.getSeatNo());
-                System.out.println("[SeatService distributeSeat] Use the previous distributed seat number!" + soldTicket.getSeatNo());
+                logger.info("[SeatService distributeSeat] Use the previous distributed seat number!" + soldTicket.getSeatNo());
                 return ticket;
             }
         }
@@ -89,7 +90,7 @@ public class SeatServiceImpl implements SeatService {
             seat = rand.nextInt(range) + 1;
         }
         ticket.setSeatNo(seat);
-        System.out.println("[SeatService distributeSeat] Use a new seat number!" + seat);
+        logger.info("[SeatService distributeSeat] Use a new seat number!" + seat);
         return ticket;
     }
 
@@ -108,7 +109,7 @@ public class SeatServiceImpl implements SeatService {
     public int getLeftTicketOfInterval(SeatRequest seatRequest){
 
 
-        System.out.println("[Seat Service] Train Number" + seatRequest.getTrainNumber());
+        logger.info("[Seat Service] Train Number" + seatRequest.getTrainNumber());
 
 
         int numOfLeftTicket = 0;
@@ -119,12 +120,12 @@ public class SeatServiceImpl implements SeatService {
 
         String trainNumber = seatRequest.getTrainNumber();
         if(trainNumber.startsWith("G") || trainNumber.startsWith("D") ){
-            System.out.println("[SeatService getLeftTicketOfInterval] TrainNumber start with G|D");
+            logger.info("[SeatService getLeftTicketOfInterval] TrainNumber start with G|D");
 
 
             routeResult = restTemplate.getForObject(
                     "http://ts-travel-service:12346/travel/getRouteByTripId/"+ seatRequest.getTrainNumber() ,GetRouteResult.class);
-            System.out.println("[SeatService getLeftTicketOfInterval] The result of getRouteResult is " + routeResult.getMessage());
+            logger.info("[SeatService getLeftTicketOfInterval] The result of getRouteResult is " + routeResult.getMessage());
 
 
             leftTicketInfo = restTemplate.postForObject(
@@ -133,14 +134,14 @@ public class SeatServiceImpl implements SeatService {
 
             trainTypeResult = restTemplate.getForObject(
                     "http://ts-travel-service:12346/travel/getTrainTypeByTripId/" + seatRequest.getTrainNumber() ,GetTrainTypeResult.class);
-            System.out.println("[SeatService getLeftTicketOfInterval] The result of getTrainTypeResult is " + trainTypeResult.getMessage());
+            logger.info("[SeatService getLeftTicketOfInterval] The result of getTrainTypeResult is " + trainTypeResult.getMessage());
         }
         else{
-            System.out.println("[SeatService getLeftTicketOfInterval] TrainNumber start with other capital");
+            logger.info("[SeatService getLeftTicketOfInterval] TrainNumber start with other capital");
 
             routeResult = restTemplate.getForObject(
                     "http://ts-travel2-service:16346/travel2/getRouteByTripId/" + seatRequest.getTrainNumber() ,GetRouteResult.class);
-            System.out.println("[SeatService getLeftTicketOfInterval] The result of getRouteResult is " + routeResult.getMessage());
+            logger.info("[SeatService getLeftTicketOfInterval] The result of getRouteResult is " + routeResult.getMessage());
 
 
             leftTicketInfo = restTemplate.postForObject(
@@ -148,7 +149,7 @@ public class SeatServiceImpl implements SeatService {
 
             trainTypeResult = restTemplate.getForObject(
                     "http://ts-travel2-service:16346/travel2/getTrainTypeByTripId/" + seatRequest.getTrainNumber(), GetTrainTypeResult.class);
-            System.out.println("[SeatService getLeftTicketOfInterval] The result of getTrainTypeResult is " + trainTypeResult.getMessage());
+            logger.info("[SeatService getLeftTicketOfInterval] The result of getTrainTypeResult is " + trainTypeResult.getMessage());
         }
 
 
@@ -156,11 +157,11 @@ public class SeatServiceImpl implements SeatService {
         int seatTotalNum;
         if(seatRequest.getSeatType() == SeatClass.FIRSTCLASS.getCode()) {
             seatTotalNum = trainTypeResult.getTrainTypeClass().getConfortClass();
-            System.out.println("[SeatService getLeftTicketOfInterval] The request seat type is confortClass and the total num is " + seatTotalNum);
+            logger.info("[SeatService getLeftTicketOfInterval] The request seat type is confortClass and the total num is " + seatTotalNum);
         }
         else {
             seatTotalNum = trainTypeResult.getTrainTypeClass().getEconomyClass();
-            System.out.println("[SeatService getLeftTicketOfInterval] The request seat type is economyClass and the total num is " + seatTotalNum);
+            logger.info("[SeatService getLeftTicketOfInterval] The request seat type is economyClass and the total num is " + seatTotalNum);
         }
         String startStation = seatRequest.getStartStation();
         Set<Ticket> soldTickets = leftTicketInfo.getSoldTickets();
@@ -169,7 +170,7 @@ public class SeatServiceImpl implements SeatService {
             String soldTicketDestStation = soldTicket.getDestStation();
 
             if(stationList.indexOf(soldTicketDestStation) < stationList.indexOf(startStation)){
-                System.out.println("[SeatService getLeftTicketOfInterval] The previous distributed seat number is usable!" + soldTicket.getSeatNo());
+                logger.info("[SeatService getLeftTicketOfInterval] The previous distributed seat number is usable!" + soldTicket.getSeatNo());
                 numOfLeftTicket++;
             }
         }
