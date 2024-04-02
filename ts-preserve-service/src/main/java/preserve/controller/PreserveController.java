@@ -10,6 +10,7 @@ import java.util.concurrent.Future;
 
 @RestController
 public class PreserveController {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(PreserveController.class);
 
     @Autowired
     private PreserveService preserveService;
@@ -26,7 +27,7 @@ public class PreserveController {
         String loginId = otiPlus.getLoginId();
 
 
-        System.out.println("[Preserve Service][Preserve] Account " + loginId + " order from " +
+        logger.info("[Preserve Service][Preserve] Account " + loginId + " order from " +
                 oti.getFrom() + " -----> " + oti.getTo() + " at " + oti.getDate());
 
         //add this request to the queue of requests
@@ -38,7 +39,7 @@ public class PreserveController {
         //wait the task done
         while(true) {
             if(otr.isDone()) {
-                System.out.println("------preserveService uuid = " + uuid  +  " done--------");
+                logger.info("------preserveService uuid = " + uuid  +  " done--------");
                 break;
             }
             Thread.sleep(300);
@@ -49,14 +50,14 @@ public class PreserveController {
         //some error happened that beyond image
         if(index < 0){
             statusBean.chartMsgs.remove(pn);
-            System.out.println("-----cannot find the current preserve node.------");
+            logger.info("-----cannot find the current preserve node.------");
             throw new Exception("cannot find the current preserve node.");
         } else {
             //check if there exists any request from the same loginId that haven't return
             for(int i = 0; i < index; i++){
                 if(statusBean.chartMsgs.get(i).getLoginId().equals(loginId)){
                     statusBean.chartMsgs.remove(pn);
-                    System.out.println("-----This OrderTicketsResult return before the last loginId request.------");
+                    logger.info("-----This OrderTicketsResult return before the last loginId request.------");
                     result.setStatus(false);
                     result.setMessage("ErrorReportUI");
                     return result;
@@ -65,7 +66,7 @@ public class PreserveController {
             }
         }
 
-        System.out.println("-----This OrderTicketsResult return in the sequence.------");
+        logger.info("-----This OrderTicketsResult return in the sequence.------");
         statusBean.chartMsgs.remove(pn);
 
         return result;

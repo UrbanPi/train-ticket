@@ -9,6 +9,7 @@ import java.util.*;
 
 @Service
 public class TravelServiceImpl implements TravelService{
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TravelServiceImpl.class);
 
     @Autowired
     private TripRepository repository;
@@ -26,25 +27,25 @@ public class TravelServiceImpl implements TravelService{
             if(trip == null){
                 result.setStatus(false);
                 result.setMessage("Trip Not Found");
-                System.out.println("[Get Route By Trip ID] Trip Not Found:" + tripId);
+                logger.info("[Get Route By Trip ID] Trip Not Found:" + tripId);
                 result.setRoute(null);
             }else{
                 Route route = getRouteByRouteId(trip.getRouteId());
                 if(route == null){
                     result.setStatus(false);
                     result.setMessage("Route Not Found");
-                    System.out.println("[Get Route By Trip ID] Route Not Found:" + trip.getRouteId());
+                    logger.info("[Get Route By Trip ID] Route Not Found:" + trip.getRouteId());
                     result.setRoute(null);
                 }else{
                     result.setStatus(true);
                     result.setMessage("Success");
-                    System.out.println("[Get Route By Trip ID] Success");
+                    logger.info("[Get Route By Trip ID] Success");
                     result.setRoute(route);
                 }
             }
         } else {
             result.setStatus(false);
-            System.out.println("[Get Route By Trip ID] TripId is invaild");
+            logger.info("[Get Route By Trip ID] TripId is invaild");
             result.setMessage("TripId is invaild");
             result.setRoute(null);
         }
@@ -174,7 +175,7 @@ public class TravelServiceImpl implements TravelService{
     @Override
     public GetTripAllDetailResult getTripAllDetailInfo(GetTripAllDetailInfo gtdi){
         GetTripAllDetailResult gtdr = new GetTripAllDetailResult();
-        System.out.println("[TravelService] [GetTripAllDetailInfo] TripId:" + gtdi.getTripId());
+        logger.info("[TravelService] [GetTripAllDetailInfo] TripId:" + gtdi.getTripId());
         Trip trip = repository.findByTripId(new TripId(gtdi.getTripId()));
         if(trip == null){
             gtdr.setStatus(false);
@@ -226,7 +227,7 @@ public class TravelServiceImpl implements TravelService{
         ResultSoldTicket result = restTemplate.postForObject(
                 "http://ts-order-service:12031/order/calculate", information ,ResultSoldTicket.class);
         if(result == null){
-            System.out.println("soldticket Info doesn't exist");
+            logger.info("soldticket Info doesn't exist");
             return null;
         }
         //设置返回的车票信息
@@ -265,13 +266,13 @@ public class TravelServiceImpl implements TravelService{
         calendarStart.setTime(trip.getStartingTime());
         calendarStart.add(Calendar.MINUTE,minutesStart);
         response.setStartingTime(calendarStart.getTime());
-        System.out.println("[Train Service]计算时间：" + minutesStart  + " 时间:" + calendarStart.getTime().toString());
+        logger.info("[Train Service]计算时间：" + minutesStart  + " 时间:" + calendarStart.getTime().toString());
 
         Calendar calendarEnd = Calendar.getInstance();
         calendarEnd.setTime(trip.getStartingTime());
         calendarEnd.add(Calendar.MINUTE,minutesEnd);
         response.setEndTime(calendarEnd.getTime());
-        System.out.println("[Train Service]计算时间：" + minutesEnd  + " 时间:" + calendarEnd.getTime().toString());
+        logger.info("[Train Service]计算时间：" + minutesEnd  + " 时间:" + calendarEnd.getTime().toString());
 
         response.setTripId(new TripId(result.getTrainNumber()));
         response.setTrainTypeId(trip.getTrainTypeId());
@@ -330,15 +331,15 @@ public class TravelServiceImpl implements TravelService{
     }
 
     private Route getRouteByRouteId(String routeId){
-        System.out.println("[Travel Service][Get Route By Id] Route ID：" + routeId);
+        logger.info("[Travel Service][Get Route By Id] Route ID：" + routeId);
         GetRouteResult result = restTemplate.getForObject(
                 "http://ts-route-service:11178/route/queryById/" + routeId,
                 GetRouteResult.class);
         if(result.isStatus() == false){
-            System.out.println("[Travel Service][Get Route By Id] Fail." + result.getMessage());
+            logger.info("[Travel Service][Get Route By Id] Fail." + result.getMessage());
             return null;
         }else{
-            System.out.println("[Travel Service][Get Route By Id] Success.");
+            logger.info("[Travel Service][Get Route By Id] Success.");
             return result.getRoute();
         }
     }

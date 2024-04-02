@@ -9,6 +9,7 @@ import java.util.concurrent.Future;
 
 @RestController
 public class ClickController {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(ClickController.class);
 
     @Autowired
     private AsyncTask asyncTask;
@@ -21,7 +22,7 @@ public class ClickController {
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/click/clickTwice", method = RequestMethod.POST)
     public OrderTicketsResult clickTwice(@RequestBody OrderTicketsInfo oti, @CookieValue String loginId, @CookieValue String loginToken) throws Exception{
-        System.out.println("Click Two");
+        logger.info("Click Two");
         Future<OrderTicketsResult> task1 = asyncTask.sendAsyncClickTwice(oti,loginId,loginToken);
         Thread.sleep(500);
         Future<OrderTicketsResult> task2 = asyncTask.sendAsyncClickTwice(oti,loginId,loginToken);

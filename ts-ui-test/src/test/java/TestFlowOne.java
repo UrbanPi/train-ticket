@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
  * Created by ZDH on 2017/7/19.
  */
 public class TestFlowOne {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TestFlowOne.class);
     private WebDriver driver;
     private String trainType;//0--all,1--GaoTie,2--others
     private String baseUrl;
@@ -67,11 +68,11 @@ public class TestFlowOne {
         //get login status
         String statusLogin = driver.findElement(By.id("flow_preserve_login_msg")).getText();
         if("".equals(statusLogin))
-            System.out.println("Failed to Login! Status is Null!");
+            logger.info("Failed to Login! Status is Null!");
         else if(statusLogin.startsWith("Success"))
-            System.out.println("Success to Login! Status:"+statusLogin);
+            logger.info("Success to Login! Status:"+statusLogin);
         else
-            System.out.println("Failed to Login! Status:"+statusLogin);
+            logger.info("Failed to Login! Status:"+statusLogin);
         Assert.assertEquals(statusLogin.startsWith("Success"),true);
     }
     @Test (dependsOnMethods = {"testLogin"})
@@ -143,7 +144,7 @@ public class TestFlowOne {
             Thread.sleep(1000);
         }
         else
-            System.out.println("Tickets search failed!!!");
+            logger.info("Tickets search failed!!!");
         Assert.assertEquals(ticketsList.size() > 0,true);
     }
    // @Test(enabled = false)
@@ -164,7 +165,7 @@ public class TestFlowOne {
             contactsList = driver.findElements(By.xpath("//table[@id='contacts_booking_list_table']/tbody/tr"));
         }
         if(contactsList.size() == 0)
-            System.out.println("Show Contacts failed!");
+            logger.info("Show Contacts failed!");
         Assert.assertEquals(contactsList.size() > 0,true);
 
         if (contactsList.size() == 1){
@@ -201,7 +202,7 @@ public class TestFlowOne {
         driver.findElement(By.id("ticket_select_contacts_confirm_btn")).click();
 
 
-        System.out.println("Ticket contacts selected btn is clicked");
+        logger.info("Ticket contacts selected btn is clicked");
         Thread.sleep(1000);
     }
     @Test (dependsOnMethods = {"testBooking"})
@@ -228,7 +229,7 @@ public class TestFlowOne {
         boolean bStatusConfirm = bFrom && bTo && bTripId && bPrice && bDate && bName && bSeatType && bDocumentType && bDocumentNum;
         if(bStatusConfirm == false){
             driver.findElement(By.id("ticket_confirm_cancel_btn")).click();
-            System.out.println("Confirming Ticket Canceled!");
+            logger.info("Confirming Ticket Canceled!");
         }
 
 
@@ -243,17 +244,17 @@ public class TestFlowOne {
 
 
         Thread.sleep(15000);
-        System.out.println("Confirm Ticket!");
+        logger.info("Confirm Ticket!");
         Alert javascriptConfirm = driver.switchTo().alert();
         String statusAlert = driver.switchTo().alert().getText();
-        System.out.println("The Alert information of Confirming Ticket："+statusAlert);
+        logger.info("The Alert information of Confirming Ticket："+statusAlert);
         Assert.assertEquals(statusAlert.startsWith("Success"),true);
         javascriptConfirm.accept();
 
-        System.out.println("Confirm Ticket!");
+        logger.info("Confirm Ticket!");
         Alert javascriptConfirm2 = driver.switchTo().alert();
         String statusAlert2 = driver.switchTo().alert().getText();
-        System.out.println("The Alert information of Confirming Ticket："+statusAlert2);
+        logger.info("The Alert information of Confirming Ticket："+statusAlert2);
         Assert.assertEquals(statusAlert2.startsWith("Success"),true);
         javascriptConfirm2.accept();
 
