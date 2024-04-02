@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 
 public class TestServiceExecute {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TestServiceExecute.class);
     private WebDriver driver;
     private String baseUrl;
     @BeforeClass
@@ -30,9 +31,9 @@ public class TestServiceExecute {
         Thread.sleep(1000);
         String statusExecute = driver.findElement(By.id("execute_order_message")).getText();
         if (!"".equals(statusExecute))
-            System.out.println("Success: "+statusExecute);
+            logger.info("Success: "+statusExecute);
         else
-            System.out.println("False, status security check is null!");
+            logger.info("False, status security check is null!");
         Assert.assertEquals(statusExecute.equals(""),false);
     }
     @AfterClass

@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 
 public class TestServiceSecurity {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TestServiceSecurity.class);
     private WebDriver driver;
     private String baseUrl;
     @BeforeClass
@@ -32,7 +33,7 @@ public class TestServiceSecurity {
             testSecurityCheck();
         }
         else
-            System.out.println("False,Security Config List's size is 0 or Failed");
+            logger.info("False,Security Config List's size is 0 or Failed");
         Assert.assertEquals(securityList.size() > 0,true);
     }
     public void testSecurityCheck() throws Exception{
@@ -42,9 +43,9 @@ public class TestServiceSecurity {
         Thread.sleep(1000);
         String statusSecurityCheck = driver.findElement(By.id("security_check_message")).getText();
         if (!"".equals(statusSecurityCheck))
-            System.out.println("Success: "+statusSecurityCheck);
+            logger.info("Success: "+statusSecurityCheck);
         else
-            System.out.println("False, status security check is null!");
+            logger.info("False, status security check is null!");
         Assert.assertEquals(statusSecurityCheck.startsWith("Success"),true);
     }
     @AfterClass

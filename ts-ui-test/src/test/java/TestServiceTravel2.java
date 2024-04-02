@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 
 public class TestServiceTravel2 {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TestServiceTravel2.class);
     private WebDriver driver;
     private String baseUrl;
     @BeforeClass
@@ -39,10 +40,10 @@ public class TestServiceTravel2 {
         Thread.sleep(1000);
 //        String statusSignIn = driver.findElement(By.id("login_result_msg")).getText();
 //        if(statusSignIn ==null || statusSignIn.length() <= 0) {
-//            System.out.println("Failed,Status of Sign In btn is NULL!");
+//            logger.info("Failed,Status of Sign In btn is NULL!");
 //            driver.quit();
 //        }else
-//            System.out.println("Sign Up btn status:"+statusSignIn);
+//            logger.info("Sign Up btn status:"+statusSignIn);
     }
     @Test (dependsOnMethods = {"testTravel2"})
     public void testQueryTravel2() throws Exception{
@@ -54,7 +55,7 @@ public class TestServiceTravel2 {
         if (travel2List.size() > 0)
             System.out.printf("Success to Query Travel2 and Travel2 list size is %d.%n",travel2List.size());
         else
-            System.out.println("Failed to Query Travel2 or Travel2 list size is 0");
+            logger.info("Failed to Query Travel2 or Travel2 list size is 0");
         Assert.assertEquals(travel2List.size() > 0,true);
     }
     @AfterClass
