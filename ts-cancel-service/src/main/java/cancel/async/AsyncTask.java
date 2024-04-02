@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Component  
 public class AsyncTask {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(AsyncTask.class);
     
     @Autowired
 	private RestTemplate restTemplate;
@@ -20,7 +21,7 @@ public class AsyncTask {
 
         Thread.sleep(4000);
 
-        System.out.println("[Cancel Order Service][Change Order Status]");
+        logger.info("[Cancel Order Service][Change Order Status]");
         ChangeOrderResult result = restTemplate.postForObject("http://ts-order-other-service:12032/orderOther/update",info,ChangeOrderResult.class);
         return new AsyncResult<>(result);
 
@@ -29,7 +30,7 @@ public class AsyncTask {
     @Async("mySimpleAsync")
     public Future<Boolean> drawBackMoneyForOrderCancel(String money, String userId,String orderId, String loginToken) throws InterruptedException{
         //1.Search Order Info
-        System.out.println("[Cancel Order Service][Get Order] Getting....");
+        logger.info("[Cancel Order Service][Get Order] Getting....");
         GetOrderByIdInfo getOrderInfo = new GetOrderByIdInfo();
         getOrderInfo.setOrderId(orderId);
         GetOrderResult cor = restTemplate.postForObject(
@@ -43,10 +44,10 @@ public class AsyncTask {
         changeOrderInfo.setLoginToken(loginToken);
         ChangeOrderResult changeOrderResult = restTemplate.postForObject("http://ts-order-other-service:12032/orderOther/update",changeOrderInfo,ChangeOrderResult.class);
         if(changeOrderResult.isStatus() == false){
-            System.out.println("[Cancel Order Service]Unexpected error");
+            logger.info("[Cancel Order Service]Unexpected error");
         }
         //3.do drawback money
-        System.out.println("[Cancel Order Service][Draw Back Money] Draw back money...");
+        logger.info("[Cancel Order Service][Draw Back Money] Draw back money...");
         DrawBackInfo info = new DrawBackInfo();
         info.setMoney(money);
         info.setUserId(userId);

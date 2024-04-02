@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class CancelController {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(CancelController.class);
 
     @Autowired
     private RestTemplate restTemplate;
@@ -21,20 +22,20 @@ public class CancelController {
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/cancelCalculateRefund", method = RequestMethod.POST)
     public CalculateRefundResult calculate(@RequestBody CancelOrderInfo info){
-        System.out.println("[Cancel Order Service][Calculate Cancel Refund] OrderId:" + info.getOrderId());
+        logger.info("[Cancel Order Service][Calculate Cancel Refund] OrderId:" + info.getOrderId());
         return cancelService.calculateRefund(info);
     }
 
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/cancelOrder", method = RequestMethod.POST)
     public CancelOrderResult cancelTicket(@RequestBody CancelOrderInfo info, @CookieValue String loginToken, @CookieValue String loginId) throws RuntimeException{
-        System.out.println("[Cancel Order Service][Cancel Ticket] info:" + info.getOrderId());
+        logger.info("[Cancel Order Service][Cancel Ticket] info:" + info.getOrderId());
         if(loginToken == null ){
             loginToken = "admin";
         }
-        System.out.println("[Cancel Order Service][Cancel Order] order ID:" + info.getOrderId() + "  loginToken:" + loginToken);
+        logger.info("[Cancel Order Service][Cancel Order] order ID:" + info.getOrderId() + "  loginToken:" + loginToken);
         if(loginToken == null){
-            System.out.println("[Cancel Order Service][Cancel Order] Not receive any login token");
+            logger.info("[Cancel Order Service][Cancel Order] Not receive any login token");
             CancelOrderResult result = new CancelOrderResult();
             result.setStatus(false);
             result.setMessage("No Login Token");
@@ -42,13 +43,13 @@ public class CancelController {
         }
         VerifyResult verifyResult = verifySsoLogin(loginToken);
         if(verifyResult.isStatus() == false){
-            System.out.println("[Cancel Order Service][Cancel Order] Do not login.");
+            logger.info("[Cancel Order Service][Cancel Order] Do not login.");
             CancelOrderResult result = new CancelOrderResult();
             result.setStatus(false);
             result.setMessage("Not Login");
             return result;
         }else{
-            System.out.println("[Cancel Order Service][Cancel Ticket] Verify Success");
+            logger.info("[Cancel Order Service][Cancel Ticket] Verify Success");
             try{
                 return cancelService.cancelOrder(info,loginToken,loginId);
             }catch(Exception e){
@@ -60,7 +61,7 @@ public class CancelController {
     }
 
     private VerifyResult verifySsoLogin(String loginToken){
-        System.out.println("[Cancel Order Service][Verify Login] Verifying....");
+        logger.info("[Cancel Order Service][Verify Login] Verifying....");
         VerifyResult tokenResult = restTemplate.getForObject(
                 "http://ts-sso-service:12349/verifyLoginToken/" + loginToken,
                 VerifyResult.class);
