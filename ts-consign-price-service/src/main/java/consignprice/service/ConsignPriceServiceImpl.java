@@ -11,12 +11,13 @@ import java.text.DecimalFormat;
 
 @Service
 public class ConsignPriceServiceImpl implements ConsignPriceService {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(ConsignPriceServiceImpl.class);
     @Autowired
     private ConsignPriceConfigRepository repository;
 
     @Override
     public String getPriceByWeightAndRegion(GetPriceDomain domain) {
-        System.out.println(String.format("Receive the request to calculate the price. [%s]", domain.toString()));
+        logger.info(String.format("Receive the request to calculate the price. [%s]", domain.toString()));
         String result;
 
         PriceConfig priceConfig = repository.findByIndex(0);
@@ -32,7 +33,7 @@ public class ConsignPriceServiceImpl implements ConsignPriceService {
             else
                 result = formatNumber(initialPrice + extraWeight * priceConfig.getBeyondPrice(),country);
         }
-        System.out.println(String.format("Calculate the consign price successfully. The price is [%s]", result));
+        logger.info(String.format("Calculate the consign price successfully. The price is [%s]", result));
         return result;
     }
 
@@ -76,7 +77,7 @@ public class ConsignPriceServiceImpl implements ConsignPriceService {
 
     @Override
     public boolean createAndModifyPrice(PriceConfig config) {
-        System.out.println("[Consign Price Service][Create New Price Config]");
+        logger.info("[Consign Price Service][Create New Price Config]");
 
         PriceConfig originalConfig;
         if(repository.findByIndex(0) != null)

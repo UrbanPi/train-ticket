@@ -10,12 +10,13 @@ import java.util.UUID;
 
 @Component
 public class InitData implements CommandLineRunner {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(InitData.class);
     @Autowired
     ConsignPriceService service;
 
     @Override
     public void run(String... strings) throws Exception {
-        System.out.println("[Consign price service] [Init data operation]");
+        logger.info("[Consign price service] [Init data operation]");
         PriceConfig config = new PriceConfig();
         config.setId(UUID.randomUUID());
         config.setIndex(0);

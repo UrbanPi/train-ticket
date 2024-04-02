@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 
 public class TestServiceTravel {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TestServiceTravel.class);
     private WebDriver driver;
     private String baseUrl;
     public class TravelInfo{
@@ -91,9 +92,9 @@ public class TestServiceTravel {
 
 //        String statusUpdateTrip = driver.findElement(By.id("login_result_msg")).getText();
 //        if(!"".equals(statusUpdateTrip))
-//            System.out.println("Failed,Status of Update Trip btn is NULL!");
+//            logger.info("Failed,Status of Update Trip btn is NULL!");
 //        else
-//            System.out.println("Update Trip btn status:"+statusUpdateTrip);
+//            logger.info("Update Trip btn status:"+statusUpdateTrip);
 //
 //        Assert.assertEquals(statusUpdateTrip.startsWith("Success"),true);
     }
@@ -107,7 +108,7 @@ public class TestServiceTravel {
         if (travelList.size() > 0)
             System.out.printf("Success to Query Travel and Travel list size is %d.%n",travelList.size());
         else
-            System.out.println("Failed to Query Travel or Travel list size is 0");
+            logger.info("Failed to Query Travel or Travel list size is 0");
         Assert.assertEquals(travelList.size() > 0,true);
     }
     @AfterClass
