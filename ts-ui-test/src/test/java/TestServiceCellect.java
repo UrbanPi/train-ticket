@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 
 public class TestServiceCellect {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TestServiceCellect.class);
     private WebDriver driver;
     private String baseUrl;
     @BeforeClass
@@ -28,9 +29,9 @@ public class TestServiceCellect {
         driver.findElement(By.id("single_collect_button")).click();
         String statusTicketCollect = driver.findElement(By.id("single_collect_order_result")).getText();
         if ("".equals(statusTicketCollect))
-            System.out.println("False,status security check is null!");
+            logger.info("False,status security check is null!");
         else
-            System.out.println("Ticket Collect status:"+statusTicketCollect);
+            logger.info("Ticket Collect status:"+statusTicketCollect);
         Assert.assertEquals(!"".equals(statusTicketCollect),true);
     }
     @AfterClass

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class AccountRegisterController {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(AccountRegisterController.class);
 
     @Autowired
     private RegisterService accountService;
@@ -19,7 +20,7 @@ public class AccountRegisterController {
 
     @RequestMapping(path = "/register", method = RequestMethod.POST)
     public RegisterResult createNewAccount(@RequestBody RegisterInfo ri,@CookieValue String YsbCaptcha){
-        System.out.println("[Register Service][Register] Verification Code:" + ri.getVerificationCode() +
+        logger.info("[Register Service][Register] Verification Code:" + ri.getVerificationCode() +
                 " VerifyCookie:" + YsbCaptcha);
         return accountService.create(ri,YsbCaptcha);
     }
