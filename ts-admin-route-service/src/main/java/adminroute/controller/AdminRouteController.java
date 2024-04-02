@@ -17,6 +17,7 @@ import java.util.UUID;
 
 @RestController
 public class AdminRouteController {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(AdminRouteController.class);
     @Autowired
     AdminRouteService adminRouteService;
 
@@ -54,9 +55,9 @@ public class AdminRouteController {
         if (!file.isEmpty()) {
             try {
 
-                System.out.println("File Upload - File Name: " + file.getName());
-                System.out.println("File Upload - File Original Filename" + file.getOriginalFilename());
-                System.out.println("File Upload - File Size" + file.getSize());
+                logger.info("File Upload - File Name: " + file.getName());
+                logger.info("File Upload - File Original Filename" + file.getOriginalFilename());
+                logger.info("File Upload - File Size" + file.getSize());
 
                 BufferedOutputStream out = new BufferedOutputStream(
                         new FileOutputStream(new File(file.getOriginalFilename())));
@@ -69,12 +70,12 @@ public class AdminRouteController {
 
                 String str = null;
                 while((str = bufferedReader.readLine()) != null) {
-                    System.out.println("[Upload Read Line]" + str);
+                    logger.info("[Upload Read Line]" + str);
 
                     String[] strList = str.split("&");
 
                     if(strList.length != 4){
-                        System.out.println("[Array Length]：" + strList.length);
+                        logger.info("[Array Length]：" + strList.length);
                         continue;
                     }
 
@@ -93,10 +94,10 @@ public class AdminRouteController {
                             "http://ts-route-service:11178/route/createAndModify",
                             info, CreateAndModifyRouteResult.class);
                     if(result.isStatus() == true){
-                        System.out.println("[Upload Add Route]Add Route Success.");
+                        logger.info("[Upload Add Route]Add Route Success.");
                     }else{
-                        System.out.println("[Upload Add Route]Add Route Fail.");
-                        System.out.println("[Upload Add Route]Reason == " + result.getMessage());
+                        logger.info("[Upload Add Route]Add Route Fail.");
+                        logger.info("[Upload Add Route]Reason == " + result.getMessage());
                     }
 
 

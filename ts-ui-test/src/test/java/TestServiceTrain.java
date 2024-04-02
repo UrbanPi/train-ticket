@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
  * Created by ZDH on 2017/7/21.
  */
 public class TestServiceTrain {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TestServiceTrain.class);
     private WebDriver driver;
     private String baseUrl;
     @BeforeClass
@@ -36,10 +37,10 @@ public class TestServiceTrain {
         Thread.sleep(1000);
 //        String statusSignIn = driver.findElement(By.id("login_result_msg")).getText();
 //        if(statusSignIn ==null || statusSignIn.length() <= 0) {
-//            System.out.println("Failed,Status of Sign In btn is NULL!");
+//            logger.info("Failed,Status of Sign In btn is NULL!");
 //            driver.quit();
 //        }else
-//            System.out.println("Sign Up btn status:"+statusSignIn);
+//            logger.info("Sign Up btn status:"+statusSignIn);
     }
     @Test (dependsOnMethods = {"testTrain"})
     public void testQueryTrain() throws Exception{
@@ -51,7 +52,7 @@ public class TestServiceTrain {
         if (trainList.size() > 0)
             System.out.printf("Success to Query Train and Train list size is %d.%n",trainList.size());
         else
-            System.out.println("Failed to Query Train or Train list size is 0");
+            logger.info("Failed to Query Train or Train list size is 0");
         Assert.assertEquals(trainList.size() > 0,true);
     }
     @AfterClass

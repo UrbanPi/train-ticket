@@ -10,6 +10,7 @@ import java.util.UUID;
 
 @Service
 public class AccountSsoServiceImpl implements AccountSsoService{
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(AccountSsoServiceImpl.class);
 
     @Autowired
     private AccountRepository accountRepository;
@@ -23,13 +24,13 @@ public class AccountSsoServiceImpl implements AccountSsoService{
     public Account createAccount(Account account){
 
         if(accountRepository.findById(account.getId()) != null){
-            System.out.println("[SSO Service][Init Account] Account Already Exists.");
+            logger.info("[SSO Service][Init Account] Account Already Exists.");
             return account;
         }
-        System.out.println("[SSO Service][Init Account] Before:" + account.getId());
+        logger.info("[SSO Service][Init Account] Before:" + account.getId());
         Account resultAcc = accountRepository.save(account);
         Account oldAcc = accountRepository.findByEmail(account.getEmail());
-        System.out.println("[SSO Service][Init Account] After:" + oldAcc.getId());
+        logger.info("[SSO Service][Init Account] After:" + oldAcc.getId());
         return resultAcc;
     }
 
@@ -41,8 +42,8 @@ public class AccountSsoServiceImpl implements AccountSsoService{
             rr.setStatus(false);
             rr.setMessage("Account Already Exists");
             rr.setAccount(null);
-            System.out.println("[SSO Service][Register] Fail.Account already exists.");
-            System.out.println("[SSO Service][Register] Register Email:" + ri.getEmail() + " Exist Email:" + oldAcc.getEmail());
+            logger.info("[SSO Service][Register] Fail.Account already exists.");
+            logger.info("[SSO Service][Register] Register Email:" + ri.getEmail() + " Exist Email:" + oldAcc.getEmail());
             return rr;
         }
         Account account = new Account();
@@ -55,7 +56,7 @@ public class AccountSsoServiceImpl implements AccountSsoService{
         account.setGender(ri.getGender());
         Account resultAcc = accountRepository.save(account);
         resultAcc.setPassword("");
-        System.out.println("[SSO Service][Register] Success.");
+        logger.info("[SSO Service][Register] Success.");
         RegisterResult rr = new RegisterResult();
         rr.setStatus(true);
         rr.setMessage("Success");
@@ -66,7 +67,7 @@ public class AccountSsoServiceImpl implements AccountSsoService{
     @Override
     public LoginResult login(LoginInfo li){
         if(li == null){
-            System.out.println("[SSO Service][Login] Fail.Account not found.");
+            logger.info("[SSO Service][Login] Fail.Account not found.");
             LoginResult lr = new LoginResult();
             lr.setStatus(false);
             lr.setMessage("Account Not Found");
@@ -78,7 +79,7 @@ public class AccountSsoServiceImpl implements AccountSsoService{
                 result.getPassword() != null && li.getPassword() != null
                 && result.getPassword().equals(li.getPassword())){
             result.setPassword("");
-            System.out.println("[SSO Service][Login] Success.");
+            logger.info("[SSO Service][Login] Success.");
             LoginResult lr = new LoginResult();
             lr.setStatus(true);
             lr.setMessage("Success");
@@ -90,10 +91,10 @@ public class AccountSsoServiceImpl implements AccountSsoService{
             lr.setAccount(null);
             if(result == null){
                 lr.setMessage("Account Not Exist");
-                System.out.println("[SSO Service][Login] Fail.Account Not Exist.");
+                logger.info("[SSO Service][Login] Fail.Account Not Exist.");
             }else{
                 lr.setMessage("Password Wrong");
-                System.out.println("[SSO Service][Login] Fail.Wrong Password.");
+                logger.info("[SSO Service][Login] Fail.Wrong Password.");
             }
             return lr;
         }
@@ -106,7 +107,7 @@ public class AccountSsoServiceImpl implements AccountSsoService{
 
         //if(loginUserList.keySet().contains(loginId)){
         if(loginValue != null){
-            System.out.println("[SSO Service][Login] Already Login. Old login session will be kick off");
+            logger.info("[SSO Service][Login] Already Login. Old login session will be kick off");
 //            plr.setStatus(false);
 //            plr.setLoginId(loginId);
 //            plr.setMsg("Already Login");
@@ -123,7 +124,7 @@ public class AccountSsoServiceImpl implements AccountSsoService{
             String token = UUID.randomUUID().toString();
             loginUserListRepository.save(new LoginValue(loginId,token));
             //loginUserList.put(loginId,token);
-            System.out.println("[SSO Service][Login] Login Success. Id:" + loginId + " Token:" + token);
+            logger.info("[SSO Service][Login] Login Success. Id:" + loginId + " Token:" + token);
             plr.setStatus(true);
             plr.setLoginId(loginId);
             plr.setMsg("Success");
@@ -136,7 +137,7 @@ public class AccountSsoServiceImpl implements AccountSsoService{
     public LogoutResult logoutDeleteToken(LogoutInfo li){
         LogoutResult lr = new LogoutResult();
         if(loginUserListRepository.findById(li.getId()) == null){
-            System.out.println("[SSO Service][Logout] Already Logout. LogoutId:" + li.getId());
+            logger.info("[SSO Service][Logout] Already Logout. LogoutId:" + li.getId());
            lr.setStatus(false);
            lr.setMessage("Not Login");
         }else{
@@ -156,16 +157,16 @@ public class AccountSsoServiceImpl implements AccountSsoService{
 
     @Override
     public VerifyResult verifyLoginToken(String verifyToken){
-        System.out.println("[SSO Service][Verify] Verify token:" + verifyToken);
+        logger.info("[SSO Service][Verify] Verify token:" + verifyToken);
         VerifyResult vr = new VerifyResult();
         if(loginUserListRepository.findByloginToken(verifyToken) != null || verifyToken.equals("admin")){
             vr.setStatus(true);
             vr.setMessage("Verify Success.");
-            System.out.println("[SSO Service][Verify] Success.Token:" + verifyToken);
+            logger.info("[SSO Service][Verify] Success.Token:" + verifyToken);
         }else{
             vr.setStatus(false);
             vr.setMessage("Verify Fail.");
-            System.out.println("[SSO Service][Verify] Fail.Token:" + verifyToken);
+            logger.info("[SSO Service][Verify] Fail.Token:" + verifyToken);
         }
         return vr;
     }
@@ -175,7 +176,7 @@ public class AccountSsoServiceImpl implements AccountSsoService{
         FindAllAccountResult findAllAccountResult = new FindAllAccountResult();
         ArrayList<Account> accounts = accountRepository.findAll();
         for(int i = 0;i < accounts.size();i++){
-            System.out.println("[SSO Service][Find All Account]" + accounts.get(i).getId());
+            logger.info("[SSO Service][Find All Account]" + accounts.get(i).getId());
         }
         findAllAccountResult.setStatus(true);
         findAllAccountResult.setMessage("Success.");
@@ -202,17 +203,17 @@ public class AccountSsoServiceImpl implements AccountSsoService{
         Account existAccount = accountRepository.findByEmail(modifyAccountInfo.getNewEmail());
         ModifyAccountResult result = new ModifyAccountResult();
         if(existAccount != null && !modifyAccountInfo.getAccountId().equals(existAccount.getId().toString())){
-            System.out.println("[SSO Service][Modify Info] Email exists.");
+            logger.info("[SSO Service][Modify Info] Email exists.");
             result.setStatus(false);
             result.setMessage("Email Has Been Occupied.");
             return result;
         }
 
-        System.out.println("[SSO Service][Modify Info] Account Id:" + modifyAccountInfo.getAccountId());
+        logger.info("[SSO Service][Modify Info] Account Id:" + modifyAccountInfo.getAccountId());
         Account oldAccount = accountRepository.findById(UUID.fromString(modifyAccountInfo.getAccountId()));
 
         if(oldAccount == null){
-            System.out.println("[SSO Service][Modify Info] Fail.Can not found account.");
+            logger.info("[SSO Service][Modify Info] Fail.Can not found account.");
             result.setStatus(false);
             result.setMessage("Account Not Found.");
         }else{
@@ -224,7 +225,7 @@ public class AccountSsoServiceImpl implements AccountSsoService{
             oldAccount.setDocumentNum(modifyAccountInfo.getNewDocumentNumber());
             accountRepository.save(oldAccount);
             //oldAccount.setPassword("");
-            System.out.println("[SSO Service][ModifyInfo] Success.");
+            logger.info("[SSO Service][ModifyInfo] Success.");
             result.setStatus(true);
             result.setMessage("Success.");
         }
@@ -253,9 +254,9 @@ public class AccountSsoServiceImpl implements AccountSsoService{
             c = new Contacts();
             c.setId(UUID.fromString("1d1a11c1-11cb-1cf1-b1bb-b11111d1da1f"));
             c.setName("adminroot");
-            System.out.println("[SSO Service][Admin Login successfully!]");
+            logger.info("[SSO Service][Admin Login successfully!]");
         }else{
-            System.out.println("[SSO Service][Admin Login fail!]");
+            logger.info("[SSO Service][Admin Login fail!]");
         }
         return c;
     }

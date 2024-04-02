@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 
 public class TestServiceCancel {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TestServiceCancel.class);
     private WebDriver driver;
     private String baseUrl;
     public static void login(WebDriver driver,String username,String password){
@@ -43,11 +44,11 @@ public class TestServiceCancel {
         //get login status
         String statusLogin = driver.findElement(By.id("flow_preserve_login_msg")).getText();
         if("".equals(statusLogin))
-            System.out.println("Failed to Login! Status is Null!");
+            logger.info("Failed to Login! Status is Null!");
         else if(statusLogin.startsWith("Success"))
-            System.out.println("Success to Login! Status:"+statusLogin);
+            logger.info("Success to Login! Status:"+statusLogin);
         else
-            System.out.println("Failed to Login! Status:"+statusLogin);
+            logger.info("Failed to Login! Status:"+statusLogin);
 
         Assert.assertEquals(statusLogin.startsWith("Success"),true);
         driver.findElement(By.id("microservice_page")).click();
@@ -60,7 +61,7 @@ public class TestServiceCancel {
         driver.findElement(By.id("single_cancel_refund_button")).click();
         Thread.sleep(500);
         String statusCancelRefundBtn = driver.findElement(By.id("single_cancel_refund_result")).getText();
-        System.out.println("Cancel Refund Btn status:"+statusCancelRefundBtn);
+        logger.info("Cancel Refund Btn status:"+statusCancelRefundBtn);
         Assert.assertEquals(!"".equals(statusCancelRefundBtn), true);
     }
     @Test (dependsOnMethods = {"testCheckRefund"})
@@ -68,7 +69,7 @@ public class TestServiceCancel {
         driver.findElement(By.id("single_cancel_button")).click();
         Thread.sleep(1000);
         String statusCancelOrderResult = driver.findElement(By.id("single_cancel_order_result")).getText();
-        System.out.println("Do Cancel Btn status:"+statusCancelOrderResult);
+        logger.info("Do Cancel Btn status:"+statusCancelOrderResult);
         Assert.assertEquals(statusCancelOrderResult.startsWith("Success"), true);
     }
     @AfterClass
