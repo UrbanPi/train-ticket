@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 @RestController
 public class OrderController {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(OrderController.class);
 
     @Autowired
     private OrderService orderService;
@@ -25,21 +26,21 @@ public class OrderController {
 
     @RequestMapping(value="/order/getTicketListByDateAndTripId", method = RequestMethod.POST)
     public LeftTicketInfo getTicketListByDateAndTripId(@RequestBody SeatRequest seatRequest){
-        System.out.println("[Order Service][Get Sold Ticket] Date:" + seatRequest.getTravelDate().toString());
+        logger.info("[Order Service][Get Sold Ticket] Date:" + seatRequest.getTravelDate().toString());
         return orderService.getSoldTickets(seatRequest);
     }
 
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/order/create", method = RequestMethod.POST)
     public CreateOrderResult createNewOrder(@RequestBody CreateOrderInfo coi,@CookieValue String loginToken){
-        System.out.println("[Order Service][Create Order] Create Order form " + coi.getOrder().getFrom() + " --->"
+        logger.info("[Order Service][Create Order] Create Order form " + coi.getOrder().getFrom() + " --->"
             + coi.getOrder().getTo() + " at " + coi.getOrder().getTravelDate());
         VerifyResult tokenResult = verifySsoLogin(loginToken);
         if(tokenResult.isStatus() == true){
-            System.out.println("[Order Service][Verify Login] Success");
+            logger.info("[Order Service][Verify Login] Success");
             return orderService.create(coi.getOrder());
         }else{
-            System.out.println("[Order Service][Verify Login] Fail");
+            logger.info("[Order Service][Verify Login] Fail");
             CreateOrderResult cor = new CreateOrderResult();
             cor.setStatus(false);
             cor.setMessage("Not Login");
@@ -57,13 +58,13 @@ public class OrderController {
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/order/query", method = RequestMethod.POST)
     public ArrayList<Order> queryOrders(@RequestBody QueryInfo qi,@CookieValue String loginId,@CookieValue String loginToken){
-        System.out.println("[Order Service][Query Orders] Query Orders for " + loginId);
+        logger.info("[Order Service][Query Orders] Query Orders for " + loginId);
         VerifyResult tokenResult = verifySsoLogin(loginToken);
         if(tokenResult.isStatus() == true){
-            System.out.println("[Order Service][Verify Login] Success");
+            logger.info("[Order Service][Verify Login] Success");
             return orderService.queryOrders(qi,loginId);
         }else{
-            System.out.println("[Order Service][Verify Login] Fail");
+            logger.info("[Order Service][Verify Login] Fail");
             return new ArrayList<Order>();
         }
     }
@@ -71,7 +72,7 @@ public class OrderController {
     @CrossOrigin(origins = "*")
     @RequestMapping(path="/order/calculate", method = RequestMethod.POST)
     public CalculateSoldTicketResult calculateSoldTicket(@RequestBody CalculateSoldTicketInfo csti){
-        System.out.println("[Order Service][Calculate Sold Tickets] Date:" + csti.getTravelDate() + " TrainNumber:"
+        logger.info("[Order Service][Calculate Sold Tickets] Date:" + csti.getTravelDate() + " TrainNumber:"
                 + csti.getTrainNumber());
         return orderService.queryAlreadySoldOrders(csti);
     }
@@ -79,35 +80,35 @@ public class OrderController {
     @CrossOrigin(origins = "*")
     @RequestMapping(path="/order/price", method = RequestMethod.POST)
     public GetOrderPriceResult getOrderPrice(@RequestBody GetOrderPrice info){
-        System.out.println("[Order Service][Get Order Price] Order Id:" + info.getOrderId());
+        logger.info("[Order Service][Get Order Price] Order Id:" + info.getOrderId());
         return orderService.getOrderPrice(info);
     }
 
     @CrossOrigin(origins = "*")
     @RequestMapping(path="/order/payOrder", method = RequestMethod.POST)
     public PayOrderResult payOrder(@RequestBody PayOrderInfo info){
-        System.out.println("[Order Service][Pay Order] Order Id:" + info.getOrderId());
+        logger.info("[Order Service][Pay Order] Order Id:" + info.getOrderId());
         return orderService.payOrder(info);
     }
 
     @CrossOrigin(origins = "*")
     @RequestMapping(path="/order/getById", method = RequestMethod.POST)
     public GetOrderResult getOrderById(@RequestBody GetOrderByIdInfo info){
-        System.out.println("[Order Service][Get Order By Id] Order Id:" + info.getOrderId());
+        logger.info("[Order Service][Get Order By Id] Order Id:" + info.getOrderId());
         return orderService.getOrderById(info);
     }
 
     @CrossOrigin(origins = "*")
     @RequestMapping(path="/order/modifyOrderStatus", method = RequestMethod.POST)
     public ModifyOrderStatusResult modifyOrder(@RequestBody ModifyOrderStatusInfo info){
-        System.out.println("[Order Service][Modify Order Status] Order Id:" + info.getOrderId());
+        logger.info("[Order Service][Modify Order Status] Order Id:" + info.getOrderId());
         return orderService.modifyOrder(info);
     }
 
     @CrossOrigin(origins = "*")
     @RequestMapping(path="/getOrderInfoForSecurity", method = RequestMethod.POST)
     public GetOrderInfoForSecurityResult securityInfoCheck(@RequestBody GetOrderInfoForSecurity info){
-        System.out.println("[Order Service][Security Info Get]");
+        logger.info("[Order Service][Security Info Get]");
         return orderService.checkSecurityAboutOrder(info);
     }
 
@@ -116,10 +117,10 @@ public class OrderController {
     public ChangeOrderResult saveOrderInfo(@RequestBody ChangeOrderInfo orderInfo,@CookieValue String loginToken){
         VerifyResult tokenResult = verifySsoLogin(loginToken);
         if(tokenResult.isStatus() == true){
-            System.out.println("[Order Service][Verify Login] Success");
+            logger.info("[Order Service][Verify Login] Success");
             return orderService.saveChanges(orderInfo.getOrder());
         }else{
-            System.out.println("[Order Service][Verify Login] Fail");
+            logger.info("[Order Service][Verify Login] Fail");
             ChangeOrderResult cor = new ChangeOrderResult();
             cor.setStatus(false);
             cor.setMessage("Not Login");
@@ -137,7 +138,7 @@ public class OrderController {
     @CrossOrigin(origins = "*")
     @RequestMapping(path="/order/delete",method = RequestMethod.POST)
     public DeleteOrderResult deleteOrder(@RequestBody DeleteOrderInfo info){
-        System.out.println("[Order Service][Delete Order] Order Id:" + info.getOrderId());
+        logger.info("[Order Service][Delete Order] Order Id:" + info.getOrderId());
         return orderService.deleteOrder(info);
     }
 
@@ -146,12 +147,12 @@ public class OrderController {
     @CrossOrigin(origins = "*")
     @RequestMapping(path="/order/findAll", method = RequestMethod.GET)
     public QueryOrderResult findAllOrder(){
-        System.out.println("[Order Service][Find All Order]");
+        logger.info("[Order Service][Find All Order]");
         return orderService.getAllOrders();
     }
 
     private VerifyResult verifySsoLogin(String loginToken){
-        System.out.println("[Order Service][Verify Login] Verifying....");
+        logger.info("[Order Service][Verify Login] Verifying....");
         VerifyResult tokenResult = restTemplate.getForObject(
                 "http://ts-sso-service:12349/verifyLoginToken/" + loginToken,
                 VerifyResult.class);

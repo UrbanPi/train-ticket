@@ -9,6 +9,7 @@ import security.service.SecurityService;
 
 @RestController
 public class SecurityController {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(SecurityController.class);
 
     @Autowired
     private SecurityService securityService;
@@ -21,35 +22,35 @@ public class SecurityController {
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/securityConfig/findAll", method = RequestMethod.GET)
     public GetAllSecurityConfigResult findAllSecurityConfig(){
-        System.out.println("[Security Service][Find All]");
+        logger.info("[Security Service][Find All]");
         return securityService.findAllSecurityConfig();
     }
 
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/securityConfig/create", method = RequestMethod.POST)
     public CreateSecurityConfigResult create(@RequestBody CreateSecurityConfigInfo info){
-        System.out.println("[Security Service][Create] Name:" + info.getName());
+        logger.info("[Security Service][Create] Name:" + info.getName());
         return securityService.addNewSecurityConfig(info);
     }
 
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/securityConfig/update", method = RequestMethod.POST)
     public UpdateSecurityConfigResult update(@RequestBody UpdateSecurityConfigInfo info){
-        System.out.println("[Security Service][Update] Name:" + info.getName());
+        logger.info("[Security Service][Update] Name:" + info.getName());
         return securityService.modifySecurityConfig(info);
     }
 
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/securityConfig/delete", method = RequestMethod.POST)
     public DeleteConfigResult delete(@RequestBody DeleteConfigInfo info){
-        System.out.println("[Security Service][Delete] Id:" + info.getId());
+        logger.info("[Security Service][Delete] Id:" + info.getId());
         return securityService.deleteSecurityConfig(info);
     }
 
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/security/check", method = RequestMethod.POST)
     public CheckResult check(@RequestBody CheckInfo info){
-        System.out.println("[Security Service][Check Security] Check Account Id:" + info.getAccountId());
+        logger.info("[Security Service][Check Security] Check Account Id:" + info.getAccountId());
         return securityService.check(info);
     }
 
@@ -58,14 +59,14 @@ public class SecurityController {
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/security/checkInOneHour", method = RequestMethod.POST)
     public CheckResult checkInOneHour(@RequestBody CheckInfo info){
-        System.out.println("[Security Service][Check Security In One Hour] Check Account Id:" + info.getAccountId());
+        logger.info("[Security Service][Check Security In One Hour] Check Account Id:" + info.getAccountId());
         return securityService.check(info);
     }
 
     @CrossOrigin(origins = "*")
     @RequestMapping(path = "/security/checkTotalNumber", method = RequestMethod.POST)
     public CheckResult checkTotalNumber(@RequestBody CheckInfo info){
-        System.out.println("[Security Service][Check Security Total Number] Check Account Id:" + info.getAccountId());
+        logger.info("[Security Service][Check Security Total Number] Check Account Id:" + info.getAccountId());
         return securityService.check(info);
     }
 

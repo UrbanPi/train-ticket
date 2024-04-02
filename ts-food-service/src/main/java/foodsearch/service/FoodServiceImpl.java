@@ -13,6 +13,7 @@ import java.util.UUID;
 
 @Service
 public class FoodServiceImpl implements FoodService{
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(FoodServiceImpl.class);
 
     @Autowired
     private RestTemplate restTemplate;
@@ -22,7 +23,7 @@ public class FoodServiceImpl implements FoodService{
 
     @Override
     public GetAllFoodOfTripResult getAllFood(String date, String startStation, String endStation, String tripId) {
-        System.out.println("data=" + date + "start=" + startStation + "end=" + endStation + "tripid=" + tripId);
+        logger.info("data=" + date + "start=" + startStation + "end=" + endStation + "tripid=" + tripId);
         GetAllFoodOfTripResult result = new GetAllFoodOfTripResult();
 
         if(null == tripId || tripId.length() <= 2){
@@ -42,9 +43,9 @@ public class FoodServiceImpl implements FoodService{
                                                 qti, GetTrainFoodListResult.class);
         if( trainFoodListResult.isStatus()){
             trainFoodList = trainFoodListResult.getTrainFoodList();
-            System.out.println("[Food Service]Get Train Food List!");
+            logger.info("[Food Service]Get Train Food List!");
         } else {
-            System.out.println("[Food Service]Get the Get Food Request Failed!");
+            logger.info("[Food Service]Get the Get Food Request Failed!");
             result.setStatus(false);
             result.setMessage(trainFoodListResult.getMessage());
             return result;
@@ -93,7 +94,7 @@ public class FoodServiceImpl implements FoodService{
                                                     qsi, GetFoodStoresListResult.class);
                 if(foodStoresListResult.isStatus()){
                     if( null != foodStoresListResult.getFoodStoreList()){
-                        System.out.println("[Food Service]Get the Food Store!");
+                        logger.info("[Food Service]Get the Food Store!");
                         foodStoreListMap.put(s, foodStoresListResult.getFoodStoreList());
                     }
                 } else {
@@ -121,7 +122,7 @@ public class FoodServiceImpl implements FoodService{
         FoodOrder fo = foodOrderRepository.findByOrderId(UUID.fromString(afoi.getOrderId()));
         AddFoodOrderResult result = new AddFoodOrderResult();
         if(fo != null){
-            System.out.println("[Food-Service][AddFoodOrder] Order Id Has Existed.");
+            logger.info("[Food-Service][AddFoodOrder] Order Id Has Existed.");
             result.setStatus(false);
             result.setMessage("OrderId has existed");
             result.setFoodOrder(null);
@@ -137,7 +138,7 @@ public class FoodServiceImpl implements FoodService{
             fo.setFoodName(afoi.getFoodName());
             fo.setPrice(afoi.getPrice());
             foodOrderRepository.save(fo);
-            System.out.println("[Food-Service][AddFoodOrder] Success.");
+            logger.info("[Food-Service][AddFoodOrder] Success.");
             result.setStatus(true);
             result.setMessage("Success");
             result.setFoodOrder(fo);
@@ -151,13 +152,13 @@ public class FoodServiceImpl implements FoodService{
         FoodOrder fo = foodOrderRepository.findByOrderId(UUID.fromString(cfoi.getOrderId()));
         CancelFoodOrderResult result = new  CancelFoodOrderResult();
         if(fo == null){
-            System.out.println("[Food-Service][Cancel FoodOrder] Order Id Is Non-Existent.");
+            logger.info("[Food-Service][Cancel FoodOrder] Order Id Is Non-Existent.");
             result.setStatus(false);
             result.setMessage("Order Id Is Non-Existent.");
             result.setFoodOrder(null);
         } else {
             foodOrderRepository.deleteFoodOrderByOrderId(UUID.fromString(cfoi.getOrderId()));
-            System.out.println("[Food-Service][Cancel FoodOrder] Success.");
+            logger.info("[Food-Service][Cancel FoodOrder] Success.");
             result.setStatus(true);
             result.setMessage("Success");
             result.setFoodOrder(fo);
@@ -171,7 +172,7 @@ public class FoodServiceImpl implements FoodService{
         FoodOrder fo = foodOrderRepository.findById(UUID.fromString(ufoi.getId()));
         UpdateFoodOrderResult result = new UpdateFoodOrderResult();
         if(fo == null){
-            System.out.println("[Food-Service][Update FoodOrder] Order Id Is Non-Existent.");
+            logger.info("[Food-Service][Update FoodOrder] Order Id Is Non-Existent.");
             result.setStatus(false);
             result.setMessage("Order Id Is Non-Existent.");
             result.setFoodOrder(null);
@@ -185,7 +186,7 @@ public class FoodServiceImpl implements FoodService{
             fo.setFoodName(ufoi.getFoodName());
             fo.setPrice(ufoi.getPrice());
             foodOrderRepository.save(fo);
-            System.out.println("[Food-Service][Update FoodOrder] Success.");
+            logger.info("[Food-Service][Update FoodOrder] Success.");
             result.setStatus(true);
             result.setMessage("Success");
             result.setFoodOrder(fo);
