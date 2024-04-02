@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
  * Created by ZDH on 2017/7/19.
  */
 public class TestFlowSuccess {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TestFlowSuccess.class);
 
     private WebDriver driver;
     private String baseUrl;
@@ -105,11 +106,11 @@ public class TestFlowSuccess {
         //get login status
         String statusLogin = driver.findElement(By.id("flow_preserve_login_msg")).getText();
         if("".equals(statusLogin))
-            System.out.println("Failed to Login! Status is Null!");
+            logger.info("Failed to Login! Status is Null!");
         else if(statusLogin.startsWith("Success"))
-            System.out.println("Success to Login! Status:"+statusLogin);
+            logger.info("Success to Login! Status:"+statusLogin);
         else
-            System.out.println("Failed to Login! Status:"+statusLogin);
+            logger.info("Failed to Login! Status:"+statusLogin);
         Assert.assertEquals(statusLogin.startsWith("Success"),true);
     }
 
@@ -140,7 +141,7 @@ public class TestFlowSuccess {
         if (myOrdersList.size() > 0) {
             System.out.printf("Success to show my orders list，the list size is:%d%n",myOrdersList.size());
         } else {
-            System.out.println("Failed to show my orders list，the list size is 0 or No orders in this user!");
+            logger.info("Failed to show my orders list，the list size is 0 or No orders in this user!");
         }
         Assert.assertEquals(myOrdersList.size() > 0,true);
     }
@@ -179,7 +180,7 @@ public class TestFlowSuccess {
 
         Alert javascriptConfirm = driver.switchTo().alert();
         String statusAlert = driver.switchTo().alert().getText();
-        System.out.println("The Alert information of Cancel Ticket："+statusAlert);
+        logger.info("The Alert information of Cancel Ticket："+statusAlert);
         Assert.assertEquals(statusAlert.startsWith("Success"),true);
         javascriptConfirm.accept();
     }

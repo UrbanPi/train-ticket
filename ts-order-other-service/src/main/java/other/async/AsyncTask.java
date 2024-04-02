@@ -13,6 +13,7 @@ import java.util.concurrent.Future;
 
 @Component  
 public class AsyncTask {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(AsyncTask.class);
 
     @Autowired
     private OrderOtherRepository orderOtherRepository;
@@ -22,17 +23,17 @@ public class AsyncTask {
     @Async("myAsync")
     public Future<QueryOrderResult> viewAllOrderAsync(){
         count++;
-        System.out.println("[Enter View All Order Async] Count:" + count);
+        logger.info("[Enter View All Order Async] Count:" + count);
         try{
             Thread.sleep(10000);
             ArrayList<Order> orders = orderOtherRepository.findAll();
             QueryOrderResult result = new QueryOrderResult(true,"Success.",orders);
             count--;
-            System.out.println("[Exit View All Order Async] Count:" + count);
+            logger.info("[Exit View All Order Async] Count:" + count);
             return new AsyncResult<>(result);
         }catch(Exception e){
             count--;
-            System.out.println("[Exit View All Order Async] Exception Count:" + count);
+            logger.info("[Exit View All Order Async] Exception Count:" + count);
             return null;
         }
 
@@ -41,7 +42,7 @@ public class AsyncTask {
 //    @Async("myAsync")
 //    public Future<ChangeOrderResult> updateOtherOrderStatusToCancel(ChangeOrderInfo info) throws InterruptedException{
 //        Thread.sleep(2000);
-//        System.out.println("[Cancel Order Service][Change Order Status] Getting....");
+//        logger.info("[Cancel Order Service][Change Order Status] Getting....");
 //        ChangeOrderResult result = restTemplate.postForObject("http://ts-order-other-service:12032/orderOther/update",info,ChangeOrderResult.class);
 //        return new AsyncResult<>(result);
 //    }
@@ -51,15 +52,15 @@ public class AsyncTask {
 //
 //        double op = new Random().nextDouble();
 //        if(op < 0.5){
-//            System.out.println("[Cancel Order Service] 延迟流程，退票将会错误");
+//            logger.info("[Cancel Order Service] 延迟流程，退票将会错误");
 //            Thread.sleep(4000);
 //        }else {
-//            System.out.println("[Cancel Order Service] 正常流程，退票应该正常");
+//            logger.info("[Cancel Order Service] 正常流程，退票应该正常");
 //        }
 //
 //
 //        //1.第一步，查询订单信息
-//        System.out.println("[Cancel Order Service][Get Order] Getting....");
+//        logger.info("[Cancel Order Service][Get Order] Getting....");
 //        GetOrderByIdInfo getOrderInfo = new GetOrderByIdInfo();
 //        getOrderInfo.setOrderId(orderId);
 //        GetOrderResult cor = restTemplate.postForObject(
@@ -73,10 +74,10 @@ public class AsyncTask {
 //        changeOrderInfo.setLoginToken(loginToken);
 //        ChangeOrderResult changeOrderResult = restTemplate.postForObject("http://ts-order-other-service:12032/orderOther/update",changeOrderInfo,ChangeOrderResult.class);
 //        if(changeOrderResult.isStatus() == false){
-//            System.out.println("[Cancel Order Service]紧急！修改订单状态到取消中-错误");
+//            logger.info("[Cancel Order Service]紧急！修改订单状态到取消中-错误");
 //        }
 //        //3.第三步，执行退款
-//        System.out.println("[Cancel Order Service][Draw Back Money] Draw back money...");
+//        logger.info("[Cancel Order Service][Draw Back Money] Draw back money...");
 //        DrawBackInfo info = new DrawBackInfo();
 //        info.setMoney(money);
 //        info.setUserId(userId);

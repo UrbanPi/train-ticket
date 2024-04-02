@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
  * Created by fdse-jichao on 2018/1/30.
  */
 public class TestFlowFail {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TestFlowFail.class);
     private WebDriver driver;
     private String baseUrl;
     private List<WebElement> myOrdersList;
@@ -109,11 +110,11 @@ public class TestFlowFail {
         //get login status
         String statusLogin = driver.findElement(By.id("flow_preserve_login_msg")).getText();
         if("".equals(statusLogin))
-            System.out.println("Failed to Login! Status is Null!");
+            logger.info("Failed to Login! Status is Null!");
         else if(statusLogin.startsWith("Success"))
-            System.out.println("Success to Login! Status:"+statusLogin);
+            logger.info("Success to Login! Status:"+statusLogin);
         else
-            System.out.println("Failed to Login! Status:"+statusLogin);
+            logger.info("Failed to Login! Status:"+statusLogin);
         Assert.assertEquals(statusLogin.startsWith("Success"),true);
     }
 
@@ -144,7 +145,7 @@ public class TestFlowFail {
         if (myOrdersList.size() > 0) {
             System.out.printf("Success to show my orders list，the list size is:%d%n",myOrdersList.size());
         } else {
-            System.out.println("Failed to show my orders list，the list size is 0 or No orders in this user!");
+            logger.info("Failed to show my orders list，the list size is 0 or No orders in this user!");
         }
         Assert.assertEquals(myOrdersList.size() > 0,true);
     }
@@ -183,7 +184,7 @@ public class TestFlowFail {
 
         Alert javascriptConfirm = driver.switchTo().alert();
         String statusAlert = driver.switchTo().alert().getText();
-        System.out.println("The Alert information of Cancel Ticket："+statusAlert);
+        logger.info("The Alert information of Cancel Ticket："+statusAlert);
         Assert.assertEquals(statusAlert.startsWith("Success"),true);
         javascriptConfirm.accept();
     }

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 @RestController
 public class OrderOtherController {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(OrderOtherController.class);
 
     @Autowired
     private OrderOtherService orderService;
@@ -48,7 +49,7 @@ public class OrderOtherController {
 
     @RequestMapping(value = "/orderOther/getSuspendStationArea", method = RequestMethod.GET)
     public SuspendArea getSuspendStationArea(){
-        System.out.println("[Order Other Service] Get Suspend Station Area.");
+        logger.info("[Order Other Service] Get Suspend Station Area.");
         return orderService.getSuspendArea();
     }
 
@@ -56,7 +57,7 @@ public class OrderOtherController {
     @RequestMapping(value = "/orderOther/getOrdersByFromAndTo/{fromId}/{toId}", method = RequestMethod.GET)
     public ArrayList<Order> getOrdersByFromIdAndToId(@PathVariable String fromId, @PathVariable String toId){
 
-        System.out.println("[Order Service][Get] From:" + fromId + " To:" + toId);
+        logger.info("[Order Service][Get] From:" + fromId + " To:" + toId);
 
         ArrayList<Order> ordersFrom = orderOtherRepository.findByFromId(fromId);
         ArrayList<Order> ordersTo = orderOtherRepository.findByToId(toId);
@@ -65,7 +66,7 @@ public class OrderOtherController {
         orders.addAll(ordersFrom);
         orders.addAll(ordersTo);
 
-        System.out.println("[Order Service][Get] From:" + ordersFrom.size() + " To:" + ordersTo.size());
+        logger.info("[Order Service][Get] From:" + ordersFrom.size() + " To:" + ordersTo.size());
 
         return orders;
     }
@@ -73,7 +74,7 @@ public class OrderOtherController {
     @RequestMapping(value="/orderOther/getTicketListByDateAndTripId", method = RequestMethod.POST)
     public LeftTicketInfo getTicketListByDateAndTripId(@RequestBody SeatRequest seatRequest){
 
-        System.out.println("[Order Other Service][Get Sold Ticket] Date:" + seatRequest.getTravelDate().toString());
+        logger.info("[Order Other Service][Get Sold Ticket] Date:" + seatRequest.getTravelDate().toString());
         LeftTicketInfo leftTicketInfo = orderService.getSoldTickets(seatRequest);;
 
         return leftTicketInfo;
@@ -90,15 +91,15 @@ public class OrderOtherController {
     @RequestMapping(path = "/orderOther/create", method = RequestMethod.POST)
     public CreateOrderResult createNewOrder(@RequestBody CreateOrderInfo coi,@CookieValue String loginToken){
 
-        System.out.println("[Order Other Service][Create Order] Create Order form " + coi.getOrder().getFrom() + " --->"
+        logger.info("[Order Other Service][Create Order] Create Order form " + coi.getOrder().getFrom() + " --->"
                 + coi.getOrder().getTo() + " at " + coi.getOrder().getTravelDate());
         VerifyResult tokenResult = verifySsoLogin(loginToken);
         CreateOrderResult createOrderResult;
         if(tokenResult.isStatus() == true){
-            System.out.println("[Order Other Service][Verify Login] Success");
+            logger.info("[Order Other Service][Verify Login] Success");
             createOrderResult = orderService.create(coi.getOrder());
         }else{
-            System.out.println("[Order Other Service][Verify Login] Fail");
+            logger.info("[Order Other Service][Verify Login] Fail");
             CreateOrderResult cor = new CreateOrderResult();
             cor.setStatus(false);
             cor.setMessage("Not Login");
@@ -122,14 +123,14 @@ public class OrderOtherController {
     @RequestMapping(path = "/orderOther/query", method = RequestMethod.POST)
     public ArrayList<Order> queryOrders(@RequestBody QueryInfo qi,@CookieValue String loginId,@CookieValue String loginToken){
 
-        System.out.println("[Order Other Service][Query Orders] Query Orders for " + loginId);
+        logger.info("[Order Other Service][Query Orders] Query Orders for " + loginId);
         VerifyResult tokenResult = verifySsoLogin(loginToken);
         ArrayList<Order> orders;
         if(tokenResult.isStatus() == true){
-            System.out.println("[Order Other Service][Verify Login] Success");
+            logger.info("[Order Other Service][Verify Login] Success");
             orders = orderService.queryOrders(qi,loginId);
         }else{
-            System.out.println("[Order Other Service][Verify Login] Fail");
+            logger.info("[Order Other Service][Verify Login] Fail");
             orders = new ArrayList<>();
         }
 
@@ -140,7 +141,7 @@ public class OrderOtherController {
     @RequestMapping(path="/orderOther/calculate", method = RequestMethod.POST)
     public CalculateSoldTicketResult calculateSoldTicket(@RequestBody CalculateSoldTicketInfo csti){
 
-        System.out.println("[Order Other Service][Calculate Sold Tickets] Date:" + csti.getTravelDate() + " TrainNumber:"
+        logger.info("[Order Other Service][Calculate Sold Tickets] Date:" + csti.getTravelDate() + " TrainNumber:"
                 + csti.getTrainNumber());
         CalculateSoldTicketResult result = orderService.queryAlreadySoldOrders(csti);
 
@@ -151,7 +152,7 @@ public class OrderOtherController {
     @RequestMapping(path="/orderOther/price", method = RequestMethod.POST)
     public GetOrderPriceResult getOrderPrice(@RequestBody GetOrderPrice info){
 
-        System.out.println("[Order Other Service][Get Order Price] Order Id:" + info.getOrderId());
+        logger.info("[Order Other Service][Get Order Price] Order Id:" + info.getOrderId());
         GetOrderPriceResult result = orderService.getOrderPrice(info);
 
         return result;
@@ -161,7 +162,7 @@ public class OrderOtherController {
     @RequestMapping(path="/orderOther/payOrder", method = RequestMethod.POST)
     public PayOrderResult payOrder(@RequestBody PayOrderInfo info){
 
-        System.out.println("[Order Other Service][Pay Order] Order Id:" + info.getOrderId());
+        logger.info("[Order Other Service][Pay Order] Order Id:" + info.getOrderId());
         PayOrderResult result = orderService.payOrder(info);
 
         return result;
@@ -172,7 +173,7 @@ public class OrderOtherController {
     @RequestMapping(path="/orderOther/getById", method = RequestMethod.POST)
     public GetOrderResult getOrderById(@RequestBody GetOrderByIdInfo info){
 
-        System.out.println("[Order Other Service][Get Order By Id] Order Id:" + info.getOrderId());
+        logger.info("[Order Other Service][Get Order By Id] Order Id:" + info.getOrderId());
         GetOrderResult result = orderService.getOrderById(info);
 
         return result;
@@ -183,7 +184,7 @@ public class OrderOtherController {
     @RequestMapping(path="/orderOther/modifyOrderStatus", method = RequestMethod.POST)
     public ModifyOrderStatusResult modifyOrder(@RequestBody ModifyOrderStatusInfo info){
 
-        System.out.println("[Order Other Service][Modify Order Status] Order Id:" + info.getOrderId());
+        logger.info("[Order Other Service][Modify Order Status] Order Id:" + info.getOrderId());
         ModifyOrderStatusResult result = orderService.modifyOrder(info);
 
         return result;
@@ -193,7 +194,7 @@ public class OrderOtherController {
     @RequestMapping(path="/getOrderOtherInfoForSecurity", method = RequestMethod.POST)
     public GetOrderInfoForSecurityResult securityInfoCheck(@RequestBody GetOrderInfoForSecurity info){
 
-        System.out.println("[Order Other Service][Security Info Get]");
+        logger.info("[Order Other Service][Security Info Get]");
         GetOrderInfoForSecurityResult result = orderService.checkSecurityAboutOrder(info);
 
         return result;
@@ -206,10 +207,10 @@ public class OrderOtherController {
         ChangeOrderResult result;
         VerifyResult tokenResult = verifySsoLogin(loginToken);
         if(tokenResult.isStatus() == true){
-            System.out.println("[Order Other Service][Verify Login] Success");
+            logger.info("[Order Other Service][Verify Login] Success");
             result =  orderService.saveChanges(orderInfo.getOrder());
         }else{
-            System.out.println("[Order Other Service][Verify Login] Fail");
+            logger.info("[Order Other Service][Verify Login] Fail");
             ChangeOrderResult cor = new ChangeOrderResult();
             cor.setStatus(false);
             cor.setMessage("Not Login");
@@ -233,7 +234,7 @@ public class OrderOtherController {
     @RequestMapping(path="/orderOther/delete",method = RequestMethod.POST)
     public DeleteOrderResult deleteOrder(@RequestBody DeleteOrderInfo info){
 
-        System.out.println("[Order Other Service][Delete Order] Order Id:" + info.getOrderId());
+        logger.info("[Order Other Service][Delete Order] Order Id:" + info.getOrderId());
         DeleteOrderResult result = orderService.deleteOrder(info);
 
         return result;
@@ -246,14 +247,14 @@ public class OrderOtherController {
     @RequestMapping(path="/orderOther/findAll", method = RequestMethod.GET)
     public QueryOrderResult findAllOrder(){
 
-        System.out.println("[Order Other Service][Find All Order]");
+        logger.info("[Order Other Service][Find All Order]");
         QueryOrderResult result = orderService.getAllOrders();
 
         return result;
     }
 
     private VerifyResult verifySsoLogin(String loginToken){
-        System.out.println("[Order Other Service][Verify Login] Verifying....");
+        logger.info("[Order Other Service][Verify Login] Verifying....");
         VerifyResult tokenResult = restTemplate.getForObject(
                 "http://ts-sso-service:12349/verifyLoginToken/" + loginToken,
                 VerifyResult.class);

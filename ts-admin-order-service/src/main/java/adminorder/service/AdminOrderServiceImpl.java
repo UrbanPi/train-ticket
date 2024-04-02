@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 @Service
 public class AdminOrderServiceImpl implements AdminOrderService {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(AdminOrderServiceImpl.class);
 
     @Autowired
     private RestTemplate restTemplate;
@@ -27,7 +28,7 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 
     @Override
     public boolean suspendOrder(String fromStationId,String toStationId){
-        System.out.println(fromStationId + " " + toStationId);
+        logger.info(fromStationId + " " + toStationId);
         restTemplate.getForObject("http://ts-order-other-service:12032/orderOther/suspend/" + fromStationId + "/" + toStationId, Boolean.class);
 //        ValueOperations<String, String> ops = redisTemplate.opsForValue();
 //        ops.set("adminOrderSuspendFromStationId",fromStationId);
@@ -40,18 +41,18 @@ public class AdminOrderServiceImpl implements AdminOrderService {
 //        if(redisTemplate.hasKey("adminOrderSuspendFromStationId")){
 //            ValueOperations<String, String> ops = redisTemplate.opsForValue();
 //            ops.set("adminOrderSuspendFromStationId", "");
-//            System.out.println("adminOrderSuspendFromStationId 已清空");
+//            logger.info("adminOrderSuspendFromStationId 已清空");
 //        }else{
-//            System.out.println("adminOrderSuspendFromStationId 不存在");
+//            logger.info("adminOrderSuspendFromStationId 不存在");
 //        }
 //        if(redisTemplate.hasKey("adminOrderSuspendToStationId")){
 //            ValueOperations<String, String> ops = redisTemplate.opsForValue();
 //            ops.set("adminOrderSuspendToStationId", "");
-//            System.out.println("adminOrderSuspendToStationId 已清空");
+//            logger.info("adminOrderSuspendToStationId 已清空");
 //        }else{
-//            System.out.println("adminOrderSuspendToStationId 不存在");
+//            logger.info("adminOrderSuspendToStationId 不存在");
 //        }
-        System.out.println(fromStationId + " " + toStationId);
+        logger.info(fromStationId + " " + toStationId);
         restTemplate.getForObject("http://ts-order-other-service:12032//orderOther/cancelSuspend/" + fromStationId + "/" + toStationId, Boolean.class);
 
         return true;
@@ -60,7 +61,7 @@ public class AdminOrderServiceImpl implements AdminOrderService {
     @Override
     public GetAllOrderResult getAllOrders(String id) {
         if(checkId(id)){
-            System.out.println("[Admin Order Service][Get All Orders]");
+            logger.info("[Admin Order Service][Get All Orders]");
             //Get all of the orders
             ArrayList<Order> orders = new ArrayList<Order>();
             //From ts-order-service
@@ -68,21 +69,21 @@ public class AdminOrderServiceImpl implements AdminOrderService {
                     "http://ts-order-service:12031/order/findAll",
                     QueryOrderResult.class);
             if(result.isStatus()){
-                System.out.println("[Admin Order Service][Get Orders From ts-order-service successfully!]");
+                logger.info("[Admin Order Service][Get Orders From ts-order-service successfully!]");
                 orders.addAll(result.getOrders());
             }
             else
-                System.out.println("[Admin Order Service][Get Orders From ts-order-service fail!]");
+                logger.info("[Admin Order Service][Get Orders From ts-order-service fail!]");
             //From ts-order-other-service
             result = restTemplate.getForObject(
                     "http://ts-order-other-service:12032/orderOther/findAll",
                     QueryOrderResult.class);
             if(result.isStatus()){
-                System.out.println("[Admin Order Service][Get Orders From ts-order-other-service successfully!]");
+                logger.info("[Admin Order Service][Get Orders From ts-order-other-service successfully!]");
                 orders.addAll(result.getOrders());
             }
             else
-                System.out.println("[Admin Order Service][Get Orders From ts-order-other-service fail!]");
+                logger.info("[Admin Order Service][Get Orders From ts-order-other-service fail!]");
             //Return orders
             GetAllOrderResult getAllOrderResult = new GetAllOrderResult();
             getAllOrderResult.setStatus(true);
@@ -91,7 +92,7 @@ public class AdminOrderServiceImpl implements AdminOrderService {
             return getAllOrderResult;
         }
         else{
-            System.out.println("[Admin Order Service][Wrong Admin ID]");
+            logger.info("[Admin Order Service][Wrong Admin ID]");
             GetAllOrderResult result = new GetAllOrderResult();
             result.setStatus(false);
             result.setMessage("The loginId is Wrong: " + id);
@@ -108,19 +109,19 @@ public class AdminOrderServiceImpl implements AdminOrderService {
             deleteOrderInfo.setOrderId(request.getOrderId());
 
             if(request.getTrainNumber().startsWith("G") || request.getTrainNumber().startsWith("D") ){
-                System.out.println("[Admin Order Service][Delete Order]");
+                logger.info("[Admin Order Service][Delete Order]");
                 deleteOrderResult = restTemplate.postForObject(
                         "http://ts-order-service:12031/order/delete", deleteOrderInfo,DeleteOrderResult.class);
             }
             else{
-                System.out.println("[Admin Order Service][Delete Order Other]");
+                logger.info("[Admin Order Service][Delete Order Other]");
                 deleteOrderResult = restTemplate.postForObject(
                         "http://ts-order-other-service:12032/orderOther/delete", deleteOrderInfo,DeleteOrderResult.class);
             }
             return deleteOrderResult;
         }
         else{
-            System.out.println("[Admin Order Service][Wrong Admin ID]");
+            logger.info("[Admin Order Service][Wrong Admin ID]");
             DeleteOrderResult result = new DeleteOrderResult();
             result.setStatus(false);
             result.setMessage("The loginId is Wrong: " + request.getLoginid());
@@ -133,19 +134,19 @@ public class AdminOrderServiceImpl implements AdminOrderService {
         if(checkId(request.getLoginid())){
             UpdateOrderResult updateOrderResult = new UpdateOrderResult();
             if(request.getOrder().getTrainNumber().startsWith("G") || request.getOrder().getTrainNumber().startsWith("D") ){
-                System.out.println("[Admin Order Service][Update Order]");
+                logger.info("[Admin Order Service][Update Order]");
                 updateOrderResult = restTemplate.postForObject(
                         "http://ts-order-service:12031/order/adminUpdate", request.getOrder() ,UpdateOrderResult.class);
             }
             else{
-                System.out.println("[Admin Order Service][Add New Order Other]");
+                logger.info("[Admin Order Service][Add New Order Other]");
                 updateOrderResult = restTemplate.postForObject(
                         "http://ts-order-other-service:12032/orderOther/adminUpdate", request.getOrder() ,UpdateOrderResult.class);
             }
             return updateOrderResult;
         }
         else{
-            System.out.println("[Admin Order Service][Wrong Admin ID]");
+            logger.info("[Admin Order Service][Wrong Admin ID]");
             UpdateOrderResult result = new UpdateOrderResult();
             result.setStatus(false);
             result.setMessage("The loginId is Wrong: " + request.getLoginid());
@@ -158,19 +159,19 @@ public class AdminOrderServiceImpl implements AdminOrderService {
         if(checkId(request.getLoginid())){
             AddOrderResult addOrderResult;
             if(request.getOrder().getTrainNumber().startsWith("G") || request.getOrder().getTrainNumber().startsWith("D") ){
-                System.out.println("[Admin Order Service][Add New Order]");
+                logger.info("[Admin Order Service][Add New Order]");
                 addOrderResult = restTemplate.postForObject(
                         "http://ts-order-service:12031/order/adminAddOrder", request.getOrder() ,AddOrderResult.class);
             }
             else{
-                System.out.println("[Admin Order Service][Add New Order Other]");
+                logger.info("[Admin Order Service][Add New Order Other]");
                 addOrderResult = restTemplate.postForObject(
                         "http://ts-order-other-service:12032/orderOther/adminAddOrder", request.getOrder() ,AddOrderResult.class);
             }
             return addOrderResult;
         }
         else{
-            System.out.println("[Admin Order Service][Wrong Admin ID]");
+            logger.info("[Admin Order Service][Wrong Admin ID]");
             AddOrderResult result = new AddOrderResult();
             result.setStatus(false);
             result.setMessage("The loginId is Wrong: " + request.getLoginid());
