@@ -10,6 +10,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class TestFlowSuccess {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TestFlowSuccess.class);
     private WebDriver driver;
     private String baseUrl;
 
@@ -64,11 +65,11 @@ public class TestFlowSuccess {
         //get login status
 //        String statusLogin = driver.findElement(By.id("flow_preserve_login_msg")).getText();
 //        if("".equals(statusLogin)) {
-//            System.out.println("Failed to Login! Status is Null!");
+//            logger.info("Failed to Login! Status is Null!");
 //        } else if(statusLogin.startsWith("Success")) {
-//            System.out.println("Success to Login! Status:" + statusLogin);
+//            logger.info("Success to Login! Status:" + statusLogin);
 //        } else {
-//            System.out.println("Failed to Login! Status:" + statusLogin);
+//            logger.info("Failed to Login! Status:" + statusLogin);
 //        }
 //        Assert.assertEquals(statusLogin.startsWith("Success"),true);
 //
@@ -147,7 +148,7 @@ public class TestFlowSuccess {
 //            Thread.sleep(1000);
 //        }
 //        else
-//            System.out.println("Tickets search failed!!!");
+//            logger.info("Tickets search failed!!!");
 //        Assert.assertEquals(ticketsList.size() > 0,true);
     }
 

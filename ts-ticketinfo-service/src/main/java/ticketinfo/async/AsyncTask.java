@@ -11,7 +11,8 @@ import ticketinfo.domain.ResultForTravel;
 import java.util.concurrent.Future;
 
 @Component  
-public class AsyncTask {  
+public class AsyncTask {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(AsyncTask.class);  
 
     @Autowired
 	private RestTemplate restTemplate;
@@ -21,7 +22,7 @@ public class AsyncTask {
     @Async("mySimpleAsync")
     public Future<ResultForTravel> queryForTravel(QueryForTravel info){
         size += 1;
-        System.out.println("[Ticket Info] Thread Size: " + size);
+        logger.info("[Ticket Info] Thread Size: " + size);
         ResultForTravel result = restTemplate.postForObject(
                 "http://ts-basic-service:15680/basic/queryForTravel", info, ResultForTravel.class);
         size -= 1;

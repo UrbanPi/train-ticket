@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 @Service
 public class RoutePlanServiceImpl implements RoutePlanService{
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(RoutePlanServiceImpl.class);
 
     @Autowired
     private RestTemplate restTemplate;
@@ -41,7 +42,7 @@ public class RoutePlanServiceImpl implements RoutePlanService{
                 TripResponse thisRes = finalResult.get(j);
 
                 if(thisRes == null){
-                    System.out.println("警告：this-res null");
+                    logger.info("警告：this-res null");
                 }
 
                 if(Float.parseFloat(thisRes.getPriceForEconomyClass()) < minPrice){
@@ -152,7 +153,7 @@ public class RoutePlanServiceImpl implements RoutePlanService{
     public RoutePlanResults searchMinStopStations(GetRoutePlanInfo info) {
         String fromStationId = queryForStationId(info.getFormStationName());
         String toStationId = queryForStationId(info.getToStationName());
-        System.out.println("From Id:" + fromStationId + " To:" + toStationId);
+        logger.info("From Id:" + fromStationId + " To:" + toStationId);
         //1.获取这个经过这两个车站的路线
         GetRouteByStartAndTerminalInfo searchRouteInfo =
                 new GetRouteByStartAndTerminalInfo(fromStationId,toStationId);
@@ -160,7 +161,7 @@ public class RoutePlanServiceImpl implements RoutePlanService{
                 "http://ts-route-service:11178/route/queryByStartAndTerminal",
                 searchRouteInfo, GetRoutesListlResult.class);
         ArrayList<Route> routeList = routeResult.getRoutes();
-        System.out.println("[Route Plan Service] Candidate Route Number:" + routeList.size());
+        logger.info("[Route Plan Service] Candidate Route Number:" + routeList.size());
         //2.计算这两个车站之间有多少停靠站
         ArrayList<Integer> gapList = new ArrayList<>();
         for(int i = 0; i < routeList.size(); i++){
@@ -201,7 +202,7 @@ public class RoutePlanServiceImpl implements RoutePlanService{
             tempList.addAll(travelTrips.get(i));
             finalTripResult.add(tempList);
         }
-        System.out.println("[Route Plan Service] Trips Num:" + finalTripResult.size());
+        logger.info("[Route Plan Service] Trips Num:" + finalTripResult.size());
         //5.再根据这些车次信息获取其价格和停靠站信息
         ArrayList<Trip> trips = new ArrayList<>();
         for(ArrayList<Trip> tempTrips : finalTripResult){
@@ -249,7 +250,7 @@ public class RoutePlanServiceImpl implements RoutePlanService{
             tripResponses.add(unit);
         }
 
-        System.out.println("[Route Plan Service] Trips Response Unit Num:" + tripResponses.size());
+        logger.info("[Route Plan Service] Trips Response Unit Num:" + tripResponses.size());
         RoutePlanResults finalResults = new RoutePlanResults();
 
         finalResults.setStatus(true);
@@ -260,7 +261,7 @@ public class RoutePlanServiceImpl implements RoutePlanService{
     }
 
     private String queryForStationId(String stationName){
-        System.out.println("[Preserve Service][Get Station Name]");
+        logger.info("[Preserve Service][Get Station Name]");
         QueryForStationId queryForId = new QueryForStationId();
         queryForId.setName(stationName);
         String stationId = restTemplate.postForObject("http://ts-station-service:12345/station/queryForId",queryForId,String.class);
@@ -268,15 +269,15 @@ public class RoutePlanServiceImpl implements RoutePlanService{
     }
 
     private Route getRouteByRouteId(String routeId){
-        System.out.println("[Route Plan Service][Get Route By Id] Route ID：" + routeId);
+        logger.info("[Route Plan Service][Get Route By Id] Route ID：" + routeId);
         GetRouteResult result = restTemplate.getForObject(
                 "http://ts-route-service:11178/route/queryById/" + routeId,
                 GetRouteResult.class);
         if(result.isStatus() == false){
-            System.out.println("[Travel Service][Get Route By Id] Fail." + result.getMessage());
+            logger.info("[Travel Service][Get Route By Id] Fail." + result.getMessage());
             return null;
         }else{
-            System.out.println("[Travel Service][Get Route By Id] Success.");
+            logger.info("[Travel Service][Get Route By Id] Success.");
             return result.getRoute();
         }
     }
@@ -287,7 +288,7 @@ public class RoutePlanServiceImpl implements RoutePlanService{
                 "http://ts-travel-service:12346/travel/queryWithPackage",
                 info,  QueryTripResponsePackage.class);
 
-        System.out.println("[Route Plan Get Trip][Size]" + list.getResponses().size());
+        logger.info("[Route Plan Get Trip][Size]" + list.getResponses().size());
 
         return list.getResponses();
     }
@@ -298,7 +299,7 @@ public class RoutePlanServiceImpl implements RoutePlanService{
                 "http://ts-travel2-service:16346/travel2/queryWithPackage",
                 info,  QueryTripResponsePackage.class);
 
-        System.out.println("[Route Plan Get TripOther][Size]" + list.getResponses().size());
+        logger.info("[Route Plan Get TripOther][Size]" + list.getResponses().size());
 
         return list.getResponses();
     }

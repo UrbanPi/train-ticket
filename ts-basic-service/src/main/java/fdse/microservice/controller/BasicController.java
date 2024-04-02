@@ -12,19 +12,20 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 public class BasicController {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(BasicController.class);
 
     @Autowired
     BasicService service;
 
     @RequestMapping(value="/basic/queryForTravel", method= RequestMethod.POST)
     public ResultForTravel queryForTravel(@RequestBody QueryForTravel info){
-        System.out.println("[Basic Info][Query For Travel] Sleep Begin");
+        logger.info("[Basic Info][Query For Travel] Sleep Begin");
         try{
             Thread.sleep(10000);
         }catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println("[Basic Info][Query For Travel] Sleep End");
+        logger.info("[Basic Info][Query For Travel] Sleep End");
         return service.queryForTravel(info);
     }
 

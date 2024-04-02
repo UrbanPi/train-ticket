@@ -10,14 +10,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 @Component  
-public class AsyncTask {  
+public class AsyncTask {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(AsyncTask.class);  
 
     @Autowired
 	private RestTemplate restTemplate;
 
     @Async("mySimpleAsync")
     public Future<ModifyOrderStatusResult> sendAsyncCallToModifyOrderStatus(String tripId,String orderId){
-        System.out.println("[Inside-Payment][Async][Begin] Send Async Call To Modify Order Status");
+        logger.info("[Inside-Payment][Async][Begin] Send Async Call To Modify Order Status");
         ModifyOrderStatusInfo info = new ModifyOrderStatusInfo();
         info.setOrderId(orderId);
         info.setStatus(1);
@@ -29,26 +30,26 @@ public class AsyncTask {
             result = restTemplate.postForObject(
                     "http://ts-order-other-service:12032/orderOther/modifyOrderStatus", info, ModifyOrderStatusResult.class);
         }
-        System.out.println("[Inside-Payment][Async][End] Send Async Call To Modify Order Status");
+        logger.info("[Inside-Payment][Async][End] Send Async Call To Modify Order Status");
         return new AsyncResult<>(result);
     }
 
     @Async("mySimpleAsync")
     public Future<GetOrderResult> sendAsyncCallToGetOrder(GetOrderByIdInfo getOrderByIdInfo,String tripId){
-        System.out.println("[Inside-Payment][Async][Begin] Send Async Call To Get Order");
+        logger.info("[Inside-Payment][Async][Begin] Send Async Call To Get Order");
         GetOrderResult result;
         if(tripId.startsWith("G") || tripId.startsWith("D")){
             result = restTemplate.postForObject("http://ts-order-service:12031/order/getById",getOrderByIdInfo,GetOrderResult.class);
         }else{
             result = restTemplate.postForObject("http://ts-order-other-service:12032/orderOther/getById",getOrderByIdInfo,GetOrderResult.class);
         }
-        System.out.println("[Inside-Payment][Async][End] Send Async Call To Get Order");
+        logger.info("[Inside-Payment][Async][End] Send Async Call To Get Order");
         return new AsyncResult<>(result);
     }
 
     @Async("mySimpleAsync")
     public Future<Account> sendAsyncCallToGetAccount(GetAccountByIdInfo info) {
-        System.out.println("[Inside-Payment][Async][Begin] Send Async Call To Get Account");
+        logger.info("[Inside-Payment][Async][Begin] Send Async Call To Get Account");
         GetAccountByIdResult result = restTemplate.postForObject("http://ts-sso-service:12349/account/findById", info,GetAccountByIdResult.class);
         if(result.isStatus() == true){
             return new AsyncResult<>(result.getAccount());

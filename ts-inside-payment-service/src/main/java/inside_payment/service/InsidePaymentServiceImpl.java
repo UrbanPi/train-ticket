@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 public class InsidePaymentServiceImpl implements InsidePaymentService{
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(InsidePaymentServiceImpl.class);
 
     @Autowired
     public AddMoneyRepository addMoneyRepository;
@@ -48,7 +49,7 @@ public class InsidePaymentServiceImpl implements InsidePaymentService{
         if(result.isStatus()){
 
             if(result.getOrder().getStatus() != OrderStatus.NOTPAID.getCode()){
-                System.out.println("[Inside Payment Service][Pay] Error. Order status Not allowed to Pay.");
+                logger.info("[Inside Payment Service][Pay] Error. Order status Not allowed to Pay.");
                 return false;
             }
 
@@ -300,7 +301,7 @@ public class InsidePaymentServiceImpl implements InsidePaymentService{
         if(paymentTemp == null){
             paymentRepository.save(payment);
         }else{
-            System.out.println("[Inside Payment Service][Init Payment] Already Exists:" + payment.getId());
+            logger.info("[Inside Payment Service][Init Payment] Already Exists:" + payment.getId());
         }
     }
 

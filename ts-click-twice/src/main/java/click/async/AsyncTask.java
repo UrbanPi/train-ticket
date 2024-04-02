@@ -20,6 +20,7 @@ import java.util.concurrent.Future;
 
 @Component  
 public class AsyncTask {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(AsyncTask.class);
     @Autowired
 	private RestTemplate restTemplate;
 
@@ -47,7 +48,7 @@ public class AsyncTask {
             throw new RuntimeException("Error");
         }
 
-        System.out.println("[预定结果] " + orderTicketsResult.getMessage());
+        logger.info("[预定结果] " + orderTicketsResult.getMessage());
         return new AsyncResult(orderTicketsResult);
     }
 
@@ -70,7 +71,7 @@ public class AsyncTask {
             throw new RuntimeException("Error");
         }
 
-        System.out.println("[搜索结果]" + results.isStatus() + " " + results.getTravelAdvanceResultUnits().size());
+        logger.info("[搜索结果]" + results.isStatus() + " " + results.getTravelAdvanceResultUnits().size());
 
         return null;
     }

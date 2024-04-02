@@ -13,13 +13,14 @@ import java.util.List;
  */
 @RestController
 public class InsidePaymentController {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(InsidePaymentController.class);
 
     @Autowired
     public InsidePaymentService service;
 
     @RequestMapping(value="/inside_payment/pay", method = RequestMethod.POST)
     public boolean pay(@RequestBody PaymentInfo info, HttpServletRequest request){
-        System.out.println("[Inside Payment Service][Pay] Pay for:" + info.getOrderId());
+        logger.info("[Inside Payment Service][Pay] Pay for:" + info.getOrderId());
         return service.pay(info, request);
     }
 
