@@ -15,6 +15,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class TestServiceTicketInfo {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TestServiceTicketInfo.class);
     private WebDriver driver;
     private String baseUrl;
     @BeforeClass
@@ -60,7 +61,7 @@ public class TestServiceTicketInfo {
         if (ticketInfoList.size() > 0)
             System.out.printf("Success to Query TicketInfo and TicketInfo list size is %d.%n",ticketInfoList.size());
         else
-            System.out.println("Failed to Query TicketInfo or TicketInfo list size is 0");
+            logger.info("Failed to Query TicketInfo or TicketInfo list size is 0");
         Assert.assertEquals(ticketInfoList.size() > 0,true);
     }
     @AfterClass

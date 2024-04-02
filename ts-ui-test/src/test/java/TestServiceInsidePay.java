@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class TestServiceInsidePay {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TestServiceInsidePay.class);
     private WebDriver driver;
     private String baseUrl;
     public static void login(WebDriver driver,String username,String password){
@@ -43,11 +44,11 @@ public class TestServiceInsidePay {
         //get login status
         String statusLogin = driver.findElement(By.id("flow_preserve_login_msg")).getText();
         if("".equals(statusLogin))
-            System.out.println("Failed to Login! Status is Null!");
+            logger.info("Failed to Login! Status is Null!");
         else if(statusLogin.startsWith("Success"))
-            System.out.println("Success to Login! Status:"+statusLogin);
+            logger.info("Success to Login! Status:"+statusLogin);
         else
-            System.out.println("Failed to Login! Status:"+statusLogin);
+            logger.info("Failed to Login! Status:"+statusLogin);
         Assert.assertEquals(statusLogin.startsWith("Success"),true);
         driver.findElement(By.id("microservice_page")).click();
     }
@@ -63,9 +64,9 @@ public class TestServiceInsidePay {
 
         String statusInsidePay = driver.findElement(By.id("inside_payment_result")).getText();
         if (!"".equals(statusInsidePay))
-            System.out.println("Status of inside payment: "+statusInsidePay);
+            logger.info("Status of inside payment: "+statusInsidePay);
         else
-            System.out.println("False, status of inside payment result is null!");
+            logger.info("False, status of inside payment result is null!");
         Assert.assertEquals(!"".equals(statusInsidePay),true);
     }
     @Test (dependsOnMethods = {"testInsidePay"})
@@ -77,7 +78,7 @@ public class TestServiceInsidePay {
         if (insidePayList.size() > 0)
             System.out.printf("Success to Query InsidePayList and InsidePay list size is %d.%n",insidePayList.size());
         else
-            System.out.println("Failed to Query InsidePayList or InsidePay list size is 0");
+            logger.info("Failed to Query InsidePayList or InsidePay list size is 0");
         Assert.assertEquals(insidePayList.size() > 0,true);
     }
     @Test (dependsOnMethods = {"testInsidePayList"})
@@ -89,7 +90,7 @@ public class TestServiceInsidePay {
         if (userBalanceList.size() > 0)
             System.out.printf("Success to Query UserBalanceList and UserBalanceList list size is %d.%n",userBalanceList.size());
         else
-            System.out.println("Failed to Query UserBalanceList or UserBalanceList list size is 0");
+            logger.info("Failed to Query UserBalanceList or UserBalanceList list size is 0");
         Assert.assertEquals(userBalanceList.size() > 0,true);
     }
     @Test (dependsOnMethods = {"testUserBalance"})
@@ -101,7 +102,7 @@ public class TestServiceInsidePay {
         if (addMoneyList.size() > 0)
             System.out.printf("Success to Query Add Money List and Add Money List list size is %d.%n",addMoneyList.size());
         else
-            System.out.println("Failed to Query Add Money List or Add Money List list size is 0");
+            logger.info("Failed to Query Add Money List or Add Money List list size is 0");
         Assert.assertEquals(addMoneyList.size() > 0,true);
     }
 

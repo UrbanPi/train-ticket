@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 
 public class TestServiceRebook {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TestServiceRebook.class);
     private WebDriver driver;
     private String baseUrl;
     private String orderId = "";
@@ -48,11 +49,11 @@ public class TestServiceRebook {
         //get login status
         String statusLogin = driver.findElement(By.id("flow_preserve_login_msg")).getText();
         if("".equals(statusLogin))
-            System.out.println("Failed to Login! Status is Null!");
+            logger.info("Failed to Login! Status is Null!");
         else if(statusLogin.startsWith("Success"))
-            System.out.println("Success to Login! Status:"+statusLogin);
+            logger.info("Success to Login! Status:"+statusLogin);
         else
-            System.out.println("Failed to Login! Status:"+statusLogin);
+            logger.info("Failed to Login! Status:"+statusLogin);
 
         Assert.assertEquals(statusLogin.startsWith("Success"),true);
         driver.findElement(By.id("microservice_page")).click();
@@ -67,7 +68,7 @@ public class TestServiceRebook {
         elementOrdertypePT.click();
         if(elementOrdertypeGTCJ.isEnabled() || elementOrdertypePT.isEnabled()){
             elementRefreshOrdersBtn.click();
-            System.out.println("Show Orders according database!");
+            logger.info("Show Orders according database!");
         }
         else {
             elementRefreshOrdersBtn.click();
@@ -88,10 +89,10 @@ public class TestServiceRebook {
             Select selSeat = new Select(elementOrderStatus);
             selSeat.selectByValue("1"); //2st
             ordersList.get(i).findElement(By.xpath("td[9]/button")).click();
-            System.out.println("Success get orderId and update order status! orderId:"+orderId);
+            logger.info("Success get orderId and update order status! orderId:"+orderId);
         }
         else
-            System.out.println("Cant't get orders information1");
+            logger.info("Cant't get orders information1");
         Assert.assertEquals(ordersList.size() > 0,true);
         Assert.assertEquals(orderId.equals(""),false);
     }
@@ -99,13 +100,13 @@ public class TestServiceRebook {
     public void testTicketRebook()throws Exception{
         JavascriptExecutor js = (JavascriptExecutor) driver;
 //        if(orderId ==null || orderId.length() <= 0) {
-//            System.out.println("Failed,orderId is NULL!");
+//            logger.info("Failed,orderId is NULL!");
 //            driver.quit();
 //        }
 //        if (!"".equals(orderId))
-//            System.out.println("Sign Up btn status: "+statusSignIn);
+//            logger.info("Sign Up btn status: "+statusSignIn);
 //        else
-//            System.out.println("False，Status of Sign In btn is NULL!");
+//            logger.info("False，Status of Sign In btn is NULL!");
         driver.findElement(By.id("single_rebook_order_id")).clear();
 
         driver.findElement(By.id("single_rebook_order_id")).sendKeys(orderId);
@@ -132,22 +133,22 @@ public class TestServiceRebook {
         //get rebook status
         String statusRebook = driver.findElement(By.id("single_rebook_result")).getText();
         if("".equals(statusRebook)){
-            System.out.println("Failed,Status of Rebook btn is NULL!");
+            logger.info("Failed,Status of Rebook btn is NULL!");
             Assert.assertEquals(!"".equals(statusRebook), true);
         }
         else if(statusRebook.startsWith("You haven't paid")){
-            System.out.println("Failed,You haven't paid the original ticket!");
+            logger.info("Failed,You haven't paid the original ticket!");
         }
         else if(statusRebook.startsWith("Please")) {
-            System.out.println(statusRebook);
+            logger.info(statusRebook);
             driver.findElement(By.id("rebook_pay_button")).click();
             Thread.sleep(1000);
             String statusRebookPayment = driver.findElement(By.id("rebook_payment_result")).getText();
-            System.out.println("Rebook payment status:"+statusRebookPayment);
+            logger.info("Rebook payment status:"+statusRebookPayment);
             Assert.assertEquals(statusRebookPayment.startsWith("true"), true);
         }
         else {
-            System.out.println("Rebook status:" + statusRebook);
+            logger.info("Rebook status:" + statusRebook);
             Assert.assertEquals(statusRebook.startsWith("true"), true);
         }
     }
