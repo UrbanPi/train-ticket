@@ -28,16 +28,6 @@ public class AsyncTask {
 
     @Async("mySimpleAsync")
     public Future<Boolean> drawBackMoneyForOrderCancel(String money, String userId,String orderId, String loginToken) throws InterruptedException{
-
-        /*********************** Fault Reproduction - Error Process Seq *************************/
-        if(new Random().nextBoolean()){
-            System.out.println("[Cancel Order Service] Delay Process，Wrong Cancel Process");
-            Thread.sleep(8000);
-        } else {
-            System.out.println("[Cancel Order Service] Normal Process，Normal Cancel Process");
-        }
-
-
         //1.Search Order Info
         System.out.println("[Cancel Order Service][Get Order] Getting....");
         GetOrderByIdInfo getOrderInfo = new GetOrderByIdInfo();
