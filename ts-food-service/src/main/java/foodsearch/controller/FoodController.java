@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 public class FoodController {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(FoodController.class);
 
     @Autowired
     FoodService foodService;
@@ -27,37 +28,37 @@ public class FoodController {
 
     @RequestMapping(path = "/food/getFood", method = RequestMethod.POST)
     public GetAllFoodOfTripResult getFood(@RequestBody GetAllFoodOfTripInfo gati){
-        System.out.println("[Food Service]Get the Get Food Request!");
+        logger.info("[Food Service]Get the Get Food Request!");
         return foodService.getAllFood(gati.getDate(), gati.getStartStation(), gati.getEndStation(), gati.getTripId());
     }
 
     @RequestMapping(path = "/food/createFoodOrder", method = RequestMethod.POST)
     public AddFoodOrderResult createFoodOrder(@RequestBody AddFoodOrderInfo afoi){
-        System.out.println("[Food Service]Try to Create a FoodOrder!");
+        logger.info("[Food Service]Try to Create a FoodOrder!");
         return foodService.createFoodOrder(afoi);
     }
 
     @RequestMapping(path = "/food/cancelFoodOrder", method = RequestMethod.POST)
     public CancelFoodOrderResult cancelFoodOrder(@RequestBody CancelFoodOrderInfo cfoi){
-        System.out.println("[Food Service]Try to Cancel a FoodOrder!");
+        logger.info("[Food Service]Try to Cancel a FoodOrder!");
         return foodService.cancelFoodOrder(cfoi);
     }
 
     @RequestMapping(path = "/food/updateFoodOrder", method = RequestMethod.POST)
     public UpdateFoodOrderResult updateFoodOrder(@RequestBody UpdateFoodOrderInfo ufoi){
-        System.out.println("[Food Service]Try to Update a FoodOrder!");
+        logger.info("[Food Service]Try to Update a FoodOrder!");
         return foodService.updateFoodOrder(ufoi);
     }
 
     @RequestMapping(path = "/food/findAllFoodOrder", method = RequestMethod.GET)
     public List<FoodOrder> findAllFoodOrder(){
-        System.out.println("[Food Service]Try to Find all FoodOrder!");
+        logger.info("[Food Service]Try to Find all FoodOrder!");
         return foodService.findAllFoodOrder();
     }
 
     @RequestMapping(path = "/food/findFoodOrderByOrderId", method = RequestMethod.POST)
     public FindByOrderIdResult findFoodOrderByOrderId(@RequestBody FindByOrderIdInfo foi){
-        System.out.println("[Food Service]Try to Find all FoodOrder!");
+        logger.info("[Food Service]Try to Find all FoodOrder!");
         return foodService.findByOrderId(foi.getOrderId());
     }
 

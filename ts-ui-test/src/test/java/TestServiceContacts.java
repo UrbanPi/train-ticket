@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 
 public class TestServiceContacts {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TestServiceContacts.class);
     private WebDriver driver;
     private String baseUrl;
     @BeforeClass
@@ -32,7 +33,7 @@ public class TestServiceContacts {
             System.out.printf("Success,Contacts List's size is %d.%n", contactsList.size());
         }
         else
-            System.out.println("False,Contacts List's size is 0 or Failed");
+            logger.info("False,Contacts List's size is 0 or Failed");
         Assert.assertEquals(contactsList.size() > 0,true);
     }
     @AfterClass

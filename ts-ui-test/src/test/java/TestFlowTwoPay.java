@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class TestFlowTwoPay {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TestFlowTwoPay.class);
     private WebDriver driver;
     private String baseUrl;
     private List<WebElement> myOrdersList;
@@ -44,11 +45,11 @@ public class TestFlowTwoPay {
         //get login status
         String statusLogin = driver.findElement(By.id("flow_preserve_login_msg")).getText();
         if("".equals(statusLogin))
-            System.out.println("Failed to Login! Status is Null!");
+            logger.info("Failed to Login! Status is Null!");
         else if(statusLogin.startsWith("Success"))
-            System.out.println("Success to Login! Status:"+statusLogin);
+            logger.info("Success to Login! Status:"+statusLogin);
         else
-            System.out.println("Failed to Login! Status:"+statusLogin);
+            logger.info("Failed to Login! Status:"+statusLogin);
         Assert.assertEquals(statusLogin.startsWith("Success"),true);
         driver.findElement(By.id("flow_two_page")).click();
     }
@@ -63,7 +64,7 @@ public class TestFlowTwoPay {
             System.out.printf("Success to show my orders list，the list size is:%d%n",myOrdersList.size());
         }
         else
-            System.out.println("Failed to show my orders list，the list size is 0 or No orders in this user!");
+            logger.info("Failed to show my orders list，the list size is 0 or No orders in this user!");
         Assert.assertEquals(myOrdersList.size() > 0,true);
     }
     @Test (dependsOnMethods = {"testViewOrders"})
@@ -93,7 +94,7 @@ public class TestFlowTwoPay {
         boolean bNotPaidTripId = !"".equals(inputNotPaidTripId);
         boolean bNotPaidStatus = bNotPaidOrderId && bNotPaidPrice && bNotPaidTripId;
         if(bNotPaidStatus == false)
-            System.out.println("Step-Pay for Your Order,The input is null!!");
+            logger.info("Step-Pay for Your Order,The input is null!!");
         Assert.assertEquals(bNotPaidStatus,true);
 
         driver.findElement(By.id("pay_for_not_paid_pay_button")).click();
@@ -101,7 +102,7 @@ public class TestFlowTwoPay {
 
         Alert javascriptConfirm = driver.switchTo().alert();
         String statusAlert = driver.switchTo().alert().getText();
-        System.out.println("The Alert information of Payment："+statusAlert);
+        logger.info("The Alert information of Payment："+statusAlert);
         Assert.assertEquals(statusAlert.startsWith("Success"),true);
         javascriptConfirm.accept();
     }
