@@ -10,15 +10,16 @@ import org.springframework.web.client.RestTemplate;
 
 @Component  
 public class AsyncTask {
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(AsyncTask.class);
     
     @Autowired
 	private RestTemplate restTemplate;
 
     @Async("mySimpleAsync")
     public Future<Boolean> sendAsyncCallToPaymentService(OutsidePaymentInfo outsidePaymentInfo) throws InterruptedException{
-        System.out.println("[Inside Payment Service][Async Task] Begin.");
+        logger.info("[Inside Payment Service][Async Task] Begin.");
         Boolean value = restTemplate.getForObject("http://ts-rest-external-service:16100/greet", Boolean.class);
-        System.out.println("[Inside Payment Service][Async Task] Value:" + value);
+        logger.info("[Inside Payment Service][Async Task] Value:" + value);
         return new AsyncResult<>(value);
     }
     

@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 public class InsidePaymentServiceImpl implements InsidePaymentService{
+    private final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(InsidePaymentServiceImpl.class);
 
     @Autowired
     public AddMoneyRepository addMoneyRepository;
@@ -51,7 +52,7 @@ public class InsidePaymentServiceImpl implements InsidePaymentService{
         if(result.isStatus()){
 
             if(result.getOrder().getStatus() != OrderStatus.NOTPAID.getCode()){
-                System.out.println("[Inside Payment Service][Pay] Error. Order status Not allowed to Pay.");
+                logger.info("[Inside Payment Service][Pay] Error. Order status Not allowed to Pay.");
                 return false;
             }
 
@@ -92,7 +93,7 @@ public class InsidePaymentServiceImpl implements InsidePaymentService{
 //                        "http://ts-payment-service:19001/payment/pay", outsidePaymentInfo,Boolean.class);
                 boolean outsidePaySuccess = false;
                 try{
-                    System.out.println("[Payment Service][Turn To Outside Patment] Async Task Begin");
+                    logger.info("[Payment Service][Turn To Outside Patment] Async Task Begin");
                     Future<Boolean> task = asyncTask.sendAsyncCallToPaymentService(outsidePaymentInfo);
 //                    if(new Random().nextBoolean() == true){
                         //External service timeout
@@ -102,7 +103,7 @@ public class InsidePaymentServiceImpl implements InsidePaymentService{
 //                        outsidePaySuccess = task.get(6000,TimeUnit.MILLISECONDS).booleanValue();
 //                    }
                 }catch (Exception e){
-                    System.out.println("[Inside Payment][Turn to Outside Payment] External Service Timeout.");
+                    logger.info("[Inside Payment][Turn to Outside Payment] External Service Timeout.");
                     //e.printStackTrace();
                     outsidePaySuccess = false;
                     //return false;
@@ -113,7 +114,7 @@ public class InsidePaymentServiceImpl implements InsidePaymentService{
                 }
 
 
-                System.out.println("[Inside Payment][Turn to Outside Payment] External Service Success.");
+                logger.info("[Inside Payment][Turn to Outside Payment] External Service Success.");
 
                 /*********************************************************************************/
 
@@ -328,7 +329,7 @@ public class InsidePaymentServiceImpl implements InsidePaymentService{
         if(paymentTemp == null){
             paymentRepository.save(payment);
         }else{
-            System.out.println("[Inside Payment Service][Init Payment] Already Exists:" + payment.getId());
+            logger.info("[Inside Payment Service][Init Payment] Already Exists:" + payment.getId());
         }
     }
 
