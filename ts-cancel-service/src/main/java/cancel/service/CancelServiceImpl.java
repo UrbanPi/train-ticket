@@ -8,7 +8,6 @@ import org.springframework.web.client.RestTemplate;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.Future;
 
 @Service
 public class CancelServiceImpl implements CancelService{
@@ -35,11 +34,15 @@ public class CancelServiceImpl implements CancelService{
                 ChangeOrderInfo changeOrderInfo = new ChangeOrderInfo();
                 changeOrderInfo.setLoginToken(loginToken);
                 changeOrderInfo.setOrder(order);
+
+
+
+
                 ChangeOrderResult changeOrderResult = cancelFromOrder(changeOrderInfo);
                 if(changeOrderResult.isStatus() == true){
                     CancelOrderResult finalResult = new CancelOrderResult();
                     finalResult.setStatus(true);
-                    finalResult.setMessage("Success.Cancel Order");
+                    finalResult.setMessage("Success.");
                     logger.info("[Cancel Order Service][Cancel Order] Success.");
                     //Draw back money
                     String money = calculateRefund(order);
@@ -109,67 +112,102 @@ public class CancelServiceImpl implements CancelService{
                     ChangeOrderInfo changeOrderInfo = new ChangeOrderInfo();
                     changeOrderInfo.setLoginToken(loginToken);
                     changeOrderInfo.setOrder(order);
-//                    ChangeOrderResult changeOrderResult = cancelFromOtherOrder(changeOrderInfo);
+                    ChangeOrderResult changeOrderResult = cancelFromOtherOrder(changeOrderInfo);
 
 
-                    /*********************** Fault Reproduction - Error Process Seq *************************/
-                    //1.return money
-                    String money = calculateRefund(order);
-                    Future<Boolean> taskDrawBackMoney = asyncTask.drawBackMoneyForOrderCancel(money,loginId,order.getId().toString(),loginToken);
+//
+//
+//                    String money = calculateRefund(order);
+//                    Future<Boolean> taskDrawBackMoney = asyncTask.drawBackMoneyForOrderCan(money,loginId,order.getId().toString());
+//                    Future<ChangeOrderResult> taskCancelOrder = asyncTask.updateOtherOrderStatusToCancel(changeOrderInfo);
+//
+//                    ChangeOrderResult changeOrderResult = null;
+//                    boolean drawBackMoneyStatus = false;
+//                    while(!taskCancelOrder.isDone() || !taskDrawBackMoney.isDone()){}
+//                    logger.info("[Cancel Order Service][Cancel Order] Two Process Done");
+//                    drawBackMoneyStatus = taskDrawBackMoney.get();
+//                    changeOrderResult = taskCancelOrder.get();
+//
+//
+//
 
-                    //2.change status to [canceled]
-                    Future<ChangeOrderResult> taskCancelOrder = asyncTask.updateOtherOrderStatusToCancel(changeOrderInfo);
-
-                    ChangeOrderResult changeOrderResult;
-                    boolean drawBackMoneyStatus;
-
-//                    boolean status = true;
-                    while(!taskCancelOrder.isDone() || !taskDrawBackMoney.isDone()) {
-
-//                        if(!taskDrawBackMoney.isDone() && taskCancelOrder.isDone()){
-//                            status = false;
+//                    if(changeOrderResult.isStatus() == true && drawBackMoneyStatus == true){
+//                        CancelOrderResult finalResult = new CancelOrderResult();
+//                        finalResult.setStatus(true);
+//                        finalResult.setMessage("Success.");
+//                        logger.info("[Cancel Order Service][Cancel Order] Success.");
+//                        logger.info("[Cancel Order Service][Draw Back Money] Success.");
+//
+//                        GetAccountByIdInfo getAccountByIdInfo = new GetAccountByIdInfo();
+//                        getAccountByIdInfo.setAccountId(order.getAccountId().toString());
+//                        GetAccountByIdResult result = getAccount(getAccountByIdInfo);
+//                        if(result.isStatus() == false){
+//                            return null;
 //                        }
-                    }
+//
+//                        NotifyInfo notifyInfo = new NotifyInfo();
+//                        notifyInfo.setDate(new Date().toString());
+//
+//
+//                        notifyInfo.setEmail(result.getAccount().getEmail());
+//                        notifyInfo.setStartingPlace(order.getFrom());
+//                        notifyInfo.setEndPlace(order.getTo());
+//                        notifyInfo.setUsername(result.getAccount().getName());
+//                        notifyInfo.setSeatNumber(order.getSeatNumber());
+//                        notifyInfo.setOrderNumber(order.getId().toString());
+//                        notifyInfo.setPrice(order.getPrice());
+//                        notifyInfo.setSeatClass(SeatClass.getNameByCode(order.getSeatClass()));
+//                        notifyInfo.setStartingTime(order.getTravelTime().toString());
+//
+//                        sendEmail(notifyInfo);
+//
+//
+//                        return finalResult;
+//                    }else if(changeOrderResult.isStatus() == true && drawBackMoneyStatus == false){
+//                        CancelOrderResult finalResult = new CancelOrderResult();
+//                        finalResult.setStatus(false);
+//                        finalResult.setMessage("Fail.");
+//                        logger.info("[Cancel Order Service][Cancel Order] Success.");
+//                        logger.info("[Cancel Order Service][Draw Back Money] Fail.");
+//                        return finalResult;
+//                    }else if(changeOrderResult.isStatus() == false && drawBackMoneyStatus == true){
+//                        CancelOrderResult finalResult = new CancelOrderResult();
+//                        finalResult.setStatus(false);
+//                        finalResult.setMessage("Fail.");
+//                        logger.info("[Cancel Order Service][Cancel Order] Fail.");
+//                        logger.info("[Cancel Order Service][Draw Back Money] Success.");
+//                        return finalResult;
+//                    }else{
+//                        CancelOrderResult finalResult = new CancelOrderResult();
+//                        finalResult.setStatus(false);
+//                        finalResult.setMessage("Fail.");
+//                        logger.info("[Cancel Order Service][Cancel Order] Fail.");
+//                        logger.info("[Cancel Order Service][Draw Back Money] Fail.");
+//                        return finalResult;
+//                    }
 
-                    drawBackMoneyStatus = taskDrawBackMoney.get();
-                    changeOrderResult = taskCancelOrder.get();
-                    logger.info("[Cancel Order Service][Cancel Order] Two Process Done");
-
-
-                    /********************************************************************************/
-                    GetOrderByIdInfo localInfo = new GetOrderByIdInfo();
-                    localInfo.setOrderId(order.getId().toString());
-                    GetOrderResult gor = getOrderByIdFromOrderOther(localInfo);
-                    boolean status;
-                    if(gor.getOrder().getStatus() != OrderStatus.CANCEL.getCode()){
-                        logger.info("订单状态不对");
-                        status = false;
-                    }else{
-                        logger.info("订单状态正确");
-                        status = true;
-                    }
-
-
-                    if(changeOrderResult.isStatus() == true && drawBackMoneyStatus == true){
-                        if(status == false) {
-                            logger.info("[Cancel Order Service]Fail. Processes Seq");
-                            throw new RuntimeException("[Error Process Seq]");
+//
+                    if(changeOrderResult.isStatus() == true){
+                        CancelOrderResult finalResult = new CancelOrderResult();
+                        finalResult.setStatus(true);
+                        finalResult.setMessage("Success.");
+                        logger.info("[Cancel Order Service][Cancel Order] Success.");
+                        //Draw back money
+                        String money = calculateRefund(order);
+                        boolean status = drawbackMoney(money,loginId);
+                        if(status == true){
+                            logger.info("[Cancel Order Service][Draw Back Money] Success.");
                         }else{
-                            CancelOrderResult finalResult = new CancelOrderResult();
-                            finalResult.setStatus(true);
-                            finalResult.setMessage("Success.Processes Seq.");
-                            logger.info("[Cancel Order Service]Success.Processes Seq.");
-                            return finalResult;
+                            logger.info("[Cancel Order Service][Draw Back Money] Fail.");
                         }
-                    }else if(changeOrderResult.isStatus() == true && drawBackMoneyStatus == false){
-                        throw new RuntimeException("[????] Draw Back Money Fail but Cancel Order Success.");
-
-                    }else if(changeOrderResult.isStatus() == false && drawBackMoneyStatus == true){
-                        throw new RuntimeException("[???????] Draw Back Money Success but Cancel Order Fail.");
+                        return finalResult;
                     }else{
-                        throw new RuntimeException("[???????] All Fail");
+                        CancelOrderResult finalResult = new CancelOrderResult();
+                        finalResult.setStatus(false);
+                        finalResult.setMessage(changeOrderResult.getMessage());
+                        logger.info("[Cancel Order Service][Cancel Order] Fail.Reason:" + changeOrderResult.getMessage());
+                        return finalResult;
                     }
-
                 }else{
                     CancelOrderResult result = new CancelOrderResult();
                     result.setStatus(false);
@@ -209,14 +247,14 @@ public class CancelServiceImpl implements CancelService{
                 if(order.getStatus() == OrderStatus.NOTPAID.getCode()){
                     CalculateRefundResult result = new CalculateRefundResult();
                     result.setStatus(true);
-                    result.setMessage("Success.Calculate Refund Not paid");
+                    result.setMessage("Success");
                     result.setRefund("0");
                     logger.info("[Cancel Order][Refund Price] From Order Service.Not Paid.");
                     return result;
                 }else{
                     CalculateRefundResult result = new CalculateRefundResult();
                     result.setStatus(true);
-                    result.setMessage("Success.Calculate Refund");
+                    result.setMessage("Success");
                     result.setRefund(calculateRefund(order));
                     logger.info("[Cancel Order][Refund Price] From Order Service.Paid.");
                     return result;
@@ -241,14 +279,14 @@ public class CancelServiceImpl implements CancelService{
                     if(order.getStatus() == OrderStatus.NOTPAID.getCode()){
                         CalculateRefundResult result = new CalculateRefundResult();
                         result.setStatus(true);
-                        result.setMessage("Success.Calculate not pay");
+                        result.setMessage("Success");
                         result.setRefund("0");
                         logger.info("[Cancel Order][Refund Price] From Order Other Service.Not Paid.");
                         return result;
                     }else{
                         CalculateRefundResult result = new CalculateRefundResult();
                         result.setStatus(true);
-                        result.setMessage("Success.Calculate pay");
+                        result.setMessage("Success");
                         result.setRefund(calculateRefund(order));
                         logger.info("[Cancel Order][Refund Price] From Order Other Service.Paid.");
                         return result;
