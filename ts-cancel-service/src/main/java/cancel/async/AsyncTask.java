@@ -24,7 +24,7 @@ public class AsyncTask {
 
         Thread.sleep(2000);
 
-        System.out.println("[Cancel Order Service][Change Order Status] Getting....");
+        logger.info("[Cancel Order Service][Change Order Status] Getting....");
         ChangeOrderResult result = restTemplate.postForObject("http://ts-order-other-service:12032/orderOther/update",info,ChangeOrderResult.class);
         return new AsyncResult<>(result);
     }
@@ -32,7 +32,7 @@ public class AsyncTask {
     @Async("mySimpleAsync")
     public Future<Boolean> drawBackMoneyForOrderCan(String money, String userId,String orderId) throws InterruptedException{
 
-        System.out.println("[Cancel Order Service][Get Order] Getting....");
+        logger.info("[Cancel Order Service][Get Order] Getting....");
         GetOrderByIdInfo getOrderInfo = new GetOrderByIdInfo();
         getOrderInfo.setOrderId(orderId);
         GetOrderResult cor = restTemplate.postForObject(
@@ -42,7 +42,7 @@ public class AsyncTask {
         if(order.getStatus() == OrderStatus.NOTPAID.getCode()
                 || order.getStatus() == OrderStatus.PAID.getCode() || order.getStatus() == OrderStatus.CHANGE.getCode()){
 
-            System.out.println("[Cancel Order Service][Draw Back Money] Draw back money...");
+            logger.info("[Cancel Order Service][Draw Back Money] Draw back money...");
             DrawBackInfo info = new DrawBackInfo();
             info.setMoney(money);
             info.setUserId(userId);
@@ -54,7 +54,7 @@ public class AsyncTask {
             }
         }else{
 
-            System.out.println("[Cancel Order Service][Drawback Money] Fail. Status Not Permitted");
+            logger.info("[Cancel Order Service][Drawback Money] Fail. Status Not Permitted");
             return new AsyncResult<>(false);
 
         }
