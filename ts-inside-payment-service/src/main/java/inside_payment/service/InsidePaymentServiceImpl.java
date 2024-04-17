@@ -224,9 +224,9 @@ public class InsidePaymentServiceImpl implements InsidePaymentService{
         equal.set(0);
         //设置订单状态为已退款
         GetOrderByIdInfo getOrderInfo = new GetOrderByIdInfo();
-        logger.info();
+        
         logger.info("info.getOrderId()"+info.getOrderId());
-        logger.info();
+        
         getOrderInfo.setOrderId(info.getOrderId());
         GetOrderResult cor = restTemplate.postForObject(
                 "http://ts-order-other-service:12032/orderOther/getById/"
@@ -429,10 +429,10 @@ public class InsidePaymentServiceImpl implements InsidePaymentService{
         info.setOrderId(orderId);
         String result = restTemplate.postForObject("http://ts-cancel-service:18885/cancelCalculateRefund2",info,String.class);
 
-        logger.info();
+        
         logger.info("money:"+money);
         logger.info("result.getRefund():"+result);
-        logger.info();
+        
 
         if(!result.equals(money)){
             equal.set(2);
@@ -460,13 +460,13 @@ public class InsidePaymentServiceImpl implements InsidePaymentService{
             ChangeOrderInfo changeOrderInfo = new ChangeOrderInfo();
             changeOrderInfo.setOrder(order);
             changeOrderInfo.setLoginToken(loginToken);
-            logger.info();
+            
             logger.info("http://ts-order-other-service:12032/orderOther/update before");
-            logger.info();
+            
             changeOrderResult = restTemplate.postForObject("http://ts-order-other-service:12032/orderOther/update",changeOrderInfo,ChangeOrderResult.class);
-            logger.info();
+            
             logger.info("http://ts-order-other-service:12032/orderOther/update after");
-            logger.info();
+            
         }else{
             equal.set(1);
             changeOrderResult = new ChangeOrderResult();

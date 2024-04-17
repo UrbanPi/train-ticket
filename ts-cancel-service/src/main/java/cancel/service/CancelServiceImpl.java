@@ -369,9 +369,9 @@ public class CancelServiceImpl implements CancelService{
 
             DecimalFormat priceFormat = new java.text.DecimalFormat("0.00");
             String str = priceFormat.format(price);
-            logger.info();
+            
             logger.info("[Cancel Order]calculate refund - " + str);
-            logger.info();
+            
             return str;
         }
     }

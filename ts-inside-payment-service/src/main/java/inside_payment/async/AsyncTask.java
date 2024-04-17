@@ -56,10 +56,10 @@ public class AsyncTask {
         info.setOrderId(orderId);
         String result = restTemplate.postForObject("http://ts-cancel-service:18885/cancelCalculateRefund2",info,String.class);
 
-        logger.info();
+        
         logger.info("money:"+money);
         logger.info("result.getRefund():"+result);
-        logger.info();
+        
 
         if(!result.equals(money)){
             InsidePaymentServiceImpl.equal.set(2);
@@ -87,13 +87,13 @@ public class AsyncTask {
             ChangeOrderInfo changeOrderInfo = new ChangeOrderInfo();
             changeOrderInfo.setOrder(order);
             changeOrderInfo.setLoginToken(loginToken);
-            logger.info();
+            
             logger.info("http://ts-order-other-service:12032/orderOther/update before");
             logger.info("---重新修改过程---");
             changeOrderResult = restTemplate.postForObject("http://ts-order-other-service:12032/orderOther/update",changeOrderInfo,ChangeOrderResult.class);
-            logger.info();
+            
             logger.info("http://ts-order-other-service:12032/orderOther/update after");
-            logger.info();
+            
         }else{
             InsidePaymentServiceImpl.equal.set(1);
 
@@ -107,13 +107,13 @@ public class AsyncTask {
             ChangeOrderInfo changeOrderInfo = new ChangeOrderInfo();
             changeOrderInfo.setOrder(order);
             changeOrderInfo.setLoginToken(loginToken);
-            logger.info();
+            
             logger.info("http://ts-order-other-service:12032/orderOther/update before");
             logger.info("---一般过程---");
             changeOrderResult = restTemplate.postForObject("http://ts-order-other-service:12032/orderOther/update",changeOrderInfo,ChangeOrderResult.class);
-            logger.info();
+            
             logger.info("http://ts-order-other-service:12032/orderOther/update after");
-            logger.info();
+            
 
 
             changeOrderResult = new ChangeOrderResult();
