@@ -5232,12 +5232,6 @@ spec:
                   fieldPath: status.hostIP
           ports:
             - containerPort: 16100
-            - name: metric
-              containerPort: 9464
-            - name: evomaster
-              containerPort: 40100
-            - name: mscontr
-              containerPort: 9090
           resources:
             requests:
               cpu: 50m
@@ -5246,7 +5240,7 @@ spec:
               memory: 2500Mi
           readinessProbe:
             tcpSocket:
-              port: 9090
+              port: 16100
             initialDelaySeconds: 60
             periodSeconds: 10
             timeoutSeconds: 5
