@@ -51,6 +51,7 @@ public class EmbeddedEvoMasterController extends EmbeddedSutController {
         ctx = SpringApplication.run(TrainApplication.class, new String[]{
                 "--logging.file.name=app.logs", "--logging.file=app.logs"
         });
+        resetStateOfSUT();
         return "https://localhost:" + getSutPort();
     }
 
@@ -78,14 +79,14 @@ public class EmbeddedEvoMasterController extends EmbeddedSutController {
 
     @Override
     public void resetStateOfSUT() {
-        try (Stream<Path> stream = Files.list(Paths.get("./dumps"))) {
+        try (Stream<Path> stream = Files.list(Paths.get("/app/dumps/"))) {
             List<Process> processes = stream
                     .filter(Files::isDirectory)
                     .map(Path::getFileName)
                     .map(Path::toString)
                     .map(mongoDB -> {
                         ProcessBuilder pb = new ProcessBuilder("/bin/bash", "-c",
-                                "cd /app;./mongorestore --drop mongodb://" + mongoDB + " " + MONGO_DUMPS_ROOT + mongoDB +"/");
+                                "cd /app;./mongorestore --drop mongodb://" + mongoDB + " " + MONGO_DUMPS_ROOT +"/" +mongoDB +"/");
                         try {
                             return pb.start();
                         } catch (IOException e) {
