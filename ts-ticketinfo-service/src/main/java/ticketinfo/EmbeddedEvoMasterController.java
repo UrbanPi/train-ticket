@@ -125,8 +125,19 @@ public class EmbeddedEvoMasterController extends EmbeddedSutController {
         cookieLoginDto.password = "DefaultPassword";
         basicUserAuth.cookieLogin = cookieLoginDto;
 
+        AuthenticationDto vipUser = new AuthenticationDto("vipUser");
+        CookieLoginDto cookieLoginDtoVIP = new CookieLoginDto();
+        cookieLoginDtoVIP.contentType = CookieLoginDto.ContentType.JSON;
+        cookieLoginDtoVIP.httpVerb = CookieLoginDto.HttpVerb.POST;
+        cookieLoginDtoVIP.loginEndpointUrl = "http://ts-login-service:12342/login";
+        cookieLoginDtoVIP.usernameField = "email";
+        cookieLoginDtoVIP.username = "vip_microservices@163.com";
+        cookieLoginDtoVIP.passwordField = "password";
+        cookieLoginDtoVIP.password = "DefaultPassword";
+        vipUser.cookieLogin = cookieLoginDtoVIP;
+
         return Arrays.asList(
-                basicUserAuth
+                basicUserAuth, vipUser
         );
     }
 
