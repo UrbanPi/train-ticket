@@ -88,7 +88,7 @@ also clear, why the failure happens with other trains than 'Z' or 'K'. The imple
 the train types.
 
 #### Adaptations
-In xxxxx changed snippet:
+In `ts-cancel-service:CancelController#cancelTicket()` changed snippet:
 `````java
 Account account = result.getAccount();
 if(account.getName().contains("VIP")){
