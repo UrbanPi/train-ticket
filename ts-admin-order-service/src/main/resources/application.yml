@@ -4,5 +4,7 @@ server:
 spring:
   application:
     name: ts-admin-order-service
+  cache:
+    type: none
 
 
