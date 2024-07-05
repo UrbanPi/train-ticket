@@ -14,17 +14,17 @@ import logging
 import shutil
 
 from service_availability import available_versions, filter_services
+START_TIME: datetime = datetime.now() # Is reset each time when starting to generate tests
+STOP_TIME: datetime = datetime.now() # Is reset each time when starting to generate tests
+START_TIME_FORMATTED_ABS: str = datetime.today().strftime("%Y-%m-%d-%H-%M-%S")
 
-START_TIME: datetime = datetime.now()  # datetime(2024,3,20,8,43,0)
-START_TIME_FORMATTED: str = datetime.today().strftime("%Y-%m-%d-%H-%M-%S")
-STOP_TIME: datetime = datetime.now()
 
 plain_format = logging.Formatter("%(message)s")
 regular_format = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
 logger_handler = logging.StreamHandler(sys.stdout)
 logger_handler.setFormatter(regular_format)
 
-fileHandler = logging.FileHandler(f"./{START_TIME_FORMATTED}-run_evo_master_test_generator.log")
+fileHandler = logging.FileHandler(f"./{START_TIME_FORMATTED_ABS}-run_evo_master_test_generator.log")
 fileHandler.setFormatter(regular_format)
 
 
@@ -217,7 +217,8 @@ def retrieve_and_save_prometheus_metrics(destination: str):
         try:
             response = request.urlopen(req, timeout=120).read().decode("utf8")
         except Exception as e:
-            return f"Could not get metric names from prometheus because: {e}"
+            logger.error(f"Could not get metric names from prometheus because: {e}")
+            return
         return json.loads(response)["data"]
 
     def get_and_save(prometheus_query: str, destination: str, query_name: str):
@@ -263,9 +264,14 @@ def retrieve_and_save_prometheus_metrics(destination: str):
         if result:
             logger.error(f"Could not get prometheus metrik for {result[1]} because: {result[2]}")
             failed_metrics.append((result[0], result[1]))
+    metrix_names = None
+    while not metrix_names:
+        logger.info("Retrieving prometheus metrics")
+        metrix_names = get_metrix_names()
+        if not metrix_names:
+            logger.error("Retrying after waiting 2 minutes")
+            time.sleep(120)
 
-    logger.info("Retrieving prometheus metrics")
-    metrix_names = get_metrix_names()
     failed_retrievals = []
     with ThreadPoolExecutor() as executor:
         results = executor.map(get_and_save, metrix_names,
@@ -279,7 +285,7 @@ def retrieve_and_save_prometheus_metrics(destination: str):
         "container_cpu_usage_seconds_total_by_pod_instance_container")
     handle_result(err, failed_retrievals)
 
-    # Retry failed jaeger retrievals
+    # Retry failed prometheus retrievals
     retry_count = 0
     limit = 5
     while retry_count < limit and len(failed_retrievals) > 0:
@@ -297,32 +303,49 @@ def retrieve_and_save_jaeger_traces(destination: str, service_pod_names: dict[st
     def get_and_save(service_name: str, destination: str):
         cur_start: datetime = START_TIME
         sequence_num = 0
-        responses = []
-        while cur_start < STOP_TIME:
-            start: datetime = cur_start
-            end: datetime = cur_start + timedelta(minutes=5)
-            cur_start = end
-            request_params = parse.urlencode({'service': service_name,
-                                              'limit': -1,
-                                              'start': int(round(start.timestamp() * 1_000_000)),
-                                              'end': int(round(end.timestamp() * 1_000_000)),
-                                              'lookback': "5m"})
-            req = request.Request(method="GET",
-                                  url=f"http://localhost:32688/api/traces?{request_params}",
-                                  headers={"Accept": "application/json"})
-            try:
-                response = request.urlopen(req, timeout=600).read().decode("utf8")
-                responses.append(json.loads(response))
-            except Exception as e:
-                return service_name, e
-            # with open(destination+str(sequence_num), 'w', encoding="utf8") as file:
-            #     file.write(response)
-            sequence_num += 1
-        complete = responses[0]
-        for r in responses[1::]:
-            complete["data"].extend(r["data"])
-        with open(destination, 'w', encoding="utf8") as file:
-            file.write(json.dumps(complete))
+        initial_response = True
+        initial_entry = True
+        # Open destination file with line buffering -> writes to disk in new-lines
+        with open(destination, 'w', encoding="utf8", buffering=1) as file:
+            while cur_start < STOP_TIME:
+                start: datetime = cur_start
+                end: datetime = cur_start + timedelta(minutes=1)
+                cur_start = end
+                request_params = parse.urlencode({'service': service_name,
+                                                  'limit': -1,
+                                                  'start': int(round(start.timestamp() * 1_000_000)),
+                                                  'end': int(round(end.timestamp() * 1_000_000)),
+                                                  'lookback': "1m"})
+                req = request.Request(method="GET",
+                                      url=f"http://localhost:32688/api/traces?{request_params}",
+                                      headers={"Accept": "application/json"})
+                try:
+                    response = request.urlopen(req, timeout=300).read().decode("utf8")
+                    response_data = json.loads(response)
+                except Exception as e:
+                    return service_name, e
+                sequence_num += 1
+                if initial_response:
+                    # On initial request "open" the data list
+                    file.write('{"data":[')
+                    initial_response = False
+                if len(response_data["data"]) > 0:
+                    if not initial_entry:
+                        file.write(",\n")  # Prepare for next trace, add new line to flush to disk -> line buffering
+                    else:
+                        initial_entry = False
+
+                    json_data = json.dumps(response_data["data"])[1:-1]  # Format as JSON remove enclosing brackets
+                    file.write(json_data)
+
+            # When we are finished "close" the data list
+            file.write('],')
+            # Delete data as preparation to ...
+            del response_data["data"]
+            # Write remaining metadata of last response
+            file.write(json.dumps(response_data)[1:-1])
+            # Close JSON object
+            file.write("}")
 
     def handle_result(result: tuple | None, failed_services: list[str]):
         if result:
@@ -333,7 +356,8 @@ def retrieve_and_save_jaeger_traces(destination: str, service_pod_names: dict[st
     service_names, _ = zip(*service_pod_names.items())
     service_names = [sn + "-1.0" if "ts-user-service" == sn or "ts-auth-service" == sn else sn for sn in service_names]
     failed_retrievals = []
-    with ThreadPoolExecutor() as executor:
+    # Do not use too many workers because with large files / traces you will definitively crash jaeger
+    with ThreadPoolExecutor(max_workers=2) as executor:
         results = executor.map(get_and_save, service_names, [destination + "/" + n + ".json" for n in service_names if n != service_pod_under_test_name])
         for res in results:
             handle_result(res, failed_retrievals)
@@ -349,6 +373,7 @@ def retrieve_and_save_jaeger_traces(destination: str, service_pod_names: dict[st
         time.sleep(60)
         new_results = []
         for service_name in failed_retrievals:
+            logger.info(f"Retrying getting traces for: {service_name} ")
             err = get_and_save(service_name, destination + "/" + service_name + ".json")
             handle_result(err, new_results)
         failed_retrievals = new_results
@@ -437,10 +462,11 @@ def retrieve_and_save_all_data(service_pod_names, service_under_test_name):
     # Get generated tests
     retrieve_and_save_evo_tests(tests, pod_name=service_pod_names.get(service_under_test_name),
                                 service_name=service_under_test_name)
-    shutil.make_archive(f"{START_TIME_FORMATTED}-{version_arg}-generated-with-{service_under_test_name}", "gztar", root_dir=base_destination)
+    shutil.make_archive(f"{START_TIME_FORMATTED_ABS}-{version_arg}-generated-with-{service_under_test_name}", "gztar", root_dir=base_destination)
 
 
 def start_generating(version_argument: str, service: str, evo_master_args: str):
+    global START_TIME, STOP_TIME
     if not version_argument:
         logger.error("No version selected defaulting to version \"master\"")
         version_argument = "master"
@@ -460,9 +486,9 @@ def start_generating(version_argument: str, service: str, evo_master_args: str):
 
     # Pre run cleaning
     cleanup(service_pod_names)
-
     start_evo_master_driver(service_to_test)
 
+    START_TIME = datetime.now()
     call_microservice_controller_of(services=selected_services, with_method=start_service)
 
     if version_argument == "master":
@@ -482,8 +508,6 @@ def start_generating(version_argument: str, service: str, evo_master_args: str):
 
     # Stop all services
     call_microservice_controller_of(services=all_services, with_method=stop_service)
-
-    global STOP_TIME
     STOP_TIME = datetime.now()
 
     retrieve_and_save_all_data(service_pod_names, service)
@@ -520,7 +544,7 @@ if __name__ == '__main__':
     count_skipped = 0
     count_tested = 0
     if service_arg == "all":
-        logger.info(f"Start running EvoMaster for all services with OpenAPI specification in version {version_arg}")
+        logger.info(f"Start running EvoMaster for services with OpenAPI documentation in version {version_arg}")
         selected_services, _ = filter_services(version_argument=version_arg)
         skip = skip_stop is not None
         for serv in selected_services:

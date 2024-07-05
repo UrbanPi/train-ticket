@@ -64,21 +64,21 @@ services = {
 }
 unavailable_services = {
     "ts-avatar-service": {"port": 30037,  # No swagger definition, written in Python
-     "versions": ["master_grp"]},
-     "ts-delivery-service": {"port": 30044,  # No REST endpoints, Java
-     "versions": ["master_grp"]},
-     "ts-news-service": {"port": 30048,  # No swagger definition (service is basically an oneliner in written in Go
-     "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
-     "ts-ticket-office-service": {"port": 30063,  # No swagger definition, written in JS
-     "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
-     "ts-voucher-service": {"port": 30071,  # No swagger definition, written in Python
-     "versions": ["master_grp"]},
-     "ts-rest-external-service": {"port": 30079,  # No swagger definition, written in JS
-     "versions": ["error_grp_3"]},
-     "ts-launcher": {"port": 30080, # Java,no swagger definition, executes a workflow which has a chance to trigger the fault.
-     "versions": ["error_grp_4"]},
-     "ts-gateway-service": {"port": 30467,  # No swagger definition available (Java)
-     "versions": ["master_grp"]}
+                          "versions": ["master_grp"]},
+    "ts-delivery-service": {"port": 30044,  # No REST endpoints, Java
+                            "versions": ["master_grp"]},
+    "ts-news-service": {"port": 30048,  # No swagger definition (service is basically an oneliner in written in Go
+                        "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
+    "ts-ticket-office-service": {"port": 30063,  # No swagger definition, written in JS
+                                 "versions": ["master_grp", "error_grp", "error_grp_2", "error_grp_3"]},
+    "ts-voucher-service": {"port": 30071,  # No swagger definition, written in Python
+                           "versions": ["master_grp"]},
+    "ts-rest-external-service": {"port": 30079,  # No swagger definition, written in JS
+                                 "versions": ["error_grp_3"]},
+    "ts-launcher": {"port": 30080, # Java,no swagger definition, executes a workflow which has a chance to trigger the fault.
+                    "versions": ["error_grp_4"]},
+    "ts-gateway-service": {"port": 30467,  # No swagger definition available (Java)
+                           "versions": ["master_grp"]}
 }
 
 
