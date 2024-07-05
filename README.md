@@ -1,11 +1,21 @@
+# TrainTicket execute / util branch
+This branch contains various helper scripts for working with and executing TrainTicket.
+If you plan to work with this repository you should consider copying following directories
+outside the TrainTicket repository:
+* execute_evo_master
+* execute_evo_master_tests
+* update_files_in_branches
+* util
+
+
 # Overview
 
 The repository contains various versions of the Trainticket microservice system.
 The master and ts-error-cleaned branch have no deliberately built-in faults, the remaining branches each
-contain a deliberately built-in fault. The master branch and the error branches
+contain a deliberately built-in fault. The master branch and the fault branches
 also differ from each other with regard to the underlying tech stack. Most notably:
 
-| Component          | master branch      | error branches                |
+| Component          | master branch      | fault branches                |
 |--------------------|--------------------|-------------------------------|
 | Primary framework  | SpringBoot 2.3.12  | SpringBoot 1.5.3              |
 | Persistence:       | One MySQL*         | Mostly individual MongoDBs    |
@@ -26,22 +36,33 @@ the respective branches.
 
 ## Quickstart Trainticket with EvoMaster
 1. Have Docker and Kubernetes setup -> see Wiki of this repository
-2. Download / clone your preferred version of Trainticket into a ( WSL2) Linux distribution 
-3. cd into root folder of the repo and start Trainticket with
-``
-./hack/deploy/deploy.sh default "--with-otel --with-monitoring"
-``
+2. Download / clone your preferred version of Trainticket into a ( WSL2) Linux distribution
+3. Pull the following containers to ensure they exist (Background: There was/exists a problem with the private Github 
+   container registry that prevents the download of external container dependencies)
+```   
+docker pull openresty/openresty:trusty
+docker pull openjdk:8-jdk
+docker pull python:3
+docker pull node
+docker pull mrrm/web.go
+docker pull alpine:3.14
+docker pull openjdk:8-jre
+   ```
+4. cd into root folder of the repo and start Trainticket with
+   ``
+   ./hack/deploy/deploy.sh default "--with-otel --with-monitoring"
+   ``
 
-4. Wait around 3 minutes. You can check the status with ``kubectl get pods``. 
-5. Start the production Java services with the Python script ``start_all.py``. Or start generating tests with EvoMaster
-by executing the Python script ``run_evo_master_test_generator.py``.
-6. Wait again for around 3 minutes. 
-7. You can reach the endpoints of the individual services on different ports on localhost. The mappings of ports to services
-are hardcoded. They are defined in the Python script ``service_availability.py``. 
-8. stop Trainticket with
-``
-./hack/deploy/specific-reset.sh default "--with-otel --with-monitoring"
-``
+5. Wait around 3 minutes. You can check the status with ``kubectl get pods``.
+6. Start the production Java services with the Python script ``start_all.py``. Or start generating tests with EvoMaster
+   by executing the Python script ``run_evo_master_test_generator.py``.
+7. Wait again for around 3 minutes.
+8. You can reach the endpoints of the individual services on different ports on localhost. The mappings of ports to services
+   are hardcoded. They are defined in the Python script ``service_availability.py``.
+9. stop Trainticket with
+   ``
+   ./hack/deploy/specific-reset.sh default "--with-otel --with-monitoring"
+   ``
 
 ### Endpoints
 * http://localhost:32677/  : GUI of Trainticket
@@ -52,14 +73,18 @@ are hardcoded. They are defined in the Python script ``service_availability.py``
 * http://localhost:303XX/swagger-ui.html : Prometheus endpoint of the production service (fast)
 * http://localhost:306XX/swagger-ui.html : Swagger definition of the microservice controller
 
+# Cloning, compiling, building, publishing
+Use the contents of the python script in util/clone_branches.py to generate output for cloning, compiling the project and
+building and publishing docker images.
 
 ## Compile Maven projects
-
 You need to have Maven available. Go to the root folder and execute:
 
 ``mvn -DskipTests=true clean package``
 
 ## Build Docker containers
+Prerequisite: Compiled Maven projects
+`./script/publish-docker-images.sh  containers.github.scch.at/contest/trainticket branch_name`
 
 ### Production containers
 
